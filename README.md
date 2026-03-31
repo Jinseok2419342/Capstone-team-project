@@ -15,3 +15,6 @@
 
 ## 청사진
 ![alt text](src/asset/Blueprint.jpg)
+
+## 현상황
+https://drive.google.com/file/d/1jm0rw15vPh_qfNWp1wrNx_rkewdpraTZ/view?usp=sharing
