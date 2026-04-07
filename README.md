@@ -1,5 +1,14 @@
 # Capstone-team-project
 상부상조
+---
+
+```md
+진행사항 게시판 (노션 링크) - https://www.notion.so/33b2b2979d1880ca8c62d807f22375fb?source=copy_link
+아이디어 게시판
+```
+
+
+---
 
 
 | 학번       | 이름   | 역할       | GitHub Repository                                      | 이메일                        |
