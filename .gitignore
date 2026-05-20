@@ -2,4 +2,6 @@ venv/
 __pycache__/
 *.pyc
 .env
-src/asset/crops/
+src/asset/
+src/Setting_Guide.md
+firebase-key.json
