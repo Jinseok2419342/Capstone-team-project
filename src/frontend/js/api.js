@@ -25,11 +25,42 @@ async function fetchItemsByCategory(category) {
 }
 
 /**
+ * 분실물 처리 완료
+ * POST /items/{id}/process
+ */
+async function processItem(id) {
+  const res = await fetch(`${API_BASE}/items/${encodeURIComponent(id)}/process`, {
+    method: 'POST',
+  });
+  if (!res.ok) throw new Error(`API 오류: ${res.status}`);
+  return res.json();
+}
+
+/**
+ * 전체 분실물 목록 초기화
+ * DELETE /items
+ */
+async function clearItems() {
+  const res = await fetch(`${API_BASE}/items`, {
+    method: 'DELETE',
+  });
+  if (!res.ok) throw new Error(`API 오류: ${res.status}`);
+  return res.json();
+}
+
+/**
  * 최신 카메라 스냅샷 URL
  * 백엔드에서 이미지를 제공하는 경우 사용
  */
 function getSnapshotUrl() {
   return `${API_BASE}/snapshot?t=${Date.now()}`;
+}
+
+function resolveApiUrl(path) {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (path.startsWith('/')) return `${API_BASE}${path}`;
+  return path;
 }
 
 // ── 개발용 목(mock) 데이터 ──────────────────────────────────────────────────

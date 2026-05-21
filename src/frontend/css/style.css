@@ -150,10 +150,31 @@ main {
   min-height: 200px;
 }
 
+.canvas-wrapper.is-empty {
+  aspect-ratio: 4 / 3;
+  background: #f4f5f7;
+  border-style: dashed;
+}
+
+.canvas-wrapper.is-empty::after {
+  content: "표시할 분실물이 없습니다";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+  font-size: 0.95rem;
+}
+
 #camera-snapshot {
   display: block;
   width: 100%;
   height: auto;
+}
+
+.canvas-wrapper.is-empty #camera-snapshot {
+  display: none;
 }
 
 #ar-canvas {

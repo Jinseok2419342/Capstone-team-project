@@ -1,6 +1,6 @@
 // ── 설정 ────────────────────────────────────────────────────────────────────
 const USE_MOCK = false;      // 백엔드 연동 시 false 로 변경
-const AUTO_REFRESH_MS = 30000;  // 30초마다 자동 갱신 (0이면 비활성)
+const AUTO_REFRESH_MS = 5000;   // 5초마다 자동 갱신 (0이면 비활성)
 
 // ── 현재 표시 중인 항목 (처리 버튼에서 참조) ─────────────────────────────────
 let _currentItems = [];
@@ -82,7 +82,7 @@ function renderTable(items) {
   tbody.innerHTML = items.map(item => {
     const dday  = calcDday(item.expires_at);
     const thumb = item.image_path
-      ? `<img class="thumb" src="${item.image_path}" alt="${item.name}" />`
+      ? `<img class="thumb" src="${resolveApiUrl(item.image_path)}" alt="${item.name}" />`
       : '-';
 
     return `
@@ -136,6 +136,17 @@ function updateAR(items) {
   window._arItems = items;
 
   const img = document.getElementById('camera-snapshot');
+  const wrapper = document.querySelector('.canvas-wrapper');
+  const hasItems = Array.isArray(items) && items.length > 0;
+
+  if (!hasItems) {
+    if (wrapper) wrapper.classList.add('is-empty');
+    img.removeAttribute('src');
+    renderARMasks([]);
+    return;
+  }
+
+  if (wrapper) wrapper.classList.remove('is-empty');
 
   if (!USE_MOCK) {
     // 스냅샷은 배경 이미지 역할만 — 마스킹은 이미지 로드와 무관하게 바로 그림
@@ -164,7 +175,8 @@ async function refresh() {
   if (items) _currentItems = items;
   if (items) updateSummaryCards(items);
   renderTable(items);
-  if (items) { updateAR(items); updateARSidebar(items); }
+  updateAR(items || []);
+  updateARSidebar(items || []);
 
   document.getElementById('last-updated').textContent =
     '마지막 갱신: ' + new Date().toLocaleTimeString('ko-KR');
@@ -174,19 +186,49 @@ async function refresh() {
 document.getElementById('btn-refresh').addEventListener('click', refresh);
 document.getElementById('btn-refresh-ar').addEventListener('click', refresh);
 document.getElementById('filter-category').addEventListener('change', refresh);
+document.getElementById('btn-clear-items').addEventListener('click', async () => {
+  if (!confirm('분실물 목록을 모두 초기화하시겠습니까?')) return;
 
-document.getElementById('items-tbody').addEventListener('click', (e) => {
+  const btn = document.getElementById('btn-clear-items');
+  btn.disabled = true;
+  try {
+    if (!USE_MOCK) await clearItems();
+    _currentItems = [];
+    updateSummaryCards(_currentItems);
+    renderTable(_currentItems);
+    updateAR(_currentItems);
+    updateARSidebar(_currentItems);
+    document.getElementById('last-updated').textContent =
+      '마지막 갱신: ' + new Date().toLocaleTimeString('ko-KR');
+  } catch (err) {
+    console.error('초기화 실패:', err);
+    alert('초기화 중 오류가 발생했습니다. 백엔드 서버를 확인하세요.');
+  } finally {
+    btn.disabled = false;
+  }
+});
+
+document.getElementById('items-tbody').addEventListener('click', async (e) => {
   const btn = e.target.closest('.btn-process');
   if (!btn) return;
-  const id   = Number(btn.dataset.id);
+  const id   = btn.dataset.id;
   const item = _currentItems.find(i => i.id === id);
   if (!item) return;
   if (!confirm(`"${item.name}" 항목을 처리(폐기)하시겠습니까?`)) return;
-  _currentItems = _currentItems.filter(i => i.id !== id);
-  renderTable(_currentItems);
-  updateSummaryCards(_currentItems);
-  updateAR(_currentItems);
-  updateARSidebar(_currentItems);
+
+  btn.disabled = true;
+  try {
+    if (!USE_MOCK) await processItem(id);
+    _currentItems = _currentItems.filter(i => i.id !== id);
+    renderTable(_currentItems);
+    updateSummaryCards(_currentItems);
+    updateAR(_currentItems);
+    updateARSidebar(_currentItems);
+  } catch (err) {
+    console.error('처리 실패:', err);
+    alert('처리 중 오류가 발생했습니다. 백엔드 서버를 확인하세요.');
+    btn.disabled = false;
+  }
 });
 
 // ── 초기 실행 ────────────────────────────────────────────────────────────────

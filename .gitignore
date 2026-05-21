@@ -1,7 +1,39 @@
 venv/
+.venv/
+env/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environment secrets
 .env
+.env.*
+!.env.example
+
+# Generated/runtime assets
 src/asset/
+*.log
+
+# Local model copies (keep the canonical root yolov8n.pt only)
+src/*.pt
+*.onnx
+*.engine
+
+# Firebase service account keys
+firebase-key.json
+src/backend/firebase-key.json
+*-key.json
+*serviceAccount*.json
+service-account*.json
+google-credentials*.json
+
+# Local setup notes
 src/Setting_Guide.md
-# firebase-key.json
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
