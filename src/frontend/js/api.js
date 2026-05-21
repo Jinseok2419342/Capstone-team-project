@@ -29,7 +29,7 @@ async function fetchItemsByCategory(category) {
  * 백엔드에서 이미지를 제공하는 경우 사용
  */
 function getSnapshotUrl() {
-  return `${API_BASE}/snapshot`;
+  return `${API_BASE}/snapshot?t=${Date.now()}`;
 }
 
 // ── 개발용 목(mock) 데이터 ──────────────────────────────────────────────────

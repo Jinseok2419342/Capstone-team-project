@@ -9,7 +9,8 @@ import cv2
 import time
 import os
 import base64
-from datetime import datetime
+import requests
+from datetime import datetime, timezone
 from ultralytics import YOLO
 from dotenv import load_dotenv
 from openai import OpenAI
@@ -40,11 +41,14 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 # ==========================================
 # [3. AI 모델 및 동작 파라미터 설정]
 # ==========================================
-MOTION_THRESHOLD = 20
-MIN_MOTION_AREA = 5000
-STABILIZATION_TIME = 2.0
-STARTUP_GRACE_PERIOD = 3.0 # 시작 후 배경을 학습하고 초기 상태를 기억할 시간(초)
+BACKEND_URL = "http://localhost:8000"
+
+MOTION_THRESHOLD = 25
+MIN_MOTION_AREA = 3000
+STABILIZATION_TIME = 3.0
+STARTUP_GRACE_PERIOD = 5.0 # 시작 후 배경을 학습하고 초기 상태를 기억할 시간(초)
 IOU_THRESHOLD = 0.5        # 기존 물체와 50% 이상 겹치면 같은 물체로 간주
+SNAPSHOT_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "asset", "snapshot.jpg")
 
 print("Loading Local AI Model (YOLOv8n)...")
 model = YOLO('yolov8n.pt') 
@@ -106,6 +110,47 @@ def analyze_with_openai(image_path):
         print(f"   -> 🚨 OpenAI API 호출 실패: {e}")
         return None
 
+def parse_and_send_to_backend(ai_result, crop_path, bbox):
+    """GPT-4o 결과 텍스트를 파싱해서 백엔드 POST /save로 전송합니다."""
+    if not ai_result:
+        return
+
+    object_name = "알 수 없음"
+    category = "비음식물"
+
+    for line in ai_result.splitlines():
+        if line.startswith("1.") or "물체:" in line:
+            object_name = line.split(":")[-1].strip()
+        if line.startswith("2.") or "카테고리:" in line:
+            raw = line.split(":")[-1].strip()
+            if "음식물" in raw and "비음식물" not in raw:
+                category = "음식물"
+            elif "비음식물" in raw:
+                category = "비음식물"
+            elif "고가품" in raw:
+                category = "고가품"
+
+    x1, y1, x2, y2 = bbox
+    payload = {
+        "object_name": object_name,
+        "category": category,
+        "image_url": crop_path,
+        "full_image_url": "",
+        "yolo_confidence": 0.0,
+        "freshness": "",
+        "camera_id": "cam0",
+        "raw_ai_response": ai_result,
+        "bbox": {"x": x1, "y": y1, "w": x2 - x1, "h": y2 - y1},
+        "detected_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+    try:
+        res = requests.post(f"{BACKEND_URL}/save", json=payload, timeout=5)
+        print(f"   -> 백엔드 저장 완료: {res.json()}")
+    except Exception as e:
+        print(f"   -> 백엔드 전송 실패: {e}")
+
+
 def perform_object_detection_and_crop(frame, timestamp, known_boxes, is_initial_scan=False):
     """YOLO를 실행하고, 기존 물체(known_boxes)와 겹치지 않는 '새 물체'만 처리합니다."""
     if is_initial_scan:
@@ -114,48 +159,50 @@ def perform_object_detection_and_crop(frame, timestamp, known_boxes, is_initial_
         print(f"\n[AI 분석 시작] 안정화된 화면 분석 중... (Timestamp: {timestamp})")
         
     start_time = time.time()
-    results = model.predict(frame, conf=0.4, verbose=False)
+    conf = 0.6 if is_initial_scan else 0.4
+    results = model.predict(frame, conf=conf, verbose=False)
     
-    current_boxes = [] # 방금 화면에서 찾은 모든 물체들의 위치
+    new_boxes = []     # 이번에 새로 발견된 박스만 누적
     new_object_count = 0
-    
+
     for result in results:
         for i, box in enumerate(result.boxes):
             x1, y1, x2, y2 = map(int, box.xyxy[0])
             current_box = (x1, y1, x2, y2)
-            current_boxes.append(current_box) # 현재 상태로 등록
 
-            # 초기 스캔일 경우, 화면의 박스들만 기억하고 API 전송은 생략
+            # 초기 스캔: 화면의 박스들만 기억하고 API 전송은 생략
             if is_initial_scan:
+                new_boxes.append(current_box)
                 continue
-                
+
             # --- [새 물체 필터링 (IoU)] ---
             is_new = True
             for known_box in known_boxes:
-                # 기존 박스와 50% 이상 겹치면 원래 있던 물체로 간주
                 if calculate_iou(current_box, known_box) > IOU_THRESHOLD:
                     is_new = False
                     break
-                    
-            if is_new: # 완전히 새로운 물체일 때만!
+
+            if is_new:
                 cropped_img = frame[y1:y2, x1:x2]
                 if cropped_img.size == 0: continue
-                
+
                 crop_filename = os.path.join(CROP_DIR, f"crop_{timestamp}_{i}.jpg")
                 cv2.imwrite(crop_filename, cropped_img)
                 new_object_count += 1
+                new_boxes.append(current_box)  # 새 물체만 known_boxes에 추가할 목록에 넣음
                 print(f"   -> ✨ [NEW] 객체 크롭 완료: {crop_filename}")
-                analyze_with_openai(crop_filename)
+                ai_result = analyze_with_openai(crop_filename)
+                parse_and_send_to_backend(ai_result, crop_filename, (x1, y1, x2, y2))
             else:
-                # 디버깅용 (실제 운영시엔 주석처리해도 됨)
                 print("   -> ♻️ [기존 물체] 무시됨 (API 호출 안함)")
 
     end_time = time.time()
     if not is_initial_scan:
         print(f"[프로세스 완료] 새로운 물체 {new_object_count}개 처리. 소요시간: {end_time - start_time:.2f}초")
-        
-    # 현재 화면의 박스 리스트를 반환하여 known_boxes를 최신 상태로 업데이트
-    return current_boxes, new_object_count
+
+    # 초기 스캔이면 새 박스 목록 반환, 아니면 기존 + 새 박스를 합쳐서 반환
+    updated_boxes = new_boxes if is_initial_scan else known_boxes + new_boxes
+    return updated_boxes, new_object_count
 
 def main():
     cap = cv2.VideoCapture(0)
@@ -245,7 +292,8 @@ def main():
                 # 지정 시간 안정화 완료 시 분석 트리거
                 if wait_time >= STABILIZATION_TIME:
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-                    
+                    cv2.imwrite(SNAPSHOT_PATH, frame)
+
                     # 새로운 박스 찾기 및 known_boxes 최신화
                     known_boxes, new_count = perform_object_detection_and_crop(frame, timestamp, known_boxes)
                     

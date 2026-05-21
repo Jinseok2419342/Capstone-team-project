@@ -1,5 +1,5 @@
 // ── 설정 ────────────────────────────────────────────────────────────────────
-const USE_MOCK = true;      // 백엔드 연동 시 false 로 변경
+const USE_MOCK = false;      // 백엔드 연동 시 false 로 변경
 const AUTO_REFRESH_MS = 30000;  // 30초마다 자동 갱신 (0이면 비활성)
 
 // ── 현재 표시 중인 항목 (처리 버튼에서 참조) ─────────────────────────────────
@@ -135,12 +135,12 @@ function updateARSidebar(items) {
 function updateAR(items) {
   window._arItems = items;
 
-  // 스냅샷 이미지 설정 (백엔드 연동 시 실제 URL로 교체)
   const img = document.getElementById('camera-snapshot');
+
   if (!USE_MOCK) {
+    // 스냅샷은 배경 이미지 역할만 — 마스킹은 이미지 로드와 무관하게 바로 그림
     img.src = getSnapshotUrl();
   } else {
-    // Mock: 빈 이미지 대신 회색 배경 Canvas를 직접 그림
     const c = document.createElement('canvas');
     c.width = 640; c.height = 480;
     const ctx = c.getContext('2d');
@@ -152,6 +152,7 @@ function updateAR(items) {
     img.src = c.toDataURL();
   }
 
+  // 캔버스는 원본 좌표계(640×480) 고정이라 이미지 로드 여부와 무관하게 바로 그릴 수 있음
   renderARMasks(items);
 }
 
