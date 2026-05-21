@@ -1,10 +1,8 @@
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import FileResponse, JSONResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse, JSONResponse, Response
 from pydantic import BaseModel
 import os
-import glob
 import firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime, timedelta, timezone
@@ -17,12 +15,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# asset 폴더 정적 서빙 (백엔드 실행 위치 기준 ../asset)
-ASSET_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "asset")
-ASSET_DIR = os.path.normpath(ASSET_DIR)
-if os.path.isdir(ASSET_DIR):
-    app.mount("/assets", StaticFiles(directory=ASSET_DIR), name="assets")
 
 # Firebase 연결
 if not firebase_admin._apps:
@@ -92,39 +84,46 @@ def save_item(item: LostItem):
     return {"message": "저장 완료"}
 
 
+SNAPSHOT_PATH = os.path.normpath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "asset", "snapshot.jpg")
+)
+
 @app.get("/snapshot")
 def get_snapshot():
-    # asset 폴더에서 가장 최신 full_*.jpg 반환
-    pattern = os.path.join(ASSET_DIR, "full_*.jpg")
-    files = sorted(glob.glob(pattern))
-    if files:
-        return FileResponse(files[-1], media_type="image/jpeg")
+    if os.path.isfile(SNAPSHOT_PATH):
+        return FileResponse(
+            SNAPSHOT_PATH,
+            media_type="image/jpeg",
+            headers={"Cache-Control": "no-store"},
+        )
     return JSONResponse(status_code=404, content={"error": "스냅샷 없음"})
 
 
 @app.get("/items")
 def get_items(category: str = Query(default=None)):
 
-    query = db.collection("lost_items")
-    if category:
-        query = query.where("category", "==", category)
-    docs = query.stream()
+    docs = db.collection("lost_items").stream()
 
     result = []
 
     for doc in docs:
-        item = doc.to_dict()
-        item["id"] = doc.id
-        if hasattr(item.get("found_at"), "isoformat"):
-            dt = item["found_at"]
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            item["found_at"] = dt.isoformat()
-        if hasattr(item.get("dispose_at"), "isoformat"):
-            dt = item["dispose_at"]
-            if dt.tzinfo is None:
-                dt = dt.replace(tzinfo=timezone.utc)
-            item["dispose_at"] = dt.isoformat()
+        d = doc.to_dict()
+        item = {
+            "id": doc.id,
+            "name": d.get("object_name", ""),
+            "category": d.get("category", ""),
+            "detected_at": d.get("found_at").isoformat() if d.get("found_at") else None,
+            "expires_at": d.get("dispose_at").isoformat() if d.get("dispose_at") else None,
+            "image_path": d.get("image_url", ""),
+            "bbox": {
+                "x": d.get("bbox", {}).get("x", 0),
+                "y": d.get("bbox", {}).get("y", 0),
+                "width": d.get("bbox", {}).get("w", 0),
+                "height": d.get("bbox", {}).get("h", 0),
+            },
+        }
+        if category and item["category"] != category:
+            continue
         result.append(item)
 
     return result

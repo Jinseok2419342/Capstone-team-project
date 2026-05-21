@@ -21,22 +21,7 @@ async function fetchItemsByCategory(category) {
     : `${API_BASE}/items?category=${encodeURIComponent(category)}`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`API 오류: ${res.status}`);
-  const raw = await res.json();
-  return raw.map(item => ({
-    id:          item.id,
-    name:        item.object_name,
-    category:    item.category,
-    detected_at: item.found_at,
-    expires_at:  item.dispose_at,
-    image_path:      item.image_url ?? '',
-    full_image_url:  item.full_image_url ?? '',
-    bbox: item.bbox ? {
-      x:      item.bbox.x,
-      y:      item.bbox.y,
-      width:  item.bbox.w,
-      height: item.bbox.h,
-    } : null,
-  }));
+  return res.json();
 }
 
 /**
@@ -44,7 +29,7 @@ async function fetchItemsByCategory(category) {
  * 백엔드에서 이미지를 제공하는 경우 사용
  */
 function getSnapshotUrl() {
-  return `${API_BASE}/snapshot`;
+  return `${API_BASE}/snapshot?t=${Date.now()}`;
 }
 
 // ── 개발용 목(mock) 데이터 ──────────────────────────────────────────────────
