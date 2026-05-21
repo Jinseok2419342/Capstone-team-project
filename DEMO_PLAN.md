@@ -24,7 +24,7 @@
 | Python 3.11.9 | 다른 버전은 패키지 호환 문제 발생 가능 |
 | 웹캠 | USB 카메라 또는 내장 카메라 |
 | `firebase-key.json` | 팀원에게 받아 `src/backend/` 폴더에 넣기 |
-| `.env` 파일 | 팀원에게 받아 프로젝트 루트에 넣기 (OPENAI_API_KEY 포함) |
+| `.env` 파일 | 아래 **4-1단계** 참고 (`.env.example` 복사 후 키 입력) |
 
 ### 최초 1회 설정
 
@@ -48,7 +48,19 @@ venv\Scripts\activate
 > Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 > ```
 
-**4. 패키지 설치**
+**4-1. `.env` 파일 생성**
+
+프로젝트 루트의 `.env.example` 파일을 복사해서 `.env`로 만든 뒤, API 키를 입력합니다.
+
+```powershell
+copy .env.example .env
+```
+
+> 맥(Mac): `cp .env.example .env`
+
+`.env` 파일을 열어 `OPENAI_API_KEY=` 뒤에 팀원에게 받은 키를 붙여넣기 하세요.
+
+**4-2. 패키지 설치**
 ```powershell
 python -m pip install -r requirements.txt
 ```
@@ -135,8 +147,25 @@ Capstone-team-project/
 │   │       ├── api.js
 │   │       ├── ar_mask.js
 │   │       └── dashboard.js
-│   └── test/              ← 테스트 스크립트
+│   └── test/
+│       ├── clear_dummy.py ← Firebase 데이터 전체 삭제
+│       └── insert_dummy.py
 ```
+
+---
+
+## 테스트 유틸리티
+
+### Firebase 데이터 전체 삭제 (`clear_dummy.py`)
+
+데모 후 Firebase `lost_items` 컬렉션을 초기화할 때 사용합니다.
+
+```powershell
+venv\Scripts\activate
+python src/test/clear_dummy.py
+```
+
+> **주의**: 실행하면 Firebase의 모든 분실물 데이터가 삭제됩니다. 되돌릴 수 없으니 신중히 사용하세요.
 
 ---
 
@@ -144,7 +173,7 @@ Capstone-team-project/
 
 | 증상 | 원인 | 해결 |
 |------|------|------|
-| `OPENAI_API_KEY` 오류 | `.env` 파일 없음 | 팀원에게 `.env` 파일 받아 루트에 넣기 |
+| `OPENAI_API_KEY` 오류 | `.env` 파일 없음 | `.env.example` 복사해서 `.env` 만들고 키 입력 (4-1단계 참고) |
 | `firebase-key.json` 오류 | 파일 없음 | 팀원에게 받아 `src/backend/` 에 넣기 |
 | 카메라를 열 수 없습니다 | 웹캠 미연결 또는 다른 앱 사용 중 | 웹캠 연결 확인, 다른 앱 종료 |
 | 데이터가 대시보드에 안 보임 | 백엔드 서버 미실행 | 터미널 1(백엔드)이 실행 중인지 확인 |

@@ -4,4 +4,4 @@ __pycache__/
 .env
 src/asset/
 src/Setting_Guide.md
-firebase-key.json
+# firebase-key.json
