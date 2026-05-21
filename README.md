@@ -48,12 +48,12 @@ Capstone-team-project
 │   ├── 📂 ai/            # 커스텀 모델 학습 · 추론 코드, 데이터 전처리 스크립트
 │   ├── 📂 asset/         # 런타임 산출물 (crops 등)
 │   ├── 📂 test/          # 단위/통합 테스트
-│   ├── main.py           # 현재 PoC 통합 진입점 (모션 → YOLO → 멀티모달 API)
-│   └── Setting_Guide.md  # venv & 패키지 설치 가이드
+│   └── main.py           # 현재 PoC 통합 진입점 (모션 → YOLO → 멀티모달 API)
 ├── 📂 doc/               # 회의록, 기획서, 선행연구 PDF
 │   ├── Meeting_Minutes/  # 회의록 01~04
 │   └── Original_Ideas/   # 최초 개인별 아이디어 제안서
 ├── yolov8n.pt            # YOLOv8 nano 가중치
+├── RUN_GUIDE.md          # 세팅 & 실행 통합 가이드
 ├── requirements.txt
 ├── LICENSE
 └── README.md
@@ -154,7 +154,7 @@ sequenceDiagram
 
 ## 🚀 개발 환경 셋업 (Setup)
 
-> 자세한 단계는 [src/Setting_Guide.md](src/Setting_Guide.md) 참조.
+> 자세한 단계는 [RUN_GUIDE.md](RUN_GUIDE.md) 참조.
 
 ```powershell
 # 1) Python 3.11.9 설치 (PATH 추가 필수)
@@ -246,7 +246,7 @@ python src/main.py
 
 ## 🖼️ 청사진 (Blueprint)
 
-![Blueprint](src/asset/Blueprint.jpg)
+![Blueprint](Blueprint.jpg)
 
 
 ---
