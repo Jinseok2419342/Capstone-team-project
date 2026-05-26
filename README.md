@@ -12,7 +12,7 @@
 
 | 구분 | 링크 |
 |------|------|
-| 🎬 현 상황 데모 | [Google Drive 영상](https://drive.google.com/file/d/1jm0rw15vPh_qfNWp1wrNx_rkewdpraTZ/view?usp=sharing) |
+| 🎬 현 상황 데모 | [Google Drive 영상](https://drive.google.com/file/d/1U8NY72xnIXy5uuaNiOrCIeiE2gXzfgE1/view?usp=sharing) |
 | 🚀 다른 PC 실행 가이드 | [RUN_GUIDE.md](RUN_GUIDE.md) |
 | 📝 팀 프로젝트 기획서 (최신) | [doc/팀 프로젝트기획서.pdf](doc/%ED%8C%80%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EA%B8%B0%ED%9A%8D%EC%84%9C.pdf) |
 | 🧠 핵심 개념 증명 | [doc/01 캡스톤 개념 증명.pdf](doc/01%20%EC%BA%A1%EC%8A%A4%ED%86%A4%20%EA%B0%9C%EB%85%90%20%EC%A6%9D%EB%AA%85.pdf) |
