@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import smtplib
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
@@ -11,6 +12,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from dotenv import load_dotenv
 from pydantic import BaseModel, ConfigDict, Field
+
+from .email_notify import send_status_email, smtp_configured
 
 try:
     import firebase_admin
@@ -283,11 +286,10 @@ def save_item(item: LostItem):
     return {"message": "저장 완료", "id": item_id, "storage": _storage_mode()}
 
 
-@app.get("/items")
-def get_items(
-    category: str | None = Query(default=None),
-    include_processed: bool = Query(default=False),
-):
+def _list_public_items(
+    category: str | None = None,
+    include_processed: bool = False,
+) -> list[dict[str, Any]]:
     if db is not None:
         docs = db.collection("lost_items").stream()
         raw_items = [(doc.id, doc.to_dict()) for doc in docs]
@@ -305,6 +307,37 @@ def get_items(
 
     result.sort(key=lambda row: row.get("detected_at") or "", reverse=True)
     return result
+
+
+@app.get("/items")
+def get_items(
+    category: str | None = Query(default=None),
+    include_processed: bool = Query(default=False),
+):
+    return _list_public_items(category=category, include_processed=include_processed)
+
+
+@app.post("/notify/status-email")
+def notify_status_email():
+    if not smtp_configured():
+        raise HTTPException(
+            status_code=503,
+            detail="이메일 설정이 완료되지 않았습니다. .env에 SMTP_HOST, SMTP_USER, SMTP_PASSWORD, ADMIN_EMAIL을 설정하세요.",
+        )
+
+    items = _list_public_items()
+    try:
+        recipient = send_status_email(items)
+    except ValueError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except smtplib.SMTPException as exc:
+        raise HTTPException(status_code=502, detail=f"이메일 전송 실패: {exc}") from exc
+
+    return {
+        "message": "관리자에게 현황 이메일을 보냈습니다.",
+        "recipient": recipient,
+        "item_count": len(items),
+    }
 
 
 @app.post("/items/{item_id}/process")

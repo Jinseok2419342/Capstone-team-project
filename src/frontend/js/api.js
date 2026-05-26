@@ -56,6 +56,22 @@ function getSnapshotUrl() {
   return `${API_BASE}/snapshot?t=${Date.now()}`;
 }
 
+/**
+ * 현재 분실물 현황을 관리자 이메일로 전송
+ * POST /notify/status-email
+ */
+async function sendStatusEmail() {
+  const res = await fetch(`${API_BASE}/notify/status-email`, {
+    method: 'POST',
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    const detail = data.detail || data.message || `API 오류: ${res.status}`;
+    throw new Error(typeof detail === 'string' ? detail : JSON.stringify(detail));
+  }
+  return data;
+}
+
 function resolveApiUrl(path) {
   if (!path) return '';
   if (path.startsWith('http://') || path.startsWith('https://')) return path;
