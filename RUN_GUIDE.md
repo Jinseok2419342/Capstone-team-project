@@ -197,3 +197,4 @@ Firebase 없음:
 2. 터미널 2: python src/main.py --no-ai
 3. 브라우저: src/frontend/index.html 열기
 ```
+

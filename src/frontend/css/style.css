@@ -25,9 +25,29 @@ header h1 {
   font-weight: 600;
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
 #last-updated {
   font-size: 0.8rem;
   color: #aaa;
+}
+
+.btn-email {
+  background: #27ae60;
+}
+
+.btn-email:hover {
+  background: #219a52;
+}
+
+.btn-email:disabled {
+  opacity: 0.7;
+  cursor: wait;
 }
 
 /* ── Main layout ── */

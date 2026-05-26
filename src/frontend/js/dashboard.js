@@ -183,6 +183,28 @@ async function refresh() {
 }
 
 // ── 이벤트 바인딩 ────────────────────────────────────────────────────────────
+document.getElementById('btn-send-email').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-send-email');
+  if (USE_MOCK) {
+    alert('Mock 모드에서는 이메일을 보낼 수 없습니다. 백엔드 연동 후 사용하세요.');
+    return;
+  }
+
+  btn.disabled = true;
+  const originalText = btn.textContent;
+  btn.textContent = '전송 중...';
+  try {
+    const result = await sendStatusEmail();
+    alert(`관리자(${result.recipient})에게 현황 이메일을 보냈습니다.\n(항목 ${result.item_count}건)`);
+  } catch (err) {
+    console.error('이메일 전송 실패:', err);
+    alert(err.message || '이메일 전송 중 오류가 발생했습니다.');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+});
+
 document.getElementById('btn-refresh').addEventListener('click', refresh);
 document.getElementById('btn-refresh-ar').addEventListener('click', refresh);
 document.getElementById('filter-category').addEventListener('change', refresh);
