@@ -1,256 +1,170 @@
-# 분실물 자동 추론 및 시각화 관리 AI 시스템
-### 2026 AI 캡스톤디자인 · 동양미래대학교 · 팀 **상부상조 (2조)**
+# AI 분실물 보관 시스템
 
-> **라즈베리파이 엣지 컴퓨팅 + 하이브리드 AI**(YOLOv8 + Gemini Vision + 로컬 LLM)를 결합해
-> 분실물의 **인식 · 분류 · 폐기 가이드**를 완전 무인으로 자동화하는 시스템.
+고정 웹캠의 장면 변화를 감지해 새 물건을 등록하고, 사라진 물건은 회수 처리하는 캡스톤 프로젝트입니다. 변화가 안정되면 변경 전·후 전체 장면과 변화 영역 확대 이미지를 OpenAI 또는 Gemini의 멀티모달 API가 한 번에 비교하며, 물품 분류에 따라 보관 기한을 자동 부여합니다.
 
-`EDGE × MULTIMODAL × LLM` — 음식물(1일) / 비음식물(30일) / 고가품(6개월) **3-카테고리 자동 분기**
+| 분류 | 예시 | 기본 보관 기한 |
+|---|---|---:|
+| 고가품 | 휴대전화, 노트북, 지갑, 귀금속 | 90일 |
+| 일반 물품 | 우산, 의류, 필기구 | 60일 |
+| 음식 | 도시락, 음료, 부패 가능한 내용물 | 1일 |
 
----
+API 키나 웹캠이 없어도 내장 시연 모드로 전체 관리자 흐름을 보여줄 수 있습니다.
 
-## 📌 빠른 링크 (Quick Links)
+## 1. 가장 빠른 실행법 (Windows PowerShell)
 
-| 구분 | 링크 |
-|------|------|
-| 🎬 현 상황 데모 | [Google Drive 영상](https://drive.google.com/file/d/1U8NY72xnIXy5uuaNiOrCIeiE2gXzfgE1/view?usp=sharing) |
-| 🚀 다른 PC 실행 가이드 | [RUN_GUIDE.md](RUN_GUIDE.md) |
-| 📝 팀 프로젝트 기획서 (최신) | [doc/팀 프로젝트기획서.pdf](doc/%ED%8C%80%20%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8%EA%B8%B0%ED%9A%8D%EC%84%9C.pdf) |
-| 🧠 핵심 개념 증명 | [doc/01 캡스톤 개념 증명.pdf](doc/01%20%EC%BA%A1%EC%8A%A4%ED%86%A4%20%EA%B0%9C%EB%85%90%20%EC%A6%9D%EB%AA%85.pdf) |
-| 💰 API 토큰/비용 예측 | [doc/02 캡스톤 API 토큰 및 가격 예측.pdf](doc/02%20%EC%BA%A1%EC%8A%A4%ED%86%A4%20API%20%ED%86%A0%ED%81%B0%20%EB%B0%8F%20%EA%B0%80%EA%B2%A9%20%EC%98%88%EC%B8%A1.pdf) |
-| 📒 진행사항 보드 (Notion) | [바로가기](https://www.notion.so/33b2b2979d1880ca8c62d807f22375fb?source=copy_link) |
-| 🗂 회의록 모음 | [doc/Meeting_Minutes/](doc/Meeting_Minutes) |
-
----
-
-## 👥 팀원 및 역할 (Team & Roles)
-
-> 기준: 팀 프로젝트 기획서(2026.05.12 v1.0)의 최신 역할 분담.
-
-| 학번 | 이름 | 역할 | 주요 담당 영역 | 개인 SDL 저장소 |
-|------|------|------|----------------|------------------|
-| 20241499 | **장진석** | **PM / Full-Stack** | 작업 관리 및 코어 작업(OpenCV / AI API 통합), 라즈베리파이 하드웨어 제어 (OpenCV 연동) | [Jinseok2419342/2026-Capstone-SDL](https://github.com/Jinseok2419342/2026-Capstone-SDL) |
-| 20241504 | **김지훈** | **Backend · AI** | FastAPI · Spring 기반 REST API 설계, AWS RDS(MySQL) 연동, 데이터 전처리 파이프라인 및 커스텀 AI 모델 학습 | [seusik1122/ai-capstone](https://github.com/seusik1122/ai-capstone.git) |
-| 20241516 | **권기원** | **Backend** | 하이브리드 AI 추론 최적화(파이프라인 분리 · 임베딩 캐시), AWS 인프라 구성 보조, 사용성(UX) 테스트 주도 | [giwon1115/3-1-ai](https://github.com/giwon1115/3-1-ai) |
-| 20241505 | **고지호** | **Frontend** | HTML · CSS · JS 기반 관리자 대시보드 설계 및 구현, AR-Style 마스킹 필터 렌더링 (Canvas API) | [jiho050718/2026-QA-Capstone](https://github.com/jiho050718/2026-QA-Capstone) |
-
----
-
-## 📂 프로젝트 구조 (Project Structure)
-
-> 기획서 §1.1에서 정의한 디렉토리 정책을 그대로 반영했습니다.
-
-```text
-Capstone-team-project
-├── 📂 src/
-│   ├── 📂 main/          # 카메라 제어, OpenCV 모션 감지 코드 등 (엣지 진입점)
-│   ├── 📂 backend/       # FastAPI · Spring Boot 서버, AWS 연동 코드
-│   ├── 📂 frontend/      # 관리자 대시보드 HTML/CSS/JS
-│   ├── 📂 ai/            # 커스텀 모델 학습 · 추론 코드, 데이터 전처리 스크립트
-│   ├── 📂 asset/         # 런타임 산출물 (crops 등)
-│   ├── 📂 test/          # 단위/통합 테스트
-│   └── main.py           # 현재 PoC 통합 진입점 (모션 → YOLO → 멀티모달 API)
-├── 📂 doc/               # 회의록, 기획서, 선행연구 PDF
-│   ├── Meeting_Minutes/  # 회의록 01~04
-│   └── Original_Ideas/   # 최초 개인별 아이디어 제안서
-├── yolov8n.pt            # YOLOv8 nano 가중치
-├── RUN_GUIDE.md          # 세팅 & 실행 통합 가이드
-├── requirements.txt
-├── LICENSE
-└── README.md
-```
-
-기능 단위 디렉토리 분리 · **Pull Request 기반 코드 리뷰** 운영.
-
----
-
-## 🧭 시스템 아키텍처 (System Architecture)
-
-```mermaid
-flowchart LR
-    subgraph EDGE["🔌 EDGE LAYER — Raspberry Pi 5 (src/main)"]
-        CAM["📷 USB Camera<br/>실시간 스트림"]
-        MOTION["OpenCV<br/>Motion Detection<br/>(Frame Diff)"]
-        YOLO["YOLOv8n<br/>객체 탐지 + Crop"]
-    end
-
-    subgraph AI["🧠 AI PIPELINE (src/ai)"]
-        MM["Gemini Vision API<br/>(물체명 + 부패도)"]
-        LITE["Local LLM<br/>Gemma 4 E2B (INT4)<br/>3-카테고리 분류"]
-        CUSTOM["커스텀 CNN<br/>신선도 / 고가품"]
-        CACHE["임베딩 캐시<br/>(중복 호출 차단)"]
-    end
-
-    subgraph SRV["🗄️ BACKEND (src/backend)"]
-        API["FastAPI · Spring<br/>REST API"]
-        DB[("AWS RDS<br/>MySQL")]
-        SCH["Scheduler<br/>일일/월간 알림"]
-        MAIL["관리자 이메일"]
-    end
-
-    subgraph FE["🖥️ FRONTEND (src/frontend)"]
-        DASH["관리자 대시보드"]
-        VIS["AR 마스킹<br/>(Canvas API)"]
-    end
-
-    CAM --> MOTION --> YOLO -->|crop| MM
-    YOLO -.유사도 매칭.-> CACHE
-    CACHE -.캐시 hit.-> LITE
-    MM --> CUSTOM --> LITE
-    LITE -->|물체명·카테고리·좌표| API
-    API <--> DB
-    SCH --> DB
-    SCH --> MAIL
-    API --> DASH
-    DB --> VIS
-    DASH --> VIS
-```
-
----
-
-## 🔁 처리 파이프라인 (5-Step Flow · 기획서 §1.5)
-
-```mermaid
-sequenceDiagram
-    participant U as 👤 사용자
-    participant Pi as 🔌 Raspberry Pi 5
-    participant Y as 🧩 YOLOv8n
-    participant MM as 🤖 Gemini Vision
-    participant L as 🪶 Gemma 4 E2B
-    participant DB as 🗄️ AWS RDS
-    participant A as 👨‍💼 관리자
-
-    U->>Pi: 분실물을 바구니에 거치
-    Pi->>Pi: OpenCV 모션 감지 → 2초 안정화
-    Pi->>Y: 안정화 프레임 전달
-    Y->>Y: 신규 객체 판별 (IoU/임베딩)
-    Y->>MM: 크롭 이미지 전송
-    MM-->>Y: "에어팟 프로", 부패도 라벨
-    Y->>L: 카테고리 분류 요청
-    L-->>Y: 음식물(1일) / 비음식물(30일) / 고가품(6개월)
-    Y->>DB: 이름·카테고리·시간·좌표·이미지경로 저장
-    Note over DB,A: 스케줄러가 폐기 기한 도래 시 자동 트리거
-    DB->>A: 이메일 + AR 빨간 마스킹 가이드
-    A->>DASH: 관리자 대시보드 확인
-```
-
----
-
-## 🛠️ 기술 스택 (Tech Stack · 기획서 §2.5 + 회의록 02 확정)
-
-| Layer | 사용 기술 |
-|-------|-----------|
-| **HW · Edge** | Raspberry Pi 5, USB Camera, Python 3.11.9 |
-| **CV / Detection** | OpenCV, YOLOv8 (`yolov8n.pt`, Ultralytics) |
-| **Multimodal AI** | **Gemini Vision API** (메인) / GPT-4o (PoC 단계 대안) |
-| **Light LLM** | **Gemma 4 E2B** 로컬 (Raspberry Pi 5 · 4GB RAM · INT4, 7.6 tokens/sec 실측) |
-| **커스텀 모델** | CNN — 신선도 / 고가품 분류 (Roboflow Universe + Kaggle Fresh-vs-Rotten Fine-tuning) |
-| **Backend** | **FastAPI** · Spring Boot (검토), Python 3.11.9 |
-| **Database** | **AWS RDS (MySQL)** — 회의록 02에서 확정 |
-| **Cloud / Infra** | AWS (RDS · S3 · Budgets 알람), Oracle Free Tier 이주 옵션 |
-| **Frontend** | Vanilla JS (+ React 검토), **Canvas API** (`drawRect` + `globalAlpha`로 AR 마스킹) |
-| **Dev / Collab** | GitHub (PR 리뷰), Notion, GitHub Copilot, Claude / Cursor (개발 보조) |
-
----
-
-## 🚀 개발 환경 셋업 (Setup)
-
-> 자세한 단계는 [RUN_GUIDE.md](RUN_GUIDE.md) 참조.
+Python 3.11 이상을 설치한 다음 이 폴더에서 실행합니다.
 
 ```powershell
-# 1) Python 3.11.9 설치 (PATH 추가 필수)
-# 2) 가상환경 생성 & 활성화
-python -m venv venv
-venv\Scripts\activate              # Windows
-# source venv/bin/activate         # macOS / Linux
-
-# 3) 의존성 설치
-python -m pip install -r requirements.txt
-
-# 4) PoC 실행 (모션 감지 → YOLO → 멀티모달 API)
-python src/main.py
+.\setup.ps1
+.\start.ps1
 ```
 
-> `.env` 파일을 프로젝트 루트에 두고 멀티모달 API 키를 설정하세요.
+브라우저에서 <http://127.0.0.1:8000>을 엽니다. PowerShell 실행 정책 때문에 스크립트 실행이 차단되면 아래 명령으로 동일하게 실행할 수 있습니다.
 
----
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+Copy-Item .env.example .env
+.\.venv\Scripts\python.exe run.py
+```
 
-## 🎯 정량 목표 & 기대효과 (기획서 §1.6)
+메일 중복 방지는 단일 서버 프로세스를 기준으로 설계되어 있습니다. 제공된 `start.ps1` 또는 `run.py`로 실행하고, `uvicorn --workers 2`처럼 여러 worker를 띄우지 마세요.
 
-| 지표 | 목표값 |
-|------|--------|
-| 커스텀 CNN 분류 정확도 (신선도 · 고가품) | **≥ 85 %** |
-| 물체 감지 → DB 저장 처리 시간 | **≤ 10 초** |
-| 임베딩 캐시 적용 시 멀티모달 API 호출 절감 | **≥ 30 %** |
-| 1학기말까지 핵심 기능 데모 프로토타입 | **완성** |
+### Raspberry Pi 4 + 카메라 모듈
 
-**정성 효과** : ① 관리 효율 (수기 입력 제거) · ② 위생 강화 (음식물 신속 처리) · ③ 실무 풀스택 협업 경험.
+Raspberry Pi OS 설치부터 CSI 카메라 연결, 자동 시작, 노트북과 다른 네트워크에서도 접속하는 Tailscale 방식, 인터넷이 전혀 없을 때 쓰는 `ReFound-Demo` 전용 Wi-Fi까지 [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md)에 한 단계씩 정리되어 있습니다.
 
----
+설치와 Tailscale 설정을 이미 끝냈다면 [Android 핫스팟 학교 시연 운영 가이드](docs/guides/SCHOOL_DEMO_GUIDE.md)에서 지금 상태에 이어 핫스팟 저장, 냉간 부팅 리허설, 발표 당일 순서와 OpenAI/Gemini 전환 방법만 따라가면 됩니다.
 
-## 🧪 핵심 개념 증명 (Proof of Concept)
+핫스팟을 미리 저장하지 못한 상태로 학교에 가더라도 별도 모니터와 USB 키보드가 있다면 [Pi 모니터·키보드 현장 Wi-Fi 연결 가이드](docs/guides/PI_MONITOR_WIFI_GUIDE.md)를 따라 현장에서 직접 로그인하고 연결할 수 있습니다.
 
-- 640×480 저해상도 + Gaussian 인공 노이즈 환경에서 크롭 후 각각 **158×135 / 180×149** 해상도까지 떨어진 이미지로도 **Gemini가 정답 분류**(`earbuds case`, `power adapter`)에 성공.
-- 비용 예측 (양 변 384px 이하 · ≈ 373 tokens/호출):
-  - Gemini 3.1 Pro : **$0.000736 / 호출** → 1,000회 ≈ 1,107원
-  - Gemini 3 Flash : $0.000184 / 호출
-  - Gemini 3.1 Flash-Lite : $0.000092 / 호출
-- 자세한 수치는 [doc/02 캡스톤 API 토큰 및 가격 예측.pdf](doc/02%20%EC%BA%A1%EC%8A%A4%ED%86%A4%20API%20%ED%86%A0%ED%81%B0%20%EB%B0%8F%20%EA%B0%80%EA%B2%A9%20%EC%98%88%EC%B8%A1.pdf) 참조.
+- 평상시와 학교 시연의 기본 경로: **Tailscale** — Pi와 노트북이 서로 다른 Wi-Fi에 연결되어도 양쪽에 인터넷만 있으면 접속할 수 있습니다.
+- 인터넷도 확신할 수 없는 경우: **Pi 오프라인 핫스팟** — 노트북을 Pi가 만든 Wi-Fi에 직접 연결해 `http://10.42.0.1:8000`을 엽니다. 이때 웹과 로컬 감지는 동작하지만 OpenAI/Gemini와 메일은 인터넷이 없어 사용할 수 없습니다.
+- 공유기 포트포워딩으로 8000번 포트를 인터넷에 직접 공개하지 마세요. 현재 앱은 단일 관리자 캡스톤 시연을 전제로 하며 자체 로그인 기능은 없습니다.
 
----
+## 2. 시연 전 권장 설정
 
-## 🗓️ 추진 일정 (Gantt · 14주 · 기획서 §3.1)
+1. 웹캠을 삼각대나 모니터에 단단히 고정하고, 물건을 놓는 영역이 화면 중앙에 오게 합니다.
+2. 관리자 웹의 **설정**에서 카메라 번호를 확인하고, 픽셀 변화 민감도는 우선 권장 범위인 `18~28`로 둡니다.
+3. 사람이 화면 밖으로 완전히 빠진 뒤 장면이 안정되도록 `감지 후 대기`를 3~5초로 둡니다.
+4. 감시 구역에서 기존 물건을 **완전히 모두 치운 뒤** 화면의 **기준 장면 다시 잡기**를 누릅니다. 처음 기준선에 남아 있던 물건은 나중에 사라질 때 오인될 수 있습니다.
+5. 물건을 한 번에 하나만 놓고 손과 몸이 화면 밖으로 완전히 빠지게 합니다. 움직임 → 안정화 → 전체 장면과 변화 영역 AI 비교 → 등록 순서로 처리됩니다.
+6. **보관 물품**에서 이름과 상태를 확인합니다. AI 판단이 불확실하거나 최소 확신도보다 낮아도 기록은 사라지지 않고 `확인 필요한 새 물품`으로 남으므로 관리자가 상세 화면에서 확인할 수 있습니다.
+7. 카메라를 건드리지 않은 채 같은 물건을 완전히 치우고 화면 밖으로 나옵니다. 저장된 위치와 전후 장면을 비교해 회수 상태로 전환됩니다. 물건을 옆으로 조금 밀면 새 물건을 만들지 않고 기존 ID의 추적 위치를 갱신합니다.
 
-| Phase | 기간 | 주요 산출물 |
-|-------|------|-------------|
-| **P1** 기획 · 개념 검증 | 3–5주 | 아이디어 제안서, 개념증명 문서 (**M1**) |
-| **P2** 환경 구축 · 핵심 파이프라인 | 5–9주 | 데이터 검토, 전처리, `main.py` 통합 (**M2** — 카메라→API 끊김없는 동작) |
-| **P3** 데이터 학습 · DB 통합 | 9–12주 | RDS · FastAPI · 카테고리 분류 · 관리자 페이지 (**M3** — DB 자동 누적 + 실시간 조회) |
-| **P4** 프로토타입 통합 · 테스트 | 12–14주 | AR 마스킹, 알림, 유저 테스트, 데모 (**M4**) |
+발표 장소의 카메라 권한이나 네트워크가 불안정할 수 있으므로, 발표 직전에는 **시연 물품 추가** 버튼으로 `스마트폰(90일) → 샌드위치(1일) → 우산(60일)`이 정상 표시되는지도 확인하세요. 이 흐름은 인터넷 없이 동작합니다.
 
----
+## 3. 멀티모달 AI 연결
 
-## 🧩 핵심 과제와 해결 전략
+`.env`에서 한 가지 이상을 설정합니다. 둘 다 설정하고 공급자를 `자동 선택`으로 두면 OpenAI를 우선 시도하고 실패 시 Gemini를 사용합니다.
 
-| 이슈 | 해결 전략 (기획서 §4.2 · 회의록 종합) |
-|------|----------------------------------------|
-| **Occlusion** (물건 겹침) | 단기: Confidence Score 튜닝 + 다중 박스 / 중장기: 라파 스피커·LED 능동 유도 |
-| **회수 / 위치 변경 감지** | IoU + 임베딩 코사인 유사도 기반 Re-Identification, DB 상태 `회수됨` 자동 갱신 |
-| **API 비용 폭증** | 이미지=고성능 API / 텍스트=Lite LLM 파이프라인 분리, 임베딩 유사도 캐시로 중복 호출 차단 (Pro/Flash/Flash-Lite 자동 전환 시 60–70 % 절감 목표) |
-| **AWS 비용 만료** | 팀원 프리티어 계정 순환, Oracle Cloud Free Tier 이주 옵션 (회의록 02) |
-| **신선도 라벨링 비용** | Kaggle Fresh-vs-Rotten은 **API 위임**으로 결정 (라벨링 비용 회피) |
+```dotenv
+OPENAI_API_KEY=여기에_키
+GEMINI_API_KEY=여기에_키
+```
 
----
+키를 바꾼 뒤에는 서버를 재시작합니다. 분석 요청 한 번에 ① 변경 전 전체 장면, ② 변경 후 전체 장면을 저해상도 문맥 이미지로, ③ 변화 영역의 변경 전·후 확대 이미지를 고해상도 세부 이미지로 함께 보냅니다. 전체 장면은 물건의 위치와 추가·제거 방향을 판단하고, 확대 이미지는 종류와 특징을 식별하는 데 사용합니다.
 
-## 📚 데이터셋 (기획서 §2.4)
+원격 AI가 `added`로 판단하고 설정한 최소 확신도(기본 50%)를 넘으면 이름과 분류를 확정합니다. `uncertain` 또는 낮은 확신도의 결과도 감지 기록 유실을 막기 위해 삭제하지 않고 `확인 필요한 새 물품`으로 보존합니다. 키가 없거나 API 요청이 실패한 경우에도 같은 방식으로 관리자 확인 대상으로 남습니다.
 
-| 출처 | 용도 | 비고 |
-|------|------|------|
-| **MS COCO 2017** (118K / 80 cls) | YOLOv8 사전학습 | 일반 물품 즉시 탐지 |
-| **Roboflow Universe** | YOLOv8 Fine-tuning | 에어팟·지갑 등 고가품 보강 |
-| **Fresh vs Rotten** (Kaggle / Hugging Face, ~13K) | 신선도 판별 | 박스 어노테이션 부재 → **Gemini API 위임** |
+- OpenAI 모델·이미지 입력: <https://developers.openai.com/api/docs/models>
+- Gemini 모델·이미지 입력: <https://ai.google.dev/gemini-api/docs/models>
 
-**전처리 5단계** (회의록 04 합의) : 리사이징·정규화(224/256) → 라벨 노이즈 제거 → 데이터 증강(Albumentations) → 클래스 불균형 처리 → Train/Val/Test 분할(8:1:1 또는 7:2:1).
+기본 모델은 짧은 물품 분류의 비용과 응답 속도를 고려해 OpenAI `gpt-5.6-luna`, Gemini `gemini-3.5-flash-lite`로 지정되어 있습니다. 모델 ID는 관리자 설정에서 바꿀 수 있습니다.
 
----
+## 4. 기한 메일 연결
 
-## 🗂️ 회의록 요약 (doc/Meeting_Minutes)
+관리자 웹 **설정**에 SMTP 서버, 포트, 발신 계정, 관리자 수신 메일을 입력하고 `.env`에 비밀번호를 둡니다.
 
-| # | 일자 | 결정사항 |
-|---|------|----------|
-| [01](doc/Meeting_Minutes) | 2026.03.24 | 역할 분담 1차 — PM/FullStack, Backend×2, Frontend 확정 |
-| [02](doc/Meeting_Minutes) | 2026.03.31 | **DB 솔루션 = AWS** 확정 (RDS/MySQL), Budgets 알람 우선 설정 |
-| [03](doc/Meeting_Minutes) | 2026.04.07 | 커스텀 학습 단계 도입 결정 (고가품 분류 + 음식 부패도 모델) |
-| [04](doc/Meeting_Minutes) | 2026.04.14 | 전처리 파이프라인 합의 (리사이즈/증강 우선, 라벨 노이즈는 분담 진행) |
+```dotenv
+SMTP_PASSWORD=메일_앱_비밀번호
+```
 
----
+Gmail 기준 서버는 `smtp.gmail.com`, 포트는 `587`, TLS는 켬입니다. Google 계정의 일반 비밀번호 대신 2단계 인증에서 만든 앱 비밀번호를 사용하세요. 설정 화면의 **테스트 메일 보내기**로 검증할 수 있습니다.
 
-## 🖼️ 청사진 (Blueprint)
+서버는 기한을 주기적으로 확인합니다. 기한이 지나면 물품을 `기한 도래`로 바꾸고 웹 알림을 항상 남기며, SMTP가 완전히 설정된 경우 관리자에게 메일을 한 번 보냅니다.
 
-![Blueprint](Blueprint.jpg)
+## 5. 감지 원리
 
+```text
+고정 기준 장면
+    ↓ 미세 평행 이동·회전·초점 변화 보정 후 움직임 감지
+사람이 빠질 때까지 대기 + 장면 안정 확인
+    ↓ 이전 안정 장면과 차이 영역 계산
+전체 장면 전·후(low detail) + 변화 영역 전·후(high detail)를 한 AI 요청으로 비교
+    ├ 기존 물품과 일치 → 이동이면 위치 갱신, 실제 소실이면 회수
+    └ 새 물품 → 이름·분류·기한 확정 (불확실하면 관리자 확인 대상으로 보존)
+```
 
----
+최대 약 24px의 특징 기반 이동, 약한 회전·초점 변화를 기준 좌표에 맞춘 뒤 비교합니다. 등록 당시 물체와 빈 배경의 외곽 증거도 함께 사용하므로 휴대전화 화면이 켜지는 변화는 회수로 처리하지 않습니다. 24px보다 크게 카메라가 옮겨졌거나 각도가 크게 바뀌면 빈 구역에서 기준 장면을 다시 잡으세요. 화면 가장자리 약 4%는 렌즈·노출 오검출 방지를 위해 신규 물품 감지를 보수적으로 처리하므로 물건은 중앙 감시 영역에 놓는 것이 좋습니다.
 
-## 📜 License
+## 6. 데이터와 개인정보
 
-This project is licensed under the terms of the [LICENSE](LICENSE) file.
+- SQLite DB: `data/lost_items.db`
+- 감지 이미지: `data/captures/`
+- 초기화 백업: `data/reset-backups/<UTC 시각>/`
+- API 키/SMTP 비밀번호: `.env` (Git에서 제외됨)
+- 개인 정보 보호 모드에서는 실시간 화면을 흐리게 표시할 수 있습니다.
+- OpenAI 또는 Gemini를 사용하면 변화가 감지된 시점의 **전체 카메라 장면 전·후 이미지**와 변화 영역 확대 이미지가 해당 외부 서비스로 전송됩니다. 카메라는 분실물 보관대만 촬영하도록 고정하고 사람, 문서, 모니터, 출입구는 구도에서 제외하세요.
+- 촬영 또는 외부 전송을 즉시 멈춰야 할 때는 **개인정보 보호 모드**를 켭니다.
+
+기본 서버 주소는 같은 컴퓨터에서만 접속 가능한 `127.0.0.1`입니다. 교내망 공개가 필요하면 `.env`의 `HOST=0.0.0.0`으로 바꾸되, 실제 운영 전에는 로그인·HTTPS·방화벽을 추가하세요.
+
+새 시연을 준비할 때는 먼저 **카메라 감시 구역의 물건을 모두 치운 뒤** **설정 → 시스템 → 운영 데이터 초기화**를 사용합니다. 시스템은 먼저 SQLite와 캡처 이미지를 위 백업 폴더에 저장한 다음 물품·활동·알림·캡처만 비우고 현재 빈 화면을 새 기준으로 잡습니다. 카메라·AI·메일 설정과 `.env`는 유지되며, 경고 확인 후 `초기화`를 직접 입력해야 실행됩니다. 물건을 남긴 채 초기화하면 그 물건이 기준 화면의 일부가 되어 나중에 치울 때 오인될 수 있습니다.
+
+## 7. 프로젝트 구조
+
+```text
+app/                    FastAPI 서버, 저장소, AI·카메라·감지 로직
+static/                 관리자 화면 JavaScript·CSS
+templates/              관리자 화면 HTML
+tests/                  API·저장소·서비스·영상 처리 자동 테스트
+scripts/raspberry-pi/   Pi 설치, 서비스, 네트워크, 배포 스크립트
+docs/                   설치·시연 가이드, 발표·캡스톤 문서
+data/                   SQLite DB와 감지 이미지(실행 중 생성, Git 제외)
+dist/                   Pi 배포 압축 파일(생성 산출물, Git 제외)
+run.py                  애플리케이션 진입점
+```
+
+`app/main.py`가 API와 서비스 수명 주기를 조정하고, `store.py`는 SQLite, `vision.py`는 장면 변화와 물체 추적, `ai.py`는 OpenAI/Gemini 분류, `notifier.py`는 만료 알림을 담당합니다.
+
+## 8. 테스트
+
+개발·테스트 의존성을 설치합니다.
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+```
+
+```powershell
+.\.venv\Scripts\python.exe -m pytest
+```
+
+서버 실행 후 상태 확인:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8000/api/health
+```
+
+자동 테스트는 저장소, API, 합성 카메라 장면, AI/메일 실패 처리를 검증합니다. 발표 전에는 실제 환경에서 아래 3가지를 한 번씩 별도로 확인하세요.
+
+1. 사용할 웹캠으로 빈 기준 화면을 잡은 뒤 물건 추가와 회수가 각각 감지되는지
+2. 설정한 OpenAI/Gemini 키로 실제 물품 이름이 표시되고, 일부러 가리킨 물품은 `확인 필요한 새 물품`으로 보존되는지
+3. **테스트 메일 보내기**로 관리자 주소에 메일이 도착하는지
+
+## 9. 문제 해결
+
+- **카메라 대신 시연 화면이 나옴**: Windows 설정에서 데스크톱 앱의 카메라 권한을 허용하고, Zoom/Teams처럼 카메라를 점유한 앱을 닫습니다. 설정의 카메라 번호를 0, 1 순서로 바꿔 봅니다.
+- **물건이 바로 등록되지 않음**: 손과 사람이 빠진 뒤 `감지 후 대기 + 안정 확인` 시간이 지나야 분석됩니다. 서버 콘솔과 활동 기록을 확인합니다.
+- **등록은 됐지만 ‘확인 필요한 새 물품’으로 표시됨**: AI가 종류 또는 추가 방향을 확실히 판단하지 못했거나 최소 확신도보다 낮은 경우입니다. 물건을 지우고 다시 놓기보다 상세 화면에서 이름과 분류를 확인·수정하세요.
+- **초기화 뒤 예전 사진이 새 물품에 보임**: 최신 버전은 물품 ID를 재사용하지 않고 이미지 응답 캐시도 금지합니다. 실행 중이던 구버전을 완전히 종료해 다시 시작한 뒤 브라우저에서 `Ctrl+F5`를 한 번 눌러 주세요.
+- **회수·폐기 중 상태 변경 안내가 표시됨**: 상세 화면을 연 뒤 카메라가 먼저 자동 회수한 경우입니다. 화면이 최신 상태로 자동 갱신되며, 다른 처리로 바꾸려면 먼저 보관 목록으로 복원하세요. 같은 작업을 다시 요청하는 것은 안전하게 한 번만 기록됩니다.
+- **치워도 회수되지 않음**: 물건을 일부만 가리거나 옆으로 밀지 말고 화면 밖으로 완전히 치운 뒤 안정화 시간을 기다립니다. 그래도 감지되지 않으면 물건이 없는 상태에서 기준 화면을 다시 잡으세요. 이 수동 작업은 저장된 빈 배경과 확실히 일치하는 기존 물품을 회수 처리할 수 있으므로 먼저 보관 목록을 확인해야 합니다.
+- **오검출이 많음**: 픽셀 변화 민감도를 `18~28`로 되돌리고 조명을 고정한 뒤 빈 구역에서 기준 장면을 다시 잡습니다. 값이 낮을수록 민감하며 `9` 전후는 매우 높은 설정입니다.
+- **카메라 화면 자체가 주기적으로 확대되거나 흐려짐**: 웹캠의 연속 자동초점·자동노출 동작일 수 있습니다. 시스템이 작은 초점 호흡은 보정하지만, 시연 전 Windows 카메라 설정이나 제조사 도구에서 초점을 맞춘 뒤 연속 자동초점/자동노출을 고정하면 가장 안정적입니다. 장치마다 OpenCV 제어 방식이 달라 애플리케이션이 이를 강제로 끄지는 않습니다.
+- **AI가 임시 이름으로 등록함**: 설정 화면의 공급자 상태와 `.env`의 키를 확인하고 서버를 재시작합니다.
+- **메일이 안 옴**: 관리자/발신 주소, SMTP 포트, TLS와 앱 비밀번호를 확인한 뒤 테스트 메일을 보냅니다. 실패 이유는 알림/활동 기록에 남습니다.
+
+API 명세는 서버 실행 중 <http://127.0.0.1:8000/docs>에서 확인할 수 있습니다.
+
+설치·시연 가이드, 발표 자료, 기획 문서는 [문서 목록](docs/README.md)에서 찾을 수 있습니다.

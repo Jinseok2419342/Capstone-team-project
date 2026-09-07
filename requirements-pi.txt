@@ -1,0 +1,8 @@
+fastapi>=0.115,<1.0
+pydantic>=2.9,<3.0
+uvicorn[standard]>=0.30,<1.0
+httpx>=0.27,<1.0
+
+# Raspberry Pi OS provides numpy, OpenCV, libcamera and Picamera2 through apt.
+# install.sh creates the virtual environment with --system-site-packages so
+# these ABI-matched packages are visible without compiling large wheels.
