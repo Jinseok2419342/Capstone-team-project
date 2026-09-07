@@ -1,0 +1,55 @@
+%%{init: {"theme":"base","themeVariables":{"fontFamily":"Pretendard, Noto Sans KR, sans-serif","primaryColor":"#EAF4FF","primaryTextColor":"#111827","primaryBorderColor":"#1687F8","lineColor":"#38BDF8"}}}%%
+erDiagram
+    ITEMS ||--o{ ACTIVITIES : "활동을 남김"
+    ITEMS ||--o{ NOTIFICATIONS : "알림을 예약"
+
+    ITEMS {
+        int id PK
+        string name
+        string description
+        string category "valuable general food"
+        int retention_days
+        datetime detected_at
+        datetime expires_at
+        string status "stored due recovered disposed"
+        datetime recovered_at
+        json bbox_json
+        float confidence
+        string image_path
+        string background_path
+        string provider
+        text ai_raw
+        datetime created_at
+        datetime updated_at
+    }
+
+    ACTIVITIES {
+        int id PK
+        string type
+        string message
+        int item_id FK
+        json metadata_json
+        datetime created_at
+    }
+
+    NOTIFICATIONS {
+        int id PK
+        string type
+        string message
+        int item_id FK
+        string status "pending sent failed"
+        datetime scheduled_for
+        datetime sent_at
+        datetime failed_at
+        string error
+        json metadata_json
+        datetime created_at
+        datetime updated_at
+    }
+
+    SETTINGS {
+        string key PK
+        json value_json
+        datetime updated_at
+    }
+

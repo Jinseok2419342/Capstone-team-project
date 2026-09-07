@@ -1,0 +1,35 @@
+%%{init: {"theme":"base","flowchart":{"curve":"linear"},"themeVariables":{"fontFamily":"Pretendard, Noto Sans KR, sans-serif","primaryColor":"#EAF4FF","primaryTextColor":"#111827","primaryBorderColor":"#1687F8","lineColor":"#38BDF8","secondaryColor":"#F3F4F6","tertiaryColor":"#FFFFFF"}}}%%
+flowchart LR
+    subgraph PI["Raspberry Pi 4 · 2GB · OS Lite"]
+        CAM["CSI 카메라"] --> CAP["Picamera2 입력"]
+        BOOT["systemd 자동 시작"] --> API["FastAPI<br/>서비스 조정"]
+        CAP --> VISION["Local Vision<br/>정렬 · 움직임 · 사건 후보"]
+        VISION --> EVIDENCE["4-image evidence<br/>전체 장면 2 + crop 2"]
+        EVIDENCE --> API
+        API --> CLASSIFIER["ObjectClassifier<br/>멀티모달 분류"]
+        API --> STORE["Store<br/>트랜잭션 · 생명주기"]
+        STORE --> DB[("SQLite · WAL")]
+        API --> FILES[("캡처 이미지")]
+        API --> WEB["관리자 웹<br/>HTML · CSS · JavaScript"]
+        API --> SCHEDULER["ExpirationScheduler"]
+        SCHEDULER --> STORE
+    end
+
+    subgraph EXTERNAL["외부 서비스"]
+        OPENAI["OpenAI Vision API"]
+        GEMINI["Gemini Vision API"]
+        SMTP["SMTP 메일 서버"]
+    end
+
+    subgraph ACCESS["관리자 접속"]
+        ADMIN["관리자 브라우저"]
+        TAILSCALE["Tailscale Serve<br/>사설 HTTPS"]
+        HOTSPOT["ReFound-Demo<br/>오프라인 Wi-Fi"]
+    end
+
+    CLASSIFIER -->|"우선 호출"| OPENAI
+    CLASSIFIER -->|"자동 대체"| GEMINI
+    SCHEDULER -->|"기한 알림"| SMTP
+    ADMIN -->|"일반 운영"| TAILSCALE --> API
+    ADMIN -. "인터넷 장애 시" .-> HOTSPOT --> API
+

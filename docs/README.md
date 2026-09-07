@@ -14,5 +14,6 @@
 - [브라우저용 발표 화면](presentation/PRESENTATION.html)
 - [초기 시스템 구성도](presentation/Blueprint.jpg)
 - [발표 이미지 준비 목록](presentation/assets/README.md)
+- [발표용 Mermaid 다이어그램](presentation/diagrams/README.md)
 
 나머지 PDF·HWP 파일과 `Meeting_Minutes`, `Original_Ideas` 폴더는 팀 프로젝트의 기획·보고·회의 기록 원본입니다.

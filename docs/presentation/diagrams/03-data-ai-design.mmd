@@ -1,0 +1,38 @@
+%%{init: {"theme":"base","flowchart":{"curve":"linear"},"themeVariables":{"fontFamily":"Pretendard, Noto Sans KR, sans-serif","primaryColor":"#EAF4FF","primaryTextColor":"#111827","primaryBorderColor":"#1687F8","lineColor":"#38BDF8","secondaryColor":"#F3F4F6","tertiaryColor":"#FFFFFF"}}}%%
+flowchart TB
+    FRAME["카메라 프레임"] --> WARMUP["카메라 준비 · 기준 장면"]
+    WARMUP --> ALIGN["특징점 정렬<br/>미세 이동 · 회전 보정"]
+    ALIGN --> PHOTO["초점 · 노출 · 그림자 보정"]
+    PHOTO --> MOTION["움직임 판정"]
+    MOTION --> SETTLE["사람이 빠진 뒤 안정화 대기"]
+    SETTLE --> CHANGE["변화 영역 병합 · 경계 상자 생성"]
+    CHANGE --> LOCAL{"Local Vision 사건"}
+
+    LOCAL -->|"moved"| SAMEID["동일 ID 위치 갱신<br/>외부 AI 호출 없음"]
+    LOCAL -->|"removed"| RECOVER["저장된 빈 배경과 비교<br/>확실하면 회수"]
+    LOCAL -->|"verify_removed"| VERIFY["모호한 회수 후보"]
+    LOCAL -->|"added"| SAVEFIRST["provisional 선저장"]
+
+    SAVEFIRST --> PACK["AI 입력 구성<br/>장면 전·후 low detail<br/>crop 전·후 high detail"]
+    VERIFY --> PACK
+    PACK --> SELECT{"공급자 선택"}
+    SELECT -->|"자동 선택 1순위"| OPENAI["OpenAI Responses API"]
+    SELECT -->|"자동 대체"| GEMINI["Gemini generateContent API"]
+    SELECT -->|"키 없음 · 호출 실패"| OFFLINE["offline 결과"]
+
+    OPENAI --> JSON["구조화 결과<br/>action: added · removed · uncertain<br/>name · description · category<br/>value · confidence"]
+    GEMINI --> JSON
+    JSON --> VALIDATE{"결과 검증"}
+    VALIDATE -->|"added · 확신도 충족"| CONFIRMED["분류 확정<br/>valuable · general · food"]
+    VALIDATE -->|"removed · 확신도 충족"| RECOVERYCONFIRM["회수 확정"]
+    VALIDATE -->|"불일치 · 낮은 확신도"| REVIEW["기록 유지<br/>관리자 확인 요청"]
+    OFFLINE --> REVIEW
+
+    CONFIRMED --> RETENTION["기한 계산<br/>90일 · 60일 · 1일"]
+    SAMEID --> SQLITE[("SQLite")]
+    RECOVER --> SQLITE
+    RECOVERYCONFIRM --> SQLITE
+    RETENTION --> SQLITE
+    REVIEW --> SQLITE
+    SQLITE -. "파일 경로 참조" .-> EVIDENCE[("scene/crop JPEG")]
+    SQLITE --> ACTIVITY["활동 · 알림 · 대시보드"]

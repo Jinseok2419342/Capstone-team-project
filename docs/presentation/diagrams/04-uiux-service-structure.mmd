@@ -1,0 +1,52 @@
+%%{init: {"theme":"base","flowchart":{"curve":"linear"},"themeVariables":{"fontFamily":"Pretendard, Noto Sans KR, sans-serif","primaryColor":"#EAF4FF","primaryTextColor":"#111827","primaryBorderColor":"#1687F8","lineColor":"#38BDF8","secondaryColor":"#F3F4F6","tertiaryColor":"#FFFFFF"}}}%%
+flowchart TB
+    ADMIN["관리자"] --> ACCESS["사설 HTTPS · 로컬 접속 · 오프라인 Wi-Fi"]
+    ACCESS --> SHELL["반응형 관리자 웹<br/>사이드바 + 모바일 하단 메뉴"]
+
+    subgraph VIEWS["사용자 화면"]
+        direction LR
+        DASH["개요<br/>보관 수 · 기한 · 최근 활동 · AI 상태"]
+        ITEMS["보관 물품<br/>검색 · 상태/분류 필터"]
+        ACTIVITY["활동 기록<br/>감지 · 분류 · 회수 · 오류"]
+        CAMERA["카메라<br/>라이브뷰 · 감지 상태 · 기준 재설정"]
+        SETTINGS["설정<br/>AI · 카메라 · 메일 · 정책 · 시스템"]
+    end
+
+    SHELL --> DASH
+    SHELL --> ITEMS
+    SHELL --> ACTIVITY
+    SHELL --> CAMERA
+    SHELL --> SETTINGS
+
+    ITEMS --> DETAIL["물품 상세 모달<br/>정보 수정 · 회수 · 폐기 · 복원 · 기한 연장"]
+    DASH --> DEMO["빠른 시연 모달<br/>예시 물품 추가 · 자동 회수"]
+    SETTINGS --> CONFIRM["확인 절차<br/>테스트 메일 · 개인정보 보호 · 안전 초기화"]
+
+    subgraph API["FastAPI 서비스"]
+        direction LR
+        DASHAPI["대시보드 API"]
+        ITEMAPI["물품·생명주기 API"]
+        STREAM["MJPEG 카메라 스트림"]
+        SETTINGAPI["설정·유지보수 API"]
+    end
+
+    DASH --> DASHAPI
+    ACTIVITY --> DASHAPI
+    ITEMS --> ITEMAPI
+    DETAIL --> ITEMAPI
+    CAMERA --> STREAM
+    CAMERA --> SETTINGAPI
+    SETTINGS --> SETTINGAPI
+    CONFIRM --> SETTINGAPI
+    DEMO --> ITEMAPI
+
+    DASHAPI --> STORE[("SQLite Store")]
+    ITEMAPI --> STORE
+    STREAM --> VISION["VisionMonitor"]
+    SETTINGAPI --> VISION
+    SETTINGAPI --> NOTIFIER["EmailNotifier"]
+
+    UX1["현재 상태를 한눈에 표시"] -.-> DASH
+    UX2["위험 작업은 확인 후 실행"] -.-> CONFIRM
+    UX3["모든 변경을 활동 기록으로 보존"] -.-> ACTIVITY
+

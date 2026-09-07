@@ -1,6 +1,32 @@
-# AI 분실물 보관 시스템
+# Re:Found — 분실물 자동 추론 및 시각화 관리 AI 시스템
 
-고정 웹캠의 장면 변화를 감지해 새 물건을 등록하고, 사라진 물건은 회수 처리하는 캡스톤 프로젝트입니다. 변화가 안정되면 변경 전·후 전체 장면과 변화 영역 확대 이미지를 OpenAI 또는 Gemini의 멀티모달 API가 한 번에 비교하며, 물품 분류에 따라 보관 기한을 자동 부여합니다.
+### 2026 AI 캡스톤디자인 · 동양미래대학교 인공지능소프트웨어학과 · 상부상조(2조)
+
+| 학번 | 이름 | 역할 | 현재 담당 영역 |
+|---|---|---|---|
+| 20241499 | **장진석** | 팀장 · 시스템 통합 | 기획 및 아키텍처, 로컬 비전·멀티모달 AI·FastAPI·관리자 웹 구현, Raspberry Pi 배포, 테스트 및 문서화 |
+| 20241516 | **권기원** | 팀원 · 개발/시연 지원 | 구현 및 발표 자료 검토, 자료 교정, 시연 준비와 운영 지원 |
+
+> Raspberry Pi 엣지 비전과 멀티모달 AI를 결합해 분실물의 **감지 · 분류 · 보관 · 알림 · 회수**를 하나의 관리자 서비스로 연결합니다.
+
+`EDGE VISION × MULTIMODAL AI × LIFECYCLE MANAGEMENT`
+
+## 프로젝트 개요 및 최종 목표
+
+| 구분 | 현재 기준 내용 |
+|---|---|
+| 프로젝트명 | 분실물 자동 추론 및 시각화 관리 AI 시스템 `Re:Found` |
+| 교과목 | 2026 AI 캡스톤디자인 |
+| 소속 | 동양미래대학교 인공지능소프트웨어학과 |
+| 팀 | 상부상조(2조) |
+| 지도교수 | 강환수 교수 |
+| 최종 산출물 | Raspberry Pi 카메라 장치, FastAPI 서버, 반응형 관리자 웹으로 구성된 통합 프로토타입 |
+
+고정 카메라의 장면 변화를 로컬에서 감지하고, 사건이 안정된 시점에 변경 전·후 전체 장면과 변화 영역 확대 이미지를 OpenAI 또는 Gemini의 멀티모달 API가 함께 비교합니다. 새 물품은 AI가 열린 범주의 이름과 분류를 추론하며, 등록 이후에는 보관 기한·알림·회수·폐기·복원까지 동일한 시스템에서 관리합니다.
+
+이 프로젝트의 최종 목표는 단순한 객체 인식 데모가 아니라, **인식 결과가 실제 분실물 관리 업무의 끝까지 이어지는 실행 가능한 서비스**를 만드는 것입니다. API 키나 카메라를 사용할 수 없는 상황에서도 내장 시연 데이터로 관리자 흐름을 확인할 수 있도록 구성했습니다.
+
+### 보관 분류 정책
 
 | 분류 | 예시 | 기본 보관 기한 |
 |---|---|---:|
@@ -8,9 +34,185 @@
 | 일반 물품 | 우산, 의류, 필기구 | 60일 |
 | 음식 | 도시락, 음료, 부패 가능한 내용물 | 1일 |
 
-API 키나 웹캠이 없어도 내장 시연 모드로 전체 관리자 흐름을 보여줄 수 있습니다.
+`1일 · 60일 · 90일`은 법정 보관 기간이 아니라 현재 프로토타입의 기본 운영 정책입니다. 관리자는 물품별 분류와 만료일을 수정하거나 기한을 연장할 수 있습니다.
 
-## 1. 가장 빠른 실행법 (Windows PowerShell)
+## 빠른 링크
+
+| 구분 | 링크 |
+|---|---|
+| 전체 문서 인덱스 | [docs/README.md](docs/README.md) |
+| 팀 프로젝트 기획서 | [docs/팀 프로젝트기획서.pdf](<docs/팀 프로젝트기획서.pdf>) |
+| 핵심 개념 증명 | [docs/01 캡스톤 개념 증명.pdf](<docs/01 캡스톤 개념 증명.pdf>) |
+| API 토큰·비용 예측 자료 | [docs/02 캡스톤 API 토큰 및 가격 예측.pdf](<docs/02 캡스톤 API 토큰 및 가격 예측.pdf>) |
+| 회의록 | [docs/Meeting_Minutes](docs/Meeting_Minutes) |
+| 현황 발표 원고 | [docs/presentation/PRESENTATION.md](docs/presentation/PRESENTATION.md) |
+| Raspberry Pi 설치·운영 | [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
+| 학교 시연 절차 | [Android 핫스팟 학교 시연 운영 가이드](docs/guides/SCHOOL_DEMO_GUIDE.md) |
+| 발표용 Mermaid 도식 | [도식 목록 및 다운로드 안내](docs/presentation/diagrams/README.md) |
+| Mermaid 원본 묶음 | [refound-mermaid-diagrams.zip](docs/presentation/refound-mermaid-diagrams.zip) |
+
+## 시스템 구성도
+
+```mermaid
+flowchart LR
+    subgraph EDGE["Edge · Raspberry Pi 4"]
+        CAM["CSI Camera<br/>Picamera2"]
+        VISION["OpenCV local vision<br/>stabilization · change · tracking"]
+        EVIDENCE["Event evidence<br/>full before/after + crop before/after"]
+        CAM --> VISION --> EVIDENCE
+    end
+
+    subgraph SERVER["Application · FastAPI"]
+        ORCH["FastAPI API<br/>event orchestrator"]
+        DB[("SQLite WAL<br/>items · activities · notifications · settings")]
+        FILES["Capture files"]
+        NOTIFY["Web notification<br/>SMTP email"]
+    end
+
+    subgraph AI["Multimodal AI"]
+        OPENAI["OpenAI Responses API"]
+        GEMINI["Gemini generateContent"]
+    end
+
+    subgraph CLIENT["Admin service"]
+        WEB["Responsive web UI<br/>Vanilla HTML · CSS · JS"]
+        ACCESS["Local / Tailscale HTTPS<br/>Offline hotspot"]
+    end
+
+    EVIDENCE --> ORCH
+    ORCH -->|classify or verify| OPENAI
+    ORCH -.->|fallback or selection| GEMINI
+    ORCH <--> DB
+    ORCH <--> FILES
+    ORCH --> NOTIFY
+    CAM -->|latest JPEG| ORCH
+    ORCH <-->|JSON · MJPEG| WEB
+    ACCESS --> WEB
+```
+
+평상시 프레임 분석과 사건 후보 생성은 Raspberry Pi 내부에서 수행합니다. 외부 AI에는 모든 프레임이 아니라 변화가 확정된 사건의 전·후 전체 장면과 전·후 확대 영역, 총 4장의 증거 이미지만 요청 단위로 전송합니다.
+
+## 주요 기능 정의 및 구현 현황
+
+| 영역 | 현재 구현 | 상태 |
+|---|---|---|
+| 카메라 입력 | Picamera2/OpenCV 입력, MJPEG 실시간 화면, 합성 시연 카메라 | 구현 |
+| 로컬 사건 감지 | 장면 정합, 움직임·안정화 확인, 변화 영역 산출 | 구현 |
+| 물품 이동 추적 | 동일 물품의 위치 변경 시 새 ID를 만들지 않고 좌표·참조 이미지 갱신 | 구현 |
+| 신규 물품 등록 | AI 응답 전에 임시 레코드를 먼저 저장하고 이후 이름·분류 확정 | 구현 |
+| 멀티모달 분류 | OpenAI 우선, Gemini 선택/대체 사용, 낮은 확신도 보존 | 구현 · 실제 키별 검증 필요 |
+| 생명주기 관리 | 보관, 기한 도래, 회수, 폐기, 복원, 기한 연장 | 구현 |
+| 알림 | 웹 알림과 SMTP 만료 메일 | 구현 · 실제 메일 계정 검증 필요 |
+| 관리자 웹 | 대시보드, 보관 물품, 활동 기록, 카메라, 설정 | 구현 |
+| 배포·접속 | systemd 자동 시작, Tailscale 비공개 HTTPS, 오프라인 핫스팟 | 구현 · 현장 리허설 필요 |
+| 안전장치 | 개인정보 보호 모드, 초기화 전 자동 백업, 중복 작업 방지 | 구현 |
+
+### 핵심 처리 흐름
+
+```mermaid
+sequenceDiagram
+    actor User as 사용자
+    participant Vision as Pi 로컬 비전
+    participant API as FastAPI
+    participant DB as SQLite
+    participant AI as OpenAI / Gemini
+    participant Web as 관리자 웹
+
+    User->>Vision: 물품을 놓고 화면 밖으로 이동
+    Vision->>Vision: 움직임 종료와 장면 안정 확인
+    Vision->>API: added 후보 + 4장 증거
+    API->>DB: 확인 대기 임시 레코드 우선 저장
+    API->>AI: 전체 전·후 + 확대 전·후 비교 요청
+    alt 신뢰 가능한 결과
+        AI-->>API: 이름 · 분류 · 확신도
+        API->>DB: 물품 정보와 만료일 확정
+    else 낮은 확신도 · 오류 · 오프라인
+        API->>DB: 확인 필요한 새 물품으로 보존
+    end
+    DB-->>Web: 목록 · 상태 · 활동 기록 갱신
+```
+
+물품이 화면 안에서 이동한 경우에는 로컬 추적 결과로 기존 ID의 위치를 갱신해 불필요한 외부 호출을 줄입니다. 물품 제거는 저장된 빈 배경과의 일치도가 충분하면 로컬에서 회수 처리하고, 모호한 경우에만 멀티모달 AI 검증을 사용할 수 있습니다.
+
+## 데이터 및 AI 모델 설계
+
+| 항목 | 현재 설계 |
+|---|---|
+| 데이터 입력 | 고정 카메라의 연속 프레임과 사건 시점의 4장 이미지 |
+| 로컬 전처리 | 프레임 정합, 픽셀 차이, 모폴로지 처리, 연결 성분, bounding box, 안정화 |
+| AI 입력 | 전체 장면 전·후는 문맥용 저해상도, crop 전·후는 식별용 고해상도 |
+| AI 출력 | `added` · `removed` · `uncertain`, 물품명, `valuable` · `general` · `food`, 확신도와 근거 |
+| 저장 데이터 | SQLite의 물품·활동·알림·설정과 파일 시스템의 사건 이미지 |
+| 실패 처리 | 키 없음, API 오류, 낮은 확신도에서도 임시 물품을 삭제하지 않고 관리자 확인 대상으로 유지 |
+| 학습 방식 | 별도 커스텀 모델 학습 없이 사전학습 멀티모달 API의 구조화 추론 사용 |
+
+현재 구현에는 별도의 학습·검증·테스트 데이터셋이나 커스텀 CNN이 없습니다. 따라서 자동화 테스트 통과 수치를 AI 분류 정확도로 해석하지 않으며, 모델 성능은 실제 카메라 환경에서 정답 라벨을 가진 사건 데이터셋을 구축한 뒤 별도로 평가해야 합니다.
+
+발표 및 논문용 정량 평가는 다음 지표를 기준으로 수집할 계획입니다.
+
+- 사건 감지 `precision · recall · F1`
+- 고가품·일반·음식 분류 정확도와 혼동행렬
+- 시간당 오검출 수와 불확실 판정 비율
+- 감지부터 DB 반영까지의 `p50 · p95` 지연시간
+- Raspberry Pi의 메모리 사용량, CPU 사용률과 온도
+- OpenAI/Gemini별 정확도·지연시간·요청 비용 비교
+
+## UI/UX 및 서비스 구조
+
+| 화면/기능 | 사용자 목적 | 주요 UX 원칙 |
+|---|---|---|
+| 대시보드 | 실시간 화면, 보관 현황, 만료 예정, 최근 활동 확인 | 한 화면에서 현재 상태 파악 |
+| 보관 물품 | 검색·필터, 상세 확인, 정보 수정, 회수·폐기·복원·연장 | 상태와 가능한 작업을 명확히 분리 |
+| 활동 기록 | 자동 감지와 관리자 작업 이력 확인 | 사건 원인과 결과를 시간순으로 추적 |
+| 카메라 | 실시간 스트림, 기준 장면 재설정, 시연 물품 추가 | 현장 문제를 즉시 복구할 수 있는 직접 피드백 |
+| 설정 | 감지 민감도, 안정화 시간, AI 공급자, SMTP, 시스템 초기화 | 위험 작업 확인과 운영 설정의 중앙화 |
+
+프론트엔드는 별도 빌드 과정이 없는 Vanilla HTML/CSS/JavaScript로 구성했습니다. 데스크톱과 태블릿에서 사용할 수 있는 반응형 관리자 화면이며, 상태 변경과 활동 기록은 같은 데이터베이스 트랜잭션으로 처리해 화면과 이력이 어긋나는 중간 상태를 줄였습니다.
+
+## 초기 계획 대비 현재 변경사항
+
+| 초기 계획 | 현재 구현 | 변경 목적 |
+|---|---|---|
+| Raspberry Pi 5 + USB 카메라 | Raspberry Pi 4 2GB + CSI 카메라 | 실제 보유 장비와 최종 배포 환경에 맞춤 |
+| YOLOv8 + 커스텀 CNN + 로컬 LLM | OpenCV 사건 감지 + OpenAI/Gemini 멀티모달 추론 | 제한된 엣지 자원에서 열린 범주의 물품을 문맥과 함께 판단 |
+| crop 단일 이미지 중심 | 전체 전·후 + crop 전·후 4장 증거 | 추가·제거 방향과 주변 문맥 손실 감소 |
+| AI 결과 수신 후 등록 | 임시 레코드 우선 저장 후 비동기 분류 | API 장애·낮은 확신도에서도 감지 기록 보존 |
+| AWS RDS(MySQL) | 로컬 SQLite WAL + 파일 저장소 | 오프라인 시연과 단일 장치 운영 단순화 |
+| FastAPI와 Spring 병행 검토 | FastAPI 단일 백엔드 | 중복 계층 제거와 Python 비전 파이프라인 통합 |
+| React 검토 | Vanilla HTML/CSS/JavaScript | Pi 배포와 유지보수에 필요한 빌드 복잡도 축소 |
+| 음식 1일 · 비음식 30일 · 고가품 6개월 | 음식 1일 · 일반 60일 · 고가품 90일 | 현재 프로토타입 운영 정책으로 통일 |
+| 외부 공개형 접속 검토 | 로컬 접속 + Tailscale 비공개 HTTPS + 오프라인 핫스팟 | 로그인 기능이 없는 시연 시스템의 노출 범위 제한 |
+
+## 검증 현황과 다음 과제
+
+현재 저장소의 자동화 테스트 **82개**는 API, SQLite 저장소, 서비스 수명 주기, 합성 카메라 장면, AI·메일 실패 처리와 초기화 안전장치를 검증합니다. 이는 소프트웨어 회귀 테스트 결과이며 실제 AI 정확도나 현장 감지율을 의미하지 않습니다.
+
+다음 단계에서 우선 보완할 항목은 아래와 같습니다.
+
+1. 교실 조명, 가림, 겹침, 초점 변화가 포함된 실제 사건 데이터 수집과 정답 라벨링
+2. 동일 데이터에서 OpenAI와 Gemini의 정확도·지연시간·비용 비교
+3. Raspberry Pi 장시간 실행 시 메모리·CPU·온도와 카메라 안정성 측정
+4. 학교 네트워크, Tailscale, 오프라인 핫스팟을 포함한 발표 당일 리허설
+5. 실제 운영으로 확장할 경우 로그인·권한 관리, 촬영 고지, 얼굴·문서 마스킹과 보존 정책 추가
+
+## 발표용 Mermaid 원본
+
+각 `.mmd` 파일은 [Mermaid Live Editor](https://mermaid.live/)에 붙여 넣어 SVG 또는 PNG로 내려받을 수 있습니다.
+
+| 도식 | Mermaid 원본 |
+|---|---|
+| 시스템 구성도 | [01-system-architecture.mmd](docs/presentation/diagrams/01-system-architecture.mmd) |
+| 주요 기능 정의 | [02-core-features.mmd](docs/presentation/diagrams/02-core-features.mmd) |
+| 데이터 및 AI 모델 설계 | [03-data-ai-design.mmd](docs/presentation/diagrams/03-data-ai-design.mmd) |
+| UI/UX 및 서비스 구조 | [04-uiux-service-structure.mmd](docs/presentation/diagrams/04-uiux-service-structure.mmd) |
+| 데이터 모델 | [05-data-model.mmd](docs/presentation/diagrams/05-data-model.mmd) |
+| 전체 도식 한 파일 | [all-diagrams.md](docs/presentation/diagrams/all-diagrams.md) |
+
+---
+
+## 실행 및 운영 가이드
+
+### 1. 가장 빠른 실행법 (Windows PowerShell)
 
 Python 3.11 이상을 설치한 다음 이 폴더에서 실행합니다.
 
@@ -30,7 +232,7 @@ Copy-Item .env.example .env
 
 메일 중복 방지는 단일 서버 프로세스를 기준으로 설계되어 있습니다. 제공된 `start.ps1` 또는 `run.py`로 실행하고, `uvicorn --workers 2`처럼 여러 worker를 띄우지 마세요.
 
-### Raspberry Pi 4 + 카메라 모듈
+#### Raspberry Pi 4 + 카메라 모듈
 
 Raspberry Pi OS 설치부터 CSI 카메라 연결, 자동 시작, 노트북과 다른 네트워크에서도 접속하는 Tailscale 방식, 인터넷이 전혀 없을 때 쓰는 `ReFound-Demo` 전용 Wi-Fi까지 [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md)에 한 단계씩 정리되어 있습니다.
 
@@ -42,7 +244,7 @@ Raspberry Pi OS 설치부터 CSI 카메라 연결, 자동 시작, 노트북과 �
 - 인터넷도 확신할 수 없는 경우: **Pi 오프라인 핫스팟** — 노트북을 Pi가 만든 Wi-Fi에 직접 연결해 `http://10.42.0.1:8000`을 엽니다. 이때 웹과 로컬 감지는 동작하지만 OpenAI/Gemini와 메일은 인터넷이 없어 사용할 수 없습니다.
 - 공유기 포트포워딩으로 8000번 포트를 인터넷에 직접 공개하지 마세요. 현재 앱은 단일 관리자 캡스톤 시연을 전제로 하며 자체 로그인 기능은 없습니다.
 
-## 2. 시연 전 권장 설정
+### 2. 시연 전 권장 설정
 
 1. 웹캠을 삼각대나 모니터에 단단히 고정하고, 물건을 놓는 영역이 화면 중앙에 오게 합니다.
 2. 관리자 웹의 **설정**에서 카메라 번호를 확인하고, 픽셀 변화 민감도는 우선 권장 범위인 `18~28`로 둡니다.
@@ -54,7 +256,7 @@ Raspberry Pi OS 설치부터 CSI 카메라 연결, 자동 시작, 노트북과 �
 
 발표 장소의 카메라 권한이나 네트워크가 불안정할 수 있으므로, 발표 직전에는 **시연 물품 추가** 버튼으로 `스마트폰(90일) → 샌드위치(1일) → 우산(60일)`이 정상 표시되는지도 확인하세요. 이 흐름은 인터넷 없이 동작합니다.
 
-## 3. 멀티모달 AI 연결
+### 3. 멀티모달 AI 연결
 
 `.env`에서 한 가지 이상을 설정합니다. 둘 다 설정하고 공급자를 `자동 선택`으로 두면 OpenAI를 우선 시도하고 실패 시 Gemini를 사용합니다.
 
@@ -72,7 +274,7 @@ GEMINI_API_KEY=여기에_키
 
 기본 모델은 짧은 물품 분류의 비용과 응답 속도를 고려해 OpenAI `gpt-5.6-luna`, Gemini `gemini-3.5-flash-lite`로 지정되어 있습니다. 모델 ID는 관리자 설정에서 바꿀 수 있습니다.
 
-## 4. 기한 메일 연결
+### 4. 기한 메일 연결
 
 관리자 웹 **설정**에 SMTP 서버, 포트, 발신 계정, 관리자 수신 메일을 입력하고 `.env`에 비밀번호를 둡니다.
 
@@ -84,7 +286,7 @@ Gmail 기준 서버는 `smtp.gmail.com`, 포트는 `587`, TLS는 켬입니다. G
 
 서버는 기한을 주기적으로 확인합니다. 기한이 지나면 물품을 `기한 도래`로 바꾸고 웹 알림을 항상 남기며, SMTP가 완전히 설정된 경우 관리자에게 메일을 한 번 보냅니다.
 
-## 5. 감지 원리
+### 5. 감지 원리
 
 ```text
 고정 기준 장면
@@ -98,7 +300,7 @@ Gmail 기준 서버는 `smtp.gmail.com`, 포트는 `587`, TLS는 켬입니다. G
 
 최대 약 24px의 특징 기반 이동, 약한 회전·초점 변화를 기준 좌표에 맞춘 뒤 비교합니다. 등록 당시 물체와 빈 배경의 외곽 증거도 함께 사용하므로 휴대전화 화면이 켜지는 변화는 회수로 처리하지 않습니다. 24px보다 크게 카메라가 옮겨졌거나 각도가 크게 바뀌면 빈 구역에서 기준 장면을 다시 잡으세요. 화면 가장자리 약 4%는 렌즈·노출 오검출 방지를 위해 신규 물품 감지를 보수적으로 처리하므로 물건은 중앙 감시 영역에 놓는 것이 좋습니다.
 
-## 6. 데이터와 개인정보
+### 6. 데이터와 개인정보
 
 - SQLite DB: `data/lost_items.db`
 - 감지 이미지: `data/captures/`
@@ -112,7 +314,7 @@ Gmail 기준 서버는 `smtp.gmail.com`, 포트는 `587`, TLS는 켬입니다. G
 
 새 시연을 준비할 때는 먼저 **카메라 감시 구역의 물건을 모두 치운 뒤** **설정 → 시스템 → 운영 데이터 초기화**를 사용합니다. 시스템은 먼저 SQLite와 캡처 이미지를 위 백업 폴더에 저장한 다음 물품·활동·알림·캡처만 비우고 현재 빈 화면을 새 기준으로 잡습니다. 카메라·AI·메일 설정과 `.env`는 유지되며, 경고 확인 후 `초기화`를 직접 입력해야 실행됩니다. 물건을 남긴 채 초기화하면 그 물건이 기준 화면의 일부가 되어 나중에 치울 때 오인될 수 있습니다.
 
-## 7. 프로젝트 구조
+### 7. 프로젝트 구조
 
 ```text
 app/                    FastAPI 서버, 저장소, AI·카메라·감지 로직
@@ -128,7 +330,7 @@ run.py                  애플리케이션 진입점
 
 `app/main.py`가 API와 서비스 수명 주기를 조정하고, `store.py`는 SQLite, `vision.py`는 장면 변화와 물체 추적, `ai.py`는 OpenAI/Gemini 분류, `notifier.py`는 만료 알림을 담당합니다.
 
-## 8. 테스트
+### 8. 테스트
 
 개발·테스트 의존성을 설치합니다.
 
@@ -152,7 +354,7 @@ Invoke-RestMethod http://127.0.0.1:8000/api/health
 2. 설정한 OpenAI/Gemini 키로 실제 물품 이름이 표시되고, 일부러 가리킨 물품은 `확인 필요한 새 물품`으로 보존되는지
 3. **테스트 메일 보내기**로 관리자 주소에 메일이 도착하는지
 
-## 9. 문제 해결
+### 9. 문제 해결
 
 - **카메라 대신 시연 화면이 나옴**: Windows 설정에서 데스크톱 앱의 카메라 권한을 허용하고, Zoom/Teams처럼 카메라를 점유한 앱을 닫습니다. 설정의 카메라 번호를 0, 1 순서로 바꿔 봅니다.
 - **물건이 바로 등록되지 않음**: 손과 사람이 빠진 뒤 `감지 후 대기 + 안정 확인` 시간이 지나야 분석됩니다. 서버 콘솔과 활동 기록을 확인합니다.
@@ -168,3 +370,7 @@ Invoke-RestMethod http://127.0.0.1:8000/api/health
 API 명세는 서버 실행 중 <http://127.0.0.1:8000/docs>에서 확인할 수 있습니다.
 
 설치·시연 가이드, 발표 자료, 기획 문서는 [문서 목록](docs/README.md)에서 찾을 수 있습니다.
+
+## License
+
+이 프로젝트는 [LICENSE](LICENSE)의 조건에 따라 배포됩니다.

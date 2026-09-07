@@ -1,0 +1,37 @@
+%%{init: {"theme":"base","flowchart":{"curve":"linear"},"themeVariables":{"fontFamily":"Pretendard, Noto Sans KR, sans-serif","primaryColor":"#EAF4FF","primaryTextColor":"#111827","primaryBorderColor":"#1687F8","lineColor":"#38BDF8","secondaryColor":"#F3F4F6","tertiaryColor":"#FFFFFF"}}}%%
+flowchart TB
+    CAMERA["1. 카메라 입력<br/>라이브뷰 · 개인정보 보호"] --> DETECT["2. 안정화와 변화 감지<br/>정렬 · 초점/조명 보정 · 대기"]
+    DETECT --> EVENT{"3. 사건 후보"}
+
+    EVENT -->|"새 물품"| PROVISIONAL["기록 선저장<br/>감지 유실 방지"]
+    PROVISIONAL --> AI["4-image AI 분석<br/>이름 · 특징 · 분류 · 확신도"]
+    AI --> RESULT{"AI 결과"}
+    RESULT -->|"확정"| POLICY["보관 정책 적용<br/>음식 1일 · 일반 60일 · 고가 90일"]
+    RESULT -->|"불확실 · API 장애"| REVIEW["확인 필요한 물품<br/>관리자 검토 대기"]
+
+    EVENT -->|"위치 이동"| MOVE["동일 ID 유지<br/>위치와 기준 이미지 갱신"]
+    EVENT -->|"물품 소실"| REMOVE["배경 복원 확인<br/>확실하면 자동 회수"]
+    EVENT -->|"소실이 모호함"| VERIFY["AI 회수 재검증"]
+    VERIFY -->|"회수 확정"| REMOVE
+    VERIFY -->|"불확실"| REVIEW
+
+    POLICY --> DATA[("물품 · 기한 · 상태 · 활동")]
+    REVIEW --> DATA
+    MOVE --> DATA
+    REMOVE --> DATA
+
+    DATA --> DASHBOARD["관리자 웹<br/>현황 · 목록 · 상세 · 활동"]
+    DASHBOARD --> ACTIONS["관리 작업<br/>수정 · 회수 · 폐기 · 복원 · 연장"]
+    DATA --> EXPIRY["기한 확인<br/>웹 알림 · SMTP 메일"]
+
+    subgraph SUPPORT["운영 지원 기능"]
+        REBASELINE["기준 화면 재설정"]
+        RESET["백업 후 운영 데이터 초기화"]
+        DEMO["인터넷 없이 빠른 시연"]
+        NETWORK["Tailscale · 오프라인 핫스팟"]
+    end
+
+    REBASELINE -.-> DETECT
+    RESET -.-> DATA
+    DEMO -.-> DATA
+    NETWORK -.-> DASHBOARD
