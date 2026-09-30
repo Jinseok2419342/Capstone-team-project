@@ -1,0 +1,1073 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/m90b6t0r",
+    "id": "m90b6t0r",
+    "slide": 10,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kzu5c32t",
+      "id": "7",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "3. 프로젝트 개발 진행 현황",
+      "textPreview": "3. 프로젝트 개발 진행 현황",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "3. 프로젝트 개발 진행 현황"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "3. 프로젝트 개발 진행 현황",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3. 프로젝트 개발 진행 현황",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xc3mho32",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "기능별 구현과 실기 확인 상태",
+      "textPreview": "기능별 구현과 실기 확인 상태",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "기능별 구현과 실기 확인 상태"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "기능별 구현과 실기 확인 상태",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "기능별 구현과 실기 확인 상태",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cbu58j2h",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zelojyl8",
+      "id": "4",
+      "bbox": [
+        64,
+        668,
+        1085,
+        28
+      ],
+      "geometry": "rect",
+      "text": "구현 여부와 현장 확인 수준을 분리함. 미확인은 실패 판정이 아님",
+      "textPreview": "구현 여부와 현장 확인 수준을 분리함. 미확인은 실패 판정이 아님",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "구현 여부와 현장 확인 수준을 분리함. 미확인은 실패 판정이 아님"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "구현 여부와 현장 확인 수준을 분리함. 미확인은 실패 판정이 아님",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "구현 여부와 현장 확인 수준을 분리함. 미확인은 실패 판정이 아님",
+              "fontSize": 16,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ydcnatkn",
+      "id": "5",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "10",
+      "textPreview": "10",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "10"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "10",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "10",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/21cby9on",
+      "id": "8",
+      "bbox": [
+        64,
+        181,
+        1152,
+        432
+      ],
+      "text": "기능 | 코드 상태 | 현재 확인 범위\n카메라 입력·실시간 화면 | 구현 | 촬영 로그 + PC 화면 성공 보고\n추가·이동·제거 처리 | 구현 | 기본 실물 흐름 사용자 성공 보고\n외부 AI 분류·제거 검증 | 구현 | 설정 확인 / 개별 원격 응답 미수집\n편집·기한·폐기·복원 | 구현 | 자동 검사 / 실제 Pi 상세 실기 대기\n웹 알림·SMTP 메일 | 구현 | 모의 검사 / 실제 메일 수신 대기\n시연 초기화·재시작 | 구현 | 초기화 성공 보고 + 재부팅 진단\n친구 노트북·핫스팟 시연 | 준비 중 | 공유 초대 전송 / 접속·무선 부팅 대기",
+      "textPreview": "기능 | 코드 상태 | 현재 확인 범위 | 카메라 입력·실시간 화면 | 구현 | 촬영 로그 + PC 화면 성공 보고 | 추가·이동·제거 처리 | 구현 | 기본 실물 흐름 사용자 성공 보고 | 외부 AI 분류·제거 검증 | 구현 | 설정 확인 / ...",
+      "rows": 8,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            330,
+            54
+          ],
+          "text": "기능",
+          "textPreview": "기능",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "기능",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "기능",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            394,
+            181,
+            175,
+            54
+          ],
+          "text": "코드 상태",
+          "textPreview": "코드 상태",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "코드 상태",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "코드 상태",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            569,
+            181,
+            647,
+            54
+          ],
+          "text": "현재 확인 범위",
+          "textPreview": "현재 확인 범위",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "현재 확인 범위",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "현재 확인 범위",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            235,
+            330,
+            54
+          ],
+          "text": "카메라 입력·실시간 화면",
+          "textPreview": "카메라 입력·실시간 화면",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "카메라 입력·실시간 화면",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "카메라 입력·실시간 화면",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            394,
+            235,
+            175,
+            54
+          ],
+          "text": "구현",
+          "textPreview": "구현",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "구현",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "구현",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            569,
+            235,
+            647,
+            54
+          ],
+          "text": "촬영 로그 + PC 화면 성공 보고",
+          "textPreview": "촬영 로그 + PC 화면 성공 보고",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "촬영 로그 + PC 화면 성공 보고",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "촬영 로그 + PC 화면 성공 보고",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            289,
+            330,
+            54
+          ],
+          "text": "추가·이동·제거 처리",
+          "textPreview": "추가·이동·제거 처리",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "추가·이동·제거 처리",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "추가·이동·제거 처리",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            394,
+            289,
+            175,
+            54
+          ],
+          "text": "구현",
+          "textPreview": "구현",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "구현",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "구현",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            569,
+            289,
+            647,
+            54
+          ],
+          "text": "기본 실물 흐름 사용자 성공 보고",
+          "textPreview": "기본 실물 흐름 사용자 성공 보고",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "기본 실물 흐름 사용자 성공 보고",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "기본 실물 흐름 사용자 성공 보고",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            343,
+            330,
+            54
+          ],
+          "text": "외부 AI 분류·제거 검증",
+          "textPreview": "외부 AI 분류·제거 검증",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "외부 AI 분류·제거 검증",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "외부 AI 분류·제거 검증",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            394,
+            343,
+            175,
+            54
+          ],
+          "text": "구현",
+          "textPreview": "구현",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "구현",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "구현",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            569,
+            343,
+            647,
+            54
+          ],
+          "text": "설정 확인 / 개별 원격 응답 미수집",
+          "textPreview": "설정 확인 / 개별 원격 응답 미수집",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "설정 확인 / 개별 원격 응답 미수집",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "설정 확인 / 개별 원격 응답 미수집",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            397,
+            330,
+            54
+          ],
+          "text": "편집·기한·폐기·복원",
+          "textPreview": "편집·기한·폐기·복원",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "편집·기한·폐기·복원",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "편집·기한·폐기·복원",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            394,
+            397,
+            175,
+            54
+          ],
+          "text": "구현",
+          "textPreview": "구현",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "구현",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "구현",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            569,
+            397,
+            647,
+            54
+          ],
+          "text": "자동 검사 / 실제 Pi 상세 실기 대기",
+          "textPreview": "자동 검사 / 실제 Pi 상세 실기 대기",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "자동 검사 / 실제 Pi 상세 실기 대기",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "자동 검사 / 실제 Pi 상세 실기 대기",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            451,
+            330,
+            54
+          ],
+          "text": "웹 알림·SMTP 메일",
+          "textPreview": "웹 알림·SMTP 메일",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "웹 알림·SMTP 메일",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "웹 알림·SMTP 메일",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            394,
+            451,
+            175,
+            54
+          ],
+          "text": "구현",
+          "textPreview": "구현",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "구현",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "구현",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "row": 6,
+          "column": 3,
+          "bbox": [
+            569,
+            451,
+            647,
+            54
+          ],
+          "text": "모의 검사 / 실제 메일 수신 대기",
+          "textPreview": "모의 검사 / 실제 메일 수신 대기",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "모의 검사 / 실제 메일 수신 대기",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "모의 검사 / 실제 메일 수신 대기",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "row": 7,
+          "column": 1,
+          "bbox": [
+            64,
+            505,
+            330,
+            54
+          ],
+          "text": "시연 초기화·재시작",
+          "textPreview": "시연 초기화·재시작",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "시연 초기화·재시작",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "시연 초기화·재시작",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "row": 7,
+          "column": 2,
+          "bbox": [
+            394,
+            505,
+            175,
+            54
+          ],
+          "text": "구현",
+          "textPreview": "구현",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "구현",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "구현",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 21,
+          "row": 7,
+          "column": 3,
+          "bbox": [
+            569,
+            505,
+            647,
+            54
+          ],
+          "text": "초기화 성공 보고 + 재부팅 진단",
+          "textPreview": "초기화 성공 보고 + 재부팅 진단",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "초기화 성공 보고 + 재부팅 진단",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "초기화 성공 보고 + 재부팅 진단",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 22,
+          "row": 8,
+          "column": 1,
+          "bbox": [
+            64,
+            559,
+            330,
+            54
+          ],
+          "text": "친구 노트북·핫스팟 시연",
+          "textPreview": "친구 노트북·핫스팟 시연",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "친구 노트북·핫스팟 시연",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "친구 노트북·핫스팟 시연",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 23,
+          "row": 8,
+          "column": 2,
+          "bbox": [
+            394,
+            559,
+            175,
+            54
+          ],
+          "text": "준비 중",
+          "textPreview": "준비 중",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "준비 중",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "준비 중",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 24,
+          "row": 8,
+          "column": 3,
+          "bbox": [
+            569,
+            559,
+            647,
+            54
+          ],
+          "text": "공유 초대 전송 / 접속·무선 부팅 대기",
+          "textPreview": "공유 초대 전송 / 접속·무선 부팅 대기",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "공유 초대 전송 / 접속·무선 부팅 대기",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "공유 초대 전송 / 접속·무선 부팅 대기",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "composeRuns": []
+}

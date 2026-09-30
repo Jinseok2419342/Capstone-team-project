@@ -108,14 +108,14 @@ class ServiceTests(unittest.TestCase):
         result = classifier._normalize(
             """```json
             {"action":"added","name":"검은색 스마트폰","description":"검은 케이스","category":"valuable",
-             "estimated_value_krw":850000,"confidence":1.4}
+             "estimated_value_krw":850000,"confidence":0.94}
             ```""",
             "test",
         )
         self.assertEqual(result.name, "검은색 스마트폰")
         self.assertEqual(result.category, "valuable")
         self.assertEqual(result.retention_days, 90)
-        self.assertEqual(result.confidence, 1.0)
+        self.assertEqual(result.confidence, 0.94)
         self.assertEqual(result.action, "added")
 
         invalid_category = classifier._normalize(

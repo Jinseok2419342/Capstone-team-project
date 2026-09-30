@@ -1,0 +1,558 @@
+--- before/app/main.py
++++ after/app/main.py
+@@ -1,17 +1,17 @@
+ from __future__ import annotations
+ 
++import asyncio
+ import json
+ import logging
+ import shutil
+ import threading
+-import time
+ import uuid
+ from collections import OrderedDict
+ from concurrent.futures import ThreadPoolExecutor
+ from contextlib import asynccontextmanager
+ from datetime import datetime, timedelta, timezone
+ from pathlib import Path
+-from typing import Any, Generator
++from typing import Any, AsyncIterator
+ 
+ from fastapi import Body, FastAPI, HTTPException, Query
+ from fastapi.responses import FileResponse, StreamingResponse
+@@ -25,6 +25,7 @@
+     AppConfig,
+     coerce_setting,
+     public_provider_state,
++    validate_setting,
+ )
+ from .notifier import EmailNotifier, ExpirationScheduler
+ from .store import Store, classify_retention
+@@ -49,6 +50,9 @@
+ _reference_cache_bytes = 0
+ _item_mutation_lock = threading.RLock()
+ _reset_lock = threading.Lock()
++_service_lifecycle_lock = threading.RLock()
++_service_shutdown = threading.Event()
++_reset_recovery_thread: threading.Thread | None = None
+ 
+ RESET_CONFIRMATION = "초기화"
+ 
+@@ -139,7 +143,7 @@
+ 
+ def active_items_for_vision() -> list[dict[str, Any]]:
+     active: list[dict[str, Any]] = []
+-    for item in store.list_items(limit=500):
++    for item in store.list_active_items():
+         bbox = item.get("bbox") or item.get("bbox_json")
+         # Presentation presets do not correspond to a physical camera object.
+         if item.get("status") not in {"stored", "due"} or not bbox or item.get("provider") == "demo":
+@@ -190,7 +194,16 @@
+         return None
+     filename = f"{prefix}-{utc_now().strftime('%Y%m%d-%H%M%S')}-{uuid.uuid4().hex[:8]}.jpg"
+     path = (config.capture_dir / filename).resolve()
+-    path.write_bytes(image)
++    try:
++        path.write_bytes(image)
++    except OSError:
++        # A full disk may leave a partial file even though no path was returned
++        # to the caller's rollback handler.
++        try:
++            path.unlink(missing_ok=True)
++        except OSError:
++            logger.warning("Could not clean up incomplete capture: %s", path.name)
++        raise
+     return str(path)
+ 
+ 
+@@ -337,31 +350,40 @@
+ def create_provisional_item(event: ChangeEvent) -> dict[str, Any]:
+     """Persist the observation before any remote call so quick removals remain trackable."""
+     detected_at = utc_now()
+-    image_path = save_capture(event.crop_jpeg or event.after_jpeg)
+-    background_path = save_capture(event.before_jpeg, prefix="background")
+-    item = store.create_item(
+-        {
+-            "name": "분석 중인 새 물품",
+-            "description": "이미지는 안전하게 등록되었으며 AI가 물품 종류를 확인하고 있습니다.",
+-            "category": "general",
+-            "retention_days": 60,
+-            "detected_at": iso(detected_at),
+-            "expires_at": iso(detected_at + timedelta(days=60)),
+-            "status": "stored",
+-            "bbox_json": json.dumps(list(event.bbox)),
+-            "confidence": event.confidence,
+-            "image_path": image_path,
+-            "background_path": background_path,
+-            "provider": "pending",
+-            "ai_raw": "classification pending",
+-        }
+-    )
+-    store.create_activity(
+-        "item_detected",
+-        "새 물품을 감지해 우선 등록했습니다. AI 분석을 시작합니다.",
+-        item_id=item["id"],
+-        metadata={"source": "camera"},
+-    )
++    image_path = None
++    background_path = None
++    try:
++        image_path = save_capture(event.crop_jpeg or event.after_jpeg)
++        background_path = save_capture(event.before_jpeg, prefix="background")
++        item = store.create_item(
++            {
++                "name": "분석 중인 새 물품",
++                "description": "이미지는 안전하게 등록되었으며 AI가 물품 종류를 확인하고 있습니다.",
++                "category": "general",
++                "retention_days": 60,
++                "detected_at": iso(detected_at),
++                "expires_at": iso(detected_at + timedelta(days=60)),
++                "status": "stored",
++                "bbox_json": json.dumps(list(event.bbox)),
++                "confidence": event.confidence,
++                "image_path": image_path,
++                "background_path": background_path,
++                "provider": "pending",
++                "ai_raw": "classification pending",
++            }
++        )
++    except Exception:
++        remove_managed_captures([image_path, background_path])
++        raise
++    try:
++        store.create_activity(
++            "item_detected",
++            "새 물품을 감지해 우선 등록했습니다. AI 분석을 시작합니다.",
++            item_id=item["id"],
++            metadata={"source": "camera"},
++        )
++    except Exception:
++        logger.exception("Item persisted but detection activity could not be recorded")
+     return item
+ 
+ 
+@@ -391,8 +413,20 @@
+     return float(result.confidence) >= max(0.7, min(1.0, configured))
+ 
+ 
+-def classify_existing_item(item_id: int, event: ChangeEvent) -> None:
++def classify_existing_item(
++    item_id: int,
++    event: ChangeEvent,
++    expected_signature: tuple[Any, ...] | None = None,
++) -> None:
+     try:
++        with _item_mutation_lock:
++            initial = store.get_item(item_id)
++            if not initial or initial.get("provider") != "pending":
++                return
++            initial_signature = (
++                expected_signature if expected_signature is not None
++                else item_tracking_signature(initial)
++            )
+         result = classifier.classify(
+             [event.before_jpeg, event.after_jpeg],
+             scene_images=[event.scene_before_jpeg, event.scene_after_jpeg],
+@@ -418,9 +452,12 @@
+                     except (TypeError, ValueError, json.JSONDecodeError):
+                         current_bbox = None
+                 visually_reconfirmed = (
+-                    isinstance(current_bbox, (list, tuple))
+-                    and len(current_bbox) == 4
+-                    and [int(value) for value in current_bbox] != original_bbox
++                    item_tracking_signature(existing) != initial_signature
++                    or (
++                        isinstance(current_bbox, (list, tuple))
++                        and len(current_bbox) == 4
++                        and [int(value) for value in current_bbox] != original_bbox
++                    )
+                 )
+                 if (
+                     existing.get("status") not in {"stored", "due"}
+@@ -430,7 +467,7 @@
+                         result.name
+                         if result.name and result.name not in {"확인 필요한 물건", "새 분실물"}
+                         else (
+-                            "이동이 확인된 미확인 물품"
++                            "추적 중인 미확인 물품"
+                             if visually_reconfirmed
+                             else "빠르게 회수된 미확인 물품"
+                         )
+@@ -439,17 +476,16 @@
+                         item_id,
+                         {
+                             "name": fallback_name,
+-                            "description": result.description,
+-                            "category": result.category,
++                            "description": "AI가 물품 분류를 확정하지 못했습니다. 이동·처리 기록을 유지하며 관리자 확인이 필요합니다.",
+                             "confidence": result.confidence,
+-                            "provider": result.provider,
++                            "provider": f"{result.provider}_review",
+                             "ai_raw": result.raw,
+                         },
+                     )
+                     store.create_activity(
+                         "classification_inconclusive",
+                         (
+-                            "AI 분석 중 동일 물품의 이동이 다시 확인되어 등록을 유지했습니다."
++                            "AI 분석 중 물품의 추적·상태 기록이 갱신되어 등록을 유지했습니다."
+                             if visually_reconfirmed
+                             else "물품이 AI 분석 전에 처리되어 기존 회수·폐기 기록을 유지했습니다."
+                         ),
+@@ -457,6 +493,7 @@
+                         metadata={
+                             "provider": result.provider,
+                             "action": result.action,
++                            "review_required": True,
+                         },
+                     )
+                     return
+@@ -682,7 +719,8 @@
+ def handle_vision_change(event: ChangeEvent) -> None:
+     if event.kind == "added":
+         try:
+-            item = create_provisional_item(event)
++            with _item_mutation_lock:
++                item = create_provisional_item(event)
+         except Exception as exc:
+             logger.exception("Failed to persist provisional detected item")
+             try:
+@@ -690,23 +728,26 @@
+             except Exception:
+                 pass
+             return
+-        if classification_slots.acquire(blocking=False):
+-            classification_pool.submit(classify_existing_item, item["id"], event)
+-        else:
+-            store.update_item(
+-                item["id"],
+-                {
+-                    "name": "확인 필요한 새 물품",
+-                    "description": "분석 대기열이 가득 차 임시 등록되었습니다. 관리자 화면에서 확인해 주세요.",
+-                    "provider": "offline",
+-                    "ai_raw": "classification queue full",
+-                },
+-            )
+-            store.create_activity(
+-                "classification_deferred",
+-                "AI 분석 대기열이 가득 차 물품을 임시 등록했습니다.",
+-                item_id=item["id"],
+-            )
++        if not submit_classification(
++            classify_existing_item, item["id"], event, item_tracking_signature(item)
++        ):
++            with _item_mutation_lock:
++                latest = store.get_item(item["id"])
++                if latest and latest.get("provider") == "pending":
++                    store.update_item(
++                        item["id"],
++                        {
++                            "name": "확인 필요한 새 물품",
++                            "description": "분석 대기열이 가득 차 임시 등록되었습니다. 관리자 화면에서 확인해 주세요.",
++                            "provider": "offline_review",
++                            "ai_raw": "classification queue full",
++                        },
++                    )
++                    store.create_activity(
++                        "classification_deferred",
++                        "AI 분석 대기열이 가득 차 물품을 임시 등록했습니다.",
++                        item_id=item["id"],
++                    )
+         return
+     if event.kind == "verify_removed" and event.matched_item_id is not None:
+         item_id = int(event.matched_item_id)
+@@ -720,14 +761,7 @@
+             )
+         if expected_signature is None:
+             return
+-        if classification_slots.acquire(blocking=False):
+-            classification_pool.submit(
+-                verify_removed_item,
+-                item_id,
+-                event,
+-                expected_signature,
+-            )
+-        else:
++        if not submit_classification(verify_removed_item, item_id, event, expected_signature):
+             try:
+                 store.create_activity(
+                     "recovery_check_deferred",
+@@ -810,18 +844,105 @@
+ )
+ 
+ 
++def submit_classification(worker: Any, *args: Any) -> bool:
++    """Reserve bounded work; failed submission must release its reservation."""
++    if not classification_slots.acquire(blocking=False):
++        return False
++    try:
++        classification_pool.submit(worker, *args)
++    except RuntimeError:
++        classification_slots.release()
++        logger.warning("Classification deferred while executor is stopping")
++        return False
++    return True
++
++
++def _resume_operational_services(shutdown_event: threading.Event) -> None:
++    with _service_lifecycle_lock:
++        if shutdown_event is not _service_shutdown or shutdown_event.is_set():
++            return
++        scheduler.start()
++        vision.start()
++
++
++def _recover_after_aborted_reset(
++    shutdown_event: threading.Event,
++    camera_stopped: bool,
++    scheduler_stopped: bool,
++) -> None:
++    """Resume service after slow workers finish; never repeat the reset itself."""
++    global _reset_recovery_thread
++    try:
++        while not shutdown_event.is_set():
++            if not camera_stopped:
++                camera_stopped = vision.stop(timeout=0.25) is not False
++            if not scheduler_stopped:
++                scheduler_stopped = scheduler.stop(timeout=0.25) is not False
++            if camera_stopped and scheduler_stopped:
++                _resume_operational_services(shutdown_event)
++                return
++            shutdown_event.wait(0.1)
++    except Exception:
++        logger.exception("Could not resume workers after an aborted reset")
++    finally:
++        _reset_lock.release()
++        with _service_lifecycle_lock:
++            if _reset_recovery_thread is threading.current_thread():
++                _reset_recovery_thread = None
++
++
++def _defer_reset_recovery(
++    shutdown_event: threading.Event,
++    camera_stopped: bool,
++    scheduler_stopped: bool,
++) -> bool:
++    """Transfer reset-lock ownership to one recovery worker, if still serving."""
++    global _reset_recovery_thread
++    with _service_lifecycle_lock:
++        if shutdown_event is not _service_shutdown or shutdown_event.is_set():
++            return False
++        worker = threading.Thread(
++            target=_recover_after_aborted_reset,
++            args=(shutdown_event, camera_stopped, scheduler_stopped),
++            name="reset-recovery",
++            daemon=True,
++        )
++        _reset_recovery_thread = worker
++        try:
++            worker.start()
++        except Exception:
++            _reset_recovery_thread = None
++            raise
++        return True
++
++
+ @asynccontextmanager
+ async def lifespan(_: FastAPI):
++    global classification_pool, _service_shutdown
+     store.initialize()
+-    store.create_activity("system_started", "분실물 감지 시스템을 시작했습니다.")
+-    scheduler.start()
+-    vision.start()
++    store.mark_interrupted_classifications()
++    classification_pool = ThreadPoolExecutor(
++        max_workers=config.classifier_workers, thread_name_prefix="item-classifier"
++    )
++    with _service_lifecycle_lock:
++        shutdown_event = threading.Event()
++        _service_shutdown = shutdown_event
+     try:
++        vision.set_privacy(bool(current_settings().get("privacy_mode", False)))
++        store.create_activity("system_started", "분실물 감지 시스템을 시작했습니다.")
++        _resume_operational_services(shutdown_event)
+         yield
+     finally:
++        with _service_lifecycle_lock:
++            shutdown_event.set()
++            recovery = _reset_recovery_thread
+         vision.stop()
+         scheduler.stop()
+-        classification_pool.shutdown(wait=False, cancel_futures=True)
++        if recovery is not None:
++            await asyncio.to_thread(recovery.join)
++        # Drain accepted jobs so rows and semaphore permits cannot be stranded
++        # by cancellation, and a later lifespan can use a fresh executor.
++        await asyncio.to_thread(classification_pool.shutdown, wait=True)
+ 
+ 
+ app = FastAPI(
+@@ -901,21 +1022,9 @@
+ 
+ 
+ def dashboard_payload() -> dict[str, Any]:
+-    items = store.list_items(limit=500)
++    items = store.list_items(limit=100)
+     now = utc_now()
+-    lead = timedelta(days=int(current_settings().get("alert_lead_days", 7)))
+-    stored = [item for item in items if item.get("status") == "stored"]
+-    due_soon = [
+-        item
+-        for item in stored
+-        if (expiry := parse_dt(item.get("expires_at"))) is not None and now <= expiry <= now + lead
+-    ]
+-    stats = {
+-        "active": len(stored),
+-        "due_soon": len(due_soon),
+-        "expired": sum(item.get("status") == "due" for item in items),
+-        "recovered": sum(item.get("status") == "recovered" for item in items),
+-    }
++    stats = store.item_stats(now=now, lead_days=int(current_settings().get("alert_lead_days", 7)))
+     return {
+         "stats": stats,
+         "items": [item_for_api(item) for item in items[:100]],
+@@ -998,6 +1107,12 @@
+         if not existing:
+             raise HTTPException(404, "물품을 찾을 수 없습니다.")
+         updates = {key: value for key, value in edit.model_dump(exclude_none=True).items()}
++        if not updates:
++            raise HTTPException(400, "수정할 정보를 입력해 주세요.")
++        if "name" in updates:
++            updates["name"] = updates["name"].strip()
++            if not updates["name"]:
++                raise HTTPException(400, "물품 이름은 공백만 입력할 수 없습니다.")
+         if "category" in updates:
+             category = updates["category"]
+             if category not in {"valuable", "general", "food"}:
+@@ -1014,9 +1129,8 @@
+             effective_expiry = parse_dt(updates.get("expires_at", existing.get("expires_at")))
+             if effective_expiry:
+                 updates["status"] = "due" if effective_expiry <= utc_now() else "stored"
+-        if existing.get("provider") == "pending":
++        if existing.get("provider") in {"pending", "offline"} or str(existing.get("provider", "")).endswith("_review"):
+             updates["provider"] = "manual"
+-            updates["ai_raw"] = "manual edit while classification was pending"
+         item = store.update_item(item_id, updates)
+     store.create_activity("item_edited", f"{item['name']} 정보를 수정했습니다.", item_id=item_id)
+     return item_for_api(item)
+@@ -1060,9 +1174,19 @@
+ 
+ @app.post("/api/items/{item_id}/extend")
+ def extend_item(item_id: int, request: ExtendRequest) -> dict[str, Any]:
+-    item = store.extend_item(item_id, request.days)
+-    if not item:
+-        raise HTTPException(404, "물품을 찾을 수 없습니다.")
++    with _item_mutation_lock:
++        item = store.extend_item(item_id, request.days)
++        if not item:
++            raise HTTPException(404, "물품을 찾을 수 없습니다.")
++        if item.get("provider") == "pending":
++            item = store.update_item(
++                item_id,
++                {
++                    "provider": "manual_review",
++                    "name": "확인 필요한 새 물품",
++                    "description": "관리자가 보관 기한을 변경했습니다. 물품 이름과 분류를 확인해 주세요.",
++                },
++            )
+     store.create_activity(
+         "item_extended",
+         f"{item['name']}의 보관 기한을 {request.days}일 연장했습니다.",
+@@ -1162,7 +1286,10 @@
+ @app.put("/api/settings")
+ def update_settings(payload: dict[str, Any]) -> dict[str, Any]:
+     allowed = set(SETTING_TYPES)
+-    updates = {key: coerce_setting(key, value) for key, value in payload.items() if key in allowed}
++    try:
++        updates = {key: validate_setting(key, value) for key, value in payload.items() if key in allowed}
++    except ValueError as exc:
++        raise HTTPException(400, str(exc)) from exc
+     if not updates:
+         raise HTTPException(400, "저장할 수 있는 설정이 없습니다.")
+     if updates.get("provider") not in {None, "auto", "openai", "gemini", "offline"}:
+@@ -1199,6 +1326,7 @@
+         "max_change_ratio": (0.01, 1.0),
+         "settle_seconds": (0.5, 30),
+         "stable_seconds": (0.2, 15),
++        "camera_retry_seconds": (0.5, 300),
+         "smtp_port": (1, 65535),
+         "alert_lead_days": (0, 90),
+         "ai_min_confidence": (0.0, 1.0),
+@@ -1209,8 +1337,8 @@
+             raise HTTPException(400, f"{key} 값은 {minimum}~{maximum} 범위여야 합니다.")
+     with _settings_lock:
+         store.update_settings(updates)
+-    if "privacy_mode" in updates:
+-        vision.set_privacy(bool(current_settings().get("privacy_mode", False)))
++        if "privacy_mode" in updates:
++            vision.set_privacy(updates["privacy_mode"])
+     vision_keys = {
+         "camera_index",
+         "camera_backend",
+@@ -1272,17 +1400,32 @@
+     if not _reset_lock.acquire(blocking=False):
+         raise HTTPException(409, "다른 초기화 작업이 이미 진행 중입니다.")
+ 
++    deferred_recovery = False
++    with _service_lifecycle_lock:
++        shutdown_event = _service_shutdown
+     try:
+         # Stopping the producer first drains camera callbacks. Pending remote
+         # classifications become harmless because their item rows no longer
+         # exist when they return.
+-        vision.stop()
+-        scheduler.stop()
+         try:
++            camera_stopped = vision.stop()
++            scheduler_stopped = scheduler.stop()
++            if camera_stopped is False or scheduler_stopped is False:
++                deferred_recovery = _defer_reset_recovery(
++                    shutdown_event,
++                    camera_stopped is not False,
++                    scheduler_stopped is not False,
++                )
++                raise HTTPException(
++                    409,
++                    "진행 중인 카메라 또는 알림 작업 때문에 초기화를 취소했습니다. 작업이 끝나면 감시를 자동 재개합니다. 초기화가 필요하면 그 후 다시 시도해 주세요.",
++                )
+             with _item_mutation_lock:
+                 with store.maintenance_window():
+                     result = backup_and_reset_operational_data()
+             vision.rebaseline()
++        except HTTPException:
++            raise
+         except Exception as exc:
+             logger.exception("Operational data reset failed")
+             raise HTTPException(
+@@ -1290,10 +1433,11 @@
+                 "초기화 중 오류가 발생했습니다. 생성된 백업은 삭제하지 않았습니다.",
+             ) from exc
+         finally:
+-            scheduler.start()
+-            vision.start()
++            if not deferred_recovery:
++                _resume_operational_services(shutdown_event)
+     finally:
+-        _reset_lock.release()
++        if not deferred_recovery:
++            _reset_lock.release()
+ 
+     return {
+         "ok": True,
+@@ -1304,14 +1448,14 @@
+ 
+ @app.get("/camera/stream", include_in_schema=False)
+ def camera_stream() -> StreamingResponse:
+-    def frames() -> Generator[bytes, None, None]:
++    async def frames() -> AsyncIterator[bytes]:
+         stream_fps = float(current_settings().get("preview_stream_fps", 8.0))
+         frame_delay = 1.0 / max(1.0, min(15.0, stream_fps))
+         while True:
+             frame = vision.get_jpeg()
+             if frame:
+                 yield b"--frame\r\nContent-Type: image/jpeg\r\nCache-Control: no-cache\r\n\r\n" + frame + b"\r\n"
+-            time.sleep(frame_delay)
++            await asyncio.sleep(frame_delay)
+ 
+     return StreamingResponse(
+         frames(),

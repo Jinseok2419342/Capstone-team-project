@@ -1,0 +1,97 @@
+{
+    "record_date":  "2026-09-22",
+    "status":  "complete",
+    "user_request":  "End work today after provisional acceptance of the midterm PPT; prepare next-session handoff and delete caches/unnecessary generated data.",
+    "user_acceptance":  "일단 좋아 (provisional draft acceptance, not completion of missing evidence)",
+    "next_default":  "Review existing v3 PPT and fill captures step by step using its guide; do not recreate or launch measurements automatically.",
+    "read_order":  [
+                       "START_HERE.md",
+                       "AGENTS.md latest session-close section",
+                       "docs/SESSION_HANDOFF_2026-09-18.md sections 0 and 6",
+                       "output/presentation/REFOUND_MIDTERM_FILL_GUIDE.md"
+                   ],
+    "artifacts":  {
+                      "pptx":  "output/presentation/REFOUND_PROJECT_MIDTERM_2026-09-22_v3.pptx",
+                      "sha256":  "e12cc5b710723e9ffba427a911f7b75408cc9061d542cf7adae1470e2960dd16",
+                      "guide":  "output/presentation/REFOUND_MIDTERM_FILL_GUIDE.md",
+                      "slides":  30,
+                      "main":  27,
+                      "appendix":  3,
+                      "native_powerpoint_opened":  false
+                  },
+    "remaining_presentation_inputs":  {
+                                          "11":  "S1 Git history and repository URL",
+                                          "14":  "S2/S3/S4 same physical item registration, move and removal screenshots with separately verified ID captions",
+                                          "15":  "S5 real Pi administrator screenshot",
+                                          "9":  "Official progress percent after criteria agreement",
+                                          "19":  "Measured accuracy/latency, N and actual cases"
+                                      },
+    "schedule":  {
+                     "midterm_presentation":  "2026-10-13",
+                     "final_rehearsal":  "2026-10-27",
+                     "final_presentation":  "2026-11-03"
+                 },
+    "demo_state":  "Friend share invitation sent, acceptance/laptop/hotspot unconfirmed; prior installation and owner-PC access already confirmed. Actual shutdown/power removal still unreported.",
+    "cleanup":  {
+                    "status":  "complete",
+                    "targets_removed":  24,
+                    "file_count_removed":  2386,
+                    "logical_bytes_removed":  197978626,
+                    "MiB":  188.81,
+                    "junctions_removed":  1,
+                    "remaining_targets":  [
+
+                                          ],
+                    "external_runtime_preserved":  true,
+                    "browser_profiles_preserved":  3,
+                    "browser_profile_reason":  "Read-only process inventory through WMI returned access denied; active use not established, no profiles deleted.",
+                    "installed_environments_preserved":  [
+                                                             ".venv",
+                                                             "output/maintenance/2026-09-22-quick-reset/test-runtime"
+                                                         ]
+                },
+    "verification":  {
+                         "protected_files":  364,
+                         "changed_protected_files":  [
+
+                                                     ],
+                         "local_links_checked":  59,
+                         "missing_local_links":  [
+
+                                                 ],
+                         "final_artifact_post_cleanup_check":  "passed",
+                         "final_rendered_slides_preserved":  30,
+                         "old_renders":  "Removed v1/v2; saved pre-cleanup image hashes support historical comparisons.",
+                         "app_tests_rerun":  false,
+                         "new_pi_ai_smtp_experiments":  false
+                     },
+    "handoff_document_sha256":  {
+                                    "START_HERE.md":  "fa260ecd1d286426d26e0e65e572050b6fcae90b89938855cf69d2ac4043036f",
+                                    "AGENTS.md":  "b2d7a5fc808ebeb0d434c75ed1f56164b418da8cc1ed47d994eea7b5d1403d06",
+                                    "docs/SESSION_HANDOFF_2026-09-18.md":  "052b4179ce0c1f379e65bdeb8c44335ad497a19888f2cf1abd8c3fc9b320af3f",
+                                    "docs/IMPROVEMENTS.md":  "186c5e2fbad0bc715fed4ad1f4322f5aa8c1e620b7b4eca0497700855a9f688d",
+                                    "output/presentation/REFOUND_MIDTERM_FILL_GUIDE.md":  "50250c04bf17bb50a05788a33fd67141958cf8d071ba8b33ba5a08a8e183b17c"
+                                },
+    "latest_followup":  {
+                            "record_date":  "2026-09-22",
+                            "user_request":  "Check START_HERE.md and record user removal of the PC .venv.",
+                            "start_here_before_sha256":  "fa260ecd1d286426d26e0e65e572050b6fcae90b89938855cf69d2ac4043036f",
+                            "start_here_matched_previous_record":  true,
+                            "changes":  "Expanded project introduction, existing PPT next steps, and Windows setup/start instructions; synchronized handoff documents.",
+                            "pc_venv_exists":  false,
+                            "pc_venv_removed_by":  "user, after the original cleanup snapshot",
+                            "next_pc_app_start":  "Run setup.ps1 first, then start.ps1; start.ps1 does not create the environment. Python 3.11+ and package download access required.",
+                            "prior_record_scope":  "Original cleanup and handoff_document_sha256 fields above describe the earlier session-close snapshot.",
+                            "local_links_checked":  35,
+                            "missing_local_links":  [
+
+                                                    ],
+                            "ppt_and_guide_hashes_unchanged":  true,
+                            "app_tests_or_installation_run":  false,
+                            "document_sha256":  {
+                                                    "START_HERE.md":  "70c9acc9f973ffd2ac763ce3ecf69a7984a5052992b1bce51d27deac45fa25d7",
+                                                    "AGENTS.md":  "bd22e92fa186eeb8bc77b4836b5ea9cfb6f5c8e961d1255fa8776ded1572e087",
+                                                    "docs/SESSION_HANDOFF_2026-09-18.md":  "fdbe282f794cf22148a8a8632d9cab17caeeea29fddaa1f5c6b8f445cdda750c"
+                                                }
+                        }
+}

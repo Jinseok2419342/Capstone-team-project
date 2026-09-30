@@ -1,0 +1,114 @@
+{
+  "record_date": "2026-09-22",
+  "timezone": "Asia/Seoul",
+  "scope": "Session handoff; user-supplied Raspberry Pi logs and user-reported functional checks. Not a paper experiment.",
+  "current_state": "Friend device-share invitation sent; waiting for friend response. User may next resume demo preparation or request a presentation PPT.",
+  "shutdown": {
+    "command_instructed": "sudo shutdown -h now",
+    "actual_shutdown_confirmed": false,
+    "power_disconnection_confirmed": false
+  },
+  "environment": {
+    "hardware_user_reported": "Raspberry Pi 4 Model B 2GB with existing CSI camera and replacement microSD",
+    "os_log": "Debian GNU/Linux 13 (trixie)",
+    "debian_version_full_log": "13.7",
+    "architecture_log": "aarch64",
+    "kernel_log": "6.18.50+rpt-rpi-v8",
+    "camera_sensor_log": "ov5647",
+    "python_log": "3.13.5",
+    "imports_passed_log": {
+      "numpy": "2.2.4",
+      "cv2": "4.10.0",
+      "picamera2": "0.3.37",
+      "fastapi": "0.141.1",
+      "pydantic": "2.13.5",
+      "uvicorn": "0.53.0",
+      "httpx": "0.28.1"
+    },
+    "camera_product_name": null,
+    "power_supply": null,
+    "cooling": null,
+    "microsd_brand_and_specification": null
+  },
+  "deployment": {
+    "archive": "dist/refound-pi.tar.gz",
+    "sha256": "92007237f6cf4ee5fdeb2e099961153893012e8f9c0ad8f1be7596c2127cf4ae",
+    "pi_checksum_ok_user_log": true,
+    "installer_completed_user_log": true,
+    "service": "refound.service",
+    "app_directory": "/opt/refound",
+    "runtime_host": "127.0.0.1",
+    "runtime_port": 8000,
+    "archive_regenerated_during_handoff": false,
+    "note": "Workspace handoff documents are newer than the installed archive. Application code and archive were preserved."
+  },
+  "evidence": [
+    {"check": "camera_still_capture", "level": "user_supplied_log", "result": "passed", "jpeg_bytes": 1208525},
+    {"check": "picamera2_frame_capture", "level": "user_supplied_log", "result": "passed", "shape": [360, 640, 3], "dtype": "uint8"},
+    {"check": "system_after_service_restart", "level": "user_supplied_log", "time": "2026-09-22T18:48:33+09:00", "result": "Local checks passed"},
+    {"check": "quick_reset_and_real_item_registration", "level": "user_report", "result": "successful", "user_reply": "잘 돼", "individual_ai_result_collected": false},
+    {"check": "move_without_duplicate_and_removal", "level": "user_report", "result": "successful", "user_reply": "어 다 돼", "individual_ids_collected": false},
+    {"check": "system_after_reboot_instruction", "level": "user_supplied_log", "time": "2026-09-22T18:57:16+09:00", "result": "Local checks passed", "service": "active", "database": "connected", "camera_connected": true, "inventory_connected": true, "phase": "monitoring", "privacy_enabled": false},
+    {"check": "tailscale_install_authentication_serve", "level": "user_supplied_log", "result": "passed", "version": "1.102.4", "background_serve": true, "private_only_script_check_passed": true},
+    {"check": "owner_pc_https_page_and_camera_video", "level": "user_report", "result": "successful", "user_reply": "나와"},
+    {"check": "friend_share_invitation_sent", "level": "user_report", "result": "sent", "accepted": null}
+  ],
+  "reboot_diagnostic_single_snapshot": {
+    "temperature_celsius": 62.3,
+    "throttled": "0x0",
+    "available_memory": "1.5Gi",
+    "available_disk": "23G",
+    "note": "Single diagnostic snapshot, not sustained performance or stability evidence."
+  },
+  "ai": {
+    "configured_provider_log": "openai",
+    "configured_model_log": "gpt-5.6-luna",
+    "individual_remote_api_response_collected": false,
+    "accuracy_measured": false,
+    "secrets_recorded": false
+  },
+  "network": {
+    "home_setup": "Pi Ethernet to home router; owner PC",
+    "pi_tailscale_device": "refound-pi-1",
+    "https_url": "https://refound-pi-1.tail7a1a61.ts.net/",
+    "friend_device_share": "invitation sent, awaiting acceptance",
+    "friend_presentation_laptop_access_confirmed": false,
+    "demo_pi_internet_plan": "Friend Android smartphone hotspot",
+    "phone_exact_model": null,
+    "hotspot_ssid": null,
+    "hotspot_security": "User considered open hotspot; final selection unconfirmed",
+    "saved_wifi_configuration_verified": false,
+    "ethernet_disconnected_cold_boot_tested": false,
+    "authentication_and_invitation_links_recorded": false
+  },
+  "remaining_checks": [
+    "Friend accepts share with the same account used on the presentation laptop",
+    "Friend laptop HTTPS page and live camera",
+    "Hotspot configuration match and Ethernet-disconnected cold boot",
+    "Demo flow over the actual hotspot and friend laptop",
+    "Detailed AI result, multiple items, editing and expiration workflows",
+    "SMTP real delivery, privacy-enabled reboot, mobile and sustained operation"
+  ],
+  "next_choices": {
+    "demo_setup": "Resume from friend response; do not repeat installation or invitation sending without a reason",
+    "presentation_ppt": "Clarify purpose, audience, duration and format; use confirmed evidence and label pending checks. No new deck has been created.",
+    "paper": "Only on explicit choice; synchronize implementation descriptions before quantitative experiments"
+  },
+  "existing_artifacts": {
+    "latest_paper_pptx": "output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx",
+    "paper_pptx_slides": 4,
+    "old_paper_pptx": "output/presentation/REFOUND_EARLY_PAPER_FINAL.pptx",
+    "paper_draft_date": "2026-09-16",
+    "new_project_or_improvement_pptx_created": false
+  },
+  "prior_development_validation": {
+    "quick_reset_summary": "output/maintenance/2026-09-22-quick-reset/VALIDATION.json",
+    "python_tests": 272,
+    "node_tests": 37,
+    "chromium_checks": 7,
+    "network_packaging_summary": "output/maintenance/2026-09-22-network-plan/VALIDATION.json",
+    "network_deployment_tests": 6,
+    "app_tests_rerun_during_handoff": false,
+    "historical_summaries_preserved": true
+  }
+}

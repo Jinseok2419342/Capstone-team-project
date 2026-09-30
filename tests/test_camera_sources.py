@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import json
 import unittest
 from unittest.mock import Mock, patch
 
@@ -120,6 +121,172 @@ class Picamera2CaptureTests(unittest.TestCase):
         camera = FailingStartPicamera2.instances[-1]
         self.assertEqual(camera.stopped, 1)
         self.assertEqual(camera.closed, 1)
+
+    def test_flicker_defaults_preserve_controls_and_do_not_guess_capabilities(self) -> None:
+        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=FakePicamera2)
+        diagnostics = capture.get_diagnostics()
+        self.assertEqual(diagnostics["requested_mains_frequency_hz"], 0)
+        self.assertIsNone(diagnostics["applied_mains_frequency_hz"])
+        self.assertEqual(diagnostics["controls_supported"], [])
+        self.assertFalse(diagnostics["metadata_supported"])
+        self.assertEqual(diagnostics["frame_metadata"], {})
+        capture.release()
+
+    def test_dynamic_mock_attributes_are_not_treated_as_metadata_support(self) -> None:
+        class DynamicCamera(FakePicamera2):
+            def __getattr__(self, name: str) -> Mock:
+                return Mock()
+
+        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=DynamicCamera)
+        self.assertFalse(capture.get_diagnostics()["metadata_supported"])
+        self.assertEqual(capture.get_diagnostics()["controls_supported"], [])
+        self.assertTrue(capture.read()[0])
+        capture.release()
+
+    def test_supported_flicker_is_applied_without_locking_ae_awb_or_focus(self) -> None:
+        class ControlledCamera(FakePicamera2):
+            camera_controls = {
+                "AeFlickerMode": (0, 1, 0),
+                "AeFlickerPeriod": (100, 100000, 0),
+                "AeEnable": (False, True, True),
+                "AwbEnable": (False, True, True),
+                "AfMode": (0, 2, 0),
+            }
+            camera_properties = {"Model": "test-camera"}
+
+            def set_controls(self, controls: dict[str, object]) -> None:
+                self.control_updates = controls
+                # Controls must be queued after configure and before start.
+                assert self.configured is not None
+                assert self.started == 0
+
+        for frequency, period in ((50, 10000), (60, 8333)):
+            with self.subTest(frequency=frequency):
+                capture = Picamera2Capture(
+                    0, 640, 360, 8.0,
+                    mains_frequency_hz=frequency, picamera2_class=ControlledCamera,
+                )
+                camera = FakePicamera2.instances[-1]
+                self.assertEqual(camera.control_updates, {"AeFlickerMode": 1, "AeFlickerPeriod": period})
+                self.assertEqual(capture.get_diagnostics()["applied_mains_frequency_hz"], frequency)
+                self.assertEqual(capture.get_diagnostics()["model"], "test-camera")
+                self.assertEqual(capture.get_diagnostics()["warnings"], [])
+                capture.release()
+
+    def test_unsupported_or_rejected_flicker_keeps_csi_camera_running(self) -> None:
+        class MissingPeriodCamera(FakePicamera2):
+            camera_controls = {"AeFlickerMode": (0, 1, 0)}
+
+            def set_controls(self, controls: dict[str, object]) -> None:
+                raise AssertionError("Must not send unsupported controls")
+
+        class OutOfRangeCamera(MissingPeriodCamera):
+            camera_controls = {"AeFlickerMode": (0, 0, 0), "AeFlickerPeriod": (100, 100000, 0)}
+
+        class RejectingCamera(FakePicamera2):
+            camera_controls = {"AeFlickerMode": (0, 1, 0), "AeFlickerPeriod": (100, 100000, 0)}
+
+            def set_controls(self, controls: dict[str, object]) -> None:
+                raise RuntimeError("control was rejected")
+
+        for camera_type in (MissingPeriodCamera, OutOfRangeCamera, RejectingCamera):
+            with self.subTest(camera_type=camera_type):
+                capture = Picamera2Capture(
+                    0, 640, 360, 8.0,
+                    mains_frequency_hz=60, picamera2_class=camera_type,
+                )
+                self.assertTrue(capture.isOpened())
+                self.assertIsNone(capture.get_diagnostics()["applied_mains_frequency_hz"])
+                self.assertEqual(capture.get_diagnostics()["requested_mains_frequency_hz"], 60)
+                self.assertEqual(len(capture.get_diagnostics()["warnings"]), 1)
+                self.assertTrue(capture.read()[0])
+                capture.release()
+
+    def test_diagnostic_properties_failure_does_not_lose_an_open_camera(self) -> None:
+        class UnavailableInfoCamera(FakePicamera2):
+            @property
+            def camera_controls(self) -> dict[str, object]:
+                raise RuntimeError("optional camera information unavailable")
+
+            @property
+            def camera_properties(self) -> dict[str, object]:
+                raise RuntimeError("optional camera information unavailable")
+
+        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=UnavailableInfoCamera)
+        self.assertEqual(capture.get_diagnostics()["model"], "unknown")
+        self.assertTrue(capture.read()[0])
+        capture.release()
+        self.assertEqual(FakePicamera2.instances[-1].closed, 1)
+
+    def test_frame_and_metadata_are_captured_together_once_and_are_json_safe(self) -> None:
+        class MetadataCamera(FakePicamera2):
+            def capture_array(self, name: str) -> np.ndarray:
+                raise AssertionError("Must not acquire a second frame")
+
+            def capture_metadata(self) -> dict[str, object]:
+                raise AssertionError("Must not acquire metadata from another frame")
+
+            def capture_arrays(self, names: list[str]) -> tuple[list[np.ndarray], dict[str, object]]:
+                self.calls = getattr(self, "calls", 0) + 1
+                assert names == ["main"]
+                return [self.frame], {
+                    "ExposureTime": np.int64(8333), "AnalogueGain": np.float32(2.0),
+                    "ColourGains": (1.3, 1.7), "AfState": 2, "LensPosition": 1.2,
+                    "SensorTimestamp": 1234567890, "AwbLocked": True,
+                    "Lux": float("nan"), "DigitalGain": float("inf"),
+                    "ColourTemperature": 10 ** 1000,
+                    "UnrelatedBlob": np.zeros((200, 200)),
+                }
+
+        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=MetadataCamera)
+        camera = FakePicamera2.instances[-1]
+        ok, frame = capture.read()
+        self.assertTrue(ok)
+        self.assertIs(frame, camera.frame)
+        self.assertEqual(camera.calls, 1)
+        diagnostics = capture.get_diagnostics()
+        self.assertEqual(diagnostics["frame_sequence"], 1)
+        self.assertEqual(diagnostics["frame_metadata"], {
+            "ExposureTime": 8333, "AnalogueGain": 2.0, "ColourGains": [1.3, 1.7],
+            "AfState": 2, "LensPosition": 1.2, "SensorTimestamp": 1234567890, "AwbLocked": True,
+        })
+        json.dumps(diagnostics, allow_nan=False)
+        diagnostics["frame_metadata"]["ColourGains"][0] = 99
+        self.assertEqual(capture.get_diagnostics()["frame_metadata"]["ColourGains"], [1.3, 1.7])
+        capture.release()
+        capture.release()
+        self.assertEqual(camera.stopped, 1)
+        self.assertEqual(camera.closed, 1)
+
+    def test_failed_read_marks_old_metadata_as_stale_and_invalid_frames_are_rejected(self) -> None:
+        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=FakePicamera2)
+        camera = FakePicamera2.instances[-1]
+        self.assertTrue(capture.read()[0])
+        for frame in (np.zeros((8, 8, 4), np.uint8), np.zeros((8, 8, 3), np.float32), np.zeros((0, 8, 3), np.uint8)):
+            camera.frame = frame
+            self.assertEqual(capture.read(), (False, None))
+            self.assertFalse(capture.get_diagnostics()["last_read_ok"])
+            self.assertEqual(capture.get_diagnostics()["frame_sequence"], 1)
+        capture.release()
+
+    def test_invalid_flicker_frequency_is_rejected_before_acquiring_camera(self) -> None:
+        for value in (True, 45, -60, "60"):
+            with self.subTest(value=value), self.assertRaisesRegex(CameraSourceError, "frequency"):
+                Picamera2Capture(0, 640, 360, 8.0, mains_frequency_hz=value, picamera2_class=FakePicamera2)
+        self.assertEqual(FakePicamera2.instances, [])
+
+    @patch("app.camera_sources._open_opencv_capture")
+    @patch("app.camera_sources._open_picamera2_capture")
+    def test_requested_flicker_is_forwarded_only_to_picamera_backend(
+        self, open_picamera: Mock, open_opencv: Mock
+    ) -> None:
+        expected = Mock()
+        open_picamera.return_value = expected
+        capture, error = open_camera_capture(0, "picamera2", 640, 360, 8.0, mains_frequency_hz=60)
+        self.assertIs(capture, expected)
+        self.assertIsNone(error)
+        open_picamera.assert_called_once_with(0, 640, 360, 8.0, mains_frequency_hz=60)
+        open_opencv.assert_not_called()
 
     @patch("app.camera_sources._open_opencv_capture")
     @patch("app.camera_sources._open_picamera2_capture")

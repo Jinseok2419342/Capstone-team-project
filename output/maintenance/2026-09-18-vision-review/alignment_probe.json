@@ -1,0 +1,960 @@
+{
+  "frame_size": [
+    1280,
+    720
+  ],
+  "analysis_width": 360,
+  "opencv_threads": 24,
+  "warning": "Synthetic desktop diagnostics, not camera accuracy or Raspberry Pi performance",
+  "records": [
+    {
+      "scene": "rich",
+      "mode": "noise2",
+      "affine_ms": 4.712,
+      "translation_ms": 9.099,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "noise5",
+      "affine_ms": 3.667,
+      "translation_ms": 3.239,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "noise10",
+      "affine_ms": 3.71,
+      "translation_ms": 3.374,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "add8",
+      "affine_ms": 3.613,
+      "translation_ms": 3.375,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "add20",
+      "affine_ms": 3.735,
+      "translation_ms": 3.478,
+      "translation": [
+        0.3740776909722222,
+        -0.009874131944444444,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.000510334968567,
+          3.2126990845426917e-06,
+          -0.38355299830436707
+        ],
+        [
+          -3.2126990845426917e-06,
+          1.000510334968567,
+          -0.1268826574087143
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.4507805407047272,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "rich",
+      "mode": "gain1.06",
+      "affine_ms": 4.068,
+      "translation_ms": 3.81,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "gain1.15",
+      "affine_ms": 4.143,
+      "translation_ms": 3.707,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.000622272491455,
+          3.5414683225099e-05,
+          -0.3490014374256134
+        ],
+        [
+          -3.5414683225099e-05,
+          1.000622272491455,
+          -0.20508095622062683
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.5128070116043091,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "rich",
+      "mode": "spot20",
+      "affine_ms": 3.579,
+      "translation_ms": 3.344,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "spot40",
+      "affine_ms": 3.761,
+      "translation_ms": 3.264,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": true,
+      "motion_ratio": 0.10308268229166667,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "rich",
+      "mode": "gradient20",
+      "affine_ms": 3.701,
+      "translation_ms": 3.408,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "gradient40",
+      "affine_ms": 3.565,
+      "translation_ms": 3.229,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "blur1.2",
+      "affine_ms": 3.249,
+      "translation_ms": 3.164,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "blur2.5",
+      "affine_ms": 3.436,
+      "translation_ms": 3.14,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "rich",
+      "mode": "jpeg60",
+      "affine_ms": 3.228,
+      "translation_ms": 3.15,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "sparse",
+      "mode": "noise2",
+      "affine_ms": 3.353,
+      "translation_ms": 3.299,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "noise5",
+      "affine_ms": 3.354,
+      "translation_ms": 3.151,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "noise10",
+      "affine_ms": 3.179,
+      "translation_ms": 3.547,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "add8",
+      "affine_ms": 3.117,
+      "translation_ms": 3.218,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "add20",
+      "affine_ms": 3.085,
+      "translation_ms": 3.257,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "gain1.06",
+      "affine_ms": 3.186,
+      "translation_ms": 3.164,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "gain1.15",
+      "affine_ms": 3.33,
+      "translation_ms": 3.257,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": true,
+      "motion_ratio": 0.029397786458333332,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "sparse",
+      "mode": "spot20",
+      "affine_ms": 3.537,
+      "translation_ms": 3.434,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "spot40",
+      "affine_ms": 3.21,
+      "translation_ms": 3.241,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": true,
+      "motion_ratio": 0.10658528645833333,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "sparse",
+      "mode": "gradient20",
+      "affine_ms": 3.849,
+      "translation_ms": 3.316,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "gradient40",
+      "affine_ms": 3.392,
+      "translation_ms": 3.039,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "blur1.2",
+      "affine_ms": 3.52,
+      "translation_ms": 3.393,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "blur2.5",
+      "affine_ms": 2.929,
+      "translation_ms": 3.003,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "sparse",
+      "mode": "jpeg60",
+      "affine_ms": 3.277,
+      "translation_ms": 3.131,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "weak",
+      "mode": "noise2",
+      "affine_ms": 3.947,
+      "translation_ms": 3.544,
+      "translation": [
+        -0.2606472439236111,
+        0.03298611111111111,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          0.9986031651496887,
+          -5.8316793001722544e-05,
+          1.3372217416763306
+        ],
+        [
+          5.8316793001722544e-05,
+          0.9986031651496887,
+          0.43634557723999023
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 1.4148650169372559,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "weak",
+      "mode": "noise5",
+      "affine_ms": 3.824,
+      "translation_ms": 3.366,
+      "translation": [
+        -0.2688530815972222,
+        0.046088324652777776,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          0.9986121654510498,
+          -5.726920426241122e-05,
+          1.3194434642791748
+        ],
+        [
+          5.726920426241122e-05,
+          0.9986121654510498,
+          0.43098095059394836
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 1.3988505601882935,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "weak",
+      "mode": "noise10",
+      "affine_ms": 3.67,
+      "translation_ms": 3.283,
+      "translation": [
+        -0.2958848741319444,
+        0.03334554036458333,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          0.998607337474823,
+          -7.356727292062715e-05,
+          1.2899360656738281
+        ],
+        [
+          7.356727292062715e-05,
+          0.998607337474823,
+          0.4068485498428345
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 1.3730146884918213,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "weak",
+      "mode": "add8",
+      "affine_ms": 3.626,
+      "translation_ms": 3.488,
+      "translation": [
+        0.47089301215277773,
+        -0.25333658854166663,
+        0.625
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "weak",
+      "mode": "add20",
+      "affine_ms": 4.297,
+      "translation_ms": 5.098,
+      "translation": [
+        0.0,
+        0.0,
+        0.9972706364751353
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "weak",
+      "mode": "gain1.06",
+      "affine_ms": 3.801,
+      "translation_ms": 3.784,
+      "translation": [
+        0.528713650173611,
+        -0.617431640625,
+        0.5
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "weak",
+      "mode": "gain1.15",
+      "affine_ms": 4.772,
+      "translation_ms": 5.733,
+      "translation": [
+        0.0,
+        0.0,
+        0.7011225085690188
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "weak",
+      "mode": "spot20",
+      "affine_ms": 4.555,
+      "translation_ms": 3.435,
+      "translation": [
+        0.0,
+        0.0,
+        0.898876404494382
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.000274419784546,
+          0.00010883712093345821,
+          -0.3626090884208679
+        ],
+        [
+          -0.00010883712093345821,
+          1.000274419784546,
+          0.07054532319307327
+        ]
+      ],
+      "response": 0.8854166666666666,
+      "max_corner_shift": 0.39075350761413574,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "weak",
+      "mode": "spot40",
+      "affine_ms": 4.317,
+      "translation_ms": 4.408,
+      "translation": [
+        0.0,
+        0.0,
+        0.8771929824561403
+      ],
+      "motion": true,
+      "motion_ratio": 0.11153103298611111,
+      "affine": [
+        [
+          1.0002117156982422,
+          -8.333092409884557e-05,
+          -0.2834183871746063
+        ],
+        [
+          8.333092409884557e-05,
+          1.0002117156982422,
+          -0.2820526361465454
+        ]
+      ],
+      "response": 0.8813559322033898,
+      "max_corner_shift": 0.3998495638370514,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "weak",
+      "mode": "gradient20",
+      "affine_ms": 4.383,
+      "translation_ms": 3.345,
+      "translation": [
+        0.0,
+        0.0,
+        0.85
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.001253366470337,
+          0.0002716465969569981,
+          -0.07234575599431992
+        ],
+        [
+          -0.0002716465969569981,
+          1.001253366470337,
+          -0.5036778450012207
+        ]
+      ],
+      "response": 0.8372093023255814,
+      "max_corner_shift": 1.752556324005127,
+      "events": [],
+      "global_change": false
+    },
+    {
+      "scene": "weak",
+      "mode": "gradient40",
+      "affine_ms": 9.161,
+      "translation_ms": 6.083,
+      "translation": [
+        0.6409776475694444,
+        0.3089328342013889,
+        0.625
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": null,
+      "response": null,
+      "max_corner_shift": null
+    },
+    {
+      "scene": "weak",
+      "mode": "blur1.2",
+      "affine_ms": 6.485,
+      "translation_ms": 5.605,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "weak",
+      "mode": "blur2.5",
+      "affine_ms": 6.494,
+      "translation_ms": 5.807,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.0
+    },
+    {
+      "scene": "weak",
+      "mode": "jpeg60",
+      "affine_ms": 6.686,
+      "translation_ms": 5.631,
+      "translation": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "motion": false,
+      "motion_ratio": 0.0,
+      "affine": [
+        [
+          1.0003399848937988,
+          -1.48385988723021e-05,
+          -0.27147579193115234
+        ],
+        [
+          1.48385988723021e-05,
+          1.0003399848937988,
+          -0.10550517588853836
+        ]
+      ],
+      "response": 1.0,
+      "max_corner_shift": 0.31466421484947205,
+      "events": [],
+      "global_change": false
+    }
+  ]
+}

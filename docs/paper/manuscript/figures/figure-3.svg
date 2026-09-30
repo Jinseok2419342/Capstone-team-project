@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="481.8897637795276" height="236" preserveAspectRatio="xMinYMin meet" viewBox="0 0 481 236" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="481.8897637795276" height="236"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-236)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="176" width="142" height="44" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="40.8359375" y="204.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,408) scale(1,-1)">안정 전후 영상</text>
+			<text x="41.049072265625" y="192.0" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,384) scale(1,-1)">기준 B / 현재 I</text>
+			<rect x="170" y="176" width="142" height="44" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="221.41796875" y="204.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,408) scale(1,-1)">기하 정합</text>
+			<text x="190.0849609375" y="192.0" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,384) scale(1,-1)">부분 affine / 제한적 대체</text>
+			<rect x="340" y="176" width="142" height="44" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="381.240234375" y="204.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,408) scale(1,-1)">휘도·색차 구성</text>
+			<text x="370.8515625" y="192.0" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,384) scale(1,-1)">전역·국소 조명 보정</text>
+			<path d="M 142,198 L 170,198 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="170 198, 166.4897 199.9177, 166.4897 196.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 312,198 L 340,198 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="340 198, 336.4897 199.9177, 336.4897 196.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<rect x="340" y="91" width="142" height="49" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="376.740234375" y="121.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,243) scale(1,-1)">경계·그림자 억제</text>
+			<text x="362.389892578125" y="109.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,219) scale(1,-1)">형태학 처리 / 후보 병합</text>
+			<rect x="170" y="91" width="142" height="49" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="210.8359375" y="121.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,243) scale(1,-1)">전역 변화 검사</text>
+			<text x="191.25390625" y="109.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,219) scale(1,-1)">광범위 변화는 사건 억제</text>
+			<rect x="0" y="91" width="142" height="49" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="40.8359375" y="121.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,243) scale(1,-1)">활성 물품 대응</text>
+			<text x="18.724853515624993" y="109.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,219) scale(1,-1)">bbox + 물품·빈 배경 crop</text>
+			<path d="M 411,176 L 411,140 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="411 140, 412.9177 143.5103, 409.0823 143.5103" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 340,115 L 312,115 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="312 115, 315.5103 113.0823, 315.5103 116.9177" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 170,115 L 142,115 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="142 115, 145.5103 113.0823, 145.5103 116.9177" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<rect x="0" y="10" width="482" height="42" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(14%,21%,27%); fill-rule: evenodd;"/>
+			<text x="221.41796875" y="37.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,74) scale(1,-1)">사건 판정</text>
+			<text x="150.5341796875" y="25.0" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,50) scale(1,-1)">added / moved / removed / verify_removed</text>
+			<path d="M 71,91 L 71,52 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="71 52, 72.9177 55.51033, 69.0823 55.51033" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+		</g>
+	</g>
+</svg>

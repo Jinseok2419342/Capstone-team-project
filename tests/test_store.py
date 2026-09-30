@@ -9,6 +9,7 @@ from contextlib import closing
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from threading import Barrier
+from unittest.mock import patch
 
 from app.store import Store, classify_retention
 
@@ -350,7 +351,9 @@ class StoreTestCase(unittest.TestCase):
             )
 
         # The unique cycle key must also hold under concurrent scheduler runs.
-        with ThreadPoolExecutor(max_workers=6) as pool:
+        # Keep the retry clock deterministic even when concurrent DB writes
+        # take more than a second on a busy machine.
+        with patch("app.store._utc_now", return_value=now), ThreadPoolExecutor(max_workers=6) as pool:
             concurrent = list(pool.map(create_same_cycle, range(12)))
         self.assertEqual(len({row["id"] for row in concurrent}), 1)
         notification = concurrent[0]
@@ -446,6 +449,185 @@ class StoreTestCase(unittest.TestCase):
         self.assertNotIn("uq_disposal_due_per_item", names)
         self.assertIn("uq_disposal_due_per_item_schedule", names)
         self.assertEqual(columns, ["item_id", "type", "scheduled_for"])
+
+    def test_inventory_tracking_and_counts_include_older_active_items(self) -> None:
+        now = datetime.now(timezone.utc)
+        tracked = self.store.create_item(
+            {"name": "Still on shelf", "bbox": [10, 20, 30, 40],
+             "detected_at": now - timedelta(days=20), "expires_at": now + timedelta(days=1)}
+        )
+        self.store.create_item(
+            {"name": "No camera location", "expires_at": now + timedelta(days=20)}
+        )
+        due = self.store.create_item(
+            {"name": "Due", "status": "due", "bbox": [1, 2, 3, 4]}
+        )
+        for index in range(505):
+            self.store.create_item({"name": f"Returned {index}", "status": "recovered"})
+
+        self.assertEqual(
+            {item["id"] for item in self.store.list_active_items()},
+            {tracked["id"], due["id"]},
+        )
+        self.assertEqual(
+            self.store.item_stats(now, lead_days=7),
+            {"active": 2, "due_soon": 1, "expired": 1, "recovered": 505, "review_needed": 0},
+        )
+
+    def test_interrupted_classifications_retain_evidence_and_terminal_status(self) -> None:
+        items = [
+            self.store.create_item(
+                {"name": "Analyzing", "provider": "pending", "status": status,
+                 "bbox": [1, 2, 3, 4], "image_path": "capture.jpg",
+                 "background_path": "before.jpg", "confidence": 0.4}
+            )
+            for status in ("stored", "recovered")
+        ]
+        manual = self.store.create_item({"name": "Manual", "provider": "manual"})
+
+        self.assertEqual(self.store.mark_interrupted_classifications(), 2)
+        self.assertEqual(self.store.mark_interrupted_classifications(), 0)
+        for original in items:
+            updated = self.store.get_item(original["id"])
+            self.assertEqual(updated["provider"], "offline_review")
+            for field in ("id", "status", "recovered_at", "expires_at", "retention_days",
+                          "bbox", "image_path", "background_path", "confidence"):
+                self.assertEqual(updated[field], original[field])
+        self.assertEqual(self.store.get_item(manual["id"]), manual)
+        self.assertEqual(len(self.store.list_activities()), 2)
+
+    def test_due_notification_claim_is_exclusive_and_old_completions_are_ignored(self) -> None:
+        now = datetime.now(timezone.utc) + timedelta(seconds=1)
+        item = self.store.create_item(
+            {"name": "Due", "status": "due", "expires_at": now - timedelta(days=1)}
+        )
+        notification = self.store.create_notification(
+            "disposal_due", item_id=item["id"], scheduled_for=item["expires_at"]
+        )
+
+        def claim(_: int) -> dict | None:
+            # Distinct Store instances emulate independent application workers.
+            return Store(self.db_path).claim_due_notification(
+                notification["id"], now=now, retry_after_seconds=0, lease_seconds=30
+            )
+
+        with ThreadPoolExecutor(max_workers=6) as pool:
+            claims = [row for row in pool.map(claim, range(12)) if row is not None]
+        self.assertEqual(len(claims), 1)
+        self.assertNotIn("delivery_token", self.store.list_notifications()[0])
+        self.assertEqual(
+            self.store.list_retryable_due_notifications(now + timedelta(seconds=29), 0), []
+        )
+        second = self.store.claim_due_notification(
+            notification["id"], now=now + timedelta(seconds=30),
+            retry_after_seconds=0, lease_seconds=30,
+        )
+        self.assertIsNotNone(second)
+        self.assertNotEqual(claims[0]["token"], second["token"])
+        self.assertIsNone(self.store.mark_notification_sent(
+            notification["id"], delivery_token=claims[0]["token"]
+        ))
+        self.assertEqual(self.store.list_notifications()[0]["status"], "pending")
+        self.store.mark_notification_sent(notification["id"], delivery_token=second["token"])
+        self.assertIsNone(self.store.mark_notification_failed(
+            notification["id"], "late timeout", delivery_token=claims[0]["token"]
+        ))
+        self.store.mark_notification_failed(notification["id"], "legacy stale timeout")
+        self.assertEqual(self.store.list_notifications()[0]["status"], "sent")
+
+    def test_notification_claim_skips_superseded_and_terminal_items(self) -> None:
+        for action in ("recover", "dispose", "extend", "delete"):
+            with self.subTest(action=action):
+                item = self.store.create_item(
+                    {"status": "due", "expires_at": datetime.now(timezone.utc) - timedelta(days=1)}
+                )
+                notification = self.store.create_notification(
+                    "disposal_due", item_id=item["id"], scheduled_for=item["expires_at"]
+                )
+                if action == "extend":
+                    self.store.extend_item(item["id"], 7)
+                elif action == "delete":
+                    self.store.delete_item(item["id"])
+                else:
+                    self.store.apply_item_action(item["id"], action)
+                self.assertIsNone(self.store.claim_due_notification(notification["id"]))
+
+    def test_expiration_activity_failure_rolls_back_transition(self) -> None:
+        item = self.store.create_item(
+            {"expires_at": datetime.now(timezone.utc) - timedelta(days=1)}
+        )
+        with closing(sqlite3.connect(self.db_path)) as connection:
+            connection.executescript(
+                """
+                CREATE TRIGGER fail_due_activity BEFORE INSERT ON activities
+                WHEN NEW.type = 'item_due'
+                BEGIN SELECT RAISE(ABORT, 'forced due activity failure'); END;
+                """
+            )
+        with self.assertRaises(sqlite3.IntegrityError):
+            self.store.process_expirations(log_activity=True)
+        self.assertEqual(self.store.get_item(item["id"])["status"], "stored")
+        self.assertEqual(self.store.list_activities(), [])
+        with closing(sqlite3.connect(self.db_path)) as connection:
+            connection.execute("DROP TRIGGER fail_due_activity")
+        self.store.process_expirations(log_activity=True)
+        self.store.process_expirations(log_activity=True)
+        self.assertEqual(len(self.store.list_activities()), 1)
+
+    def test_initialize_adds_delivery_claim_columns_without_losing_notifications(self) -> None:
+        legacy_path = Path(self.temp_dir.name) / "legacy.sqlite3"
+        with closing(sqlite3.connect(legacy_path)) as connection:
+            connection.executescript(
+                """
+                CREATE TABLE notifications (
+                    id INTEGER PRIMARY KEY, type TEXT NOT NULL, message TEXT,
+                    item_id INTEGER, status TEXT, scheduled_for TEXT,
+                    sent_at TEXT, failed_at TEXT, error TEXT, metadata_json TEXT,
+                    created_at TEXT, updated_at TEXT
+                );
+                INSERT INTO notifications(id, type, message, status, scheduled_for)
+                VALUES (1, 'manual', 'Keep this history', 'pending', '2026-01-01T00:00:00Z');
+                """
+            )
+            connection.commit()
+        migrated = Store(legacy_path)
+        migrated.initialize()
+        migrated.initialize()
+        self.assertEqual(migrated.list_notifications()[0]["message"], "Keep this history")
+        with closing(sqlite3.connect(legacy_path)) as connection:
+            columns = {row[1] for row in connection.execute("PRAGMA table_info(notifications)")}
+        self.assertTrue({"delivery_token", "delivery_lease_until"}.issubset(columns))
+
+    def test_retry_snapshot_remains_consistent_during_concurrent_deletion(self) -> None:
+        now = datetime.now(timezone.utc) + timedelta(seconds=1)
+        item = self.store.create_item(
+            {"status": "due", "expires_at": now - timedelta(days=1)}
+        )
+        notification = self.store.create_notification(
+            "disposal_due", item_id=item["id"], scheduled_for=item["expires_at"]
+        )
+        original_connect = sqlite3.connect
+        database_path = self.db_path
+
+        class DeleteAfterSnapshot(sqlite3.Connection):
+            def execute(self, sql, parameters=(), /):
+                cursor = super().execute(sql, parameters)
+                if "SELECT n.id AS notification_id" in sql:
+                    with closing(original_connect(database_path)) as other:
+                        other.execute("DELETE FROM notifications WHERE id = ?", (notification["id"],))
+                        other.execute("DELETE FROM items WHERE id = ?", (item["id"],))
+                        other.commit()
+                return cursor
+
+        with patch("app.store.sqlite3.connect", side_effect=lambda *args, **kwargs:
+                   original_connect(*args, factory=DeleteAfterSnapshot, **kwargs)):
+            retries = self.store.list_retryable_due_notifications(now, retry_after_seconds=0)
+        self.assertEqual(len(retries), 1)
+        self.assertEqual(retries[0]["notification"]["id"], notification["id"])
+        self.assertEqual(retries[0]["item"]["id"], item["id"])
+        # The returned historical snapshot is coherent; the delivery claim
+        # then rejects it because the current item no longer exists.
+        self.assertIsNone(self.store.claim_due_notification(notification["id"], now=now))
 
     def test_backup_and_operational_reset_preserve_settings(self) -> None:
         self.store.update_settings(

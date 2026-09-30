@@ -1,0 +1,671 @@
+{
+  "kind": "390px Chromium touch emulation, isolated synthetic fixture",
+  "checks": [
+    {
+      "name": "390px mobile inventory renders without horizontal document overflow",
+      "passed": true
+    },
+    {
+      "name": "Touch opens mobile item detail; dialog fits the viewport",
+      "passed": true,
+      "bounds": {
+        "left": 25.5,
+        "right": 397.5,
+        "top": 48,
+        "bottom": 868,
+        "width": 423,
+        "height": 916
+      }
+    }
+  ],
+  "screenshots": [
+    "browser-inventory-mobile.png",
+    "browser-detail-mobile.png",
+    "browser-mobile-failure.png"
+  ],
+  "inventory_diagnostics": {
+    "viewport": {
+      "innerWidth": 423,
+      "innerHeight": 916,
+      "clientWidth": 390,
+      "scrollWidth": 423,
+      "screenWidth": 390,
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "offsetLeft": 0,
+      "offsetTop": 0
+    },
+    "overflow": [
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SELECT",
+        "id": "category-filter",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "classes": "sr-only",
+        "right": 423,
+        "left": 422,
+        "width": 1,
+        "position": "absolute",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "SELECT",
+        "id": "sort-filter",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "classes": "mobile-nav",
+        "right": 413,
+        "left": 10,
+        "width": 403,
+        "position": "fixed",
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "classes": "",
+        "right": 406.984375,
+        "left": 328.796875,
+        "width": 78.1875,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "id": "toast-region",
+        "classes": "toast-region",
+        "right": 409,
+        "left": 14,
+        "width": 395,
+        "position": "fixed",
+        "overflow": "visible"
+      }
+    ]
+  },
+  "detail_diagnostics": {
+    "viewport": {
+      "innerWidth": 423,
+      "innerHeight": 916,
+      "clientWidth": 390,
+      "scrollWidth": 423,
+      "screenWidth": 390,
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "offsetLeft": 0,
+      "offsetTop": 49
+    },
+    "overflow": [
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SELECT",
+        "id": "category-filter",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "classes": "sr-only",
+        "right": 423,
+        "left": 422,
+        "width": 1,
+        "position": "absolute",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "SELECT",
+        "id": "sort-filter",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "classes": "mobile-nav",
+        "right": 413,
+        "left": 10,
+        "width": 403,
+        "position": "fixed",
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "classes": "",
+        "right": 406.984375,
+        "left": 328.796875,
+        "width": 78.1875,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIALOG",
+        "id": "item-dialog",
+        "classes": "modal item-modal",
+        "right": 397.5,
+        "left": 25.5,
+        "width": 372,
+        "position": "fixed",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "classes": "modal-shell",
+        "right": 396.5,
+        "left": 26.5,
+        "width": 370,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "HEADER",
+        "id": "",
+        "classes": "modal-header",
+        "right": 396.5,
+        "left": 26.5,
+        "width": 370,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "id": "item-dialog-content",
+        "classes": "modal-body",
+        "right": 396.5,
+        "left": 26.5,
+        "width": 370,
+        "position": "static",
+        "overflow": "auto"
+      },
+      {
+        "tag": "DIV",
+        "id": "toast-region",
+        "classes": "toast-region",
+        "right": 409,
+        "left": 14,
+        "width": 395,
+        "position": "fixed",
+        "overflow": "visible"
+      }
+    ]
+  },
+  "focused_diagnostics": {
+    "viewport": {
+      "innerWidth": 423,
+      "innerHeight": 916,
+      "clientWidth": 390,
+      "scrollWidth": 423,
+      "screenWidth": 390,
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "offsetLeft": 0,
+      "offsetTop": 49
+    },
+    "overflow": [
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SELECT",
+        "id": "category-filter",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "classes": "sr-only",
+        "right": 423,
+        "left": 422,
+        "width": 1,
+        "position": "absolute",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "SELECT",
+        "id": "sort-filter",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "NAV",
+        "id": "",
+        "classes": "mobile-nav",
+        "right": 413,
+        "left": 10,
+        "width": 403,
+        "position": "fixed",
+        "overflow": "visible"
+      },
+      {
+        "tag": "BUTTON",
+        "id": "",
+        "classes": "",
+        "right": 406.984375,
+        "left": 328.796875,
+        "width": 78.1875,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIALOG",
+        "id": "item-dialog",
+        "classes": "modal item-modal",
+        "right": 397.5,
+        "left": 25.5,
+        "width": 372,
+        "position": "fixed",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "DIV",
+        "id": "",
+        "classes": "modal-shell",
+        "right": 396.5,
+        "left": 26.5,
+        "width": 370,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "HEADER",
+        "id": "",
+        "classes": "modal-header",
+        "right": 396.5,
+        "left": 26.5,
+        "width": 370,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "DIV",
+        "id": "item-dialog-content",
+        "classes": "modal-body",
+        "right": 396.5,
+        "left": 26.5,
+        "width": 370,
+        "position": "static",
+        "overflow": "auto"
+      },
+      {
+        "tag": "DIV",
+        "id": "toast-region",
+        "classes": "toast-region",
+        "right": 409,
+        "left": 14,
+        "width": 395,
+        "position": "fixed",
+        "overflow": "visible"
+      }
+    ]
+  },
+  "passed": false,
+  "failure": {
+    "error": "Timed out waiting for: document.querySelector('#item-dialog-title').textContent === '모바일 수정 확인'",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser_mobile_check.py\", line 54, in <module>\n    browser.wait(\"document.querySelector('#item-dialog-title').textContent === '모바일 수정 확인'\")\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser_ui_check.py\", line 100, in wait\n    raise AssertionError(f\"Timed out waiting for: {expression}\")\nAssertionError: Timed out waiting for: document.querySelector('#item-dialog-title').textContent === '모바일 수정 확인'\n"
+  },
+  "visible_text_at_failure": "본문으로 바로가기\nRe:Found\n14\n관\n\nINVENTORY\n\n보관 물품\n\nAI가 감지한 모든 물품과 보관 기한을 관리합니다.\n\n시연 물품 추가\n상태\n운영 기록 전체\n보관 전체 (만료 포함)\n보관 중\n기한 임박·만료\n폐기 임박\n기한 만료\n회수 완료\n폐기 완료\n감지 제외\n검토 상태\n모든 검토 상태\n확인 필요\nAI 분석 중\n확인 완료\n분류\n모든 분류\n귀중품\n일반 물품\n음식물\n정렬\n최근 감지순\n폐기 임박순\n이름순\n\n검색 결과 55개\n\n11:38 업데이트\n검증 물품 55\n\n9월 18일 감지 · D-30\n\n귀중품\n폐기 완료\n검증 물품 54\n\n9월 18일 감지 · D-30\n\n음식물\n회수 완료\n검증 물품 53\n\n9월 18일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 52\n\n9월 18일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 51\n\n9월 18일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 50\n\n9월 18일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 49\n\n9월 18일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 48\n\n9월 18일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 47\n\n9월 18일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 46\n\n9월 18일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 45\n\n9월 17일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 44\n\n9월 17일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 43\n\n9월 17일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 42\n\n9월 17일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 41\n\n9월 17일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 40\n\n9월 17일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 39\n\n9월 17일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 38\n\n9월 17일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 37\n\n9월 17일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 36\n\n9월 17일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 35\n\n9월 17일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 34\n\n9월 17일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 33\n\n9월 17일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 32\n\n9월 17일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 31\n\n9월 17일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 30\n\n9월 17일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 29\n\n9월 17일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 28\n\n9월 17일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 27\n\n9월 17일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 26\n\n9월 17일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 25\n\n9월 17일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 24\n\n9월 17일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 23\n\n9월 17일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 22\n\n9월 17일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 21\n\n9월 16일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 20\n\n9월 16일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 19\n\n9월 16일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 18\n\n9월 16일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 17\n\n9월 16일 감지 · D-30\n\n일반 물품\n보관 중\n확인 필요\n검증 물품 16\n\n9월 16일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 15\n\n9월 16일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 14\n\n9월 16일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 13\n\n9월 16일 감지 · D-30\n\n귀중품\n보관 중\n확인 필요\n검증 물품 12\n\n9월 16일 감지 · D-30\n\n음식물\n보관 중\n검증 물품 11\n\n9월 16일 감지 · D-30\n\n일반 물품\n보관 중\n검증 물품 10\n\n9월 16일 감지 · D-30\n\n귀중품\n보관 중\n검증 물품 09\n\n9월 16일 감지 · D-5\n\n음식물\n폐기 임박\n확인 필요\n검증 물품 08\n\n9월 16일 감지 · D-4\n\n일반 물품\n폐기 임박\n1–48 / 전체 55개\n이전\n다음\n개요\n물품\n시연\n기록\n카메라\n\n물품 상세\n\n검증 물품 55\n귀중품\n폐기 완료\n검증 물품 55\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\nAI 확신도\n96%\n감지 시각\n2026년 9월 18일 오전 09:38\n보관 만료일\n2026년 10월 18일 오전 11:38\n기본 보관 기간\n90일\n분석 제공자\nOpenAI\n물품 정보 편집\n물품 이름\n분류\n귀중품 · 90일\n일반 물품 · 60일\n음식물 · 1일\n설명\n보관 만료일\n분류를 바꾸면 기본 보관 정책이 다시 적용됩니다.\n\n편집 중에는 자동 갱신이 멈춥니다. 최신 정보를 읽으면 입력 중인 내용이 취소됩니다.\n\n편집 취소·최신 정보\n정보 저장\n보관 상태 관리\n보관 목록으로 복원\n\n폐기 처리를 취소하고 다시 보관 대상으로 등록합니다.\n\n복원\n물품이 아닌 감지 제외\n\n그림자나 배경 등 잘못 감지된 항목을 제외합니다. 사진과 활동 기록은 보존됩니다.\n\n감지 제외",
+  "javascript_exceptions": [],
+  "browser_requests": [
+    {
+      "url": "http://127.0.0.1:8765/",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/styles.css",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/app.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/settings",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/55/image?v=2026-09-18T02:38:28.941303Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/54/image?v=2026-09-18T02:38:28.934639Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/53/image?v=2026-09-18T02:38:28.928368Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/52/image?v=2026-09-18T02:38:28.921889Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/51/image?v=2026-09-18T02:38:28.915413Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/50/image?v=2026-09-18T02:38:28.908597Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/49/image?v=2026-09-18T02:38:28.901726Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/48/image?v=2026-09-18T02:38:28.894747Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/47/image?v=2026-09-18T02:38:28.887736Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/46/image?v=2026-09-18T02:38:28.881243Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/45/image?v=2026-09-18T02:38:28.874984Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/44/image?v=2026-09-18T02:38:28.868504Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/43/image?v=2026-09-18T02:38:28.862269Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/42/image?v=2026-09-18T02:38:28.855936Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/41/image?v=2026-09-18T02:38:28.849311Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/40/image?v=2026-09-18T02:38:28.842987Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/39/image?v=2026-09-18T02:38:28.836211Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/38/image?v=2026-09-18T02:38:28.829539Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/37/image?v=2026-09-18T02:38:28.823287Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/36/image?v=2026-09-18T02:38:28.816286Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/35/image?v=2026-09-18T02:38:28.809688Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/34/image?v=2026-09-18T02:38:28.802588Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/33/image?v=2026-09-18T02:38:28.795828Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/32/image?v=2026-09-18T02:38:28.789291Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/31/image?v=2026-09-18T02:38:28.781487Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/30/image?v=2026-09-18T02:38:28.774247Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/29/image?v=2026-09-18T02:38:28.768121Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/28/image?v=2026-09-18T02:38:28.761969Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/27/image?v=2026-09-18T02:38:28.755490Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/26/image?v=2026-09-18T02:38:28.748978Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/25/image?v=2026-09-18T02:38:28.742452Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/24/image?v=2026-09-18T02:38:28.735476Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/23/image?v=2026-09-18T02:38:28.728727Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/22/image?v=2026-09-18T02:38:28.722559Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/21/image?v=2026-09-18T02:38:28.716518Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/20/image?v=2026-09-18T02:38:28.710536Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/19/image?v=2026-09-18T02:38:28.704331Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/18/image?v=2026-09-18T02:38:28.698233Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/17/image?v=2026-09-18T02:38:28.692244Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/16/image?v=2026-09-18T02:38:28.686087Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/15/image?v=2026-09-18T02:38:28.680096Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/14/image?v=2026-09-18T02:38:28.673613Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/13/image?v=2026-09-18T02:38:28.667476Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/12/image?v=2026-09-18T02:38:28.661249Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/11/image?v=2026-09-18T02:38:28.654790Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/10/image?v=2026-09-18T02:38:28.648696Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/9/image?v=2026-09-18T02:38:28.642432Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/8/image?v=2026-09-18T02:38:28.636287Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/1/image?v=2026-09-18T02:38:28.587890Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/2/image?v=2026-09-18T02:38:28.594422Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/3/image?v=2026-09-18T02:38:28.601112Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/4/image?v=2026-09-18T02:38:28.608721Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/5/image?v=2026-09-18T02:38:28.616655Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/55",
+      "method": "GET"
+    },
+    {
+      "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJXaW5kb3dUZXh0IiBkPSJNMjAgM2gtMVYxaC0ydjJIN1YxSDV2Mkg0Yy0xLjEgMC0yIC45LTIgMnYxNmMwIDEuMS45IDIgMiAyaDE2YzEuMSAwIDItLjkgMi0yVjVjMC0xLjEtLjktMi0yLTJ6bTAgMThINFY4aDE2djEzeiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoMjR2MjRIMHoiLz48L3N2Zz4=",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    }
+  ]
+}

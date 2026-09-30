@@ -1,0 +1,4 @@
+INFO:     Started server process [13156]
+INFO:     Uvicorn running on http://127.0.0.1:8765 (Press CTRL+C to quit)
+
+DevTools listening on ws://127.0.0.1:8766/devtools/browser/3bc90b23-b9df-4082-839d-90b28e9881c5

@@ -1,0 +1,74 @@
+2026-09-18 11:04:13,807 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,811 | INFO | httpx | HTTP Request: GET http://testserver/api/settings "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,827 | INFO | httpx | HTTP Request: POST http://testserver/api/demo/items "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,834 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/2 "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,838 | INFO | httpx | HTTP Request: GET http://testserver/api/items?q=Capstone "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,842 | INFO | httpx | HTTP Request: POST http://testserver/api/items/2/recover "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,846 | INFO | httpx | HTTP Request: POST http://testserver/api/items/2/restore "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,852 | INFO | httpx | HTTP Request: POST http://testserver/api/items/2/extend "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,857 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/2 "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,861 | INFO | httpx | HTTP Request: POST http://testserver/api/items/2/dispose "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,865 | INFO | httpx | HTTP Request: POST http://testserver/api/items/2/restore "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,867 | INFO | httpx | HTTP Request: GET http://testserver/api/items/2 "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,875 | INFO | httpx | HTTP Request: POST http://testserver/api/demo/items "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,879 | INFO | httpx | HTTP Request: POST http://testserver/api/demo/recover "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,881 | INFO | httpx | HTTP Request: POST http://testserver/api/demo/recover "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,895 | INFO | httpx | HTTP Request: GET http://testserver/api/health "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,904 | INFO | httpx | HTTP Request: GET http://testserver/api/dashboard "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,906 | INFO | httpx | HTTP Request: POST http://testserver/api/demo/items "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,908 | INFO | httpx | HTTP Request: GET http://testserver/api/items?status=missing "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,910 | INFO | httpx | HTTP Request: GET http://testserver/api/items/999999 "HTTP/1.1 404 Not Found"
+2026-09-18 11:04:13,917 | INFO | httpx | HTTP Request: POST http://testserver/api/demo/items "HTTP/1.1 200 OK"
+2026-09-18 11:04:13,919 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/5 "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,920 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/5 "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,921 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/5 "HTTP/1.1 422 Unprocessable Entity"
+2026-09-18 11:04:13,922 | INFO | httpx | HTTP Request: POST http://testserver/api/items/5/extend "HTTP/1.1 422 Unprocessable Entity"
+2026-09-18 11:04:13,922 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,923 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,923 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,924 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,925 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,927 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:13,930 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,046 | INFO | httpx | HTTP Request: POST http://testserver/api/items/11/recover "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,048 | INFO | httpx | HTTP Request: POST http://testserver/api/items/11/recover "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,050 | INFO | httpx | HTTP Request: POST http://testserver/api/items/11/dispose "HTTP/1.1 409 Conflict"
+2026-09-18 11:04:14,054 | INFO | httpx | HTTP Request: POST http://testserver/api/items/11/restore "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,056 | INFO | httpx | HTTP Request: POST http://testserver/api/items/11/restore "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,067 | INFO | httpx | HTTP Request: POST http://testserver/api/items/12/dispose "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,069 | INFO | httpx | HTTP Request: POST http://testserver/api/items/12/dispose "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,071 | INFO | httpx | HTTP Request: POST http://testserver/api/items/12/recover "HTTP/1.1 409 Conflict"
+2026-09-18 11:04:14,073 | INFO | httpx | HTTP Request: POST http://testserver/api/items/999999/recover "HTTP/1.1 404 Not Found"
+2026-09-18 11:04:14,075 | INFO | httpx | HTTP Request: POST http://testserver/api/items/999999/dispose "HTTP/1.1 404 Not Found"
+2026-09-18 11:04:14,077 | INFO | httpx | HTTP Request: POST http://testserver/api/items/999999/restore "HTTP/1.1 404 Not Found"
+2026-09-18 11:04:14,198 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,202 | INFO | httpx | HTTP Request: GET http://testserver/api/settings "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,207 | INFO | httpx | HTTP Request: POST http://testserver/api/camera/rebaseline "HTTP/1.1 200 OK"
+======================================================================
+FAIL: test_health_and_dashboard_contract (test_api.ApiIntegrationTests.test_health_and_dashboard_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Downloads\Capstone-team-project-main\tests\test_api.py", line 104, in test_health_and_dashboard_contract
+    self.assertEqual(
+    ~~~~~~~~~~~~~~~~^
+        set(dashboard["stats"]), {"active", "due_soon", "expired", "recovered"}
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+AssertionError: Items in the first set but not the second:
+'review_needed'
+
+======================================================================
+FAIL: test_strong_remote_removal_discards_false_provisional_addition (test_api.ApiIntegrationTests.test_strong_remote_removal_discards_false_provisional_addition)
+A baseline-object disappearance must not survive as a new item.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Downloads\Capstone-team-project-main\tests\test_api.py", line 280, in test_strong_remote_removal_discards_false_provisional_addition
+    self.assertIsNone(self.store.get_item(provisional["id"]))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'id': 19, 'name': 'Existing object removed', 'description': 'AI는 제거 변화로 판단했습니다. 사진을 확인한 뒤 실제 물품인지 결정해 주세요. 확인 전까지 감지 기록과 추적을 유지합니다.', 'category': 'general', 'retention_days': 60, 'detected_at': '2026-09-18T02:04:14.000000Z', 'expires_at': '2026-11-17T02:04:14.000000Z', 'status': 'stored', 'recovered_at': None, 'bbox_json': '[85,45,150,95]', 'confidence': 0.87, 'image_path': 'C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\tmp14b5cvt2\\item-20260918-020414-6aa86e8c.jpg', 'background_path': 'C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\tmp14b5cvt2\\background-20260918-020414-44a00693.jpg', 'provider': 'openai_review', 'review_status': 'needs_review', 'review_reason': 'ai_rejected', 'source_event_id': '4406ad6a74c94db9a3388f0afa71de67', 'tracking_revision': 0, 'ai_raw': '', 'created_at': '2026-09-18T02:04:14.225474Z', 'updated_at': '2026-09-18T02:04:14.237982Z', 'bbox': [85, 45, 150, 95]} is not None
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.531s
+
+FAILED (failures=2)

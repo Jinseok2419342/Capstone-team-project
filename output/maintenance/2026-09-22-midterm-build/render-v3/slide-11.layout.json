@@ -1,0 +1,933 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/jetc3ut0",
+    "id": "jetc3ut0",
+    "slide": 11,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0b6tc3yx",
+      "id": "14",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "3. 프로젝트 개발 진행 현황",
+      "textPreview": "3. 프로젝트 개발 진행 현황",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "3. 프로젝트 개발 진행 현황"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "3. 프로젝트 개발 진행 현황",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3. 프로젝트 개발 진행 현황",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xcryxg7y",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "팀 수행 내용과 버전관리 근거",
+      "textPreview": "팀 수행 내용과 버전관리 근거",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "팀 수행 내용과 버전관리 근거"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "팀 수행 내용과 버전관리 근거",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "팀 수행 내용과 버전관리 근거",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wbih4b6d",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/n69grmpw",
+      "id": "4",
+      "bbox": [
+        64,
+        668,
+        1085,
+        28
+      ],
+      "geometry": "rect",
+      "text": "로컬 변경 백업과 검사 로그는 보존. Git 커밋 이력과는 구분",
+      "textPreview": "로컬 변경 백업과 검사 로그는 보존. Git 커밋 이력과는 구분",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "로컬 변경 백업과 검사 로그는 보존. Git 커밋 이력과는 구분"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "로컬 변경 백업과 검사 로그는 보존. Git 커밋 이력과는 구분",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "로컬 변경 백업과 검사 로그는 보존. Git 커밋 이력과는 구분",
+              "fontSize": 16,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/250zy18b",
+      "id": "5",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "11",
+      "textPreview": "11",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "11"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "11",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "11",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/98rytw72",
+      "id": "6",
+      "bbox": [
+        64,
+        180,
+        507,
+        38
+      ],
+      "geometry": "rect",
+      "text": "README의 수행 분담",
+      "textPreview": "README의 수행 분담",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "README의 수행 분담"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "README의 수행 분담",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 28,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "README의 수행 분담",
+              "fontSize": 28,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/o7ih0r6h",
+      "id": "7",
+      "bbox": [
+        64,
+        242,
+        518,
+        229
+      ],
+      "geometry": "rect",
+      "text": "장진석\n시스템 구현·통합, 배포, 검사와 문서화\n\n권기원\n자료 검토·교정과 시연 준비 지원",
+      "textPreview": "장진석 | 시스템 구현·통합, 배포, 검사와 문서화 |  | 권기원 | 자료 검토·교정과 시연 준비 지원",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 5,
+        "lines": [
+          {
+            "index": 1,
+            "text": "장진석"
+          },
+          {
+            "index": 2,
+            "text": "시스템 구현·통합, 배포, 검사와 문서화"
+          },
+          {
+            "index": 3,
+            "text": ""
+          },
+          {
+            "index": 4,
+            "text": "권기원"
+          },
+          {
+            "index": 5,
+            "text": "자료 검토·교정과 시연 준비 지원"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "장진석",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "장진석",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "시스템 구현·통합, 배포, 검사와 문서화",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "시스템 구현·통합, 배포, 검사와 문서화",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 4,
+          "text": "권기원",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "권기원",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 5,
+          "text": "자료 검토·교정과 시연 준비 지원",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "자료 검토·교정과 시연 준비 지원",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/72t03qp0",
+      "id": "8",
+      "bbox": [
+        64,
+        526,
+        533,
+        89
+      ],
+      "geometry": "rect",
+      "text": "현재 작업 폴더에는 .git이 없어\n커밋·작성자별 기여를 확인하지 못했다.",
+      "textPreview": "현재 작업 폴더에는 .git이 없어 | 커밋·작성자별 기여를 확인하지 못했다.",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "현재 작업 폴더에는 .git이 없어"
+          },
+          {
+            "index": 2,
+            "text": "커밋·작성자별 기여를 확인하지 못했다."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "현재 작업 폴더에는 .git이 없어",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 25,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "현재 작업 폴더에는 .git이 없어",
+              "fontSize": 25,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "커밋·작성자별 기여를 확인하지 못했다.",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 25,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "커밋·작성자별 기여를 확인하지 못했다.",
+              "fontSize": 25,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/61kzalof",
+      "id": "9",
+      "name": "FILL_S1",
+      "bbox": [
+        644,
+        185,
+        572,
+        357
+      ],
+      "geometry": "rect",
+      "fillColor": "#F5F8F8",
+      "lineColor": "#8BA6AB",
+      "lineWidth": 2
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ofqtgnyt",
+      "id": "10",
+      "bbox": [
+        668,
+        210,
+        524,
+        35
+      ],
+      "geometry": "rect",
+      "text": "S1",
+      "textPreview": "S1",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "S1"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "S1",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "S1",
+              "fontSize": 22,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9gza9sze",
+      "id": "11",
+      "bbox": [
+        668,
+        326.5,
+        524,
+        88
+      ],
+      "geometry": "rect",
+      "text": "저장소 개발 이력 캡처",
+      "textPreview": "저장소 개발 이력 캡처",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "저장소 개발 이력 캡처"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "저장소 개발 이력 캡처",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 31,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "저장소 개발 이력 캡처",
+              "fontSize": 31,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mdobedg3",
+      "id": "12",
+      "bbox": [
+        668,
+        473,
+        524,
+        50
+      ],
+      "geometry": "rect",
+      "text": "날짜 · 작성자 · 커밋 메시지 포함",
+      "textPreview": "날짜 · 작성자 · 커밋 메시지 포함",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "날짜 · 작성자 · 커밋 메시지 포함"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "날짜 · 작성자 · 커밋 메시지 포함",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "날짜 · 작성자 · 커밋 메시지 포함",
+              "fontSize": 19,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nehs7iho",
+      "id": "13",
+      "bbox": [
+        644,
+        566,
+        572,
+        66
+      ],
+      "geometry": "rect",
+      "text": "저장소 URL [입력]  /  주요 커밋 3~5개 [입력]",
+      "textPreview": "저장소 URL [입력]  /  주요 커밋 3~5개 [입력]",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "저장소 URL [입력]  /  주요 커밋 3~5개 [입력]"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "저장소 URL [입력]  /  주요 커밋 3~5개 [입력]",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "저장소 URL [입력]  /  주요 커밋 3~5개 [입력]",
+              "fontSize": 22,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

@@ -1,0 +1,48 @@
+2026-09-18 11:04:14,166 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,170 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,174 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,177 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,180 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,184 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,187 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,190 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,193 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,196 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,232 | INFO | httpx | HTTP Request: POST http://testserver/api/items/1/extend "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,260 | INFO | httpx | HTTP Request: POST http://testserver/api/maintenance/reset "HTTP/1.1 409 Conflict"
+2026-09-18 11:04:14,286 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/1 "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,290 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/1 "HTTP/1.1 400 Bad Request"
+2026-09-18 11:04:14,299 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/1 "HTTP/1.1 200 OK"
+2026-09-18 11:04:14,361 | INFO | httpx | HTTP Request: POST http://testserver/api/maintenance/reset "HTTP/1.1 409 Conflict"
+2026-09-18 11:04:14,363 | INFO | httpx | HTTP Request: POST http://testserver/api/maintenance/reset "HTTP/1.1 409 Conflict"
+2026-09-18 11:04:14,366 | INFO | httpx | HTTP Request: POST http://testserver/api/maintenance/reset "HTTP/1.1 409 Conflict"
+2026-09-18 11:04:14,368 | INFO | httpx | HTTP Request: POST http://testserver/api/maintenance/reset "HTTP/1.1 409 Conflict"
+2026-09-18 11:04:14,397 | INFO | httpx | HTTP Request: PUT http://testserver/api/settings "HTTP/1.1 200 OK"
+======================================================================
+FAIL: test_manual_edit_resolves_review_and_rejects_empty_names (test_app_resilience.AppResilienceTests.test_manual_edit_resolves_review_and_rejects_empty_names)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Downloads\Capstone-team-project-main\tests\test_app_resilience.py", line 201, in test_manual_edit_resolves_review_and_rejects_empty_names
+    self.assertEqual(response.json()["provider"], "manual")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'offline_review' != 'manual'
+- offline_review
++ manual
+
+
+======================================================================
+FAIL: test_rejected_submission_preserves_concurrent_manual_edit (test_app_resilience.AppResilienceTests.test_rejected_submission_preserves_concurrent_manual_edit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\USER\Downloads\Capstone-team-project-main\tests\test_app_resilience.py", line 176, in test_rejected_submission_preserves_concurrent_manual_edit
+    self.assertEqual(item["provider"], "manual")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'manual_review' != 'manual'
+- manual_review
++ manual
+
+
+----------------------------------------------------------------------
+Ran 16 tests in 0.703s
+
+FAILED (failures=2)

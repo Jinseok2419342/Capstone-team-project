@@ -66,7 +66,7 @@ fi
 if (( first_install == 1 )) && [[ -f "${REFOUND_APP_DIR}/.env" ]]; then
     if grep -Eq '^[[:space:]]*(OPENAI_API_KEY|GEMINI_API_KEY|SMTP_PASSWORD)[[:space:]]*=[[:space:]]*[^[:space:]#]' \
         "${REFOUND_APP_DIR}/.env"; then
-        die "A populated .env exists before first Pi install. Do not copy PC secrets. Remove it, rerun install, then enter newly issued keys on the Pi."
+        die "A populated .env exists before first Pi install. Keep a secure backup, remove the transferred file, rerun install, then enter valid keys directly on the Pi."
     fi
 fi
 
@@ -115,6 +115,10 @@ fi
 runuser -u "${service_user}" -- "${REFOUND_APP_DIR}/.venv/bin/python" \
     -m pip install -r "${requirements_file}"
 
+log "Checking the actual service user's Python imports before starting the app..."
+runuser -u "${service_user}" -- "${REFOUND_APP_DIR}/.venv/bin/python" \
+    "${SCRIPT_DIR}/check-runtime.py"
+
 service_temp="$(mktemp /run/refound.service.XXXXXX)"
 trap 'rm -f "${service_temp:-}"' EXIT
 sed \
@@ -124,18 +128,14 @@ sed \
 install -m 0644 -o root -g root "${service_temp}" \
     "/etc/systemd/system/${REFOUND_SERVICE}"
 
-write_runtime_mode local
+prepare_install_runtime
 install -m 0644 -o root -g root /dev/null "${REFOUND_RUNTIME_DIR}/installed"
-systemctl daemon-reload
-systemctl enable --now "${REFOUND_SERVICE}"
+restart_installed_service
 
-port="$(runtime_port)"
-if ! wait_for_health "${port}"; then
-    warn "The service started but its health endpoint did not become ready."
-    systemctl status "${REFOUND_SERVICE}" --no-pager || true
-    die "Inspect logs with: sudo journalctl -u ${REFOUND_SERVICE} -n 80 --no-pager"
+log "Installation complete. Existing access settings were retained; a first install is local-only."
+if (( first_install == 1 )); then
+    log "Next: run check-camera.sh and follow docs/guides/FRESH_SD_START.md. Verify the app through an SSH tunnel before optional Tailscale setup."
+else
+    log "Continue using the existing access address. Check the camera and finish one real-item rehearsal before presenting."
 fi
-
-log "Installation complete. The app currently listens only on this Pi."
-log "Next: run check-camera.sh, then choose setup-tailscale.sh or setup-hotspot.sh."
 log "Edit Pi-only secrets with: sudo -u ${service_user} nano ${REFOUND_APP_DIR}/.env"

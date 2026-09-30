@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "desktop_checks_passed": 12,
+  "mobile_checks_passed": 4,
+  "javascript_exceptions": 0,
+  "desktop_raw_report": "browser-desktop-result.json",
+  "mobile_raw_report": "browser-mobile-result.json",
+  "desktop_raw_report_note": "The original desktop run continued into the pre-fix mobile failure. The mobile issue was fixed and verified separately.",
+  "real_hardware_or_remote_services_used": false,
+  "temporary_processes_stopped": true,
+  "temporary_fixture_cleanup": "Automatic approval review rejected recursive deletion: blocked by policy. Fixture directories retained under this review folder."
+}

@@ -1,0 +1,6 @@
+Collecting opencv-python-headless==4.11.0.86
+  Downloading opencv_python_headless-4.11.0.86-cp37-abi3-win_amd64.whl.metadata (20 kB)
+Downloading opencv_python_headless-4.11.0.86-cp37-abi3-win_amd64.whl (39.4 MB)
+   ---------------------------------------- 39.4/39.4 MB 5.0 MB/s  0:00:07
+Installing collected packages: opencv-python-headless
+Successfully installed opencv-python-headless-4.11.0.86

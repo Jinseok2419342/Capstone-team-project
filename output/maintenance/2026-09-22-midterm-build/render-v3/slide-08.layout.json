@@ -1,0 +1,986 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/fu1gfa1s",
+    "id": "fu1gfa1s",
+    "slide": 8,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sjix0zy1",
+      "id": "7",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "3. 프로젝트 개발 진행 현황",
+      "textPreview": "3. 프로젝트 개발 진행 현황",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "3. 프로젝트 개발 진행 현황"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "3. 프로젝트 개발 진행 현황",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "3. 프로젝트 개발 진행 현황",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/18byd4zy",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "현재 위치와 수업 일정",
+      "textPreview": "현재 위치와 수업 일정",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "현재 위치와 수업 일정"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "현재 위치와 수업 일정",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "현재 위치와 수업 일정",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/g72x4zyd",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ri9g7uhw",
+      "id": "4",
+      "bbox": [
+        64,
+        668,
+        1085,
+        28
+      ],
+      "geometry": "rect",
+      "text": "개발 기록 기준일은 9월 22일. 발표일까지의 작업은 계획으로 구분",
+      "textPreview": "개발 기록 기준일은 9월 22일. 발표일까지의 작업은 계획으로 구분",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "개발 기록 기준일은 9월 22일. 발표일까지의 작업은 계획으로 구분"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "개발 기록 기준일은 9월 22일. 발표일까지의 작업은 계획으로 구분",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "개발 기록 기준일은 9월 22일. 발표일까지의 작업은 계획으로 구분",
+              "fontSize": 16,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6h0fypgb",
+      "id": "5",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "08",
+      "textPreview": "08",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "08"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "08",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "08",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/u9sb2p0r",
+      "id": "8",
+      "bbox": [
+        64,
+        181,
+        1152,
+        429
+      ],
+      "text": "시점 | 수업·발표 일정 | 현재 근거 또는 예정 작업\n9/08  ·  3주차 | 팀프로젝트 현황보고 | 기존 프로젝트 소개 단계\n9/18  ·  개발 기록 | 앱·비전·처리 구조 보완 | 연결 복구와 데이터 보존 회귀 검사\n9/22  ·  5주차 / 현재 | 중간보고 작성 시작 | 새 SD 설치·카메라·재부팅 진단 확인\n9/29  ·  6주차 | 중간보고 작성 | 실기 증거 확보와 자료 보완 예정\n10/13  ·  7주차 | 프로젝트 개발 중간보고 발표 | 현재 구현·검증 결과와 남은 계획 보고\n10/27 / 11/03 | 최종보고 연습 / 최종보고 발표 | 추가 평가·안정화 결과 제출 예정",
+      "textPreview": "시점 | 수업·발표 일정 | 현재 근거 또는 예정 작업 | 9/08  ·  3주차 | 팀프로젝트 현황보고 | 기존 프로젝트 소개 단계 | 9/18  ·  개발 기록 | 앱·비전·처리 구조 보완 | 연결 복구와 데이터 보존 회귀 검사 | 9/22 ...",
+      "rows": 7,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            265,
+            61.29
+          ],
+          "text": "시점",
+          "textPreview": "시점",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "시점",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "시점",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            329,
+            181,
+            415,
+            61.29
+          ],
+          "text": "수업·발표 일정",
+          "textPreview": "수업·발표 일정",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "수업·발표 일정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "수업·발표 일정",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            744,
+            181,
+            472,
+            61.29
+          ],
+          "text": "현재 근거 또는 예정 작업",
+          "textPreview": "현재 근거 또는 예정 작업",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "현재 근거 또는 예정 작업",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "현재 근거 또는 예정 작업",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            242.29,
+            265,
+            61.29
+          ],
+          "text": "9/08  ·  3주차",
+          "textPreview": "9/08  ·  3주차",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "9/08  ·  3주차",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "9/08  ·  3주차",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            329,
+            242.29,
+            415,
+            61.29
+          ],
+          "text": "팀프로젝트 현황보고",
+          "textPreview": "팀프로젝트 현황보고",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "팀프로젝트 현황보고",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "팀프로젝트 현황보고",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            744,
+            242.29,
+            472,
+            61.29
+          ],
+          "text": "기존 프로젝트 소개 단계",
+          "textPreview": "기존 프로젝트 소개 단계",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "기존 프로젝트 소개 단계",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "기존 프로젝트 소개 단계",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            303.57,
+            265,
+            61.29
+          ],
+          "text": "9/18  ·  개발 기록",
+          "textPreview": "9/18  ·  개발 기록",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "9/18  ·  개발 기록",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "9/18  ·  개발 기록",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            329,
+            303.57,
+            415,
+            61.29
+          ],
+          "text": "앱·비전·처리 구조 보완",
+          "textPreview": "앱·비전·처리 구조 보완",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "앱·비전·처리 구조 보완",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "앱·비전·처리 구조 보완",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            744,
+            303.57,
+            472,
+            61.29
+          ],
+          "text": "연결 복구와 데이터 보존 회귀 검사",
+          "textPreview": "연결 복구와 데이터 보존 회귀 검사",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "연결 복구와 데이터 보존 회귀 검사",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "연결 복구와 데이터 보존 회귀 검사",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            364.86,
+            265,
+            61.29
+          ],
+          "text": "9/22  ·  5주차 / 현재",
+          "textPreview": "9/22  ·  5주차 / 현재",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "9/22  ·  5주차 / 현재",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "9/22  ·  5주차 / 현재",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            329,
+            364.86,
+            415,
+            61.29
+          ],
+          "text": "중간보고 작성 시작",
+          "textPreview": "중간보고 작성 시작",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "중간보고 작성 시작",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "중간보고 작성 시작",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            744,
+            364.86,
+            472,
+            61.29
+          ],
+          "text": "새 SD 설치·카메라·재부팅 진단 확인",
+          "textPreview": "새 SD 설치·카메라·재부팅 진단 확인",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "새 SD 설치·카메라·재부팅 진단 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "새 SD 설치·카메라·재부팅 진단 확인",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            426.14,
+            265,
+            61.29
+          ],
+          "text": "9/29  ·  6주차",
+          "textPreview": "9/29  ·  6주차",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "9/29  ·  6주차",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "9/29  ·  6주차",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            329,
+            426.14,
+            415,
+            61.29
+          ],
+          "text": "중간보고 작성",
+          "textPreview": "중간보고 작성",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "중간보고 작성",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "중간보고 작성",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            744,
+            426.14,
+            472,
+            61.29
+          ],
+          "text": "실기 증거 확보와 자료 보완 예정",
+          "textPreview": "실기 증거 확보와 자료 보완 예정",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "실기 증거 확보와 자료 보완 예정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "실기 증거 확보와 자료 보완 예정",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            487.43,
+            265,
+            61.29
+          ],
+          "text": "10/13  ·  7주차",
+          "textPreview": "10/13  ·  7주차",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "10/13  ·  7주차",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "10/13  ·  7주차",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            329,
+            487.43,
+            415,
+            61.29
+          ],
+          "text": "프로젝트 개발 중간보고 발표",
+          "textPreview": "프로젝트 개발 중간보고 발표",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "프로젝트 개발 중간보고 발표",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "프로젝트 개발 중간보고 발표",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "row": 6,
+          "column": 3,
+          "bbox": [
+            744,
+            487.43,
+            472,
+            61.29
+          ],
+          "text": "현재 구현·검증 결과와 남은 계획 보고",
+          "textPreview": "현재 구현·검증 결과와 남은 계획 보고",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "현재 구현·검증 결과와 남은 계획 보고",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "현재 구현·검증 결과와 남은 계획 보고",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "row": 7,
+          "column": 1,
+          "bbox": [
+            64,
+            548.71,
+            265,
+            61.29
+          ],
+          "text": "10/27 / 11/03",
+          "textPreview": "10/27 / 11/03",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "10/27 / 11/03",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "10/27 / 11/03",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "row": 7,
+          "column": 2,
+          "bbox": [
+            329,
+            548.71,
+            415,
+            61.29
+          ],
+          "text": "최종보고 연습 / 최종보고 발표",
+          "textPreview": "최종보고 연습 / 최종보고 발표",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "최종보고 연습 / 최종보고 발표",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "최종보고 연습 / 최종보고 발표",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 21,
+          "row": 7,
+          "column": 3,
+          "bbox": [
+            744,
+            548.71,
+            472,
+            61.29
+          ],
+          "text": "추가 평가·안정화 결과 제출 예정",
+          "textPreview": "추가 평가·안정화 결과 제출 예정",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "추가 평가·안정화 결과 제출 예정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "추가 평가·안정화 결과 제출 예정",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "composeRuns": []
+}

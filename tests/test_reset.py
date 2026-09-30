@@ -188,6 +188,88 @@ class OperationalResetApiTests(unittest.TestCase):
         self.assertEqual(self.vision_start.call_count, 2)
         self.assertEqual(self.scheduler_start.call_count, 2)
 
+    def test_quick_reset_skips_backup_and_preserves_settings_and_existing_backups(self) -> None:
+        self.store.update_settings({"motion_threshold": 41, "privacy_mode": True})
+        settings_before = self.store.get_settings()
+        old_backup = self.data_dir / "reset-backups" / "previous" / "keep.txt"
+        old_backup.parent.mkdir(parents=True)
+        old_backup.write_bytes(b"existing backup")
+        sibling = self.data_dir / "keep.txt"
+        sibling.write_bytes(b"unrelated file")
+        image = self.capture_dir / "nested" / "item.jpg"
+        image.parent.mkdir()
+        image.write_bytes(b"disposable image")
+        item = self.store.create_item({"name": "Camera item", "image_path": str(image)})
+        self.store.create_item({"name": "Demo item", "source_kind": "demo"})
+        self.store.create_activity("test", "disposable activity", item_id=item["id"])
+        self.store.create_notification("test", item_id=item["id"], scheduled_for=item["expires_at"])
+        with patch.object(self.store, "backup_to") as backup, \
+             patch.object(main.shutil, "copytree") as copy:
+            response = self.client.post("/api/maintenance/reset", json={
+                "mode": "quick", "confirmation": "시연 초기화",
+            })
+            backup.assert_not_called()
+            copy.assert_not_called()
+        self.assertEqual(response.status_code, 200, response.text)
+        payload = response.json()
+        self.assertIsNone(payload["backup_directory"])
+        self.assertEqual(payload["removed"]["items"], 2)
+        self.assertEqual(payload["capture_files"], 1)
+        self.assertEqual(self.store.list_items(), [])
+        self.assertEqual(self.store.list_activities(), [])
+        self.assertEqual(self.store.list_notifications(), [])
+        self.assertEqual(list(self.capture_dir.iterdir()), [])
+        self.assertEqual(self.store.get_settings(), settings_before)
+        self.assertEqual(self.env_file.read_text(), "OPENAI_API_KEY=keep-me\n")
+        self.assertEqual(old_backup.read_bytes(), b"existing backup")
+        self.assertEqual(sibling.read_bytes(), b"unrelated file")
+        self.assertEqual(len(list(old_backup.parent.parent.iterdir())), 1)
+        self.assertEqual(self.client.get(f"/api/items/{item['id']}/image").status_code, 404)
+        fresh = self.store.create_item({"name": "Next round"})
+        self.assertGreater(fresh["id"], item["id"] + 1)
+        self.vision_rebaseline.assert_called_once_with()
+        self.assertEqual(self.vision_start.call_count, 2)
+        self.assertEqual(self.scheduler_start.call_count, 2)
+
+    def test_quick_reset_requires_explicit_mode_and_matching_confirmation(self) -> None:
+        item = self.store.create_item({"name": "Must remain"})
+        for payload, status in (
+            ({"mode": "quick", "confirmation": "초기화"}, 400),
+            ({"confirmation": "시연 초기화"}, 400),
+            ({"mode": "quick", "confirmation": "시연 초기화 "}, 400),
+            ({"mode": "typo", "confirmation": "시연 초기화"}, 422),
+        ):
+            with self.subTest(payload=payload):
+                self.assertEqual(self.client.post("/api/maintenance/reset", json=payload).status_code, status)
+        self.assertIsNotNone(self.store.get_item(item["id"]))
+        self.vision_stop.assert_not_called()
+
+    def test_quick_reset_refuses_unsafe_capture_root_before_deleting_data(self) -> None:
+        item = self.store.create_item({"name": "Must remain"})
+        with patch.object(main, "config", replace(main.config, capture_dir=self.data_dir)):
+            response = self.client.post("/api/maintenance/reset", json={
+                "mode": "quick", "confirmation": "시연 초기화",
+            })
+        self.assertEqual(response.status_code, 500)
+        self.assertIsNotNone(self.store.get_item(item["id"]))
+        self.assertTrue(self.env_file.exists())
+        self.assertFalse((self.data_dir / "reset-backups").exists())
+        self.assertFalse(main._reset_lock.locked())
+        self.assertEqual(self.vision_start.call_count, 2)
+
+    def test_quick_reset_failure_does_not_claim_a_backup_or_retry_deletion(self) -> None:
+        with patch.object(main, "_clear_operational_data", side_effect=OSError("synthetic failure")) as clear:
+            response = self.client.post("/api/maintenance/reset", json={
+                "mode": "quick", "confirmation": "시연 초기화",
+            })
+        self.assertEqual(response.status_code, 500)
+        self.assertIn("일부 데이터", response.json()["detail"])
+        clear.assert_called_once()
+        self.assertFalse((self.data_dir / "reset-backups").exists())
+        self.assertFalse(main._reset_lock.locked())
+        self.assertEqual(self.vision_start.call_count, 2)
+        self.assertEqual(self.scheduler_start.call_count, 2)
+
 
 if __name__ == "__main__":
     unittest.main()

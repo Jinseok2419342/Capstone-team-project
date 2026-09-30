@@ -1,0 +1,831 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/gny5sjyp",
+    "id": "gny5sjyp",
+    "slide": 16,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e1sf65o3",
+      "id": "11",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "4. 핵심 기능 구현 결과",
+      "textPreview": "4. 핵심 기능 구현 결과",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "4. 핵심 기능 구현 결과"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "4. 핵심 기능 구현 결과",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "4. 핵심 기능 구현 결과",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8z2h8bq1",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "통합된 기능과 남은 개발 범위",
+      "textPreview": "통합된 기능과 남은 개발 범위",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "통합된 기능과 남은 개발 범위"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "통합된 기능과 남은 개발 범위",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "통합된 기능과 남은 개발 범위",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9kby1g7m",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ytkf2h8j",
+      "id": "4",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "16",
+      "textPreview": "16",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "16"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "16",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "16",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zutgvm94",
+      "id": "5",
+      "bbox": [
+        64,
+        192,
+        552,
+        40
+      ],
+      "geometry": "rect",
+      "text": "연동 구현 완료",
+      "textPreview": "연동 구현 완료",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "연동 구현 완료"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "연동 구현 완료",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 29,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "연동 구현 완료",
+              "fontSize": 29,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kv2h4rqp",
+      "id": "6",
+      "bbox": [
+        64,
+        246,
+        552,
+        139
+      ],
+      "geometry": "rect",
+      "text": "카메라·사건 처리·SQLite·API·웹 연결\n임시 저장 후 비동기 AI 반영\n기한 검사와 알림, 상태·활동 이력 연결",
+      "textPreview": "카메라·사건 처리·SQLite·API·웹 연결 | 임시 저장 후 비동기 AI 반영 | 기한 검사와 알림, 상태·활동 이력 연결",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "카메라·사건 처리·SQLite·API·웹 연결"
+          },
+          {
+            "index": 2,
+            "text": "임시 저장 후 비동기 AI 반영"
+          },
+          {
+            "index": 3,
+            "text": "기한 검사와 알림, 상태·활동 이력 연결"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "카메라·사건 처리·SQLite·API·웹 연결",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "카메라·사건 처리·SQLite·API·웹 연결",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "임시 저장 후 비동기 AI 반영",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "임시 저장 후 비동기 AI 반영",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "기한 검사와 알림, 상태·활동 이력 연결",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "기한 검사와 알림, 상태·활동 이력 연결",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lwbyxwra",
+      "id": "7",
+      "bbox": [
+        679,
+        192,
+        537,
+        40
+      ],
+      "geometry": "rect",
+      "text": "현장 확인 대기",
+      "textPreview": "현장 확인 대기",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "현장 확인 대기"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "현장 확인 대기",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 29,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "현장 확인 대기",
+              "fontSize": 29,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ip4zel83",
+      "id": "8",
+      "bbox": [
+        679,
+        246,
+        537,
+        139
+      ],
+      "geometry": "rect",
+      "text": "친구 노트북과 핫스팟 연결\n실제 AI 응답·SMTP 수신\n여러 물품과 장시간 운영",
+      "textPreview": "친구 노트북과 핫스팟 연결 | 실제 AI 응답·SMTP 수신 | 여러 물품과 장시간 운영",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "친구 노트북과 핫스팟 연결"
+          },
+          {
+            "index": 2,
+            "text": "실제 AI 응답·SMTP 수신"
+          },
+          {
+            "index": 3,
+            "text": "여러 물품과 장시간 운영"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "친구 노트북과 핫스팟 연결",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "친구 노트북과 핫스팟 연결",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "실제 AI 응답·SMTP 수신",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "실제 AI 응답·SMTP 수신",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "여러 물품과 장시간 운영",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "여러 물품과 장시간 운영",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3qdg7qpo",
+      "id": "9",
+      "bbox": [
+        64,
+        456,
+        1152,
+        44
+      ],
+      "geometry": "rect",
+      "text": "정량 평가를 위해 추가할 부분",
+      "textPreview": "정량 평가를 위해 추가할 부분",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "정량 평가를 위해 추가할 부분"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "정량 평가를 위해 추가할 부분",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 29,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "정량 평가를 위해 추가할 부분",
+              "fontSize": 29,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fm1gzq5o",
+      "id": "10",
+      "bbox": [
+        64,
+        518,
+        1152,
+        117
+      ],
+      "geometry": "rect",
+      "text": "종단간 사건·API 호출의 영속 측정 원장\n공통 영상으로 B0/B1/B2를 비교할 스트림 실행기\n정답 라벨 데이터와 반복 측정 결과",
+      "textPreview": "종단간 사건·API 호출의 영속 측정 원장 | 공통 영상으로 B0/B1/B2를 비교할 스트림 실행기 | 정답 라벨 데이터와 반복 측정 결과",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 3,
+        "lines": [
+          {
+            "index": 1,
+            "text": "종단간 사건·API 호출의 영속 측정 원장"
+          },
+          {
+            "index": 2,
+            "text": "공통 영상으로 B0/B1/B2를 비교할 스트림 실행기"
+          },
+          {
+            "index": 3,
+            "text": "정답 라벨 데이터와 반복 측정 결과"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "종단간 사건·API 호출의 영속 측정 원장",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "종단간 사건·API 호출의 영속 측정 원장",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "공통 영상으로 B0/B1/B2를 비교할 스트림 실행기",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "공통 영상으로 B0/B1/B2를 비교할 스트림 실행기",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 3,
+          "text": "정답 라벨 데이터와 반복 측정 결과",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "정답 라벨 데이터와 반복 측정 결과",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

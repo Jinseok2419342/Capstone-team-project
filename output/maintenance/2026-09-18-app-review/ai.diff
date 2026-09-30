@@ -1,0 +1,49 @@
+--- before/app/ai.py
++++ after/app/ai.py
+@@ -3,6 +3,7 @@
+ import base64
+ import json
+ import logging
++import math
+ import re
+ from dataclasses import asdict, dataclass
+ from typing import Any, Callable, Iterable
+@@ -256,14 +257,24 @@
+         category = str(data.get("category", "general")).lower()
+         if category not in {"valuable", "general", "food"}:
+             category = "general"
++        raw_confidence = data.get("confidence")
++        valid_confidence = True
+         try:
+-            confidence = max(0.0, min(1.0, float(data.get("confidence", 0.65))))
+-        except (TypeError, ValueError):
+-            confidence = 0.65
++            confidence = float(raw_confidence)
++            if isinstance(raw_confidence, bool) or not math.isfinite(confidence):
++                raise ValueError("invalid confidence")
++            confidence = max(0.0, min(1.0, confidence))
++        except (TypeError, ValueError, OverflowError):
++            # Malformed or missing evidence must never authorize automatic
++            # registration cancellation or recovery of a tracked item.
++            confidence = 0.0
++            valid_confidence = False
+         estimated = data.get("estimated_value_krw")
+         try:
+-            estimated = int(estimated) if estimated is not None else None
+-        except (TypeError, ValueError):
++            estimated = int(estimated) if estimated is not None and not isinstance(estimated, bool) else None
++            if estimated is not None and estimated < 0:
++                estimated = None
++        except (TypeError, ValueError, OverflowError):
+             estimated = None
+         try:
+             threshold = int(self.settings_getter().get("valuable_value_threshold_krw", 100000))
+@@ -275,7 +286,7 @@
+         # Offline fallback explicitly opts into ``added`` so camera events are
+         # still retained when no remote model is available.
+         action = str(data.get("action", "uncertain")).strip().lower()
+-        if action not in {"added", "removed", "uncertain"}:
++        if not valid_confidence or action not in {"added", "removed", "uncertain"}:
+             action = "uncertain"
+         if action == "uncertain":
+             confidence = min(confidence, 0.45)

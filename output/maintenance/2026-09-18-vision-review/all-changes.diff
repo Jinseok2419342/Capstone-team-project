@@ -1,0 +1,2100 @@
+--- before/AGENTS.md
++++ after/AGENTS.md
+@@ -3,6 +3,11 @@
+ 이 파일은 2026-09-16까지의 사용자 대화와 작업 상태를 다음 세션이 이어받기 위한 저장소 수준의 인계 문서다.
+ 
+ ## 최신 코드 개선 — 2026-09-18
++
++- **추가 요청: 정지 영상 울렁거림과 Pi 4 2GB 성능 개선.** 사용자는 Pi CSI와 PC USB 양쪽에서 영상 자체의 미세한 움직임·밝기 변화를 본 것 같다고 설명했다. 감지용 정합 영상을 그대로 미리보기에 쓰면서 생기는 인위적 움직임을 합성 정지 장면에서 재현하고, 원본 영상 표시와 박스 좌표 투영을 분리했다.
++- 프레임 선택을 deadline 기반으로 바꿔 10fps 입력·7fps 분석이 기존 방식에서 5fps로 낮아지던 문제를 수정했다. 기준 grayscale 캐시, 무변화 조기 종료, 중복 정합 제거와 Lab 차분 연산을 개선했다. Pi 기본 미리보기는 800px/5fps이며 촬영·분석과 증거 품질은 기존 설정을 사용한다.
++- `camera_mains_frequency_hz=0/50/60`을 추가했다. 기본 0은 드라이버 설정 유지, 50/60은 지원되는 CSI 카메라에서만 적용한다. 자동 초점·노출·화이트밸런스를 강제로 잠그지 않는다. 센서 정보와 실제 처리 FPS/시간은 카메라 화면에서 확인한다.
++- 최신 검증: Python **202개**, Node **13개** 통과. 데스크톱 합성 벤치마크·재현 조건·하드웨어 미확인 범위는 `docs/VISION_REVIEW_2026-09-18.md`를 따른다. 합성 벤치마크는 논문 실측값이 아니다. 추가 변경 전 백업은 `output/maintenance/2026-09-18-vision-review/source-before.zip`이다.
+ 
+ - 사용자가 논문 실험 전에 앱 코드를 전체 검토하고 적극적으로 개선하도록 요청했다. 이번 우선순위는 앱 안정성·데이터 보존·관리 화면 오류 수정이다.
+ - 카메라 종료·재연결, 개인정보 보호 설정 복원, AI 지연 응답과 관리자 수정 충돌, 재시작 후 분석 대기 복구, 전체 활성 물품 조회, 알림 발송 동시성, 화면 갱신·설정 입력을 개선했다. 상세 내용과 검증 범위는 `docs/APP_REVIEW_2026-09-18.md`를 따른다.
+
+--- before/README.md
++++ after/README.md
+@@ -185,7 +185,7 @@
+ 
+ ## 검증 현황과 다음 과제
+ 
+-2026-09-18 검증에서 Python 자동화 테스트 **175개**와 프런트엔드 동작 테스트 **10개**가 통과했습니다. API, SQLite, 서비스 수명 주기, 합성 카메라 장면, AI·메일 실패 처리, 초기화 안전장치, 화면 요청 순서와 논문 실험 도구를 검증합니다. 이는 소프트웨어 회귀 검증이며 실제 AI 정확도나 현장 감지율을 의미하지 않습니다. [앱 개선 내역과 검증 범위](docs/APP_REVIEW_2026-09-18.md)를 참고하세요.
++2026-09-18 최신 검증에서 Python 자동화 테스트 **202개**와 프런트엔드 동작 테스트 **13개**가 통과했습니다. API, SQLite, 서비스 수명 주기, 합성 카메라 장면, AI·메일 실패 처리, 초기화 안전장치, 화면 요청 순서와 논문 실험 도구를 검증합니다. 이는 소프트웨어 회귀 검증이며 실제 AI 정확도나 현장 감지율을 의미하지 않습니다. [앱 개선 내역](docs/APP_REVIEW_2026-09-18.md)과 [영상 안정성·성능 개선 기록](docs/VISION_REVIEW_2026-09-18.md)을 참고하세요.
+ 
+ 다음 단계에서 우선 보완할 항목은 아래와 같습니다.
+ 
+@@ -353,6 +353,14 @@
+ 
+ 프런트엔드 검사는 별도 npm 패키지 없이 실행되며, 브라우저에서의 시각 검사는 별도로 수행합니다.
+ 
++카메라·DB·외부 AI를 사용하지 않는 합성 영상 개발 벤치마크:
++
++```powershell
++python scripts/benchmarks/vision_pipeline.py --threads 1 --output output/vision-benchmark.json
++```
++
++실행한 컴퓨터의 연산 시간을 측정합니다. 실제 촬영 FPS나 현장 인식 정확도 측정은 아닙니다.
++
+ 서버 실행 후 상태 확인:
+ 
+ ```powershell
+
+--- before/app/camera_sources.py
++++ after/app/camera_sources.py
+@@ -8,6 +8,10 @@
+ 
+ from __future__ import annotations
+ 
++from collections.abc import Mapping
++from copy import deepcopy
++from inspect import getattr_static
++import math
+ from typing import Any, Protocol
+ 
+ import cv2
+@@ -40,6 +44,59 @@
+     if isinstance(source, str) and source.strip().lstrip("-").isdigit():
+         return int(source.strip())
+     return source
++
++
++def _camera_info(camera: Any, name: str) -> dict[str, Any]:
++    """Optional diagnostics must not prevent a usable camera from opening."""
++
++    try:
++        value = getattr(camera, name, {})
++        return dict(value) if isinstance(value, Mapping) else {}
++    except Exception:
++        return {}
++
++
++def _has_capture_arrays(camera: Any) -> bool:
++    """Do not mistake a dynamic mock/proxy attribute for a supported API."""
++
++    try:
++        getattr_static(camera, "capture_arrays")
++        return callable(getattr(camera, "capture_arrays"))
++    except Exception:
++        return False
++
++
++def _configure_flicker(
++    camera: Any, frequency_hz: int, controls: dict[str, Any]
++) -> tuple[int | None, list[str]]:
++    """Request mains flicker avoidance while leaving automatic AE/AWB enabled.
++
++    The libcamera control definition specifies FlickerManual=1, and periods of
++    10000 us for 50 Hz mains and 8333 us for 60 Hz mains. Zero preserves the
++    driver's existing behaviour; unsupported cameras keep working unchanged.
++    """
++
++    if frequency_hz == 0:
++        return None, []
++    requested = {
++        "AeFlickerMode": 1,
++        "AeFlickerPeriod": 10000 if frequency_hz == 50 else 8333,
++    }
++    for key, value in requested.items():
++        info = controls.get(key)
++        if not isinstance(info, (tuple, list)) or len(info) < 2:
++            return None, [f"{frequency_hz} Hz flicker avoidance unavailable: {key} is not supported"]
++        try:
++            in_range = float(info[0]) <= value <= float(info[1])
++        except (TypeError, ValueError, OverflowError):
++            in_range = False
++        if not in_range:
++            return None, [f"{frequency_hz} Hz flicker avoidance unavailable: {key} does not accept {value}"]
++    try:
++        camera.set_controls(requested)
++    except Exception as exc:
++        return None, [f"Could not apply {frequency_hz} Hz flicker avoidance: {str(exc)[:300]}"]
++    return frequency_hz, []
+ 
+ 
+ class Picamera2Capture:
+@@ -58,8 +115,11 @@
+         height: int,
+         fps: float,
+         *,
++        mains_frequency_hz: int = 0,
+         picamera2_class: type[Any] | None = None,
+     ) -> None:
++        if isinstance(mains_frequency_hz, bool) or mains_frequency_hz not in {0, 50, 60}:
++            raise CameraSourceError("Mains frequency must be 0, 50 or 60 Hz")
+         camera_number = _numeric_source(source)
+         if not isinstance(camera_number, int) or camera_number < 0:
+             raise CameraSourceError(
+@@ -76,6 +136,10 @@
+                 queue=False,
+             )
+             camera.configure(video_config)
++            camera_controls = _camera_info(camera, "camera_controls")
++            applied_mains, warnings = _configure_flicker(
++                camera, mains_frequency_hz, camera_controls
++            )
+             camera.start()
+         except Exception as exc:
+             if camera is not None:
+@@ -93,17 +157,97 @@
+ 
+         self._camera = camera
+         self._opened = True
++        camera_properties = _camera_info(camera, "camera_properties")
++        self._diagnostics: dict[str, Any] = {
++            "backend": "picamera2",
++            "model": str(camera_properties.get("Model", "unknown"))[:128],
++            "requested_mains_frequency_hz": mains_frequency_hz,
++            "applied_mains_frequency_hz": applied_mains,
++            "controls_supported": sorted(str(key)[:64] for key in camera_controls)[:128],
++            "warnings": warnings,
++            "metadata_supported": _has_capture_arrays(camera),
++            "frame_sequence": 0,
++            "frame_metadata": {},
++            "last_read_ok": None,
++            "last_read_error": None,
++        }
+ 
+     def read(self) -> tuple[bool, np.ndarray | None]:
+         if not self._opened:
+             return False, None
+         try:
+-            frame = self._camera.capture_array("main")
+-        except Exception:
++            if self._diagnostics["metadata_supported"]:
++                # A separate capture_metadata call would describe a different
++                # frame and would double the number of blocking captures.
++                arrays, metadata = self._camera.capture_arrays(["main"])
++                frame = arrays[0]
++            else:
++                frame = self._camera.capture_array("main")
++                metadata = {}
++        except Exception as exc:
++            self._diagnostics = {
++                **self._diagnostics,
++                "last_read_ok": False,
++                "last_read_error": str(exc)[:300],
++            }
+             return False, None
+-        if not isinstance(frame, np.ndarray) or frame.ndim != 3 or frame.size == 0:
++        if (
++            not isinstance(frame, np.ndarray)
++            or frame.ndim != 3
++            or frame.shape[2] != 3
++            or frame.size == 0
++            or frame.dtype != np.uint8
++        ):
++            self._diagnostics = {
++                **self._diagnostics,
++                "last_read_ok": False,
++                "last_read_error": "Invalid RGB888 camera frame",
++            }
+             return False, None
++        self._diagnostics = {
++            **self._diagnostics,
++            "frame_sequence": self._diagnostics["frame_sequence"] + 1,
++            "frame_metadata": self._frame_metadata(metadata),
++            "last_read_ok": True,
++            "last_read_error": None,
++        }
+         return True, frame
++
++    @staticmethod
++    def _frame_metadata(metadata: Any) -> dict[str, Any]:
++        """Expose only bounded, JSON-safe sensor values useful for diagnosis."""
++
++        if not isinstance(metadata, dict):
++            return {}
++        result: dict[str, Any] = {}
++        for key in (
++            "ExposureTime", "AnalogueGain", "DigitalGain", "ColourGains",
++            "ColourTemperature", "LensPosition", "AfMode", "AfState",
++            "AeState", "AeLocked", "AwbLocked", "Lux", "FrameDuration",
++            "SensorTimestamp", "AeFlickerMode", "AeFlickerPeriod", "AeFlickerDetected",
++        ):
++            value = metadata.get(key)
++            if isinstance(value, (int, float, np.integer, np.floating, np.bool_)):
++                number = value.item() if isinstance(value, np.generic) else value
++                try:
++                    finite = isinstance(number, bool) or math.isfinite(number)
++                except (TypeError, ValueError, OverflowError):
++                    finite = False
++                if finite:
++                    result[key] = number
++            elif key == "ColourGains" and isinstance(value, (tuple, list)) and len(value) == 2:
++                try:
++                    gains = [float(part) for part in value]
++                except (TypeError, ValueError, OverflowError):
++                    continue
++                if all(math.isfinite(part) for part in gains):
++                    result[key] = gains
++        return result
++
++    def get_diagnostics(self) -> dict[str, Any]:
++        """Return the latest frame's metadata without acquiring another frame."""
++
++        return deepcopy(self._diagnostics)
+ 
+     def isOpened(self) -> bool:  # noqa: N802 - matches cv2.VideoCapture
+         return self._opened
+@@ -127,8 +271,10 @@
+     width: int,
+     height: int,
+     fps: float,
++    *,
++    mains_frequency_hz: int = 0,
+ ) -> CameraCapture:
+-    return Picamera2Capture(source, width, height, fps)
++    return Picamera2Capture(source, width, height, fps, mains_frequency_hz=mains_frequency_hz)
+ 
+ 
+ def _open_opencv_capture(
+@@ -182,6 +328,8 @@
+     width: int,
+     height: int,
+     fps: float,
++    *,
++    mains_frequency_hz: int = 0,
+ ) -> tuple[CameraCapture | None, str | None]:
+     """Open the selected backend, optionally falling back to OpenCV.
+ 
+@@ -195,6 +343,10 @@
+     picamera_error: str | None = None
+     if backend_name in {"auto", "picamera2"}:
+         try:
++            if mains_frequency_hz:
++                return _open_picamera2_capture(
++                    source, width, height, fps, mains_frequency_hz=mains_frequency_hz
++                ), None
+             return _open_picamera2_capture(source, width, height, fps), None
+         except Exception as exc:
+             picamera_error = str(exc) or exc.__class__.__name__
+
+--- before/app/config.py
++++ after/app/config.py
+@@ -114,6 +114,8 @@
+     "accumulated_check_fps": 4.0,
+     "preview_stream_fps": 8.0,
+     "preview_jpeg_quality": 84,
++    "preview_max_width": 1280,
++    "camera_mains_frequency_hz": 0,
+     "jpeg_quality": 88,
+     "stabilization_analysis_width": 480,
+     "motion_threshold": 20,
+@@ -152,6 +154,7 @@
+             "accumulated_check_fps": 2.0,
+             "preview_stream_fps": 5.0,
+             "preview_jpeg_quality": 78,
++            "preview_max_width": 800,
+             "stabilization_analysis_width": 360,
+         }
+     )
+@@ -172,6 +175,8 @@
+     "accumulated_check_fps": float,
+     "preview_stream_fps": float,
+     "preview_jpeg_quality": int,
++    "preview_max_width": int,
++    "camera_mains_frequency_hz": int,
+     "jpeg_quality": int,
+     "stabilization_analysis_width": int,
+     "motion_threshold": int,
+
+--- before/app/main.py
++++ after/app/main.py
+@@ -1307,6 +1307,8 @@
+         "gstreamer",
+     }:
+         raise HTTPException(400, "카메라 백엔드 설정이 올바르지 않습니다.")
++    if updates.get("camera_mains_frequency_hz") not in {None, 0, 50, 60}:
++        raise HTTPException(400, "조명 전원 주파수는 0(기본값), 50, 60 중 하나여야 합니다.")
+     ranges = {
+         "camera_index": (-1, 20),
+         "camera_width": (160, 3840),
+@@ -1316,6 +1318,7 @@
+         "accumulated_check_fps": (1, 30),
+         "preview_stream_fps": (1, 15),
+         "preview_jpeg_quality": (45, 95),
++        "preview_max_width": (320, 3840),
+         "jpeg_quality": (45, 95),
+         "stabilization_analysis_width": (160, 1280),
+         "motion_threshold": (2, 100),
+@@ -1345,6 +1348,7 @@
+         "camera_width",
+         "camera_height",
+         "camera_fps",
++        "camera_mains_frequency_hz",
+         "monitor_fps",
+         "accumulated_check_fps",
+         "jpeg_quality",
+
+--- before/app/vision.py
++++ after/app/vision.py
+@@ -17,6 +17,7 @@
+ import queue
+ import threading
+ import time
++from collections import deque
+ from dataclasses import asdict, dataclass, replace
+ from typing import Any, Callable, Literal
+ 
+@@ -27,6 +28,26 @@
+ 
+ 
+ BBox = tuple[int, int, int, int]
++
++
++@dataclass(slots=True)
++class _FramePacer:
++    """Keep a target cadence without rounding it down to the camera divisor."""
++
++    fps: float = 0.0
++    next_at: float | None = None
++
++    def ready(self, now: float, fps: float) -> bool:
++        interval = 1.0 / fps
++        if self.next_at is None or self.fps != fps:
++            self.fps = fps
++            self.next_at = now + interval
++            return True
++        if now + 1e-9 < self.next_at:
++            return False
++        periods = max(1, math.floor((now - self.next_at + 1e-9) / interval) + 1)
++        self.next_at += periods * interval
++        return True
+ 
+ 
+ @dataclass(frozen=True, slots=True)
+@@ -69,6 +90,10 @@
+     last_change_at: float | None = None
+     last_baseline_at: float | None = None
+     last_error: str | None = None
++    processing_ms: float = 0.0
++    preview_width: int = 0
++    preview_height: int = 0
++    camera_diagnostics: dict[str, Any] | None = None
+ 
+ 
+ @dataclass(frozen=True, slots=True)
+@@ -187,6 +212,9 @@
+         "change_border_margin_ratio": 0.04,
+         "jpeg_quality": 88,
+         "preview_jpeg_quality": 84,
++        "preview_stream_fps": 8.0,
++        "preview_max_width": 1280,
++        "camera_mains_frequency_hz": 0,
+         "ai_scene_max_width": 960,
+         "ai_scene_jpeg_quality": 72,
+         "compensate_lighting": True,
+@@ -221,6 +249,7 @@
+         self._rebaseline_generation = 0
+         self._manual_reconcile_generation: int | None = None
+         self._recent_boxes: list[tuple[BBox, str, float]] = []
++        self._preview_pacer = _FramePacer()
+ 
+         initial = self._make_notice_frame(
+             self.DEFAULTS["camera_width"],
+@@ -253,6 +282,11 @@
+             self._status.running = True
+             self._status.phase = "starting"
+             self._status.last_error = None
++            self._status.camera_diagnostics = None
++            self._status.preview_width = 0
++            self._status.preview_height = 0
++            self._status.processing_ms = 0.0
++            self._preview_pacer = _FramePacer()
+ 
+             dispatcher = threading.Thread(
+                 target=self._dispatch_callbacks,
+@@ -330,6 +364,9 @@
+                 self._status.motion_detected = False
+                 self._status.baseline_ready = False
+                 self._status.fps = 0.0
++                self._status.camera_diagnostics = None
++                self._status.preview_width = 0
++                self._status.preview_height = 0
+                 return True
+             # Another caller may have started a new generation just after the
+             # old workers exited. Do not report the whole monitor as quiescent.
+@@ -422,6 +459,7 @@
+         offline_error_reported = False
+ 
+         baseline_frame: np.ndarray | None = None
++        baseline_gray: np.ndarray | None = None
+         previous_gray: np.ndarray | None = None
+         calibration_still_since: float | None = None
+         last_motion_mono = 0.0
+@@ -434,11 +472,12 @@
+         next_active_refresh = 0.0
+         config = dict(self.DEFAULTS)
+         next_config_refresh = 0.0
+-        last_processed_mono = 0.0
++        processing_pacer = _FramePacer()
+         last_accumulated_check_mono = 0.0
+         last_fallback_mono = 0.0
+-        last_frame_mono: float | None = None
+         smoothed_fps = 0.0
++        processed_times: deque[float] = deque(maxlen=30)
++        next_camera_diagnostics = 0.0
+ 
+         try:
+             while not stop_event.is_set():
+@@ -456,6 +495,7 @@
+                     camera_opened_mono = None
+                     next_open_attempt = now_mono
+                     baseline_frame = None
++                    baseline_gray = None
+                     previous_gray = None
+                     phase = "calibrating"
+ 
+@@ -466,6 +506,7 @@
+                         camera_opened_mono = time.monotonic()
+                         read_failures = 0
+                         baseline_frame = None
++                        baseline_gray = None
+                         previous_gray = None
+                         calibration_still_since = None
+                         stable_since = None
+@@ -565,39 +606,42 @@
+                             offline_error_reported = True
+                         camera_was_connected = False
+                         baseline_frame = None
++                        baseline_gray = None
+                         previous_gray = None
+                     else:
+                         stop_event.wait(0.03)
+                     continue
+ 
+                 read_failures = 0
+-                frame = self._transform_frame(frame, config)
+                 now_mono = time.monotonic()
+                 monitor_fps = self._float_config(
+                     config, "monitor_fps", minimum=1.0, maximum=60.0
+                 )
+-                if now_mono - last_processed_mono < 1.0 / monitor_fps:
++                if not processing_pacer.ready(now_mono, monitor_fps):
+                     continue
+-                last_processed_mono = now_mono
+-
+-                if last_frame_mono is not None and now_mono > last_frame_mono:
+-                    instant_fps = 1.0 / (now_mono - last_frame_mono)
+-                    smoothed_fps = (
+-                        instant_fps
+-                        if smoothed_fps <= 0.0
+-                        else smoothed_fps * 0.88 + instant_fps * 0.12
+-                    )
+-                last_frame_mono = now_mono
++                processing_started = time.perf_counter()
++                frame = self._transform_frame(frame, config)
++                processed_times.append(now_mono)
++                if len(processed_times) >= 2 and now_mono > processed_times[0]:
++                    smoothed_fps = (len(processed_times) - 1) / (now_mono - processed_times[0])
+                 self._mark_live_frame(frame, smoothed_fps)
++                if now_mono >= next_camera_diagnostics:
++                    self._update_camera_diagnostics(capture)
++                    next_camera_diagnostics = now_mono + 1.0
+ 
+                 if self._privacy_enabled():
+                     baseline_frame = None
++                    baseline_gray = None
+                     previous_gray = None
+                     calibration_still_since = None
+                     stable_since = None
+                     phase = "privacy"
+                     self._set_detection_status(phase, False, False)
+-                    self._publish_privacy(frame.shape[1], frame.shape[0], config)
++                    if self._preview_pacer.ready(now_mono, self._float_config(
++                        config, "preview_stream_fps", minimum=1.0, maximum=15.0
++                    )):
++                        self._publish_privacy(frame.shape[1], frame.shape[0], config)
++                    self._mark_processing_time(processing_started)
+                     continue
+ 
+                 generation = self._current_rebaseline_generation()
+@@ -607,6 +651,7 @@
+                         generation
+                     )
+                     baseline_frame = None
++                    baseline_gray = None
+                     previous_gray = None
+                     calibration_still_since = None
+                     stable_since = None
+@@ -619,6 +664,7 @@
+                 # object boxes away from their real location.
+                 analysis_frame = frame
+                 analysis_aligned = False
++                current_to_reference: np.ndarray | None = None
+                 gray = self._prepare_gray(frame)
+                 reference_gray: np.ndarray | None = None
+                 if (
+@@ -626,7 +672,9 @@
+                     and baseline_frame.shape[:2] == frame.shape[:2]
+                     and self._bool_config(config, "stabilize_camera")
+                 ):
+-                    reference_gray = self._prepare_gray(baseline_frame)
++                    if baseline_gray is None:
++                        baseline_gray = self._prepare_gray(baseline_frame)
++                    reference_gray = baseline_gray
+                     euclidean = self._estimate_euclidean_alignment(
+                         reference_gray, gray, config
+                     )
+@@ -637,6 +685,7 @@
+                         maximum=1.0,
+                     )
+                     if euclidean is not None and euclidean[1] >= minimum_response:
++                        current_to_reference = euclidean[0]
+                         analysis_frame, valid_mask = self._warp_affine(
+                             frame, euclidean[0]
+                         )
+@@ -648,6 +697,10 @@
+                         if self._translation_is_usable(
+                             translation, gray.shape, config
+                         ):
++                            current_to_reference = np.array(
++                                [[1.0, 0.0, -translation[0]], [0.0, 1.0, -translation[1]]],
++                                dtype=np.float32,
++                            )
+                             analysis_frame, valid_mask = self._warp_translation(
+                                 frame, translation[0], translation[1]
+                             )
+@@ -665,6 +718,7 @@
+                         gray = self._prepare_gray(analysis_frame)
+                 if previous_gray is not None and previous_gray.shape != gray.shape:
+                     baseline_frame = None
++                    baseline_gray = None
+                     previous_gray = None
+                     calibration_still_since = None
+                     phase = "calibrating"
+@@ -746,6 +800,7 @@
+                         and camera_warmed_up
+                     ):
+                         baseline_frame = frame.copy()
++                        baseline_gray = gray.copy()
+                         phase = "monitoring"
+                         self._set_baseline_ready(generation)
+                         self._emit_event(callback_queue, "baseline_ready")
+@@ -773,10 +828,11 @@
+                     self._set_detection_status(
+                         phase, moving, baseline_frame is not None, generation
+                     )
+-                    output = self._draw_overlay(
+-                        analysis_frame, phase, moving, active_boxes, config
++                    self._publish_live_preview(
++                        frame, phase, moving, active_boxes, config,
++                        current_to_reference=current_to_reference,
+                     )
+-                    self._publish_frame(output, config, contains_camera_image=True)
++                    self._mark_processing_time(processing_started)
+                     previous_gray = gray
+                     continue
+ 
+@@ -822,10 +878,12 @@
+                                     analysis_frame,
+                                     active_boxes,
+                                     config,
++                                    already_aligned=analysis_aligned,
+                                 )
+                                 if not self._analysis_is_current(generation):
+                                     continue
+                                 baseline_frame = analysis_frame.copy()
++                                baseline_gray = gray.copy()
+                                 stable_since = None
+                                 phase = "monitoring"
+                                 self._set_baseline_ready(generation)
+@@ -841,10 +899,11 @@
+                                     )
+ 
+                 self._set_detection_status(phase, moving, True, generation)
+-                output = self._draw_overlay(
+-                    analysis_frame, phase, moving, active_boxes, config
+-                )
+-                self._publish_frame(output, config, contains_camera_image=True)
++                self._publish_live_preview(
++                    frame, phase, moving, active_boxes, config,
++                    current_to_reference=current_to_reference,
++                )
++                self._mark_processing_time(processing_started)
+                 previous_gray = gray
+ 
+         except Exception as exc:  # keep health information if a backend surprises us
+@@ -867,6 +926,9 @@
+                 self._status.baseline_ready = False
+                 self._status.phase = "stopped"
+                 self._status.fps = 0.0
++                self._status.camera_diagnostics = None
++                self._status.preview_width = 0
++                self._status.preview_height = 0
+             self._emit_event(callback_queue, "monitor_stopped")
+             capture_done.set()
+ 
+@@ -1334,9 +1396,8 @@
+             if np.any(sampled_valid):
+                 signed -= float(np.median(sampled_signed[sampled_valid]))
+ 
+-            raw_magnitude = np.abs(signed)
+-
+             if allow_local and self._bool_config(config, "compensate_local_lighting"):
++                raw_magnitude = np.abs(signed)
+                 blur_ratio = self._float_config(
+                     config,
+                     "lighting_blur_ratio",
+@@ -1512,6 +1573,14 @@
+                 config, "motion_compensate_local_lighting"
+             ),
+         )
++        threshold = self._int_config(
++            config, "motion_threshold", minimum=2, maximum=100
++        )
++        # Jitter suppression can only remove difference evidence. If no pixel
++        # would survive thresholding, the later Sobel, morphology and contour
++        # passes necessarily produce an empty mask as well.
++        if int(np.max(diff)) <= threshold:
++            return False, 0.0
+         jitter_mask = self._persistent_edge_jitter_mask(
+             previous_gray,
+             aligned_current,
+@@ -1520,9 +1589,6 @@
+         )
+         if jitter_mask is not None:
+             diff[jitter_mask > 0] = 0
+-        threshold = self._int_config(
+-            config, "motion_threshold", minimum=2, maximum=100
+-        )
+         _, mask = cv2.threshold(diff, threshold, 255, cv2.THRESH_BINARY)
+         mask = cv2.bitwise_and(mask, valid_mask)
+         mask = cv2.morphologyEx(
+@@ -1552,6 +1618,8 @@
+         after: np.ndarray,
+         active_boxes: list[_ActiveBox],
+         config: dict[str, Any],
++        *,
++        already_aligned: bool = False,
+     ) -> tuple[list[ChangeEvent], bool]:
+         if before.shape[:2] != after.shape[:2]:
+             return [], True
+@@ -1560,22 +1628,23 @@
+         after_gray = self._prepare_gray(after)
+         aligned_after = after
+         valid_mask = np.full(before_gray.shape, 255, dtype=np.uint8)
+-        euclidean = self._estimate_euclidean_alignment(
+-            before_gray, after_gray, config
+-        )
+-        minimum_response = self._float_config(
+-            config, "stabilization_min_response", minimum=0.0, maximum=1.0
+-        )
+-        if euclidean is not None and euclidean[1] >= minimum_response:
+-            aligned_after, valid_mask = self._warp_affine(after, euclidean[0])
+-        else:
+-            translation = self._estimate_translation(before_gray, after_gray, config)
+-            if self._translation_is_usable(
+-                translation, before_gray.shape, config
+-            ):
+-                aligned_after, valid_mask = self._warp_translation(
+-                    after, translation[0], translation[1]
+-                )
++        if not already_aligned:
++            euclidean = self._estimate_euclidean_alignment(
++                before_gray, after_gray, config
++            )
++            minimum_response = self._float_config(
++                config, "stabilization_min_response", minimum=0.0, maximum=1.0
++            )
++            if euclidean is not None and euclidean[1] >= minimum_response:
++                aligned_after, valid_mask = self._warp_affine(after, euclidean[0])
++            else:
++                translation = self._estimate_translation(before_gray, after_gray, config)
++                if self._translation_is_usable(
++                    translation, before_gray.shape, config
++                ):
++                    aligned_after, valid_mask = self._warp_translation(
++                        after, translation[0], translation[1]
++                    )
+ 
+         if aligned_after is not after:
+             if aligned_after.shape == before.shape:
+@@ -1620,10 +1689,10 @@
+             )
+             before_lab = cv2.cvtColor(before_bgr, cv2.COLOR_BGR2LAB)
+             after_lab = cv2.cvtColor(after_bgr, cv2.COLOR_BGR2LAB)
+-            chroma_diff = np.max(
+-                cv2.absdiff(before_lab[:, :, 1:3], after_lab[:, :, 1:3]),
+-                axis=2,
+-            ).astype(np.uint8)
++            lab_delta = cv2.absdiff(before_lab, after_lab)
++            chroma_diff = cv2.max(
++                cv2.extractChannel(lab_delta, 1), cv2.extractChannel(lab_delta, 2)
++            )
+             diff = np.maximum(diff, chroma_diff)
+             support_diff = np.maximum(support_diff, chroma_diff)
+         threshold = self._int_config(
+@@ -3551,6 +3620,7 @@
+             config.get("camera_width"),
+             config.get("camera_height"),
+             config.get("camera_fps"),
++            config.get("camera_mains_frequency_hz", 0),
+         )
+ 
+     def _open_capture(
+@@ -3558,12 +3628,17 @@
+     ) -> tuple[CameraCapture | None, str | None]:
+         source: Any = config.get("camera_source", config.get("camera_index", 0))
+         backend_name = str(config.get("camera_backend", "")).strip().lower()
++        options: dict[str, Any] = {}
++        mains_frequency = self._int_config(config, "camera_mains_frequency_hz", minimum=0, maximum=60)
++        if mains_frequency:
++            options["mains_frequency_hz"] = mains_frequency
+         return open_camera_capture(
+             source,
+             backend_name,
+             self._int_config(config, "camera_width", minimum=160, maximum=7680),
+             self._int_config(config, "camera_height", minimum=120, maximum=4320),
+             self._float_config(config, "camera_fps", minimum=1.0, maximum=120.0),
++            **options,
+         )
+ 
+     @staticmethod
+@@ -3734,13 +3809,22 @@
+         moving: bool,
+         active_boxes: list[_ActiveBox],
+         config: dict[str, Any],
++        *,
++        reference_to_preview: np.ndarray | None = None,
+     ) -> np.ndarray:
+-        output = frame.copy()
++        if frame.ndim == 2:
++            output = cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR)
++        elif frame.shape[2] == 4:
++            output = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
++        else:
++            output = frame.copy()
+         height, width = output.shape[:2]
+ 
+         if self._bool_config(config, "draw_active_boxes"):
+             for active in active_boxes:
+-                x, y, box_width, box_height = active.bbox
++                x, y, box_width, box_height = self._preview_bbox(
++                    active.bbox, reference_to_preview, width, height
++                )
+                 cv2.rectangle(
+                     output,
+                     (x, y),
+@@ -3766,7 +3850,9 @@
+             recent = [entry for entry in self._recent_boxes if entry[2] > now]
+             self._recent_boxes = recent
+         for bbox, kind, _ in recent:
+-            x, y, box_width, box_height = bbox
++            x, y, box_width, box_height = self._preview_bbox(
++                bbox, reference_to_preview, width, height
++            )
+             color = (
+                 (104, 211, 92)
+                 if kind == "added"
+@@ -3796,9 +3882,11 @@
+             )
+ 
+         panel_width = min(width - 24, 330)
+-        overlay = output.copy()
+-        cv2.rectangle(overlay, (12, 12), (12 + panel_width, 76), (15, 15, 18), -1)
+-        output = cv2.addWeighted(overlay, 0.72, output, 0.28, 0)
++        # Blend just the status panel rather than copying/blending 720p pixels
++        # outside it on every preview frame.
++        panel = output[12:77, 12:13 + panel_width]
++        shade = np.full_like(panel, (15, 15, 18))
++        cv2.addWeighted(shade, 0.72, panel, 0.28, 0, dst=panel)
+         phase_label = phase.replace("_", " ").upper()
+         color = (82, 210, 104) if phase == "monitoring" else (81, 174, 255)
+         if moving:
+@@ -3837,6 +3925,79 @@
+             cv2.LINE_AA,
+         )
+         return output
++
++    @classmethod
++    def _preview_bbox(
++        cls, bbox: BBox, reference_to_preview: np.ndarray | None, width: int, height: int
++    ) -> BBox:
++        if reference_to_preview is None:
++            return cls._clamp_bbox(bbox, width, height)
++        x, y, w, h = bbox
++        corners = np.array([[[x, y], [x + w, y], [x, y + h], [x + w, y + h]]], dtype=np.float32)
++        projected = cv2.transform(corners, reference_to_preview)[0]
++        left, top = np.floor(projected.min(axis=0)).astype(int)
++        right, bottom = np.ceil(projected.max(axis=0)).astype(int)
++        return cls._clamp_bbox((int(left), int(top), int(right - left), int(bottom - top)), width, height)
++
++    def _publish_live_preview(
++        self,
++        frame: np.ndarray,
++        phase: str,
++        moving: bool,
++        active_boxes: list[_ActiveBox],
++        config: dict[str, Any],
++        *,
++        current_to_reference: np.ndarray | None = None,
++    ) -> bool:
++        """Show camera geometry; analysis-only correction must not wobble video."""
++        fps = self._float_config(config, "preview_stream_fps", minimum=1.0, maximum=15.0)
++        if not self._preview_pacer.ready(time.monotonic(), fps):
++            return False
++        height, width = frame.shape[:2]
++        max_width = self._int_config(config, "preview_max_width", minimum=320, maximum=3840)
++        preview = frame
++        if width > max_width:
++            preview = cv2.resize(
++                frame, (max_width, max(1, round(height * max_width / width))),
++                interpolation=cv2.INTER_AREA,
++            )
++        # Bboxes stay in the full-resolution reference coordinate system for
++        # matching/storage. Project only their display copies into raw video.
++        projection = (
++            cv2.invertAffineTransform(current_to_reference)
++            if current_to_reference is not None
++            else np.array([[1, 0, 0], [0, 1, 0]], dtype=np.float32)
++        )
++        projection[0] *= preview.shape[1] / width
++        projection[1] *= preview.shape[0] / height
++        output = self._draw_overlay(
++            preview, phase, moving, active_boxes, config, reference_to_preview=projection
++        )
++        self._publish_frame(output, config, contains_camera_image=True)
++        with self._lock:
++            self._status.preview_width = int(preview.shape[1])
++            self._status.preview_height = int(preview.shape[0])
++        return True
++
++    def _update_camera_diagnostics(self, capture: CameraCapture) -> None:
++        getter = getattr(capture, "get_diagnostics", None)
++        if not callable(getter):
++            with self._lock:
++                self._status.camera_diagnostics = None
++            return
++        try:
++            diagnostics = getter()
++            if isinstance(diagnostics, dict):
++                with self._lock:
++                    self._status.camera_diagnostics = diagnostics
++        except Exception:
++            # Optional metadata must not interrupt camera processing.
++            with self._lock:
++                self._status.camera_diagnostics = None
++
++    def _mark_processing_time(self, started: float) -> None:
++        with self._lock:
++            self._status.processing_ms = round((time.perf_counter() - started) * 1000, 2)
+ 
+     def _publish_frame(
+         self,
+@@ -3912,6 +4073,10 @@
+             self._status.camera_connected = connected
+             self._status.using_fallback = not connected
+             self._status.baseline_ready = False
++            self._status.camera_diagnostics = None
++            self._status.preview_width = 0
++            self._status.preview_height = 0
++            self._status.processing_ms = 0.0
+             self._status.motion_detected = False
+             self._status.phase = (
+                 "privacy" if self._status.privacy_enabled
+
+--- before/docs/VISION_REVIEW_2026-09-18.md
++++ after/docs/VISION_REVIEW_2026-09-18.md
+@@ -0,0 +1,54 @@
++# 정지 영상 안정성과 Pi 연산 부담 개선 — 2026-09-18
++
++사용자는 Raspberry Pi의 CSI 카메라와 PC USB 웹캠 양쪽에서 가만히 있는 영상이 미세하게 움직이거나 밝기가 변하는 현상을 본 것 같다고 설명했다. 실제 장치에는 접근하지 않고 코드·합성 입력·독립 회귀 검사로 재현 가능한 부분을 수정했다.
++
++## 확인한 원인
++
++1. 감지용 기하 정합 결과를 미리보기 영상으로도 보냈다. 1280×720 정지 합성 장면의 저대비 잡음만으로 약 1.4px, 국소 밝기 변화로 약 1.75px의 잘못된 정합 이동이 발생했다. 물품 사건이 0건이어도 화면은 움직일 수 있었다.
++2. 분석한 시각으로 매번 FPS 제한 기준을 갱신하여 10fps 입력에서 7fps 설정이 5fps로 낮아졌다.
++3. 매 프레임 변하지 않는 기준 영상의 grayscale을 다시 계산하고, 변화가 없는 경우에도 Sobel·형태 연산·contour를 모두 계산했다.
++4. 이미 기준 좌표에 정합한 안정 장면을 detector core에서 다시 정합했다. Lab 두 채널 차분도 비연속 배열 복사와 NumPy reduction에 불필요한 시간이 들었다.
++5. 카메라의 실제 노출·게인·초점 변화와 소프트웨어 정합을 구분할 진단 정보가 없었다. 실제 장비 모델과 자동 제어 상태는 이번 작업에서 확인되지 않았다.
++
++## 구현 변경
++
++- 미리보기는 카메라 원래 좌표를 사용한다. 감지 좌표의 물품 박스만 역변환·축소해서 표시하며 영상 자체에 분석용 affine 보정을 적용하지 않는다.
++- 분석·미리보기 각각 deadline 기반으로 주기를 제어한다. 정지·지연 이후 과거 프레임을 몰아서 처리하지 않는다.
++- Pi 기본 미리보기는 **800×450, 5fps**다. 기본 촬영·분석은 **1280×720**, 후보 증거 JPEG 품질은 **88**이다. 다른 화면 비율이면 미리보기 높이를 비율에 맞춘다.
++- 기준 grayscale을 캐시하고 기준 갱신·재연결·privacy·재설정 시 갱신한다.
++- 보정 차분의 최대값이 움직임 임계값 이하이면 결과가 확실히 빈 마스크이므로 후처리를 생략한다. 실제 변화가 있으면 기존 경계 억제와 판정을 수행한다.
++- 중복 정합을 생략하고 Lab 차분을 연속 배열의 OpenCV 채널 연산으로 대체한다. 미리보기 상태 패널은 해당 영역만 합성한다.
++- 실제 처리 FPS, 최근 프레임 처리 시간, 미리보기 크기를 카메라 화면에 표시한다. 처리 시간은 해당 프레임의 연산 시간이며 물품 사건의 종단간 지연이 아니다.
++- 지원되는 Picamera2 장치에서 같은 프레임에 속한 노출·게인·렌즈 위치 등만 읽는다. 별도 프레임 캡처를 추가하지 않는다. 재연결 시 이전 센서 정보는 지운다.
++- 설정에 조명 보정 `기본값 유지 / 50Hz / 60Hz`를 추가했다. 지원되는 CSI 제어에만 적용하며 미지원·실패 시 영상은 유지하고 적용 불가를 알린다. 기본값은 0이며 AE·AWB·자동 초점을 강제로 잠그지 않는다.
++
++## 개발 벤치마크
++
++측정 원장은 `output/maintenance/2026-09-18-vision-review/benchmark-before.json`, `benchmark-current.json`, `benchmark-comparison.json`이다. 원장에 실행 환경·소스 SHA256·프로파일과 수치를 보존했다.
++
++Windows x64, OpenCV 1스레드, OpenCL 비활성, 1280×720 합성 입력을 사용한다. 실제 `_run` 루프에 가상 촬영 시계를 주입해 **연산 시간**과 프레임 선택을 확인한다. 카메라 대기·DB·콜백 소비·브라우저·외부 AI·열·전력은 포함하지 않는다. 추적 중인 물품은 0개다. 전후 검사는 별도 프로세스에서 순차 실행했다.
++
++정지 및 잡음 장면 모두 가상 16초의 160개 촬영 프레임에서 분석은 **80→112개**, 미리보기는 **80개**였다. 이는 스케줄러가 7fps 분석 목표를 유지한다는 검증이며 실제 Pi가 7fps를 달성했다는 결과가 아니다. 전후 합성 정지 사건은 0건이었다. 비교한 물품 추가 pair에서는 사건 종류·bbox·confidence와 증거 JPEG 4개의 SHA256이 일치했다.
++
++정확한 시간 수치와 실행 환경은 위 JSON을 따른다. 데스크톱 벤치마크를 논문용 Pi 성능값·현장 정확도로 옮기지 않는다.
++
++최종 소스에서 정지 장면은 **27.76→13.21ms/분석 프레임**이었다. 앞선 반복도 대략 26~28→13~14ms였지만, 다른 사례에는 호스트 부하에 따른 큰 시간 변동이 있었다. 변동이 큰 실행을 포함해 이전 기록을 보존했고 비교 JSON에 한계를 명시했다. 정확한 Pi 개선율이나 처리 FPS 보장이 아니다.
++
++```powershell
++python scripts/benchmarks/vision_pipeline.py --threads 1 --frames 160 --output output/vision-current.json
++python scripts/benchmarks/vision_pipeline.py --threads 1 --frames 160 --source-zip output/maintenance/2026-09-18-vision-review/source-before.zip --output output/vision-before.json
++```
++
++시간을 비교할 때 두 명령을 순차 실행하고 다른 벤치마크·테스트와 동시에 실행하지 않는다.
++
++## 검증 및 남은 확인
++
++- 전체 Python **202개**, Node **13개** 통과. Python 컴파일·JavaScript 문법·HTML ID/ARIA 검사 통과.
++- 현재 데스크톱 OpenCV 5.0 외에 임시 디렉터리의 OpenCV **4.11.0**으로 영상·카메라 테스트 **74개**를 별도 실행해 모두 통과했다. 기존 환경은 변경하지 않았으며 이 호환 검사는 실제 Pi 하드웨어 검사가 아니다.
++- 정지 잡음·조명, 작은 물품·얇은 물품·누적 이동, 원본 미리보기 픽셀, 역변환 박스, 증거 해상도, 10→7fps 주기, 캐시 재설정, grayscale/BGRA, 센서 미지원·실패를 회귀 검사했다.
++- 국소 밝기 보정을 움직임 감지에 무조건 켜면 실제 큰 저대비 물품이 사라지는 재현 사례가 있어 기본 동작을 유지했다. 국소 조명 변화가 잠시 안정화 대기를 유발할 수 있다.
++- 원본 카메라에서 발생한 물리적 흔들림·밝기 변화 자체는 미리보기 경로 분리로 제거되지 않는다. 실제 Pi/USB 영상과 브라우저 시각 검사는 아직 수행하지 않았다.
++- 새 버전에서 카메라 화면의 처리 FPS/시간을 확인하고, 밝기가 계속 달라지면 CSI의 센서 진단에서 노출·게인이 함께 변하는지 확인한다. 조명 전원 주파수를 알고 있고 드라이버가 지원할 때 50/60Hz를 선택한다. 초점 원인은 렌즈 정보·실제 모델을 확인한 뒤 판단한다.
++- 기존 운영 데이터·실제 촬영 파일·논문 결과값은 변경하지 않았다. 논문 원고의 스트림 처리·미리보기·성능 설정 설명은 본 구현 기준과 다시 대조해야 한다.
++
++센서 API와 제어 의미는 [Picamera2 공식 설명서](https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf) 및 [libcamera 공식 제어 정의](https://raw.githubusercontent.com/raspberrypi/libcamera/main/src/libcamera/control_ids_core.yaml)를 확인했다. 센서 모드와 제공되는 제어는 장치·드라이버에 따라 다르므로 코드에서 지원 범위를 확인한다.
+
+--- before/scripts/benchmarks/vision_pipeline.py
++++ after/scripts/benchmarks/vision_pipeline.py
+@@ -0,0 +1,297 @@
++"""Synthetic developer benchmark, never a Raspberry Pi or paper result.
++
++Examples (from the repository root)::
++
++    python scripts/benchmarks/vision_pipeline.py --threads 1 --output output/vision-current.json
++    python scripts/benchmarks/vision_pipeline.py --source-zip output/maintenance/2026-09-18-vision-review/source-before.zip
++
++The loop cases run the actual VisionMonitor._run with a generated camera and a
++virtual camera clock. Real CPU work is timed; capture blocking, DB, HTTP, remote
++AI, a browser and callback consumers are absent. Configured camera/monitor rates
++are scheduling inputs, not measured hardware FPS. The pair cases exercise only
++_detect_changes, including evidence JPEG encoding for an added object.
++"""
++
++from __future__ import annotations
++
++import argparse
++import cProfile
++import hashlib
++import importlib.util
++import json
++import platform
++import pstats
++import queue
++import sys
++import threading
++import time
++import types
++import zipfile
++from pathlib import Path
++from typing import Any
++
++import cv2
++import numpy as np
++
++
++ROOT = Path(__file__).resolve().parents[2]
++sys.path.insert(0, str(ROOT))
++CASES = ("static", "sensor_noise", "pair_none", "pair_added")
++
++
++def load_vision(source_zip: Path | None) -> tuple[types.ModuleType, str]:
++    """Import the selected vision source without importing app.main or config."""
++
++    if source_zip is None:
++        from app import vision
++
++        return vision, hashlib.sha256((ROOT / "app/vision.py").read_bytes()).hexdigest()
++    with zipfile.ZipFile(source_zip) as archive:
++        source = archive.read("app/vision.py")
++    name = "app._benchmark_archived_vision"
++    spec = importlib.util.spec_from_loader(name, loader=None)
++    assert spec is not None
++    module = importlib.util.module_from_spec(spec)
++    module.__file__ = str(source_zip.resolve()) + "!/app/vision.py"
++    sys.modules[name] = module
++    exec(compile(source, module.__file__, "exec"), module.__dict__)
++    return module, hashlib.sha256(source).hexdigest()
++
++
++def scenes(width: int, height: int) -> tuple[np.ndarray, np.ndarray, list[np.ndarray]]:
++    rng = np.random.default_rng(1842)
++    y, x = np.indices((height, width))
++    gray = (178 + 9 * ((x // 100 + y // 90) % 2)).astype(np.uint8)
++    before = np.dstack((gray, gray + 5, gray + 9))
++    for _ in range(36):
++        center = (int(rng.integers(30, width - 30)), int(rng.integers(30, height - 30)))
++        cv2.circle(before, center, int(rng.integers(4, 13)), (80, 104, 127), -1)
++    cv2.line(before, (40, height // 3), (width - 40, height // 3 + 18), (121, 140, 159), 3)
++    after = before.copy()
++    left, top = int(width * 0.42), int(height * 0.38)
++    right, bottom = int(width * 0.60), int(height * 0.65)
++    cv2.rectangle(after, (left, top), (right, bottom), (30, 48, 74), -1)
++    cv2.line(after, (left + 15, top + 12), (right - 15, bottom - 12), (117, 137, 164), 5)
++    noisy = [
++        np.clip(before.astype(np.int16) + rng.integers(-2, 3, before.shape, dtype=np.int16) + index % 3, 0, 255).astype(np.uint8)
++        for index in range(6)
++    ]
++    return before, after, noisy
++
++
++def profile_rows(profile: cProfile.Profile, limit: int = 12) -> dict[str, Any]:
++    stats = pstats.Stats(profile)
++    rows = [
++        {"function": f"{Path(file).name}:{line}:{name}", "calls": total,
++         "self_ms": round(own * 1000, 3), "cumulative_ms": round(cumulative * 1000, 3)}
++        for (file, line, name), (_primitive, total, own, cumulative, _callers) in stats.stats.items()
++    ]
++    return {
++        "total_profiled_seconds": round(stats.total_tt, 6),
++        "top_self": sorted(rows, key=lambda row: row["self_ms"], reverse=True)[:limit],
++        "top_cumulative": sorted(rows, key=lambda row: row["cumulative_ms"], reverse=True)[:limit],
++    }
++
++
++class VirtualTime:
++    def __init__(self) -> None:
++        self.now = 100.0
++
++    def monotonic(self) -> float:
++        return self.now
++
++    def time(self) -> float:
++        return 1_800_000_000.0 + self.now
++
++    def perf_counter(self) -> float:
++        return time.perf_counter()
++
++    def strftime(self, fmt: str) -> str:
++        return time.strftime(fmt, time.gmtime(self.time()))
++
++
++def loop_pass(
++    module: types.ModuleType, config: dict[str, Any], frames: list[np.ndarray],
++    frame_count: int, warmup: int, *, profiled: bool,
++) -> dict[str, Any]:
++    monitor = module.VisionMonitor(lambda: config, lambda _: None, lambda: [])
++    clock = VirtualTime()
++    stop = threading.Event()
++    callback_queue: queue.Queue[Any] = queue.Queue()
++    done = threading.Event()
++    profile = cProfile.Profile()
++    frame_start = 0
++    preview_start = preview_count = 0
++    preview_shape: list[int] | None = None
++    start = end = 0.0
++    profiled_phase = ""
++    original_publish = monitor._publish_frame
++
++    def publish(frame: np.ndarray, settings: dict[str, Any], **kwargs: Any) -> None:
++        nonlocal preview_count, preview_shape
++        original_publish(frame, settings, **kwargs)
++        if kwargs.get("contains_camera_image"):
++            preview_count += 1
++            preview_shape = [int(frame.shape[1]), int(frame.shape[0])]
++
++    monitor._publish_frame = publish
++
++    class SyntheticCapture:
++        index = 0
++
++        def read(self) -> tuple[bool, np.ndarray | None]:
++            nonlocal frame_start, preview_start, start, end, profiled_phase
++            if self.index == warmup:
++                frame_start = monitor._status.frame_sequence
++                preview_start = preview_count
++                profiled_phase = monitor._status.phase
++                start = time.perf_counter()
++                if profiled:
++                    profile.enable()
++            if self.index >= warmup + frame_count:
++                end = time.perf_counter()
++                if profiled:
++                    profile.disable()
++                stop.set()
++                return False, None
++            clock.now += 1.0 / float(config["camera_fps"]) + 1e-9
++            self.index += 1
++            return True, frames[(self.index - 1) % len(frames)]
++
++        def release(self) -> None:
++            pass
++
++    capture = SyntheticCapture()
++    monitor._open_capture = lambda _: (capture, None)
++    original_time = module.time
++    try:
++        module.time = clock
++        monitor._run(stop, callback_queue, done)
++    finally:
++        profile.disable()
++        module.time = original_time
++    if not end or monitor._status.last_error:
++        raise RuntimeError(monitor._status.last_error or "Synthetic loop terminated prematurely")
++    processed = monitor._status.frame_sequence - frame_start
++    result = {
++        "camera_frames": frame_count, "processed_frames": processed,
++        "published_preview_frames": preview_count - preview_start,
++        "preview_size_last": preview_shape,
++        "phase_after_warmup": profiled_phase,
++        "virtual_camera_seconds": frame_count / float(config["camera_fps"]),
++        "processed_per_virtual_second": processed / (frame_count / float(config["camera_fps"])),
++        "previews_per_virtual_second": (preview_count - preview_start) / (frame_count / float(config["camera_fps"])),
++        "real_work_seconds": round(end - start, 6),
++        "work_ms_per_processed_frame": round((end - start) * 1000 / max(1, processed), 3),
++        "synthetic_change_events": monitor._status.detected_changes,
++        "profiled": profiled,
++    }
++    if profiled:
++        result["profile"] = profile_rows(profile)
++    return result
++
++
++def pair_pass(
++    module: types.ModuleType, config: dict[str, Any], before: np.ndarray,
++    after: np.ndarray, iterations: int, *, profiled: bool,
++) -> dict[str, Any]:
++    monitor = module.VisionMonitor(lambda: config, lambda _: None, lambda: [])
++    # Initialize OpenCV's Lab/JPEG machinery before collecting timings.
++    monitor._detect_changes(before, after, [], config)
++    samples = []
++    events: list[Any] = []
++    suppressed = False
++    profile = cProfile.Profile()
++    if profiled:
++        profile.enable()
++    try:
++        for _ in range(iterations):
++            start = time.perf_counter()
++            events, suppressed = monitor._detect_changes(before, after, [], config)
++            samples.append((time.perf_counter() - start) * 1000)
++    finally:
++        profile.disable()
++    result = {
++        "iterations": iterations, "median_ms": round(float(np.median(samples)), 3),
++        "p95_ms": round(float(np.percentile(samples, 95)), 3),
++        "event_kinds_last_iteration": [event.kind for event in events],
++        "events_last_iteration": [
++            {"kind": event.kind, "bbox": list(event.bbox), "confidence": round(event.confidence, 6),
++             "evidence_sha256": {
++                 field: hashlib.sha256(payload).hexdigest() if payload else None
++                 for field in ("before_jpeg", "after_jpeg", "scene_before_jpeg", "scene_after_jpeg")
++                 for payload in (getattr(event, field),)
++             }}
++            for event in events
++        ],
++        "globally_suppressed_last_iteration": suppressed, "profiled": profiled,
++    }
++    if profiled:
++        result["profile"] = profile_rows(profile)
++    return result
++
++
++def main() -> None:
++    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
++    parser.add_argument("--source-zip", type=Path, help="Optional trusted source snapshot containing app/vision.py")
++    parser.add_argument("--threads", type=int, default=1, help="Explicit OpenCV CPU thread count (default: 1)")
++    parser.add_argument("--frames", type=int, default=80, help="Synthetic camera frames per loop sample")
++    parser.add_argument("--warmup-frames", type=int, default=40)
++    parser.add_argument("--iterations", type=int, default=10, help="Stable pair iterations")
++    parser.add_argument("--width", type=int, default=1280)
++    parser.add_argument("--height", type=int, default=720)
++    parser.add_argument("--case", choices=CASES, action="append", dest="cases")
++    parser.add_argument("--output", type=Path, help="Optional JSON report; no application data is written")
++    args = parser.parse_args()
++    if min(args.threads, args.frames, args.iterations) < 1 or args.warmup_frames < 1:
++        parser.error("thread/frame/iteration/warmup counts must be positive")
++    if args.width < 320 or args.height < 240:
++        parser.error("minimum image dimensions are 320x240")
++
++    cv2.setNumThreads(args.threads)
++    cv2.ocl.setUseOpenCL(False)
++    cv2.setRNGSeed(1842)
++    module, source_sha256 = load_vision(args.source_zip)
++    config = dict(module.VisionMonitor.DEFAULTS)
++    config.update({
++        "camera_width": args.width, "camera_height": args.height,
++        "camera_fps": 10.0, "monitor_fps": 7.0, "accumulated_check_fps": 2.0,
++        "preview_stream_fps": 5.0, "preview_max_width": 800, "preview_jpeg_quality": 78,
++        "stabilization_analysis_width": 360, "min_change_area": 1800,
++        "settle_seconds": 3.0, "stable_seconds": 1.2,
++    })
++    before, after, noisy = scenes(args.width, args.height)
++    report: dict[str, Any] = {
++        "scope": "Synthetic developer CPU benchmark on the executing host; not Pi FPS, paper results, or accuracy evaluation.",
++        "limitations": "Virtual capture clock; no camera blocking, DB, callback consumer, network, browser, power or thermal measurement. Zero active tracked items.",
++        "host": {"platform": platform.platform(), "machine": platform.machine(),
++                 "processor": platform.processor(), "python": platform.python_version(),
++                 "opencv": cv2.__version__, "numpy": np.__version__,
++                 "opencv_threads": cv2.getNumThreads(), "opencl": cv2.ocl.useOpenCL()},
++        "source": str(args.source_zip) if args.source_zip else "app/vision.py",
++        "vision_sha256": source_sha256, "config": config,
++        "warmup_camera_frames": args.warmup_frames,
++        "scene_seed": 1842, "cases": {},
++    }
++    for case in args.cases or CASES:
++        if case in ("static", "sensor_noise"):
++            frames = [before] if case == "static" else noisy
++            unprofiled = loop_pass(module, config, frames, args.frames, args.warmup_frames, profiled=False)
++            profiled = loop_pass(module, config, frames, args.frames, args.warmup_frames, profiled=True)
++        else:
++            target = before if case == "pair_none" else after
++            unprofiled = pair_pass(module, config, before, target, args.iterations, profiled=False)
++            profiled = pair_pass(module, config, before, target, args.iterations, profiled=True)
++        report["cases"][case] = {"timing": unprofiled, "profile_run": profiled}
++    rendered = json.dumps(report, ensure_ascii=False, indent=2)
++    if args.output:
++        args.output.parent.mkdir(parents=True, exist_ok=True)
++        args.output.write_text(rendered + "\n", encoding="utf-8")
++        summary = {case: data["timing"] for case, data in report["cases"].items()}
++        print(json.dumps({"output": str(args.output), "host": report["host"], "cases": summary}, indent=2))
++    else:
++        print(rendered)
++
++
++if __name__ == "__main__":
++    main()
+
+--- before/static/app.js
++++ after/static/app.js
+@@ -622,6 +622,7 @@
+     $$('[data-camera-delay]').forEach((node) => { node.textContent = `${formatDecimal(camera.settle_seconds ?? state.settings?.settle_seconds ?? 3)}초`; });
+     $$('[data-camera-threshold]').forEach((node) => { node.textContent = sensitivityLabel(camera.motion_threshold ?? state.settings?.motion_threshold); });
+     $$('[data-last-change]').forEach((node) => { node.textContent = camera.last_change_at ? relativeTime(cameraTimestamp(camera.last_change_at)) : "기록 없음"; });
++    updateCameraMetrics(camera, online);
+     const motion = $("#motion-indicator");
+     if (motion) {
+       const label = motion.querySelector("[data-motion-indicator-label]");
+@@ -629,6 +630,47 @@
+       motion.hidden = !pendingLabel;
+     }
+     syncCameraStreams();
++  }
++
++  function updateCameraMetrics(camera, online) {
++    const measured = (value, allowZero = false) => typeof value === "number" && Number.isFinite(value) && (allowZero ? value >= 0 : value > 0);
++    const setText = (selector, value) => $$(selector).forEach((node) => { node.textContent = value; });
++    setText("[data-camera-fps]", online && measured(camera.fps) ? `${camera.fps.toFixed(1)} FPS` : online ? "측정 대기" : "—");
++    setText("[data-camera-processing]", online && measured(camera.processing_ms) ? `${camera.processing_ms.toFixed(1)} ms` : online ? "측정 대기" : "—");
++    const previewReady = online && measured(camera.preview_width) && measured(camera.preview_height);
++    setText("[data-camera-preview-size]", previewReady ? `${camera.preview_width} × ${camera.preview_height}` : "—");
++
++    const diagnostics = camera.camera_diagnostics;
++    const supported = online && diagnostics?.backend === "picamera2";
++    const fresh = supported && diagnostics.last_read_ok === true;
++    const metadata = fresh ? diagnostics.frame_metadata || {} : {};
++    const setDiagnostic = (selector, value) => {
++      $$(selector).forEach((node) => {
++        node.textContent = value || "";
++        const row = node.closest("[data-camera-diagnostic-row]");
++        if (row) row.hidden = !value;
++      });
++    };
++    const model = supported && typeof diagnostics.model === "string" && diagnostics.model !== "unknown" ? diagnostics.model : "";
++    setDiagnostic("[data-camera-model]", model);
++    setDiagnostic("[data-camera-exposure]", measured(metadata.ExposureTime) ? `${(metadata.ExposureTime / 1000).toFixed(2)} ms` : "");
++    setDiagnostic("[data-camera-gain]", measured(metadata.AnalogueGain) ? `${metadata.AnalogueGain.toFixed(2)}×` : "");
++    setDiagnostic("[data-camera-lens]", measured(metadata.LensPosition, true) ? `${metadata.LensPosition.toFixed(2)} D` : "");
++    const appliedMains = supported && [50, 60].includes(diagnostics.applied_mains_frequency_hz) ? diagnostics.applied_mains_frequency_hz : null;
++    const requestedMains = supported ? diagnostics.requested_mains_frequency_hz : null;
++    setDiagnostic("[data-camera-flicker]", appliedMains ? `${appliedMains} Hz` : requestedMains === 0 ? "기본값 유지" : [50, 60].includes(requestedMains) ? "적용되지 않음" : "");
++
++    const hasSensorValues = measured(metadata.ExposureTime) || measured(metadata.AnalogueGain) || measured(metadata.LensPosition, true);
++    const message = !online ? (camera.privacy_enabled ? "보호 모드를 해제하면 센서 값을 확인할 수 있습니다." : "카메라 연결 후 센서 정보를 확인할 수 있습니다.")
++      : !supported ? "상세 센서 정보는 지원되는 CSI 카메라에서 표시됩니다. USB 카메라에서는 제공하지 않습니다."
++      : !fresh ? "최신 센서 정보를 기다리고 있습니다."
++      : !hasSensorValues ? "이 카메라에서 노출·초점 정보를 제공하지 않습니다."
++      : "밝기나 초점이 달라질 때 아래 값이 함께 변하는지 확인하세요.";
++    setText("[data-camera-diagnostic-message]", message);
++    const warnings = supported && Array.isArray(diagnostics.warnings) ? diagnostics.warnings.filter((warning) => typeof warning === "string" && warning.trim()) : [];
++    const warningText = warnings.length ? `${[50, 60].includes(requestedMains) ? `${requestedMains} Hz ` : ""}조명 보정을 적용하지 못했습니다. 카메라와 드라이버의 지원 여부를 확인해 주세요.` : "";
++    setText("[data-camera-diagnostic-warning]", warningText);
++    $$('[data-camera-diagnostic-warning-wrap]').forEach((node) => { node.hidden = !warningText; });
+   }
+ 
+   function updateProvider(provider) {
+@@ -1036,6 +1078,8 @@
+     set("ai_model", state.settingsModelCache[activeForModel]);
+     set("ai_min_confidence", settings.ai_min_confidence ?? 0.5);
+     set("camera_index", settings.camera_index ?? 0);
++    set("camera_mains_frequency_hz", settings.camera_mains_frequency_hz ?? 0);
++    set("preview_max_width", settings.preview_max_width ?? 1280);
+     set("motion_delay_seconds", settings.settle_seconds ?? 3);
+     set("motion_threshold", settings.motion_threshold ?? 20);
+     set("valuable_value_threshold_krw", settings.valuable_value_threshold_krw ?? 100000);
+@@ -1060,6 +1104,8 @@
+       provider,
+       ai_min_confidence: Number(values.get("ai_min_confidence") ?? 0.5),
+       camera_index: Number(values.get("camera_index") || 0),
++      camera_mains_frequency_hz: Number(values.get("camera_mains_frequency_hz") ?? 0),
++      preview_max_width: Number(values.get("preview_max_width") ?? state.settings?.preview_max_width ?? 1280),
+       settle_seconds: Number(values.get("motion_delay_seconds") || 3),
+       motion_threshold: Number(values.get("motion_threshold") ?? 20),
+       privacy_mode: Boolean(form.elements.namedItem("privacy_mode")?.checked),
+
+--- before/templates/index.html
++++ after/templates/index.html
+@@ -260,9 +260,22 @@
+                 <div class="camera-overlay top-left" data-camera-overlay data-mode="wait"><span class="record-dot"></span><span data-camera-mode>WAIT</span></div>
+                 <div class="camera-overlay bottom-left"><time id="camera-clock-large">--:--:--</time></div>
+               </div>
++              <footer class="camera-footer"><span><svg><use href="#icon-info"></use></svg><span>카메라가 촬영한 구도를 표시합니다. 흔들림 보정은 물품 변화 분석에만 적용됩니다.</span></span></footer>
+             </article>
+             <aside class="camera-side-stack">
+-              <article class="panel monitor-card"><header class="panel-header"><div><h2>감지 상태</h2><p>실시간 분석 정보</p></div></header><div class="monitor-state"><span class="radar-icon"><span></span><svg><use href="#icon-activity"></use></svg></span><strong data-motion-title>변화를 기다리는 중</strong><p data-camera-message>기준 화면과 현재 화면을 비교하고 있습니다.</p></div><dl class="system-metrics"><div><dt>안정화 대기</dt><dd data-camera-delay>—</dd></div><div><dt>감지 민감도</dt><dd data-camera-threshold>—</dd></div><div><dt>마지막 물품 변화</dt><dd data-last-change>기록 없음</dd></div></dl></article>
++              <article class="panel monitor-card"><header class="panel-header"><div><h2>감지 상태</h2><p>실시간 분석 정보</p></div></header><div class="monitor-state"><span class="radar-icon"><span></span><svg><use href="#icon-activity"></use></svg></span><strong data-motion-title>변화를 기다리는 중</strong><p data-camera-message>기준 화면과 현재 화면을 비교하고 있습니다.</p></div><dl class="system-metrics"><div><dt>안정화 대기</dt><dd data-camera-delay>—</dd></div><div><dt>감지 민감도</dt><dd data-camera-threshold>—</dd></div><div><dt>실제 처리 속도</dt><dd data-camera-fps>측정 대기</dd></div><div><dt>최근 프레임 처리</dt><dd data-camera-processing>측정 대기</dd></div><div><dt>미리보기 크기</dt><dd data-camera-preview-size>—</dd></div><div><dt>마지막 물품 변화</dt><dd data-last-change>기록 없음</dd></div></dl></article>
++              <details class="panel monitor-card">
++                <summary class="panel-header"><strong>카메라 진단</strong><span aria-hidden="true">⌄</span></summary>
++                <div class="camera-footer"><span data-camera-diagnostic-message>카메라 연결 후 센서 정보를 확인할 수 있습니다.</span></div>
++                <dl class="system-metrics">
++                  <div data-camera-diagnostic-row hidden><dt>카메라 모델</dt><dd data-camera-model></dd></div>
++                  <div data-camera-diagnostic-row hidden><dt>노출 시간</dt><dd data-camera-exposure></dd></div>
++                  <div data-camera-diagnostic-row hidden><dt>센서 게인</dt><dd data-camera-gain></dd></div>
++                  <div data-camera-diagnostic-row hidden><dt>초점 위치</dt><dd data-camera-lens title="초점 렌즈 위치(디옵터). 값이 변하면 카메라가 초점을 조절 중일 수 있습니다."></dd></div>
++                  <div data-camera-diagnostic-row hidden><dt>조명 보정</dt><dd data-camera-flicker></dd></div>
++                </dl>
++                <div class="camera-footer" data-camera-diagnostic-warning-wrap hidden><span><svg><use href="#icon-alert"></use></svg><span data-camera-diagnostic-warning></span></span></div>
++              </details>
+               <article class="panel camera-actions-card"><h2>카메라 도구</h2><button type="button" data-rebaseline><span><svg><use href="#icon-refresh"></use></svg></span><span><strong>기준 화면 재설정</strong><small>현재 빈 화면을 저장하고 기존 물품 상태 확인</small></span><svg><use href="#icon-chevron"></use></svg></button><button type="button" data-open-settings><span><svg><use href="#icon-settings"></use></svg></span><span><strong>감지 설정</strong><small>민감도와 안정화 시간을 조정</small></span><svg><use href="#icon-chevron"></use></svg></button></article>
+             </aside>
+           </div>
+@@ -310,6 +323,8 @@
+           <section class="settings-section" data-settings-panel="camera" id="settings-panel-camera" role="tabpanel" aria-labelledby="settings-tab-camera" hidden>
+             <div class="section-heading"><h3>카메라와 움직임 감지</h3><p>시연 장소의 조명과 카메라 거리에 맞춰 조정하세요.</p></div>
+             <label class="field"><span>카메라 번호</span><input name="camera_index" type="number" min="-1" max="20" step="1" value="0" required><small>기본 웹캠은 0입니다. 장치에 연결된 카메라 번호를 입력하세요.</small></label>
++            <label class="field"><span>조명 깜빡임 보정</span><select name="camera_mains_frequency_hz"><option value="0">카메라 기본값 유지</option><option value="50">50 Hz</option><option value="60">60 Hz</option></select><small>지원되는 CSI 카메라에만 적용됩니다. 촬영 장소의 조명 전원 주파수를 선택하세요. 자동 노출·화이트밸런스·초점 설정은 유지합니다.</small></label>
++            <label class="field"><span>미리보기 최대 너비 (픽셀)</span><input name="preview_max_width" type="number" min="320" max="3840" step="1" value="1280" required><small>낮추면 화면 전송 부담이 줄어듭니다. 물품 분석용 원본 크기는 유지합니다.</small></label>
+             <label class="field"><span>움직임 후 안정화 대기 <output id="delay-output">3초</output></span><input name="motion_delay_seconds" id="delay-range" type="range" min="0.5" max="30" step="any" value="3"></label>
+             <label class="field"><span>픽셀 변화 민감도 <output id="threshold-output">높음 (20)</output></span><input name="motion_threshold" id="threshold-range" type="range" min="2" max="100" step="any" value="20"><small>값을 낮추면 더 민감하지만 조명 변화와 카메라 진동도 감지할 수 있습니다.</small></label>
+             <label class="toggle-row"><span><strong>개인정보 보호 모드</strong><small>저장하면 영상 표시와 새 물품 감지를 중지합니다. 이미 접수된 AI 분석은 완료될 수 있습니다.</small></span><span class="switch"><input name="privacy_mode" type="checkbox"><span aria-hidden="true"></span></span></label>
+
+--- before/tests/frontend/app.test.cjs
++++ after/tests/frontend/app.test.cjs
+@@ -76,7 +76,7 @@
+     },
+   };
+   const source = readFileSync(join(__dirname, "../../static/app.js"), "utf8");
+-  const exports = "state, loadDashboard, loadItems, openItem, loadSettings, settingsPayload, populateSettings, handleProviderChange, handleItemAction, saveItemEdit, syncCameraStreams, validateSettingsForm, effectiveStatus";
++  const exports = "state, loadDashboard, loadItems, openItem, loadSettings, settingsPayload, populateSettings, handleProviderChange, handleItemAction, saveItemEdit, syncCameraStreams, validateSettingsForm, effectiveStatus, updateCameraMetrics";
+   vm.createContext(sandbox);
+   vm.runInContext(source.replace(/\}\)\(\);\s*$/, `globalThis.app = { ${exports} }; })();`), sandbox);
+   return { ...sandbox.app, document, nodes, groups, requests, add(selector, options) { const node = new Element(options); nodes.set(selector, node); return node; } };
+@@ -162,6 +162,7 @@
+ function settingsForm(app) {
+   const values = {
+     ai_provider: "auto", ai_model: "model-a", ai_min_confidence: "0.15", camera_index: "0",
++    camera_mains_frequency_hz: "0", preview_max_width: "1280",
+     motion_delay_seconds: "20.25", motion_threshold: "3.75", privacy_mode: "",
+     admin_email: "", smtp_host: "smtp.local", smtp_port: "587", smtp_username: "",
+     valuable_value_threshold_krw: "100000",
+@@ -177,6 +178,7 @@
+ const settings = {
+   provider: "auto", openai_model: "model-a", gemini_model: "model-b", ai_min_confidence: 0.15,
+   camera_index: 0, settle_seconds: 20.25, motion_threshold: 3.75, privacy_mode: false,
++  camera_mains_frequency_hz: 0, preview_max_width: 1280,
+   admin_email: "", smtp_host: "smtp.local", smtp_port: 587, smtp_username: "", valuable_value_threshold_krw: 100000,
+ };
+ 
+@@ -274,3 +276,86 @@
+   app.state.settings.alert_lead_days = 0;
+   assert.equal(app.effectiveStatus(stored), "active");
+ });
++
++test("camera tuning preserves the server profile and sends only changed numeric settings", () => {
++  const app = setup();
++  const fields = settingsForm(app);
++  app.state.settings = { ...settings, preview_max_width: 800 };
++  app.populateSettings(app.state.settings, { active: "openai" });
++  assert.equal(fields.namedItem("preview_max_width").value, "800");
++  assert.equal(fields.namedItem("camera_mains_frequency_hz").value, "0");
++  assert.equal(Object.keys(app.settingsPayload()).length, 0);
++  fields.namedItem("camera_mains_frequency_hz").value = "60";
++  fields.namedItem("preview_max_width").value = "1001";
++  assert.deepEqual(JSON.parse(JSON.stringify(app.settingsPayload())), { camera_mains_frequency_hz: 60, preview_max_width: 1001 });
++  app.state.settings = { ...settings, preview_max_width: 1001, camera_mains_frequency_hz: 50 };
++  app.populateSettings(app.state.settings, { active: "openai" });
++  assert.equal(fields.namedItem("preview_max_width").value, "1001");
++  assert.equal(fields.namedItem("camera_mains_frequency_hz").value, "50");
++  assert.equal(Object.keys(app.settingsPayload()).length, 0);
++});
++
++function cameraMetrics(app) {
++  const metrics = {};
++  for (const key of ["fps", "processing", "preview-size", "model", "exposure", "gain", "lens", "flicker", "diagnostic-message", "diagnostic-warning", "diagnostic-warning-wrap"]) {
++    const row = new Element({ hidden: true });
++    const node = new Element({ closest: (selector) => selector === "[data-camera-diagnostic-row]" ? row : null });
++    app.groups.set(`[data-camera-${key}]`, [node]);
++    metrics[key] = node;
++    metrics[`${key}-row`] = row;
++  }
++  return metrics;
++}
++
++test("camera metrics show measured values with exposure conversion and a valid infinity lens position", () => {
++  const app = setup();
++  const metrics = cameraMetrics(app);
++  app.updateCameraMetrics({
++    fps: 7.24, processing_ms: 82.38, preview_width: 800, preview_height: 450,
++    camera_diagnostics: {
++      backend: "picamera2", model: "imx-test", last_read_ok: true,
++      requested_mains_frequency_hz: 60, applied_mains_frequency_hz: 60, warnings: [],
++      frame_metadata: { ExposureTime: 8333, AnalogueGain: 2.25, LensPosition: 0 },
++    },
++  }, true);
++  assert.equal(metrics.fps.textContent, "7.2 FPS");
++  assert.equal(metrics.processing.textContent, "82.4 ms");
++  assert.equal(metrics["preview-size"].textContent, "800 × 450");
++  assert.equal(metrics.exposure.textContent, "8.33 ms");
++  assert.equal(metrics.gain.textContent, "2.25×");
++  assert.equal(metrics.lens.textContent, "0.00 D");
++  assert.equal(metrics["lens-row"].hidden, false);
++  assert.equal(metrics.flicker.textContent, "60 Hz");
++  assert.equal(metrics["diagnostic-warning-wrap"].hidden, true);
++});
++
++test("missing or stale camera diagnostics stay unavailable without fabricated zero readings", () => {
++  const app = setup();
++  const metrics = cameraMetrics(app);
++  app.updateCameraMetrics({ fps: 0, processing_ms: 0, preview_width: 0, preview_height: 0 }, true);
++  assert.equal(metrics.fps.textContent, "측정 대기");
++  assert.equal(metrics.processing.textContent, "측정 대기");
++  assert.equal(metrics["preview-size"].textContent, "—");
++  assert.equal(metrics["exposure-row"].hidden, true);
++  assert.match(metrics["diagnostic-message"].textContent, /USB/);
++
++  const camera = {
++    fps: 7, processing_ms: 83, preview_width: 800, preview_height: 450,
++    camera_diagnostics: {
++      backend: "picamera2", model: "imx-test", last_read_ok: false,
++      requested_mains_frequency_hz: 60, applied_mains_frequency_hz: null,
++      warnings: ["AeFlickerMode unavailable"],
++      frame_metadata: { ExposureTime: 10000, AnalogueGain: 2, LensPosition: 1.3 },
++    },
++  };
++  app.updateCameraMetrics(camera, true);
++  assert.equal(metrics.exposure.textContent, "");
++  assert.equal(metrics["exposure-row"].hidden, true);
++  assert.equal(metrics.flicker.textContent, "적용되지 않음");
++  assert.equal(metrics["diagnostic-warning-wrap"].hidden, false);
++  assert.match(metrics["diagnostic-warning"].textContent, /60 Hz/);
++  app.updateCameraMetrics(camera, false);
++  assert.equal(metrics.fps.textContent, "—");
++  assert.equal(metrics["model-row"].hidden, true);
++  assert.equal(metrics["diagnostic-warning-wrap"].hidden, true);
++});
+
+--- before/tests/test_api.py
++++ after/tests/test_api.py
+@@ -950,10 +950,33 @@
+             "/api/settings", json={"preview_stream_fps": 30}
+         )
+         self.assertEqual(invalid_preview_fps.status_code, 400)
++        for invalid in ({"preview_max_width": 100}, {"camera_mains_frequency_hz": 59}):
++            with self.subTest(invalid=invalid):
++                previous = self.store.get_settings()
++                response = self.client.put("/api/settings", json=invalid)
++                self.assertEqual(response.status_code, 400)
++                self.assertEqual(self.store.get_settings(), previous)
+ 
+         # Deterministic demo presets never read the camera or call external services.
+         self.vision_get_jpeg.assert_not_called()
+ 
++    def test_camera_preview_and_flicker_settings_persist(self) -> None:
++        previous = main.current_settings()
++        try:
++            response = self.client.put("/api/settings", json={
++                "camera_mains_frequency_hz": 60, "preview_max_width": 800,
++            })
++            self.assertEqual(response.status_code, 200, response.text)
++            settings = self.client.get("/api/settings").json()["settings"]
++            self.assertEqual(settings["camera_mains_frequency_hz"], 60)
++            self.assertEqual(settings["preview_max_width"], 800)
++            self.assertEqual(settings["camera_width"], previous["camera_width"])
++            self.assertEqual(settings["jpeg_quality"], previous["jpeg_quality"])
++        finally:
++            self.store.update_settings({key: previous[key] for key in (
++                "camera_mains_frequency_hz", "preview_max_width",
++            )})
++
+ 
+ if __name__ == "__main__":
+     unittest.main()
+
+--- before/tests/test_camera_config.py
++++ after/tests/test_camera_config.py
+@@ -0,0 +1,32 @@
++from __future__ import annotations
++
++import json
++import os
++import subprocess
++import sys
++import unittest
++from pathlib import Path
++
++
++class CameraProfileTests(unittest.TestCase):
++    def test_pi_preview_budget_preserves_capture_and_evidence_resolution(self) -> None:
++        root = Path(__file__).resolve().parents[1]
++        environment = dict(os.environ, HARDWARE_PROFILE="raspberry-pi")
++        result = subprocess.run(
++            [sys.executable, "-c", "import json; from app.config import DEFAULT_SETTINGS; "
++             "print(json.dumps({k:DEFAULT_SETTINGS[k] for k in "
++             "('camera_width','camera_height','jpeg_quality','preview_max_width',"
++             "'monitor_fps','preview_stream_fps','camera_mains_frequency_hz')}))"],
++            cwd=root, env=environment, text=True, capture_output=True, check=True, timeout=10,
++        )
++        settings = json.loads(result.stdout)
++        self.assertEqual((settings["camera_width"], settings["camera_height"]), (1280, 720))
++        self.assertEqual(settings["jpeg_quality"], 88)
++        self.assertEqual(settings["preview_max_width"], 800)
++        self.assertEqual(settings["monitor_fps"], 7)
++        self.assertEqual(settings["preview_stream_fps"], 5)
++        self.assertEqual(settings["camera_mains_frequency_hz"], 0)
++
++
++if __name__ == "__main__":
++    unittest.main()
+
+--- before/tests/test_camera_sources.py
++++ after/tests/test_camera_sources.py
+@@ -1,5 +1,6 @@
+ from __future__ import annotations
+ 
++import json
+ import unittest
+ from unittest.mock import Mock, patch
+ 
+@@ -121,6 +122,172 @@
+         self.assertEqual(camera.stopped, 1)
+         self.assertEqual(camera.closed, 1)
+ 
++    def test_flicker_defaults_preserve_controls_and_do_not_guess_capabilities(self) -> None:
++        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=FakePicamera2)
++        diagnostics = capture.get_diagnostics()
++        self.assertEqual(diagnostics["requested_mains_frequency_hz"], 0)
++        self.assertIsNone(diagnostics["applied_mains_frequency_hz"])
++        self.assertEqual(diagnostics["controls_supported"], [])
++        self.assertFalse(diagnostics["metadata_supported"])
++        self.assertEqual(diagnostics["frame_metadata"], {})
++        capture.release()
++
++    def test_dynamic_mock_attributes_are_not_treated_as_metadata_support(self) -> None:
++        class DynamicCamera(FakePicamera2):
++            def __getattr__(self, name: str) -> Mock:
++                return Mock()
++
++        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=DynamicCamera)
++        self.assertFalse(capture.get_diagnostics()["metadata_supported"])
++        self.assertEqual(capture.get_diagnostics()["controls_supported"], [])
++        self.assertTrue(capture.read()[0])
++        capture.release()
++
++    def test_supported_flicker_is_applied_without_locking_ae_awb_or_focus(self) -> None:
++        class ControlledCamera(FakePicamera2):
++            camera_controls = {
++                "AeFlickerMode": (0, 1, 0),
++                "AeFlickerPeriod": (100, 100000, 0),
++                "AeEnable": (False, True, True),
++                "AwbEnable": (False, True, True),
++                "AfMode": (0, 2, 0),
++            }
++            camera_properties = {"Model": "test-camera"}
++
++            def set_controls(self, controls: dict[str, object]) -> None:
++                self.control_updates = controls
++                # Controls must be queued after configure and before start.
++                assert self.configured is not None
++                assert self.started == 0
++
++        for frequency, period in ((50, 10000), (60, 8333)):
++            with self.subTest(frequency=frequency):
++                capture = Picamera2Capture(
++                    0, 640, 360, 8.0,
++                    mains_frequency_hz=frequency, picamera2_class=ControlledCamera,
++                )
++                camera = FakePicamera2.instances[-1]
++                self.assertEqual(camera.control_updates, {"AeFlickerMode": 1, "AeFlickerPeriod": period})
++                self.assertEqual(capture.get_diagnostics()["applied_mains_frequency_hz"], frequency)
++                self.assertEqual(capture.get_diagnostics()["model"], "test-camera")
++                self.assertEqual(capture.get_diagnostics()["warnings"], [])
++                capture.release()
++
++    def test_unsupported_or_rejected_flicker_keeps_csi_camera_running(self) -> None:
++        class MissingPeriodCamera(FakePicamera2):
++            camera_controls = {"AeFlickerMode": (0, 1, 0)}
++
++            def set_controls(self, controls: dict[str, object]) -> None:
++                raise AssertionError("Must not send unsupported controls")
++
++        class OutOfRangeCamera(MissingPeriodCamera):
++            camera_controls = {"AeFlickerMode": (0, 0, 0), "AeFlickerPeriod": (100, 100000, 0)}
++
++        class RejectingCamera(FakePicamera2):
++            camera_controls = {"AeFlickerMode": (0, 1, 0), "AeFlickerPeriod": (100, 100000, 0)}
++
++            def set_controls(self, controls: dict[str, object]) -> None:
++                raise RuntimeError("control was rejected")
++
++        for camera_type in (MissingPeriodCamera, OutOfRangeCamera, RejectingCamera):
++            with self.subTest(camera_type=camera_type):
++                capture = Picamera2Capture(
++                    0, 640, 360, 8.0,
++                    mains_frequency_hz=60, picamera2_class=camera_type,
++                )
++                self.assertTrue(capture.isOpened())
++                self.assertIsNone(capture.get_diagnostics()["applied_mains_frequency_hz"])
++                self.assertEqual(capture.get_diagnostics()["requested_mains_frequency_hz"], 60)
++                self.assertEqual(len(capture.get_diagnostics()["warnings"]), 1)
++                self.assertTrue(capture.read()[0])
++                capture.release()
++
++    def test_diagnostic_properties_failure_does_not_lose_an_open_camera(self) -> None:
++        class UnavailableInfoCamera(FakePicamera2):
++            @property
++            def camera_controls(self) -> dict[str, object]:
++                raise RuntimeError("optional camera information unavailable")
++
++            @property
++            def camera_properties(self) -> dict[str, object]:
++                raise RuntimeError("optional camera information unavailable")
++
++        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=UnavailableInfoCamera)
++        self.assertEqual(capture.get_diagnostics()["model"], "unknown")
++        self.assertTrue(capture.read()[0])
++        capture.release()
++        self.assertEqual(FakePicamera2.instances[-1].closed, 1)
++
++    def test_frame_and_metadata_are_captured_together_once_and_are_json_safe(self) -> None:
++        class MetadataCamera(FakePicamera2):
++            def capture_array(self, name: str) -> np.ndarray:
++                raise AssertionError("Must not acquire a second frame")
++
++            def capture_metadata(self) -> dict[str, object]:
++                raise AssertionError("Must not acquire metadata from another frame")
++
++            def capture_arrays(self, names: list[str]) -> tuple[list[np.ndarray], dict[str, object]]:
++                self.calls = getattr(self, "calls", 0) + 1
++                assert names == ["main"]
++                return [self.frame], {
++                    "ExposureTime": np.int64(8333), "AnalogueGain": np.float32(2.0),
++                    "ColourGains": (1.3, 1.7), "AfState": 2, "LensPosition": 1.2,
++                    "SensorTimestamp": 1234567890, "AwbLocked": True,
++                    "Lux": float("nan"), "DigitalGain": float("inf"),
++                    "ColourTemperature": 10 ** 1000,
++                    "UnrelatedBlob": np.zeros((200, 200)),
++                }
++
++        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=MetadataCamera)
++        camera = FakePicamera2.instances[-1]
++        ok, frame = capture.read()
++        self.assertTrue(ok)
++        self.assertIs(frame, camera.frame)
++        self.assertEqual(camera.calls, 1)
++        diagnostics = capture.get_diagnostics()
++        self.assertEqual(diagnostics["frame_sequence"], 1)
++        self.assertEqual(diagnostics["frame_metadata"], {
++            "ExposureTime": 8333, "AnalogueGain": 2.0, "ColourGains": [1.3, 1.7],
++            "AfState": 2, "LensPosition": 1.2, "SensorTimestamp": 1234567890, "AwbLocked": True,
++        })
++        json.dumps(diagnostics, allow_nan=False)
++        diagnostics["frame_metadata"]["ColourGains"][0] = 99
++        self.assertEqual(capture.get_diagnostics()["frame_metadata"]["ColourGains"], [1.3, 1.7])
++        capture.release()
++        capture.release()
++        self.assertEqual(camera.stopped, 1)
++        self.assertEqual(camera.closed, 1)
++
++    def test_failed_read_marks_old_metadata_as_stale_and_invalid_frames_are_rejected(self) -> None:
++        capture = Picamera2Capture(0, 640, 360, 8.0, picamera2_class=FakePicamera2)
++        camera = FakePicamera2.instances[-1]
++        self.assertTrue(capture.read()[0])
++        for frame in (np.zeros((8, 8, 4), np.uint8), np.zeros((8, 8, 3), np.float32), np.zeros((0, 8, 3), np.uint8)):
++            camera.frame = frame
++            self.assertEqual(capture.read(), (False, None))
++            self.assertFalse(capture.get_diagnostics()["last_read_ok"])
++            self.assertEqual(capture.get_diagnostics()["frame_sequence"], 1)
++        capture.release()
++
++    def test_invalid_flicker_frequency_is_rejected_before_acquiring_camera(self) -> None:
++        for value in (True, 45, -60, "60"):
++            with self.subTest(value=value), self.assertRaisesRegex(CameraSourceError, "frequency"):
++                Picamera2Capture(0, 640, 360, 8.0, mains_frequency_hz=value, picamera2_class=FakePicamera2)
++        self.assertEqual(FakePicamera2.instances, [])
++
++    @patch("app.camera_sources._open_opencv_capture")
++    @patch("app.camera_sources._open_picamera2_capture")
++    def test_requested_flicker_is_forwarded_only_to_picamera_backend(
++        self, open_picamera: Mock, open_opencv: Mock
++    ) -> None:
++        expected = Mock()
++        open_picamera.return_value = expected
++        capture, error = open_camera_capture(0, "picamera2", 640, 360, 8.0, mains_frequency_hz=60)
++        self.assertIs(capture, expected)
++        self.assertIsNone(error)
++        open_picamera.assert_called_once_with(0, 640, 360, 8.0, mains_frequency_hz=60)
++        open_opencv.assert_not_called()
++
+     @patch("app.camera_sources._open_opencv_capture")
+     @patch("app.camera_sources._open_picamera2_capture")
+     def test_auto_prefers_picamera2_without_opening_opencv(
+
+--- before/tests/test_vision.py
++++ after/tests/test_vision.py
+@@ -1381,7 +1381,7 @@
+                         stop_event.set()
+                     return True, np.zeros((120, 160, 3), dtype=np.uint8)
+ 
+-                def detect(*args):
++                def detect(*args, **kwargs):
+                     if control == "privacy":
+                         monitor.set_privacy(True)
+                     elif control == "rebaseline":
+
+--- before/tests/test_vision_preview.py
++++ after/tests/test_vision_preview.py
+@@ -0,0 +1,180 @@
++from __future__ import annotations
++
++import queue
++import threading
++import unittest
++from unittest.mock import Mock, patch
++
++import cv2
++import numpy as np
++
++from app.vision import VisionMonitor, _ActiveBox, _FramePacer
++
++
++class FramePacerTests(unittest.TestCase):
++    def test_ten_fps_camera_keeps_seven_processed_frames_per_second(self) -> None:
++        pacer = _FramePacer()
++        accepted = [index for index in range(100) if pacer.ready(index / 10, 7)]
++        self.assertEqual(len(accepted), 70)
++        for second in range(10):
++            self.assertEqual(sum(second * 10 <= value < (second + 1) * 10 for value in accepted), 7)
++        self.assertTrue(all(1 <= right - left <= 2 for left, right in zip(accepted, accepted[1:])))
++
++    def test_processing_pause_discards_old_deadlines_without_catchup_burst(self) -> None:
++        pacer = _FramePacer()
++        self.assertTrue(pacer.ready(0, 7))
++        self.assertFalse(pacer.ready(0.1, 7))
++        self.assertTrue(pacer.ready(10, 7))
++        for _ in range(10):
++            self.assertFalse(pacer.ready(10, 7))
++        self.assertFalse(pacer.ready(10.1, 7))
++        self.assertTrue(pacer.ready(10.2, 7))
++
++
++class VisionPreviewTests(unittest.TestCase):
++    def setUp(self) -> None:
++        self.monitor = VisionMonitor(lambda: {}, lambda event: None, lambda: [])
++        self.config = dict(VisionMonitor.DEFAULTS, preview_max_width=800, preview_stream_fps=5)
++
++    def test_estimated_alignment_does_not_move_or_resample_raw_preview_pixels(self) -> None:
++        frame = np.random.default_rng(7).integers(0, 256, (240, 320, 3), dtype=np.uint8)
++        original = frame.copy()
++        transforms = (
++            np.float32([[1, 0, 0], [0, 1, 0]]),
++            np.float32([[0.9986, -0.00006, 1.337], [0.00006, 0.9986, 0.436]]),
++        )
++        published = []
++        with patch("app.vision.time.monotonic", return_value=0) as clock, \
++             patch("app.vision.time.strftime", return_value="2026-09-18 12:00:00"), \
++             patch.object(self.monitor, "_publish_frame", side_effect=lambda image, *a, **k: published.append(image.copy())):
++            for index, transform in enumerate(transforms):
++                clock.return_value = index * 0.2
++                self.assertTrue(self.monitor._publish_live_preview(
++                    frame, "monitoring", False, [], self.config,
++                    current_to_reference=transform,
++                ))
++        np.testing.assert_array_equal(published[0], published[1])
++        np.testing.assert_array_equal(published[1][100:190], original[100:190])
++        np.testing.assert_array_equal(frame, original)
++
++    def test_inverse_alignment_and_preview_scale_project_only_display_boxes(self) -> None:
++        frame = np.full((720, 1280, 3), 180, dtype=np.uint8)
++        active = _ActiveBox(9, (400, 240, 80, 48))
++        current_to_reference = np.float32([[1, 0, -16], [0, 1, 8]])
++        transform_copy = current_to_reference.copy()
++        with patch("app.vision.time.monotonic", return_value=1), \
++             patch.object(self.monitor, "_draw_overlay", wraps=self.monitor._draw_overlay) as overlay, \
++             patch.object(self.monitor, "_publish_frame") as publish:
++            self.monitor._publish_live_preview(
++                frame, "monitoring", False, [active], self.config,
++                current_to_reference=current_to_reference,
++            )
++        projection = overlay.call_args.kwargs["reference_to_preview"]
++        self.assertEqual(self.monitor._preview_bbox(active.bbox, projection, 800, 450), (260, 145, 50, 30))
++        self.assertEqual(publish.call_args.args[0].shape, (450, 800, 3))
++        self.assertEqual(active.bbox, (400, 240, 80, 48))
++        np.testing.assert_array_equal(current_to_reference, transform_copy)
++        self.assertEqual(self.monitor.get_status()["preview_width"], 800)
++
++    def test_preview_throttling_and_downscaling_leave_evidence_at_source_resolution(self) -> None:
++        before = np.full((720, 1280, 3), 205, dtype=np.uint8)
++        after = before.copy()
++        cv2.rectangle(after, (600, 300), (690, 420), (25, 35, 45), -1)
++        original = after.copy()
++        config = dict(self.config, preview_jpeg_quality=67, jpeg_quality=88)
++        with patch("app.vision.time.monotonic", return_value=0) as clock, \
++             patch.object(self.monitor, "_encode_jpeg", wraps=self.monitor._encode_jpeg) as encode:
++            outcomes = []
++            for now in (0, 0.05, 0.2):
++                clock.return_value = now
++                outcomes.append(self.monitor._publish_live_preview(
++                    after, "monitoring", False, [], config,
++                ))
++            self.assertEqual(outcomes, [True, False, True])
++            self.assertEqual(encode.call_count, 2)
++            self.assertEqual(encode.call_args.args[0].shape, (450, 800, 3))
++            self.assertEqual(encode.call_args.args[1], 67)
++            events, globally_changed = self.monitor._detect_changes(
++                before, after, [], config, already_aligned=True,
++            )
++        self.assertFalse(globally_changed)
++        self.assertEqual(len(events), 1)
++        event = events[0]
++        self.assertEqual(event.kind, "added")
++        self.assertGreater(event.bbox[0], 550)
++        self.assertGreater(event.bbox[3], 120)
++        crop = cv2.imdecode(np.frombuffer(event.after_jpeg, np.uint8), cv2.IMREAD_COLOR)
++        scene = cv2.imdecode(np.frombuffer(event.scene_after_jpeg, np.uint8), cv2.IMREAD_COLOR)
++        self.assertEqual(crop.shape[:2], (event.bbox[3], event.bbox[2]))
++        self.assertEqual(scene.shape[1], config["ai_scene_max_width"])
++        np.testing.assert_array_equal(after, original)
++
++    def test_already_aligned_core_keeps_events_without_repeating_alignment(self) -> None:
++        before = np.full((240, 320, 3), 205, dtype=np.uint8)
++        after = before.copy()
++        cv2.rectangle(after, (100, 65), (190, 170), (25, 35, 45), -1)
++        expected_events, expected_global = self.monitor._detect_changes(before, after, [], self.config)
++        with patch.object(self.monitor, "_estimate_euclidean_alignment") as affine, \
++             patch.object(self.monitor, "_estimate_translation") as translation:
++            events, globally_changed = self.monitor._detect_changes(
++                before, after, [], self.config, already_aligned=True,
++            )
++        affine.assert_not_called()
++        translation.assert_not_called()
++        self.assertEqual(events, expected_events)
++        self.assertEqual(globally_changed, expected_global)
++        self.assertEqual([event.kind for event in events], ["added"])
++
++    def test_supported_gray_and_bgra_inputs_can_be_previewed(self) -> None:
++        for frame in (
++            np.full((240, 320), 180, dtype=np.uint8),
++            np.full((240, 320, 4), 180, dtype=np.uint8),
++        ):
++            with self.subTest(channels=frame.shape), \
++                 patch("app.vision.time.monotonic", return_value=float(frame.ndim)), \
++                 patch.object(self.monitor, "_publish_frame") as publish:
++                self.assertTrue(self.monitor._publish_live_preview(
++                    frame, "monitoring", False, [], self.config,
++                ))
++                self.assertEqual(publish.call_args.args[0].shape[:2], (240, 320))
++
++    def test_baseline_gray_cache_refreshes_after_rebaseline(self) -> None:
++        config = dict(self.config, stable_seconds=0, settle_seconds=0, camera_warmup_seconds=0)
++        monitor = VisionMonitor(lambda: config, lambda event: None, lambda: [])
++        stop = threading.Event()
++        done = threading.Event()
++        monitor._stop_event = stop
++        camera = Mock()
++        now = [0.0]
++        count = [0]
++
++        def read():
++            count[0] += 1
++            now[0] += 1
++            if count[0] == 3:
++                monitor.rebaseline()
++            if count[0] > 6:
++                stop.set()
++                return False, None
++            return True, np.full((120, 160, 3), 100 if count[0] < 3 else 160, dtype=np.uint8)
++
++        camera.read.side_effect = read
++        identity = np.float32([[1, 0, 0], [0, 1, 0]])
++        with patch("app.vision.time.monotonic", side_effect=lambda: now[0]), \
++             patch.object(monitor, "_open_capture", return_value=(camera, None)), \
++             patch.object(monitor, "_prepare_gray", wraps=monitor._prepare_gray) as prepare, \
++             patch.object(monitor, "_estimate_euclidean_alignment", return_value=(identity, 1.0)) as align, \
++             patch.object(monitor, "_has_motion", return_value=(False, 0)), \
++             patch.object(monitor, "_publish_live_preview", return_value=True):
++            monitor._run(stop, queue.Queue(), done)
++        self.assertIsNone(monitor.get_status()["last_error"])
++        self.assertEqual(prepare.call_count, 6)
++        references = [call.args[0] for call in align.call_args_list]
++        self.assertEqual([int(gray[0, 0]) for gray in references], [100, 160, 160, 160])
++        self.assertIs(references[1], references[2])
++        self.assertIs(references[2], references[3])
++        camera.release.assert_called_once()
++
++
++if __name__ == "__main__":
++    unittest.main()
+
+--- before/tests/test_vision_stability.py
++++ after/tests/test_vision_stability.py
+@@ -0,0 +1,161 @@
++from __future__ import annotations
++
++import unittest
++from unittest.mock import patch
++
++import cv2
++import numpy as np
++
++from app.vision import VisionMonitor
++
++
++class VisionStabilityTests(unittest.TestCase):
++    """Synthetic 720p fixtures exercise nuisance rejection without a camera."""
++
++    @classmethod
++    def setUpClass(cls) -> None:
++        y, x = np.indices((720, 1280))
++        plane = (180 + 5 * np.sin(x / 31) + 4 * np.cos(y / 27)).astype(np.uint8)
++        cls.weak_scene = np.repeat(plane[:, :, None], 3, axis=2)
++        cls.rich_scene = cls.weak_scene.copy()
++        for row in range(4):
++            for col in range(6):
++                left, top = 40 + col * 210, 40 + row * 175
++                cv2.rectangle(
++                    cls.weak_scene, (left, top), (left + 100, top + 75),
++                    (165, 165, 165), 2,
++                )
++                cv2.rectangle(
++                    cls.rich_scene, (left, top), (left + 100, top + 75),
++                    (60 + (col * 17) % 70, 85, 110), 3,
++                )
++                cv2.circle(cls.rich_scene, (left + 50, top + 35), 12, (95, 105, 135), -1)
++
++    def setUp(self) -> None:
++        self.monitor = VisionMonitor(lambda: {}, lambda event: None, lambda: [])
++        self.config = dict(VisionMonitor.DEFAULTS, stabilization_analysis_width=360)
++
++    def test_subthreshold_frames_skip_jitter_and_contours_with_exact_empty_result(self) -> None:
++        reference = np.full((720, 1280), 100, dtype=np.uint8)
++        cases = [reference.copy(), np.full_like(reference, 107)]
++        threshold_boundary = reference.copy()
++        threshold_boundary[200:300, 500:650] += self.config["motion_threshold"]
++        cases.append(threshold_boundary)
++
++        for current in cases:
++            with self.subTest(maximum=int(current.max())), \
++                 patch.object(self.monitor, "_persistent_edge_jitter_mask") as jitter, \
++                 patch("app.vision.cv2.findContours") as contours:
++                result = self.monitor._has_motion(
++                    reference, current, self.config, already_aligned=True,
++                )
++                self.assertEqual(result, (False, 0.0))
++                jitter.assert_not_called()
++                contours.assert_not_called()
++
++    def test_evidence_above_threshold_still_reaches_motion_mask(self) -> None:
++        reference = np.full((720, 1280), 100, dtype=np.uint8)
++        current = reference.copy()
++        current[200:250, 500:550] = 170
++        with patch.object(
++            self.monitor, "_persistent_edge_jitter_mask",
++            wraps=self.monitor._persistent_edge_jitter_mask,
++        ) as jitter:
++            moving, ratio = self.monitor._has_motion(
++                reference, current, self.config, already_aligned=True,
++            )
++        self.assertTrue(moving)
++        self.assertGreater(ratio, self.config["motion_min_ratio"])
++        jitter.assert_called_once()
++
++    def test_global_exposure_difference_retains_local_object_evidence(self) -> None:
++        reference = np.full((720, 1280), 100, dtype=np.uint8)
++        current = np.full_like(reference, 115)
++        current[200:240, 500:540] = 45
++        valid = np.full_like(reference, 255)
++        valid[:5] = 0
++
++        difference = self.monitor._compensated_gray_difference(
++            reference, current, valid, self.config, allow_local=False,
++        )
++
++        expected = np.zeros_like(reference)
++        expected[200:240, 500:540] = 70
++        np.testing.assert_array_equal(difference, expected)
++
++    def test_static_low_contrast_noise_and_brightness_do_not_emit_changes(self) -> None:
++        # This fixture produced a high-confidence ~1.4 px affine warp under
++        # sigma-2 noise in the original 360 px estimator. Analysis may choose
++        # such a transform; preview geometry must be handled independently.
++        rng = np.random.default_rng(20260918)
++        y, x = np.indices(self.weak_scene.shape[:2])
++        cases = {
++            "sensor_noise": self.weak_scene.astype(np.float32)
++            + rng.normal(0, 2, self.weak_scene.shape),
++            "brightness_gradient": self.weak_scene.astype(np.float32)
++            + (20 * (x / 1280 - 0.5))[:, :, None],
++        }
++        reference = self.monitor._prepare_gray(self.weak_scene)
++        for name, changed in cases.items():
++            with self.subTest(case=name):
++                current = np.clip(changed, 0, 255).astype(np.uint8)
++                moving, _ = self.monitor._has_motion(
++                    reference, self.monitor._prepare_gray(current), self.config,
++                )
++                events, globally_changed = self.monitor._detect_changes(
++                    self.weak_scene, current, [], self.config,
++                )
++                self.assertFalse(moving)
++                self.assertFalse(globally_changed)
++                self.assertEqual(events, [])
++
++    def test_smooth_local_illumination_does_not_create_an_object(self) -> None:
++        y, x = np.indices(self.rich_scene.shape[:2])
++        light = 40 * np.exp(-((x - 540) ** 2 / 320 ** 2 + (y - 290) ** 2 / 220 ** 2))
++        current = np.clip(
++            self.rich_scene.astype(np.float32) + light[:, :, None], 0, 255,
++        ).astype(np.uint8)
++        events, globally_changed = self.monitor._detect_changes(
++            self.rich_scene, current, [], self.config,
++        )
++        self.assertFalse(globally_changed)
++        self.assertEqual(events, [])
++
++    def test_compact_and_thin_objects_still_trigger_motion_at_720p(self) -> None:
++        reference = self.monitor._prepare_gray(self.rich_scene)
++        for width, height in ((32, 44), (12, 130)):
++            with self.subTest(size=(width, height)):
++                current = self.rich_scene.copy()
++                current[300:300 + height, 650:650 + width] = (25, 35, 45)
++                moving, ratio = self.monitor._has_motion(
++                    reference, self.monitor._prepare_gray(current), self.config,
++                )
++                self.assertTrue(moving, ratio)
++
++    def test_accumulated_slow_object_movement_survives_alignment(self) -> None:
++        baseline = self.rich_scene.copy()
++        baseline[285:350, 655:736] = (25, 35, 45)
++        reference = self.monitor._prepare_gray(baseline)
++        for shift in (12, 20):
++            with self.subTest(shift=shift):
++                current = self.rich_scene.copy()
++                current[285:350, 655 + shift:736 + shift] = (25, 35, 45)
++                moving, ratio = self.monitor._has_motion(
++                    reference, self.monitor._prepare_gray(current), self.config,
++                )
++                self.assertTrue(moving, ratio)
++
++    def test_large_low_contrast_object_is_not_treated_as_local_lighting(self) -> None:
++        reference = np.full((720, 1280), 180, dtype=np.uint8)
++        for width, height in ((200, 180), (400, 280)):
++            with self.subTest(size=(width, height)):
++                current = reference.copy()
++                current[200:200 + height, 500:500 + width] = 150
++                moving, ratio = self.monitor._has_motion(
++                    reference, current, self.config, already_aligned=True,
++                )
++                self.assertTrue(moving, ratio)
++
++
++if __name__ == "__main__":
++    unittest.main()

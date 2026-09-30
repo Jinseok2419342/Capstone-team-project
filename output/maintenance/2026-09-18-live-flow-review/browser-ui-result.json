@@ -1,0 +1,136 @@
+{
+  "passed": true,
+  "kind": "Real isolated Chromium: desktop workflow plus separate mobile touch follow-up",
+  "desktop_checks": 12,
+  "mobile_checks": 4,
+  "checks": [
+    {
+      "name": "Desktop dashboard renders live synthetic preview and database counts",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Inventory pagination shows exact server count and reaches second page",
+      "passed": true,
+      "details": {
+        "total": 55
+      }
+    },
+    {
+      "name": "Changing a category resets pagination and filters the complete database",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "A camera observation appears pending and its open detail updates after a delayed AI result",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Late AI cannot overwrite a dirty form; revision conflict preserves the draft",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Explicit reread then a normal edit saves through the real PATCH endpoint",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Expiry editing reaches due state and the real scheduler checks notification delivery",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Dispose, restore, extend, recover and restore work through visible buttons",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Dismissed evidence is read-only; restoration requires explicit confirmation",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Privacy settings immediately stop visible MJPEG connections",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Privacy exit reconnects preview; rebaseline request is distinct from completion",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Browser network interruption recovers server status and preview automatically",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "390px mobile inventory renders without horizontal document overflow",
+      "passed": true
+    },
+    {
+      "name": "Touch opens mobile item detail; dialog fits the viewport",
+      "passed": true,
+      "bounds": {
+        "left": 9,
+        "right": 381,
+        "top": 12,
+        "bottom": 832,
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "name": "Mobile editing and touch-submit save through the real API",
+      "passed": true
+    },
+    {
+      "name": "Bottom navigation responds to touch and activates the matching camera stream",
+      "passed": true
+    }
+  ],
+  "javascript_exceptions": [],
+  "screenshots": [
+    "browser-dashboard-desktop.png",
+    "browser-inventory-desktop.png",
+    "browser-pending-detail.png",
+    "browser-classified-detail.png",
+    "browser-edit-conflict.png",
+    "browser-expired-detail.png",
+    "browser-edited-detail-desktop.png",
+    "browser-camera-desktop.png",
+    "browser-inventory-mobile.png",
+    "browser-detail-mobile.png",
+    "browser-dashboard-mobile.png"
+  ],
+  "raw_results": {
+    "desktop": "browser-desktop-result.json",
+    "mobile": "browser-mobile-result.json"
+  },
+  "desktop_raw_result_note": "The desktop checks passed; the subsequent mobile section stopped on the overflow reproduced in the separate mobile report. The final mobile follow-up passed after the CSS fix.",
+  "regressions_fixed": [
+    {
+      "problem": "Saved detail enabled before mutation lock released; immediate next save ignored",
+      "evidence": [
+        "browser-before-mutation-fix.json",
+        "browser-before-mutation-fix.png"
+      ],
+      "resolution": "Release mutation once before rendering; predecessor finally cannot unlock successor; isolate late edit conflicts by open item ID"
+    },
+    {
+      "problem": "Absolute screen-reader filter label escaped horizontal scroller and expanded mobile layout viewport to 423px",
+      "evidence": [
+        "browser-before-mobile-css-fix.json",
+        "browser-before-mobile-css-fix.png"
+      ],
+      "resolution": "Position filter labels relatively; verified innerWidth/clientWidth/scrollWidth/visualViewport all390 and dialog within390x844"
+    }
+  ],
+  "closed_local_ports": {
+    "8765": "closed",
+    "8766": "closed"
+  },
+  "limits": "Synthetic camera frames, delayed fake VLM and fake SMTP transport; real FastAPI routes and disposable SQLite. No production data, live camera, remote model, or external email was used."
+}

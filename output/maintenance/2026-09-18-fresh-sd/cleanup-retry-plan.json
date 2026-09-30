@@ -1,0 +1,110 @@
+﻿[
+    {
+        "relative_path":  "app\\__pycache__",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\app\\__pycache__",
+        "files":  10,
+        "bytes":  412053
+    },
+    {
+        "relative_path":  "experiments\\__pycache__",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\experiments\\__pycache__",
+        "files":  11,
+        "bytes":  177155
+    },
+    {
+        "relative_path":  "scripts\\benchmarks\\__pycache__",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\scripts\\benchmarks\\__pycache__",
+        "files":  1,
+        "bytes":  21640
+    },
+    {
+        "relative_path":  "scripts\\experiments\\__pycache__",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\scripts\\experiments\\__pycache__",
+        "files":  1,
+        "bytes":  11147
+    },
+    {
+        "relative_path":  "scripts\\raspberry-pi\\__pycache__",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\scripts\\raspberry-pi\\__pycache__",
+        "files":  1,
+        "bytes":  2245
+    },
+    {
+        "relative_path":  "tests\\__pycache__",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\tests\\__pycache__",
+        "files":  31,
+        "bytes":  624813
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-vision-review\\__pycache__",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-vision-review\\__pycache__",
+        "files":  1,
+        "bytes":  8980
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\__pycache__",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\__pycache__",
+        "files":  2,
+        "bytes":  52611
+    },
+    {
+        "relative_path":  "tmp",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\tmp",
+        "files":  0,
+        "bytes":  0
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-58lj1niq",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-58lj1niq",
+        "files":  113,
+        "bytes":  329323
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-63rfyyzr",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-63rfyyzr",
+        "files":  117,
+        "bytes":  338124
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-a6ic4evg",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-a6ic4evg",
+        "files":  115,
+        "bytes":  333465
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-dmku11eg",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-dmku11eg",
+        "files":  113,
+        "bytes":  329323
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-hl9p2aaa",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-hl9p2aaa",
+        "files":  113,
+        "bytes":  329323
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-tfqat8kz",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-tfqat8kz",
+        "files":  115,
+        "bytes":  333449
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-t_yfs0b5",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-t_yfs0b5",
+        "files":  117,
+        "bytes":  338145
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-w31bhoui",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-w31bhoui",
+        "files":  113,
+        "bytes":  329323
+    },
+    {
+        "relative_path":  "output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-xjd4kq9s",
+        "absolute_path":  "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-xjd4kq9s",
+        "files":  117,
+        "bytes":  338140
+    }
+]

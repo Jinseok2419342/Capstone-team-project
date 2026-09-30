@@ -1,0 +1,34 @@
+{
+  "date": "2026-09-22",
+  "python_tests": 272,
+  "frontend_tests": 37,
+  "chromium_checks": 7,
+  "status": "passed",
+  "package_sha256": "15997186a4be0ee2cf5e6143892455df38974e28f5c02cb75ace269d7ea61b58",
+  "package_files_verified_against_workspace": 47,
+  "actual_pi_tested": false,
+  "live_ai_or_smtp_tested": false,
+  "user_sd_status": "new card ready; OS not written",
+  "logs": {
+    "python": "python-tests-verified.log",
+    "frontend": "frontend-tests.log",
+    "browser": "browser-validation.json"
+  },
+  "earlier_failures": "Earlier logs retain an environment dependency failure and timing-dependent legacy test failures; final verified log is authoritative. Only the legacy test clock was fixed, not notification production code.",
+  "hashes": {
+    "app/main.py": "74372dceca49a0199025ac9ba2fe78dc01f17f28bd1ff6f36913a4f4eed56083",
+    "static/app.js": "ed46384462fa1f2b61b7f81cd0ffb67ed386bc30d938275a8cddf576808cdae5",
+    "static/styles.css": "29ff1a2b71a96025f135ae69ebe1e03bbc4ee24f1847e03725bde324101d84f7",
+    "templates/index.html": "65dde5dd56b6054c39b51fd4eaf5b25f4829e8a68246c55040f65b820be19c10",
+    "tests/test_reset.py": "a56ce3a6f490206bb6937391d6961ef2556148e6e9d20fc1d5e29fd744ebfe57",
+    "tests/test_app_resilience.py": "fc9d6b0cef8b28f9859b3a2265c909d5c09a877f0eaff7b7d3d78424b55ea839",
+    "tests/test_store.py": "1cfd1ba1a666429b5e4efb1ca609636925adaf80b9b1cf3824bc0ca98ca520fb",
+    "tests/frontend/app.test.cjs": "fa2a0a02dc46586811039956e01c2d95e8f0b3ffdf68c8656e3c60031bcd2bf2",
+    "README.md": "31d5c1992b511046d085c181ffbea3e239520d6128ec10e71fb4170b1ca288e1",
+    "START_HERE.md": "9e1238c1ca5762b499ac42477971d54e71d96a28dace9b4a5083e2dd8b42ba79",
+    "AGENTS.md": "f57d394bee9c5fe2ae9f835f7c66c34705ee2d106e238a165f8587fcfc339b96",
+    "docs/SESSION_HANDOFF_2026-09-18.md": "d42917f6b633a61eb3b96217b4a0c1a2b27acb99db742fb53d0ce42f3bbc957e",
+    "docs/guides/FRESH_SD_START.md": "3e76b06a7013b96f20753ae509e7d265418f156585dc1811469a8fd0bb733a2e",
+    "docs/guides/PI_ACCEPTANCE_CHECKLIST.md": "62980773ad8b0eb708f4bf48afd18d8b313b7d2c2b2ba2132e8b02dd26ee3eb2"
+  }
+}

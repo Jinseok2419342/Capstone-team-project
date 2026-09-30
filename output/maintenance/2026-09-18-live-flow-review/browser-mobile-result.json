@@ -1,0 +1,508 @@
+{
+  "kind": "390px Chromium touch emulation, isolated synthetic fixture",
+  "checks": [
+    {
+      "name": "390px mobile inventory renders without horizontal document overflow",
+      "passed": true
+    },
+    {
+      "name": "Touch opens mobile item detail; dialog fits the viewport",
+      "passed": true,
+      "bounds": {
+        "left": 9,
+        "right": 381,
+        "top": 12,
+        "bottom": 832,
+        "width": 390,
+        "height": 844
+      }
+    },
+    {
+      "name": "Mobile editing and touch-submit save through the real API",
+      "passed": true
+    },
+    {
+      "name": "Bottom navigation responds to touch and activates the matching camera stream",
+      "passed": true
+    }
+  ],
+  "screenshots": [
+    "browser-inventory-mobile.png",
+    "browser-detail-mobile.png",
+    "browser-dashboard-mobile.png"
+  ],
+  "inventory_diagnostics": {
+    "viewport": {
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "screenWidth": 390,
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "offsetLeft": 0,
+      "offsetTop": 0
+    },
+    "overflow": [
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "relative",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SELECT",
+        "id": "category-filter",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "relative",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "classes": "sr-only",
+        "right": 423,
+        "left": 422,
+        "width": 1,
+        "position": "absolute",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "SELECT",
+        "id": "sort-filter",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      }
+    ]
+  },
+  "detail_diagnostics": {
+    "viewport": {
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "screenWidth": 390,
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "offsetLeft": 0,
+      "offsetTop": 0
+    },
+    "overflow": [
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "relative",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SELECT",
+        "id": "category-filter",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "relative",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "classes": "sr-only",
+        "right": 423,
+        "left": 422,
+        "width": 1,
+        "position": "absolute",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "SELECT",
+        "id": "sort-filter",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      }
+    ]
+  },
+  "focused_diagnostics": {
+    "viewport": {
+      "innerWidth": 390,
+      "innerHeight": 844,
+      "clientWidth": 390,
+      "scrollWidth": 390,
+      "screenWidth": 390,
+      "width": 390,
+      "height": 844,
+      "scale": 1,
+      "offsetLeft": 0,
+      "offsetTop": 0
+    },
+    "overflow": [
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "relative",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SELECT",
+        "id": "category-filter",
+        "classes": "",
+        "right": 415,
+        "left": 290,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      },
+      {
+        "tag": "LABEL",
+        "id": "",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "relative",
+        "overflow": "visible"
+      },
+      {
+        "tag": "SPAN",
+        "id": "",
+        "classes": "sr-only",
+        "right": 423,
+        "left": 422,
+        "width": 1,
+        "position": "absolute",
+        "overflow": "hidden"
+      },
+      {
+        "tag": "SELECT",
+        "id": "sort-filter",
+        "classes": "",
+        "right": 548,
+        "left": 423,
+        "width": 125,
+        "position": "static",
+        "overflow": "visible"
+      }
+    ]
+  },
+  "passed": true,
+  "javascript_exceptions": [],
+  "browser_requests": [
+    {
+      "url": "http://127.0.0.1:8765/",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/styles.css",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/app.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/settings",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/55/image?v=2026-09-18T02:39:21.274300Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/54/image?v=2026-09-18T02:39:21.268106Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/53/image?v=2026-09-18T02:39:21.261591Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/52/image?v=2026-09-18T02:39:21.255765Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/51/image?v=2026-09-18T02:39:21.249447Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/50/image?v=2026-09-18T02:39:21.242185Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/49/image?v=2026-09-18T02:39:21.234326Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/48/image?v=2026-09-18T02:39:21.227964Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/47/image?v=2026-09-18T02:39:21.221275Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/46/image?v=2026-09-18T02:39:21.215403Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/45/image?v=2026-09-18T02:39:21.209352Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/44/image?v=2026-09-18T02:39:21.203422Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/43/image?v=2026-09-18T02:39:21.197347Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/42/image?v=2026-09-18T02:39:21.190708Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/41/image?v=2026-09-18T02:39:21.184331Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/40/image?v=2026-09-18T02:39:21.178041Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/39/image?v=2026-09-18T02:39:21.171644Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/38/image?v=2026-09-18T02:39:21.165676Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/37/image?v=2026-09-18T02:39:21.159521Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/36/image?v=2026-09-18T02:39:21.152961Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/35/image?v=2026-09-18T02:39:21.146482Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/34/image?v=2026-09-18T02:39:21.138123Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/33/image?v=2026-09-18T02:39:21.132017Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/32/image?v=2026-09-18T02:39:21.125658Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/31/image?v=2026-09-18T02:39:21.118864Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/30/image?v=2026-09-18T02:39:21.112836Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/29/image?v=2026-09-18T02:39:21.106664Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/28/image?v=2026-09-18T02:39:21.100860Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/27/image?v=2026-09-18T02:39:21.094398Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/26/image?v=2026-09-18T02:39:21.088137Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/25/image?v=2026-09-18T02:39:21.081978Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/24/image?v=2026-09-18T02:39:21.075899Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/23/image?v=2026-09-18T02:39:21.069633Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/22/image?v=2026-09-18T02:39:21.062988Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/21/image?v=2026-09-18T02:39:21.056266Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/20/image?v=2026-09-18T02:39:21.050038Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/19/image?v=2026-09-18T02:39:21.043283Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/18/image?v=2026-09-18T02:39:21.035412Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/17/image?v=2026-09-18T02:39:21.028419Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/16/image?v=2026-09-18T02:39:21.021873Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/15/image?v=2026-09-18T02:39:21.015139Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/14/image?v=2026-09-18T02:39:21.008583Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/13/image?v=2026-09-18T02:39:21.001456Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/12/image?v=2026-09-18T02:39:20.995178Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/11/image?v=2026-09-18T02:39:20.988746Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/10/image?v=2026-09-18T02:39:20.982620Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/9/image?v=2026-09-18T02:39:20.976472Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/8/image?v=2026-09-18T02:39:20.970344Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/1/image?v=2026-09-18T02:39:20.926269Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/2/image?v=2026-09-18T02:39:20.932929Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/3/image?v=2026-09-18T02:39:20.939104Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/4/image?v=2026-09-18T02:39:20.945133Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/5/image?v=2026-09-18T02:39:20.951160Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/55",
+      "method": "GET"
+    },
+    {
+      "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJXaW5kb3dUZXh0IiBkPSJNMjAgM2gtMVYxaC0ydjJIN1YxSDV2Mkg0Yy0xLjEgMC0yIC45LTIgMnYxNmMwIDEuMS45IDIgMiAyaDE2YzEuMSAwIDItLjkgMi0yVjVjMC0xLjEtLjktMi0yLTJ6bTAgMThINFY4aDE2djEzeiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoMjR2MjRIMHoiLz48L3N2Zz4=",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/55",
+      "method": "PATCH"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/55/image?v=2026-09-18T02:39:24.299653Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/camera/stream?t=1789699164565",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/camera/stream?t=1789699165005",
+      "method": "GET"
+    }
+  ]
+}

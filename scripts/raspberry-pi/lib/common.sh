@@ -118,6 +118,45 @@ wait_for_health() {
     return 1
 }
 
+prepare_install_runtime() {
+    if [[ -f "${REFOUND_RUNTIME_FILE}" ]]; then
+        log "Preserved the existing access mode, bind address, and port."
+    else
+        write_runtime_mode local
+    fi
+}
+
+restart_installed_service() {
+    local previous_pid current_pid port host
+    previous_pid="$(systemctl show "${REFOUND_SERVICE}" --property=MainPID --value 2>/dev/null || true)"
+    systemctl daemon-reload
+    systemctl enable "${REFOUND_SERVICE}"
+    # enable --now leaves an already-running process on the previous code and
+    # schema. A real restart is required after installing either one.
+    systemctl restart "${REFOUND_SERVICE}"
+
+    # Read the preserved file, rather than a one-off REFOUND_PORT shell value.
+    # systemd also reads this file when launching the new process.
+    port="$(unset REFOUND_PORT; runtime_port)"
+    host="$(sed -n 's/^HOST=//p' "${REFOUND_RUNTIME_FILE}" | tail -n 1)"
+    host="${host:-127.0.0.1}"
+    case "${host}" in
+        0.0.0.0) host="127.0.0.1" ;;
+        ::|::1) host="[::1]" ;;
+    esac
+    if ! wait_for_health "${port}" "${host}"; then
+        systemctl status "${REFOUND_SERVICE}" --no-pager || true
+        die "The restarted service did not become healthy. Inspect: sudo journalctl -u ${REFOUND_SERVICE} -n 80 --no-pager"
+    fi
+    current_pid="$(systemctl show "${REFOUND_SERVICE}" --property=MainPID --value 2>/dev/null || true)"
+    if [[ ! "${current_pid}" =~ ^[1-9][0-9]*$ ]] \
+        || [[ "${current_pid}" == "${previous_pid}" ]] \
+        || ! systemctl is-active --quiet "${REFOUND_SERVICE}"; then
+        die "A new running service process was not confirmed; refusing to report an upgrade success."
+    fi
+    log "New service process ${current_pid} is responding at http://${host}:${port}."
+}
+
 switch_runtime_mode() {
     local mode="$1"
     local backup_file=""

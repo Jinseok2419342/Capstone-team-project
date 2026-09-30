@@ -1,0 +1,40 @@
+{
+  "status": "passed",
+  "final": "output\\presentation\\REFOUND_PROJECT_MIDTERM_2026-09-22_v3.pptx",
+  "final_sha256": "e12cc5b710723e9ffba427a911f7b75408cc9061d542cf7adae1470e2960dd16",
+  "slides": 30,
+  "main_slides": 27,
+  "appendix_slides": 3,
+  "source_outline_subtopics": 34,
+  "notes_with_source_references": 30,
+  "editable_tables": 13,
+  "editable_charts": 1,
+  "chart_values_ms": [
+    27.756,
+    13.212
+  ],
+  "intentional_screenshot_slots": [
+    "S1",
+    "S2",
+    "S3",
+    "S4",
+    "S5"
+  ],
+  "intentional_missing_values": [
+    "official progress percent",
+    "field AI evaluation",
+    "individual success/error samples"
+  ],
+  "visual_review": "All v1 slides individually inspected at 1280x720; all changed v2 and v3 slides inspected. Unchanged render hashes matched. Final deck rendered on all 30 slides.",
+  "historical_render_comparison_reused": true,
+  "native_powerpoint_opened": false,
+  "app_tests_rerun": false,
+  "actual_pi_or_remote_api_experiments": false,
+  "verified_protected_hashes": {
+    "app/main.py": "74372dceca49a0199025ac9ba2fe78dc01f17f28bd1ff6f36913a4f4eed56083",
+    "static/app.js": "ed46384462fa1f2b61b7f81cd0ffb67ed386bc30d938275a8cddf576808cdae5",
+    "dist/refound-pi.tar.gz": "92007237f6cf4ee5fdeb2e099961153893012e8f9c0ad8f1be7596c2127cf4ae"
+  },
+  "data_basis": "2026-09-22 current code and prior development/acceptance records",
+  "schedule_source": "User-provided class schedule: midterm 2026-10-13, rehearsal 2026-10-27, final 2026-11-03"
+}

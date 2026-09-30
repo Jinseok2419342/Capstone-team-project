@@ -1,0 +1,213 @@
+{
+  "warning": "Synthetic desktop diagnostics, not camera accuracy or Raspberry Pi performance",
+  "frame_size": [
+    1280,
+    720
+  ],
+  "opencv_threads": 24,
+  "iterations": 25,
+  "benchmarks": [
+    {
+      "case": "identical",
+      "before": {
+        "median_ms": 15.81960000021354,
+        "p95_ms": 17.151359999934357,
+        "result": [
+          false,
+          0.0
+        ]
+      },
+      "after": {
+        "median_ms": 5.435099999886006,
+        "p95_ms": 5.980840000029275,
+        "result": [
+          false,
+          0.0
+        ]
+      },
+      "speed_ratio": 2.910636418933476
+    },
+    {
+      "case": "global_brightness",
+      "before": {
+        "median_ms": 15.826000000288332,
+        "p95_ms": 16.718700000001263,
+        "result": [
+          false,
+          0.0
+        ]
+      },
+      "after": {
+        "median_ms": 5.465899999762769,
+        "p95_ms": 5.762679999952525,
+        "result": [
+          false,
+          0.0
+        ]
+      },
+      "speed_ratio": 2.8954060632238448
+    },
+    {
+      "case": "sensor_noise",
+      "before": {
+        "median_ms": 15.618200000062643,
+        "p95_ms": 17.141220000121393,
+        "result": [
+          false,
+          0.0
+        ]
+      },
+      "after": {
+        "median_ms": 5.874299999959476,
+        "p95_ms": 6.497239999953308,
+        "result": [
+          false,
+          0.0
+        ]
+      },
+      "speed_ratio": 2.658733806610215
+    },
+    {
+      "case": "compact_object",
+      "before": {
+        "median_ms": 15.54919999989579,
+        "p95_ms": 16.66586000010284,
+        "result": [
+          true,
+          0.0022352430555555554
+        ]
+      },
+      "after": {
+        "median_ms": 14.521900000090682,
+        "p95_ms": 15.030399999795918,
+        "result": [
+          true,
+          0.0022352430555555554
+        ]
+      },
+      "speed_ratio": 1.070741431892431
+    }
+  ],
+  "lighting_tradeoff": [
+    {
+      "size": [
+        32,
+        44
+      ],
+      "object_value": 25,
+      "local_compensation_off": [
+        true,
+        0.0022352430555555554
+      ],
+      "local_compensation_on": [
+        true,
+        0.0020486111111111113
+      ]
+    },
+    {
+      "size": [
+        32,
+        44
+      ],
+      "object_value": 150,
+      "local_compensation_off": [
+        true,
+        0.0016927083333333334
+      ],
+      "local_compensation_on": [
+        true,
+        0.0015234375
+      ]
+    },
+    {
+      "size": [
+        12,
+        130
+      ],
+      "object_value": 25,
+      "local_compensation_off": [
+        true,
+        0.0029730902777777776
+      ],
+      "local_compensation_on": [
+        true,
+        0.002651909722222222
+      ]
+    },
+    {
+      "size": [
+        12,
+        130
+      ],
+      "object_value": 150,
+      "local_compensation_off": [
+        true,
+        0.0020008680555555556
+      ],
+      "local_compensation_on": [
+        true,
+        0.0017578125
+      ]
+    },
+    {
+      "size": [
+        200,
+        180
+      ],
+      "object_value": 25,
+      "local_compensation_off": [
+        true,
+        0.04240885416666667
+      ],
+      "local_compensation_on": [
+        true,
+        0.025729166666666668
+      ]
+    },
+    {
+      "size": [
+        200,
+        180
+      ],
+      "object_value": 150,
+      "local_compensation_off": [
+        true,
+        0.039887152777777775
+      ],
+      "local_compensation_on": [
+        false,
+        0.0
+      ]
+    },
+    {
+      "size": [
+        400,
+        280
+      ],
+      "object_value": 25,
+      "local_compensation_off": [
+        true,
+        0.12747829861111112
+      ],
+      "local_compensation_on": [
+        true,
+        0.048515625
+      ]
+    },
+    {
+      "size": [
+        400,
+        280
+      ],
+      "object_value": 150,
+      "local_compensation_off": [
+        true,
+        0.12300347222222222
+      ],
+      "local_compensation_on": [
+        false,
+        0.0
+      ]
+    }
+  ]
+}

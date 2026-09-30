@@ -1,0 +1,986 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/l0bepsfm",
+    "id": "l0bepsfm",
+    "slide": 26,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7e9kv6lg",
+      "id": "7",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "7. 향후 개발 및 완성 계획",
+      "textPreview": "7. 향후 개발 및 완성 계획",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "7. 향후 개발 및 완성 계획"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "7. 향후 개발 및 완성 계획",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "7. 향후 개발 및 완성 계획",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/uhk36lk7",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "11월 3일 최종보고까지의 일정",
+      "textPreview": "11월 3일 최종보고까지의 일정",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "11월 3일 최종보고까지의 일정"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "11월 3일 최종보고까지의 일정",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "11월 3일 최종보고까지의 일정",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vitkzqlc",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8fil4b21",
+      "id": "4",
+      "bbox": [
+        64,
+        668,
+        1085,
+        28
+      ],
+      "geometry": "rect",
+      "text": "수업의 발표일은 확정 일정 / 사이의 개발 작업은 제안 일정",
+      "textPreview": "수업의 발표일은 확정 일정 / 사이의 개발 작업은 제안 일정",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "수업의 발표일은 확정 일정 / 사이의 개발 작업은 제안 일정"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "수업의 발표일은 확정 일정 / 사이의 개발 작업은 제안 일정",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "수업의 발표일은 확정 일정 / 사이의 개발 작업은 제안 일정",
+              "fontSize": 16,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tgr2xg3m",
+      "id": "5",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "26",
+      "textPreview": "26",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "26"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "26",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "26",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/tofqhwna",
+      "id": "8",
+      "bbox": [
+        64,
+        181,
+        1152,
+        437
+      ],
+      "text": "기간 | 개발·검증 계획 | 완료 산출물\n9/23~9/29 | 친구 접속·핫스팟, 기본 실기 추가 확인 | 접속 확인과 실제 화면 캡처\n9/30~10/12 | 통합 리허설, 측정 원장·파일럿 준비 | 중간보고 PPT와 실행 증거\n10/13  ·  중간보고 | 구현·확인 범위와 남은 계획 발표 | 중간보고 피드백\n10/14~10/26 | 정답 데이터, 반복 비교, 오류 수정 | 평가표·실패 사례·안정화 기록\n10/27  ·  발표 연습 | 전체 시연, 결과표·화면 최종 점검 | 최종 발표 수정 목록\n10/28~11/02 → 11/03 | 자료 보완·배포 고정 → 최종보고 | 최종 PPT·실행 패키지·검증 기록",
+      "textPreview": "기간 | 개발·검증 계획 | 완료 산출물 | 9/23~9/29 | 친구 접속·핫스팟, 기본 실기 추가 확인 | 접속 확인과 실제 화면 캡처 | 9/30~10/12 | 통합 리허설, 측정 원장·파일럿 준비 | 중간보고 PPT와 실행 증거 | 10/...",
+      "rows": 7,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            316,
+            62.43
+          ],
+          "text": "기간",
+          "textPreview": "기간",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "기간",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "기간",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            380,
+            181,
+            451,
+            62.43
+          ],
+          "text": "개발·검증 계획",
+          "textPreview": "개발·검증 계획",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "개발·검증 계획",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "개발·검증 계획",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            831,
+            181,
+            385,
+            62.43
+          ],
+          "text": "완료 산출물",
+          "textPreview": "완료 산출물",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "완료 산출물",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "완료 산출물",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            243.43,
+            316,
+            62.43
+          ],
+          "text": "9/23~9/29",
+          "textPreview": "9/23~9/29",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "9/23~9/29",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "9/23~9/29",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            380,
+            243.43,
+            451,
+            62.43
+          ],
+          "text": "친구 접속·핫스팟, 기본 실기 추가 확인",
+          "textPreview": "친구 접속·핫스팟, 기본 실기 추가 확인",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "친구 접속·핫스팟, 기본 실기 추가 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "친구 접속·핫스팟, 기본 실기 추가 확인",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            831,
+            243.43,
+            385,
+            62.43
+          ],
+          "text": "접속 확인과 실제 화면 캡처",
+          "textPreview": "접속 확인과 실제 화면 캡처",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "접속 확인과 실제 화면 캡처",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "접속 확인과 실제 화면 캡처",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            305.86,
+            316,
+            62.43
+          ],
+          "text": "9/30~10/12",
+          "textPreview": "9/30~10/12",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "9/30~10/12",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "9/30~10/12",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            380,
+            305.86,
+            451,
+            62.43
+          ],
+          "text": "통합 리허설, 측정 원장·파일럿 준비",
+          "textPreview": "통합 리허설, 측정 원장·파일럿 준비",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "통합 리허설, 측정 원장·파일럿 준비",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "통합 리허설, 측정 원장·파일럿 준비",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            831,
+            305.86,
+            385,
+            62.43
+          ],
+          "text": "중간보고 PPT와 실행 증거",
+          "textPreview": "중간보고 PPT와 실행 증거",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "중간보고 PPT와 실행 증거",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "중간보고 PPT와 실행 증거",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            368.29,
+            316,
+            62.43
+          ],
+          "text": "10/13  ·  중간보고",
+          "textPreview": "10/13  ·  중간보고",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "10/13  ·  중간보고",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "10/13  ·  중간보고",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            380,
+            368.29,
+            451,
+            62.43
+          ],
+          "text": "구현·확인 범위와 남은 계획 발표",
+          "textPreview": "구현·확인 범위와 남은 계획 발표",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "구현·확인 범위와 남은 계획 발표",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "구현·확인 범위와 남은 계획 발표",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            831,
+            368.29,
+            385,
+            62.43
+          ],
+          "text": "중간보고 피드백",
+          "textPreview": "중간보고 피드백",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "중간보고 피드백",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "중간보고 피드백",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            430.71,
+            316,
+            62.43
+          ],
+          "text": "10/14~10/26",
+          "textPreview": "10/14~10/26",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "10/14~10/26",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "10/14~10/26",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            380,
+            430.71,
+            451,
+            62.43
+          ],
+          "text": "정답 데이터, 반복 비교, 오류 수정",
+          "textPreview": "정답 데이터, 반복 비교, 오류 수정",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "정답 데이터, 반복 비교, 오류 수정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "정답 데이터, 반복 비교, 오류 수정",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            831,
+            430.71,
+            385,
+            62.43
+          ],
+          "text": "평가표·실패 사례·안정화 기록",
+          "textPreview": "평가표·실패 사례·안정화 기록",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "평가표·실패 사례·안정화 기록",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "평가표·실패 사례·안정화 기록",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            493.14,
+            316,
+            62.43
+          ],
+          "text": "10/27  ·  발표 연습",
+          "textPreview": "10/27  ·  발표 연습",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "10/27  ·  발표 연습",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "10/27  ·  발표 연습",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            380,
+            493.14,
+            451,
+            62.43
+          ],
+          "text": "전체 시연, 결과표·화면 최종 점검",
+          "textPreview": "전체 시연, 결과표·화면 최종 점검",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "전체 시연, 결과표·화면 최종 점검",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "전체 시연, 결과표·화면 최종 점검",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "row": 6,
+          "column": 3,
+          "bbox": [
+            831,
+            493.14,
+            385,
+            62.43
+          ],
+          "text": "최종 발표 수정 목록",
+          "textPreview": "최종 발표 수정 목록",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "최종 발표 수정 목록",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "최종 발표 수정 목록",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "row": 7,
+          "column": 1,
+          "bbox": [
+            64,
+            555.57,
+            316,
+            62.43
+          ],
+          "text": "10/28~11/02 → 11/03",
+          "textPreview": "10/28~11/02 → 11/03",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "10/28~11/02 → 11/03",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "10/28~11/02 → 11/03",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "row": 7,
+          "column": 2,
+          "bbox": [
+            380,
+            555.57,
+            451,
+            62.43
+          ],
+          "text": "자료 보완·배포 고정 → 최종보고",
+          "textPreview": "자료 보완·배포 고정 → 최종보고",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "자료 보완·배포 고정 → 최종보고",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "자료 보완·배포 고정 → 최종보고",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 21,
+          "row": 7,
+          "column": 3,
+          "bbox": [
+            831,
+            555.57,
+            385,
+            62.43
+          ],
+          "text": "최종 PPT·실행 패키지·검증 기록",
+          "textPreview": "최종 PPT·실행 패키지·검증 기록",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "최종 PPT·실행 패키지·검증 기록",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "최종 PPT·실행 패키지·검증 기록",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "composeRuns": []
+}

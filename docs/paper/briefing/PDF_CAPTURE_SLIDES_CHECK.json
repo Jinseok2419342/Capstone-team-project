@@ -1,0 +1,17 @@
+{
+  "slides": 4,
+  "pdfPages": 4,
+  "layout": "4:3; full PDF page on left, three brief explanations on right",
+  "pdfSha256": "ca0b4f502e84e7ea089ef5e02c148e4a0e7afe954c9531780c46715fd52c237f",
+  "pngSha256": [
+    "ed7c9495d1ff72f3798036d690348c5067d0626cfe1230c7e288433eb7e14e2c",
+    "42555eeef42fe6380e039bb23a71f2c95270bda12be0440c5ec8169bf8205253",
+    "f3c5787913f1f1e95e4db9922651d7d738a6421d440b9d814b362f8c04c3e708",
+    "15a6b1bc37af1162efb67bc61710dcec24263f2016f89643e9f8dbc10770c06c"
+  ],
+  "pdfPageImageEditable": false,
+  "explanationsEditable": true,
+  "final": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\presentation\\REFOUND_PDF_CAPTURE_BRIEFING.pptx",
+  "embeddedPdfPageImagesVerified": 4,
+  "allFourSlidesVisuallyInspected": true
+}

@@ -1,0 +1,20 @@
+{
+  "AGENTS.md": "1c158a4d7325c730d137b4ca5d4184e427c7fd0e03c32df24087a581e569ff6c",
+  "README.md": "2751b5e85e7fe76b01fa955974a3a9fc200cfef52cc9790b2885261ce7a326b0",
+  ".env.example": "606ad763420dc151074234bb04fb783f066dc1c8d2066b395b360093af4f604f",
+  "docs/README.md": "2e5dac80ffe2e2eaa1d6d96243612151192870b9358155b3275cccb1e2dbf664",
+  "docs/guides/PI_MONITOR_WIFI_GUIDE.md": "20e02155441956461cb27994d19207e78afa2b992f692f4573ffa065e162bcde",
+  "docs/guides/RASPBERRY_PI_GUIDE.md": "334b4b6e806d3fe5c806e228771d955039985c09f71ae79f71cad8a2239a9f5f",
+  "docs/guides/SCHOOL_DEMO_GUIDE.md": "9aea161f993732ca8ced4310ea353aa6779e52959a7b1cf4d12a071ca8f92c04",
+  "scripts/raspberry-pi/activate-hotspot.sh": "e70701c7922a59a29b89ce68a4d7acab7c55753882481fdb8fdbe8e3f8938032",
+  "scripts/raspberry-pi/check-camera.sh": "be5cc4a92ceb756d3dd015641b94a2887991a750adf24fadd425aa60336f002d",
+  "scripts/raspberry-pi/deactivate-hotspot.sh": "d6a677b927784c40422a9a7126c125754e17de282d9ae215028de766b33d8c8f",
+  "scripts/raspberry-pi/install.sh": "03effd81f19e1086a9e0adcb1565152cc49bf71aa1dfe4d200df8c25ab4bec88",
+  "scripts/raspberry-pi/package-for-pi.ps1": "8c2079991f9365e0fd178bdda35babce56785996e2e905a8eebbfca05a6d3ee9",
+  "scripts/raspberry-pi/refound.service": "4397b4472f47650b20f34988b387bef52c714eca0dbae9c3a7211fffd60b394d",
+  "scripts/raspberry-pi/remove-hotspot.sh": "7c7f369d5cb0f88015289900be3ea5c61a0cfc0ec6741421aee1e7d80531503b",
+  "scripts/raspberry-pi/setup-hotspot.sh": "91cb588a93b3d8093e2902167e233af9ee6ca8c0cc485326d664c83deb920d8a",
+  "scripts/raspberry-pi/setup-tailscale.sh": "ace5c486f0b13aafa3ac3a725a86c1baf9e0c66d0cd4b72164e838cc7fac834e",
+  "scripts/raspberry-pi/lib/common.sh": "4fd5fb21839784ce005c18f6acd2c55605e27e91b53783b357719cc6ba65fb24",
+  "tests/test_pi_deployment.py": "00f0c52628c2068938019de43ff3603e9b802dd20405f54980a4a51a7411b35e"
+}

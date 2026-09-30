@@ -1,0 +1,83 @@
+{
+  "date": "2026-09-18",
+  "navigation_documents": [
+    "START_HERE.md",
+    "docs/IMPROVEMENTS.md",
+    "docs/README.md",
+    "docs/paper/README.md",
+    "README.md",
+    "AGENTS.md",
+    "docs/SESSION_HANDOFF_2026-09-18.md"
+  ],
+  "local_links_checked": 84,
+  "missing_local_targets": [],
+  "application_or_package_changed": false,
+  "cleanup": {
+    "status": "blocked_before_execution",
+    "reason": "Automatic approval review rejected exec_command: blocked by policy. No further explanation supplied.",
+    "requested_paths": [
+      "app/__pycache__",
+      "experiments/__pycache__",
+      "scripts/benchmarks/__pycache__",
+      "scripts/experiments/__pycache__",
+      "scripts/raspberry-pi/__pycache__",
+      "tests/__pycache__",
+      "output/maintenance/2026-09-18-vision-review/__pycache__",
+      "tmp/"
+    ],
+    "deleted_files": 0,
+    "paths_still_exist": true,
+    "previously_denied_live_flow_targets_retried": false
+  },
+  "preserved": [
+    "data/",
+    "paper manuscripts, PDFs and PPTX",
+    "source backups and validation evidence",
+    "historical release packages"
+  ],
+  "source_sha256": {
+    "START_HERE.md": "68541f1852f6b97858146c5ba49a237ff59c81c923314493f0b889650bafdb29",
+    "docs/IMPROVEMENTS.md": "2dbf3fbdf227008e176c1a4da73a36d1b04e10cb47df5a1df017158e41fb747e",
+    "docs/README.md": "ded1d9561082c12edd0883fd5a9b2e592c227398958f624adbdc84a87c921782",
+    "docs/paper/README.md": "f402201bc3de3bb3a5db7c3ad9cc3061391170ba23e9e9b965747b3063f6d466",
+    "README.md": "5d054b4c63405e5ca87d489bbc61d651866e360d8847579ef62587149288d7c2",
+    "AGENTS.md": "e7b6d7811a630a8116d6a879ae8a7beca67a688e94d90a4aa6007080581a8832",
+    "docs/SESSION_HANDOFF_2026-09-18.md": "7c9912b99083598f24171c175dd3bc95694bb8dbeb5111c00164b5f949603246"
+  },
+  "explicit_user_retry": {
+    "status": "blocked_before_execution",
+    "reason": "Automatic approval review returned blocked by policy; no additional reason supplied.",
+    "target_directories": 18,
+    "candidate_file_count": 1091,
+    "candidate_bytes": 4309259,
+    "deleted_files": 0,
+    "remaining_target_directories": 18,
+    "protected_files_checked": 121,
+    "protected_files_changed": [],
+    "manual_script": "cleanup-temporary-files.ps1",
+    "manual_script_syntax_checked": true,
+    "manual_script_executed": false
+  },
+  "manual_script_fix": {
+    "reported_error": "System.Object[] cannot bind to Join-Path ChildPath",
+    "cause": "Windows PowerShell 5.1 JSON array wrapped in an extra array subexpression",
+    "fix": "Assign ConvertFrom-Json output directly; validate scalar string paths",
+    "validation": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File cleanup-temporary-files.ps1 -WhatIf",
+    "exit_code": 0,
+    "preview_targets": 18,
+    "remaining_targets": 18,
+    "protected_files_checked": 121,
+    "protected_files_changed": [],
+    "real_delete_executed": false
+  },
+  "user_execution_verification": {
+    "status": "complete",
+    "performed_by": "user",
+    "target_directories_removed": 18,
+    "remaining_targets": [],
+    "protected_files_checked": 121,
+    "protected_files_changed": [],
+    "planned_file_count": 1091,
+    "planned_bytes": 4309259
+  }
+}

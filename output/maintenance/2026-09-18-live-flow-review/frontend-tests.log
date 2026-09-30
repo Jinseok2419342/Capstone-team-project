@@ -1,0 +1,208 @@
+TAP version 13
+# Subtest: recover, dispose, restore and dismiss report success after the server commits
+ok 1 - recover, dispose, restore and dismiss report success after the server commits
+  ---
+  duration_ms: 12.4786
+  type: 'test'
+  ...
+# Subtest: a newer search survives an older response and an older error
+ok 2 - a newer search survives an older response and an older error
+  ---
+  duration_ms: 3.2422
+  type: 'test'
+  ...
+# Subtest: a refresh after mutation supersedes an in-flight identical query
+ok 3 - a refresh after mutation supersedes an in-flight identical query
+  ---
+  duration_ms: 1.3983
+  type: 'test'
+  ...
+# Subtest: older dashboard failure cannot take a newer successful connection offline
+ok 4 - older dashboard failure cannot take a newer successful connection offline
+  ---
+  duration_ms: 1.3883
+  type: 'test'
+  ...
+# Subtest: opening a second item cannot be overwritten by the first item's response
+ok 5 - opening a second item cannot be overwritten by the first item's response
+  ---
+  duration_ms: 13.7293
+  type: 'test'
+  ...
+# Subtest: opening settings during startup awaits the shared request and populates safe values
+ok 6 - opening settings during startup awaits the shared request and populates safe values
+  ---
+  duration_ms: 2.4114
+  type: 'test'
+  ...
+# Subtest: model edits survive switching providers and automatic selection
+ok 7 - model edits survive switching providers and automatic selection
+  ---
+  duration_ms: 1.2172
+  type: 'test'
+  ...
+# Subtest: hidden streams disconnect; returning to the view opens only its stream
+ok 8 - hidden streams disconnect; returning to the view opens only its stream
+  ---
+  duration_ms: 1.1817
+  type: 'test'
+  ...
+# Subtest: saving only the name preserves the full-precision expiry timestamp
+ok 9 - saving only the name preserves the full-precision expiry timestamp
+  ---
+  duration_ms: 2.6784
+  type: 'test'
+  ...
+# Subtest: upcoming expiry follows the configured alert period, including zero days
+ok 10 - upcoming expiry follows the configured alert period, including zero days
+  ---
+  duration_ms: 1.905
+  type: 'test'
+  ...
+# Subtest: camera tuning preserves the server profile and sends only changed numeric settings
+ok 11 - camera tuning preserves the server profile and sends only changed numeric settings
+  ---
+  duration_ms: 1.2221
+  type: 'test'
+  ...
+# Subtest: camera metrics show measured values with exposure conversion and a valid infinity lens position
+ok 12 - camera metrics show measured values with exposure conversion and a valid infinity lens position
+  ---
+  duration_ms: 1.1131
+  type: 'test'
+  ...
+# Subtest: missing or stale camera diagnostics stay unavailable without fabricated zero readings
+ok 13 - missing or stale camera diagnostics stay unavailable without fabricated zero readings
+  ---
+  duration_ms: 1.1328
+  type: 'test'
+  ...
+# Subtest: inventory sends all filters to the server, keeps its order and uses complete totals
+ok 14 - inventory sends all filters to the server, keeps its order and uses complete totals
+  ---
+  duration_ms: 2.032
+  type: 'test'
+  ...
+# Subtest: filter resets survive polling and the server can clamp the last page after a mutation
+ok 15 - filter resets survive polling and the server can clamp the last page after a mutation
+  ---
+  duration_ms: 2.1956
+  type: 'test'
+  ...
+# Subtest: a stale page response cannot overwrite the current page, total or navigation
+ok 16 - a stale page response cannot overwrite the current page, total or navigation
+  ---
+  duration_ms: 1.2784
+  type: 'test'
+  ...
+# Subtest: dashboard review shortcuts reset old filters and an in-flight page offset
+ok 17 - dashboard review shortcuts reset old filters and an in-flight page offset
+  ---
+  duration_ms: 2.5608
+  type: 'test'
+  ...
+# Subtest: explicit review state takes precedence over provider compatibility labels
+ok 18 - explicit review state takes precedence over provider compatibility labels
+  ---
+  duration_ms: 1.164
+  type: 'test'
+  ...
+# Subtest: demo labels survive manual edits and camera sources are never inferred as demo
+ok 19 - demo labels survive manual edits and camera sources are never inferred as demo
+  ---
+  duration_ms: 0.9895
+  type: 'test'
+  ...
+# Subtest: an open read-only detail receives AI results while dirty or focused edits are preserved
+ok 20 - an open read-only detail receives AI results while dirty or focused edits are preserved
+  ---
+  duration_ms: 2.1964
+  type: 'test'
+  ...
+# Subtest: normal edits never confirm review and explicit confirmation can save without changing fields
+ok 21 - normal edits never confirm review and explicit confirmation can save without changing fields
+  ---
+  duration_ms: 3.1988
+  type: 'test'
+  ...
+# Subtest: edit conflict keeps the draft and original revision until an explicit reload
+ok 22 - edit conflict keeps the draft and original revision until an explicit reload
+  ---
+  duration_ms: 1.6762
+  type: 'test'
+  ...
+# Subtest: excluded evidence offers restoration and pending edits block lifecycle actions
+ok 23 - excluded evidence offers restoration and pending edits block lifecycle actions
+  ---
+  duration_ms: 1.2847
+  type: 'test'
+  ...
+# Subtest: dashboard review and expiry queues are independent of the recent-items preview
+ok 24 - dashboard review and expiry queues are independent of the recent-items preview
+  ---
+  duration_ms: 1.3447
+  type: 'test'
+  ...
+# Subtest: camera recording backpressure and inventory failures have separate operational messages
+ok 25 - camera recording backpressure and inventory failures have separate operational messages
+  ---
+  duration_ms: 1.0805
+  type: 'test'
+  ...
+# Subtest: a failed MJPEG connection retries after backoff while ordinary dashboard polls stay healthy
+ok 26 - a failed MJPEG connection retries after backoff while ordinary dashboard polls stay healthy
+  ---
+  duration_ms: 1.2124
+  type: 'test'
+  ...
+# Subtest: failed item photos recover without changing item data or replacing the detail form
+ok 27 - failed item photos recover without changing item data or replacing the detail form
+  ---
+  duration_ms: 1.4822
+  type: 'test'
+  ...
+# Subtest: image retries wait for visible connected views and keep a bounded backoff
+ok 28 - image retries wait for visible connected views and keep a bounded backoff
+  ---
+  duration_ms: 1.2152
+  type: 'test'
+  ...
+# Subtest: a failed inventory load stays visibly failed across clock updates until a fresh response
+ok 29 - a failed inventory load stays visibly failed across clock updates until a fresh response
+  ---
+  duration_ms: 1.7248
+  type: 'test'
+  ...
+# Subtest: provider configuration does not claim a successful remote connection
+ok 30 - provider configuration does not claim a successful remote connection
+  ---
+  duration_ms: 1.8194
+  type: 'test'
+  ...
+# Subtest: built-in examples are described as simulated management actions
+ok 31 - built-in examples are described as simulated management actions
+  ---
+  duration_ms: 4.5403
+  type: 'test'
+  ...
+# Subtest: a committed edit or action permits the next operation before dashboard refresh and keeps its newer lock
+ok 32 - a committed edit or action permits the next operation before dashboard refresh and keeps its newer lock
+  ---
+  duration_ms: 5.3628
+  type: 'test'
+  ...
+# Subtest: a late edit conflict for a closed item cannot dirty or alter another open item's form
+ok 33 - a late edit conflict for a closed item cannot dirty or alter another open item's form
+  ---
+  duration_ms: 1.6369
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 138.4635

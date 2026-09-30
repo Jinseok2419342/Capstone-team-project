@@ -1,0 +1,63 @@
+--- before/app/config.py
++++ after/app/config.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import os
++import math
+ from dataclasses import dataclass
+ from pathlib import Path
+ from typing import Any
+@@ -38,13 +39,14 @@
+ def _int(value: Any, default: int) -> int:
+     try:
+         return int(value)
+-    except (TypeError, ValueError):
++    except (TypeError, ValueError, OverflowError):
+         return default
+ 
+ 
+ def _float(value: Any, default: float) -> float:
+     try:
+-        return float(value)
++        result = float(value)
++        return result if math.isfinite(result) else default
+     except (TypeError, ValueError):
+         return default
+ 
+@@ -203,6 +205,35 @@
+     return str(value)
+ 
+ 
++def validate_setting(key: str, value: Any) -> Any:
++    """Parse an administrator input without silently replacing bad values."""
++    target = SETTING_TYPES[key]
++    if target is bool:
++        if isinstance(value, bool):
++            return value
++        if isinstance(value, (str, int)) and str(value).strip().lower() in {
++            "1", "true", "yes", "on", "y", "0", "false", "no", "off", "n"
++        }:
++            return _bool(value)
++        raise ValueError(f"{key}: 켜짐/꺼짐 값을 확인해 주세요.")
++    if target in {int, float}:
++        if isinstance(value, bool) or not isinstance(value, (str, int, float)):
++            raise ValueError(f"{key}: 숫자를 입력해 주세요.")
++        try:
++            number = float(value)
++            if not math.isfinite(number) or (target is int and not number.is_integer()):
++                raise ValueError
++            return target(number)
++        except (TypeError, ValueError, OverflowError) as exc:
++            raise ValueError(f"{key}: 유효한 {'정수' if target is int else '숫자'}를 입력해 주세요.") from exc
++    if not isinstance(value, str) or len(value) > 300 or "\n" in value or "\r" in value:
++        raise ValueError(f"{key}: 300자 이내의 한 줄 문자열을 입력해 주세요.")
++    value = value.strip()
++    if key in {"site_name", "openai_model", "gemini_model"} and not value:
++        raise ValueError(f"{key}: 빈 값은 사용할 수 없습니다.")
++    return value
++
++
+ def public_provider_state(config: AppConfig, settings: dict[str, Any]) -> dict[str, Any]:
+     requested = settings.get("provider", "auto")
+     openai_ready = bool(config.openai_api_key)

@@ -1,0 +1,23 @@
+{
+  "scope": "Windows package compatibility only; not Raspberry Pi hardware verification.",
+  "requested_package": "opencv-python-headless==4.11.0.86",
+  "target_directory": "C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\refound-opencv4-compat-jrpzpjmg",
+  "installed_in_existing_environment": false,
+  "pip_exit_code": 0,
+  "test_exit_code": 0,
+  "opencv": "4.11.0",
+  "opencv_import_path": "C:\\Users\\Public\\Documents\\ESTsoft\\CreatorTemp\\refound-opencv4-compat-jrpzpjmg\\cv2\\__init__.py",
+  "numpy": "2.4.6",
+  "python": "3.13.3",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "patterns": [
+    "test_vision*.py",
+    "test_camera_sources.py"
+  ],
+  "tests_run": 74,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "success": true,
+  "temporary_directory_removed": true
+}

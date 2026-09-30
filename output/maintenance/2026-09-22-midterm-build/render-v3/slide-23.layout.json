@@ -1,0 +1,835 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/c7uhcr6t",
+    "id": "c7uhcr6t",
+    "slide": 23,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xovqhcz2",
+      "id": "6",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "6. 테스트 결과 및 문제점 분석",
+      "textPreview": "6. 테스트 결과 및 문제점 분석",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "6. 테스트 결과 및 문제점 분석"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "6. 테스트 결과 및 문제점 분석",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "6. 테스트 결과 및 문제점 분석",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/90vqdczq",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "주요 문제의 원인과 해결",
+      "textPreview": "주요 문제의 원인과 해결",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "주요 문제의 원인과 해결"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "주요 문제의 원인과 해결",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "주요 문제의 원인과 해결",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8zm9k7y5",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/v2d8fmhw",
+      "id": "4",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "23",
+      "textPreview": "23",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "23"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "23",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "23",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/x0ja9wn2",
+      "id": "7",
+      "bbox": [
+        64,
+        181,
+        1152,
+        434
+      ],
+      "text": "문제 | 원인 | 수정과 확인\n정지 화면이 미세하게 흔들림 | 분석용 정합 결과를 화면에도 사용 | 원본 미리보기와 박스 투영 분리\n사건 누락·중복 위험 | DB 반영 전에 기준 장면 전진 | 반영 확인 후 갱신, 사건 ID로 중복 제어\n늦은 AI 응답과 편집 충돌 | 분석 시작 후 현재 기록이 달라짐 | 검토 상태·물리 revision 확인\n연속 저장·모바일 넘침 | 배경 갱신 잠금·숨김 라벨 위치 | 작업 잠금 분리, 390px 배치 수정\n새 SD 교체·재설치 부담 | 카드 고장 뒤 환경 재구성 필요 | 설치기·진단·체크섬으로 복구 확인",
+      "textPreview": "문제 | 원인 | 수정과 확인 | 정지 화면이 미세하게 흔들림 | 분석용 정합 결과를 화면에도 사용 | 원본 미리보기와 박스 투영 분리 | 사건 누락·중복 위험 | DB 반영 전에 기준 장면 전진 | 반영 확인 후 갱신, 사건 ID로 중복 제어 ...",
+      "rows": 6,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            370,
+            72.33
+          ],
+          "text": "문제",
+          "textPreview": "문제",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "문제",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "문제",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            434,
+            181,
+            364,
+            72.33
+          ],
+          "text": "원인",
+          "textPreview": "원인",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "원인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "원인",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            798,
+            181,
+            418,
+            72.33
+          ],
+          "text": "수정과 확인",
+          "textPreview": "수정과 확인",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "수정과 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "수정과 확인",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            253.33,
+            370,
+            72.33
+          ],
+          "text": "정지 화면이 미세하게 흔들림",
+          "textPreview": "정지 화면이 미세하게 흔들림",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "정지 화면이 미세하게 흔들림",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "정지 화면이 미세하게 흔들림",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            434,
+            253.33,
+            364,
+            72.33
+          ],
+          "text": "분석용 정합 결과를 화면에도 사용",
+          "textPreview": "분석용 정합 결과를 화면에도 사용",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "분석용 정합 결과를 화면에도 사용",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "분석용 정합 결과를 화면에도 사용",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            798,
+            253.33,
+            418,
+            72.33
+          ],
+          "text": "원본 미리보기와 박스 투영 분리",
+          "textPreview": "원본 미리보기와 박스 투영 분리",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "원본 미리보기와 박스 투영 분리",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "원본 미리보기와 박스 투영 분리",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            325.67,
+            370,
+            72.33
+          ],
+          "text": "사건 누락·중복 위험",
+          "textPreview": "사건 누락·중복 위험",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "사건 누락·중복 위험",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "사건 누락·중복 위험",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            434,
+            325.67,
+            364,
+            72.33
+          ],
+          "text": "DB 반영 전에 기준 장면 전진",
+          "textPreview": "DB 반영 전에 기준 장면 전진",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "DB 반영 전에 기준 장면 전진",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "DB 반영 전에 기준 장면 전진",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            798,
+            325.67,
+            418,
+            72.33
+          ],
+          "text": "반영 확인 후 갱신, 사건 ID로 중복 제어",
+          "textPreview": "반영 확인 후 갱신, 사건 ID로 중복 제어",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "반영 확인 후 갱신, 사건 ID로 중복 제어",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "반영 확인 후 갱신, 사건 ID로 중복 제어",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            398,
+            370,
+            72.33
+          ],
+          "text": "늦은 AI 응답과 편집 충돌",
+          "textPreview": "늦은 AI 응답과 편집 충돌",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "늦은 AI 응답과 편집 충돌",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "늦은 AI 응답과 편집 충돌",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            434,
+            398,
+            364,
+            72.33
+          ],
+          "text": "분석 시작 후 현재 기록이 달라짐",
+          "textPreview": "분석 시작 후 현재 기록이 달라짐",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "분석 시작 후 현재 기록이 달라짐",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "분석 시작 후 현재 기록이 달라짐",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            798,
+            398,
+            418,
+            72.33
+          ],
+          "text": "검토 상태·물리 revision 확인",
+          "textPreview": "검토 상태·물리 revision 확인",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "검토 상태·물리 revision 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "검토 상태·물리 revision 확인",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            470.33,
+            370,
+            72.33
+          ],
+          "text": "연속 저장·모바일 넘침",
+          "textPreview": "연속 저장·모바일 넘침",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "연속 저장·모바일 넘침",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "연속 저장·모바일 넘침",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            434,
+            470.33,
+            364,
+            72.33
+          ],
+          "text": "배경 갱신 잠금·숨김 라벨 위치",
+          "textPreview": "배경 갱신 잠금·숨김 라벨 위치",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "배경 갱신 잠금·숨김 라벨 위치",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "배경 갱신 잠금·숨김 라벨 위치",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            798,
+            470.33,
+            418,
+            72.33
+          ],
+          "text": "작업 잠금 분리, 390px 배치 수정",
+          "textPreview": "작업 잠금 분리, 390px 배치 수정",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "작업 잠금 분리, 390px 배치 수정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "작업 잠금 분리, 390px 배치 수정",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            542.67,
+            370,
+            72.33
+          ],
+          "text": "새 SD 교체·재설치 부담",
+          "textPreview": "새 SD 교체·재설치 부담",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "새 SD 교체·재설치 부담",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "새 SD 교체·재설치 부담",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            434,
+            542.67,
+            364,
+            72.33
+          ],
+          "text": "카드 고장 뒤 환경 재구성 필요",
+          "textPreview": "카드 고장 뒤 환경 재구성 필요",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "카드 고장 뒤 환경 재구성 필요",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "카드 고장 뒤 환경 재구성 필요",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "row": 6,
+          "column": 3,
+          "bbox": [
+            798,
+            542.67,
+            418,
+            72.33
+          ],
+          "text": "설치기·진단·체크섬으로 복구 확인",
+          "textPreview": "설치기·진단·체크섬으로 복구 확인",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "설치기·진단·체크섬으로 복구 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "설치기·진단·체크섬으로 복구 확인",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "composeRuns": []
+}

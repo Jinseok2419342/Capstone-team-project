@@ -1,0 +1,986 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/5onypobq",
+    "id": "5onypobq",
+    "slide": 22,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jmh8nyd0",
+      "id": "7",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "6. 테스트 결과 및 문제점 분석",
+      "textPreview": "6. 테스트 결과 및 문제점 분석",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "6. 테스트 결과 및 문제점 분석"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "6. 테스트 결과 및 문제점 분석",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "6. 테스트 결과 및 문제점 분석",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6987itcr",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "실제 Pi에서 확인한 결과와 근거",
+      "textPreview": "실제 Pi에서 확인한 결과와 근거",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "실제 Pi에서 확인한 결과와 근거"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "실제 Pi에서 확인한 결과와 근거",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "실제 Pi에서 확인한 결과와 근거",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7a18rydc",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/k7qpgjul",
+      "id": "4",
+      "bbox": [
+        64,
+        668,
+        1085,
+        28
+      ],
+      "geometry": "rect",
+      "text": "2026-09-22 확인. 단일 상태 진단과 사용자 보고를 논문용 정량 실험과 구분",
+      "textPreview": "2026-09-22 확인. 단일 상태 진단과 사용자 보고를 논문용 정량 실험과 구분",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "2026-09-22 확인. 단일 상태 진단과 사용자 보고를 논문용 정량 실험과 구분"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "2026-09-22 확인. 단일 상태 진단과 사용자 보고를 논문용 정량 실험과 구분",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2026-09-22 확인. 단일 상태 진단과 사용자 보고를 논문용 정량 실험과 구분",
+              "fontSize": 16,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/58zqpov6",
+      "id": "5",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "22",
+      "textPreview": "22",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "22"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "22",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "22",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/1o3mp0ja",
+      "id": "8",
+      "bbox": [
+        64,
+        181,
+        1152,
+        431
+      ],
+      "text": "항목 | 확인 수준 | 결과\n설치·촬영 | 사용자 제공 로그 | 설치 완료, OV5647 인식·JPEG·프레임 획득\n재부팅 후 서비스 | 사용자 제공 로그 | active, DB·카메라 연결, Local checks passed\n등록·이동·회수 | 사용자 성공 보고 | 기본 흐름 정상 / 개별 사진·ID 원본 미수집\n본인 PC 원격 화면 | 사용자 성공 보고 | Tailscale HTTPS 화면·영상 확인\n원격 AI·메일·장시간 운영 | 미확인 | 응답 원본·실제 수신·지속 관찰 기록 필요\n친구 노트북·핫스팟 | 진행 중 | 초대 전송 / 수락·접속·무선 부팅 대기",
+      "textPreview": "항목 | 확인 수준 | 결과 | 설치·촬영 | 사용자 제공 로그 | 설치 완료, OV5647 인식·JPEG·프레임 획득 | 재부팅 후 서비스 | 사용자 제공 로그 | active, DB·카메라 연결, Local checks passed | 등록·...",
+      "rows": 7,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            327,
+            61.57
+          ],
+          "text": "항목",
+          "textPreview": "항목",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "항목",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "항목",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            391,
+            181,
+            271,
+            61.57
+          ],
+          "text": "확인 수준",
+          "textPreview": "확인 수준",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "확인 수준",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "확인 수준",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            662,
+            181,
+            554,
+            61.57
+          ],
+          "text": "결과",
+          "textPreview": "결과",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "결과",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "결과",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            242.57,
+            327,
+            61.57
+          ],
+          "text": "설치·촬영",
+          "textPreview": "설치·촬영",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "설치·촬영",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "설치·촬영",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            391,
+            242.57,
+            271,
+            61.57
+          ],
+          "text": "사용자 제공 로그",
+          "textPreview": "사용자 제공 로그",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "사용자 제공 로그",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "사용자 제공 로그",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            662,
+            242.57,
+            554,
+            61.57
+          ],
+          "text": "설치 완료, OV5647 인식·JPEG·프레임 획득",
+          "textPreview": "설치 완료, OV5647 인식·JPEG·프레임 획득",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "설치 완료, OV5647 인식·JPEG·프레임 획득",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "설치 완료, OV5647 인식·JPEG·프레임 획득",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            304.14,
+            327,
+            61.57
+          ],
+          "text": "재부팅 후 서비스",
+          "textPreview": "재부팅 후 서비스",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "재부팅 후 서비스",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "재부팅 후 서비스",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            391,
+            304.14,
+            271,
+            61.57
+          ],
+          "text": "사용자 제공 로그",
+          "textPreview": "사용자 제공 로그",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "사용자 제공 로그",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "사용자 제공 로그",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            662,
+            304.14,
+            554,
+            61.57
+          ],
+          "text": "active, DB·카메라 연결, Local checks passed",
+          "textPreview": "active, DB·카메라 연결, Local checks passed",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "active, DB·카메라 연결, Local checks passed",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "active, DB·카메라 연결, Local checks passed",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            365.71,
+            327,
+            61.57
+          ],
+          "text": "등록·이동·회수",
+          "textPreview": "등록·이동·회수",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "등록·이동·회수",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "등록·이동·회수",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            391,
+            365.71,
+            271,
+            61.57
+          ],
+          "text": "사용자 성공 보고",
+          "textPreview": "사용자 성공 보고",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "사용자 성공 보고",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "사용자 성공 보고",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            662,
+            365.71,
+            554,
+            61.57
+          ],
+          "text": "기본 흐름 정상 / 개별 사진·ID 원본 미수집",
+          "textPreview": "기본 흐름 정상 / 개별 사진·ID 원본 미수집",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "기본 흐름 정상 / 개별 사진·ID 원본 미수집",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "기본 흐름 정상 / 개별 사진·ID 원본 미수집",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            427.29,
+            327,
+            61.57
+          ],
+          "text": "본인 PC 원격 화면",
+          "textPreview": "본인 PC 원격 화면",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "본인 PC 원격 화면",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "본인 PC 원격 화면",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            391,
+            427.29,
+            271,
+            61.57
+          ],
+          "text": "사용자 성공 보고",
+          "textPreview": "사용자 성공 보고",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "사용자 성공 보고",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "사용자 성공 보고",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            662,
+            427.29,
+            554,
+            61.57
+          ],
+          "text": "Tailscale HTTPS 화면·영상 확인",
+          "textPreview": "Tailscale HTTPS 화면·영상 확인",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Tailscale HTTPS 화면·영상 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Tailscale HTTPS 화면·영상 확인",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            488.86,
+            327,
+            61.57
+          ],
+          "text": "원격 AI·메일·장시간 운영",
+          "textPreview": "원격 AI·메일·장시간 운영",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "원격 AI·메일·장시간 운영",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "원격 AI·메일·장시간 운영",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            391,
+            488.86,
+            271,
+            61.57
+          ],
+          "text": "미확인",
+          "textPreview": "미확인",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "미확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "미확인",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "row": 6,
+          "column": 3,
+          "bbox": [
+            662,
+            488.86,
+            554,
+            61.57
+          ],
+          "text": "응답 원본·실제 수신·지속 관찰 기록 필요",
+          "textPreview": "응답 원본·실제 수신·지속 관찰 기록 필요",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "응답 원본·실제 수신·지속 관찰 기록 필요",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "응답 원본·실제 수신·지속 관찰 기록 필요",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 19,
+          "row": 7,
+          "column": 1,
+          "bbox": [
+            64,
+            550.43,
+            327,
+            61.57
+          ],
+          "text": "친구 노트북·핫스팟",
+          "textPreview": "친구 노트북·핫스팟",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "친구 노트북·핫스팟",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "친구 노트북·핫스팟",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 20,
+          "row": 7,
+          "column": 2,
+          "bbox": [
+            391,
+            550.43,
+            271,
+            61.57
+          ],
+          "text": "진행 중",
+          "textPreview": "진행 중",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "진행 중",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "진행 중",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 21,
+          "row": 7,
+          "column": 3,
+          "bbox": [
+            662,
+            550.43,
+            554,
+            61.57
+          ],
+          "text": "초대 전송 / 수락·접속·무선 부팅 대기",
+          "textPreview": "초대 전송 / 수락·접속·무선 부팅 대기",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "초대 전송 / 수락·접속·무선 부팅 대기",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "초대 전송 / 수락·접속·무선 부팅 대기",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "composeRuns": []
+}

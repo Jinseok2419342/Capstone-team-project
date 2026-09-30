@@ -49,14 +49,23 @@ if ($TemplateText -match '(?m)^[ \t]*(OPENAI_API_KEY|GEMINI_API_KEY|SMTP_PASSWOR
 # Windows virtual environment are never traversed or added.
 $Includes = @(
     'app',
+    'experiments',
     'static',
     'templates',
+    'scripts/experiments',
     'scripts/raspberry-pi',
     'run.py',
     'requirements.txt',
     '.env.example'
 )
-foreach ($OptionalFile in @('requirements-pi.txt', 'docs/guides/RASPBERRY_PI_GUIDE.md')) {
+foreach ($OptionalFile in @(
+    'requirements-pi.txt',
+    'docs/guides/FRESH_SD_START.md',
+    'docs/guides/PI_ACCEPTANCE_CHECKLIST.md',
+    'docs/guides/RASPBERRY_PI_GUIDE.md',
+    'docs/guides/SCHOOL_DEMO_GUIDE.md',
+    'docs/guides/PI_MONITOR_WIFI_GUIDE.md'
+)) {
     if (Test-Path -LiteralPath (Join-Path $ProjectRoot $OptionalFile)) {
         $Includes += $OptionalFile
     }

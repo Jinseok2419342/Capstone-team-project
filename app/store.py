@@ -11,6 +11,7 @@ import json
 import os
 import sqlite3
 import threading
+import uuid
 from collections.abc import Mapping
 from contextlib import closing, contextmanager
 from datetime import datetime, timedelta, timezone
@@ -24,6 +25,8 @@ CATEGORY_RETENTION_DAYS = {
     "food": 1,
 }
 ITEM_STATUSES = frozenset({"stored", "due", "recovered", "disposed"})
+REVIEW_STATUSES = frozenset({"pending", "needs_review", "confirmed", "dismissed"})
+ITEM_SOURCE_KINDS = frozenset({"camera", "demo", "manual"})
 NOTIFICATION_STATUSES = frozenset({"pending", "sent", "failed"})
 
 
@@ -101,6 +104,24 @@ def _serialize_ai_raw(value: Any) -> str | None:
     return _json_dumps(value)
 
 
+def _legacy_review_status(provider: Any) -> str:
+    """Interpret historical provider labels only at the compatibility boundary."""
+
+    normalized = str(provider or "").strip().lower()
+    if normalized == "pending":
+        return "pending"
+    if normalized == "offline" or normalized.endswith("_review"):
+        return "needs_review"
+    return "confirmed"
+
+
+def _review_status(value: Any) -> str:
+    normalized = str(value).strip().lower()
+    if normalized not in REVIEW_STATUSES:
+        raise ValueError("invalid item review status")
+    return normalized
+
+
 class Store:
     """SQLite-backed repository.
 
@@ -125,6 +146,8 @@ class Store:
             "image_path",
             "background_path",
             "provider",
+            "review_status",
+            "review_reason",
             "ai_raw",
         }
     )
@@ -220,6 +243,13 @@ class Store:
                     image_path      TEXT,
                     background_path TEXT,
                     provider        TEXT,
+                    review_status   TEXT NOT NULL DEFAULT 'confirmed'
+                                    CHECK (review_status IN ('pending','needs_review','confirmed','dismissed')),
+                    review_reason   TEXT,
+                    source_kind     TEXT NOT NULL DEFAULT 'manual'
+                                    CHECK (source_kind IN ('camera','demo','manual')),
+                    source_event_id TEXT,
+                    tracking_revision INTEGER NOT NULL DEFAULT 0,
                     ai_raw          TEXT,
                     created_at      TEXT NOT NULL,
                     updated_at      TEXT NOT NULL
@@ -257,6 +287,8 @@ class Store:
                     metadata_json   TEXT,
                     created_at      TEXT NOT NULL,
                     updated_at      TEXT NOT NULL,
+                    delivery_token  TEXT,
+                    delivery_lease_until TEXT,
                     FOREIGN KEY(item_id) REFERENCES items(id) ON DELETE SET NULL
                 );
 
@@ -277,12 +309,83 @@ class Store:
                 );
                 """
             )
+            # Serialize check-and-add migrations when multiple workers start.
+            connection.execute("BEGIN IMMEDIATE")
             item_columns = {
                 row["name"]
                 for row in connection.execute("PRAGMA table_info(items)").fetchall()
             }
             if "background_path" not in item_columns:
                 connection.execute("ALTER TABLE items ADD COLUMN background_path TEXT")
+            if "review_status" not in item_columns:
+                connection.execute(
+                    "ALTER TABLE items ADD COLUMN review_status TEXT NOT NULL "
+                    "DEFAULT 'confirmed' CHECK (review_status IN "
+                    "('pending','needs_review','confirmed','dismissed'))"
+                )
+                connection.execute(
+                    """
+                    UPDATE items SET review_status = CASE
+                        WHEN lower(trim(coalesce(provider, ''))) = 'pending' THEN 'pending'
+                        WHEN lower(trim(coalesce(provider, ''))) = 'offline'
+                          OR substr(lower(trim(coalesce(provider, ''))), -7) = '_review'
+                        THEN 'needs_review' ELSE 'confirmed' END
+                    """
+                )
+            if "review_reason" not in item_columns:
+                connection.execute("ALTER TABLE items ADD COLUMN review_reason TEXT")
+            if "source_kind" not in item_columns:
+                connection.execute(
+                    "ALTER TABLE items ADD COLUMN source_kind TEXT NOT NULL "
+                    "DEFAULT 'manual' CHECK (source_kind IN ('camera','demo','manual'))"
+                )
+                connection.execute(
+                    """
+                    UPDATE items SET source_kind = CASE
+                        WHEN lower(trim(coalesce(provider, ''))) = 'demo'
+                          OR ai_raw = 'built-in deterministic presentation preset'
+                        THEN 'demo'
+                        WHEN bbox_json IS NOT NULL THEN 'camera'
+                        ELSE 'manual' END
+                    """
+                )
+            if "source_event_id" not in item_columns:
+                connection.execute("ALTER TABLE items ADD COLUMN source_event_id TEXT")
+            if "tracking_revision" not in item_columns:
+                connection.execute(
+                    "ALTER TABLE items ADD COLUMN tracking_revision INTEGER NOT NULL DEFAULT 0"
+                )
+            connection.execute(
+                "CREATE UNIQUE INDEX IF NOT EXISTS uq_items_source_event "
+                "ON items(source_event_id) WHERE source_event_id IS NOT NULL"
+            )
+            connection.execute(
+                "CREATE INDEX IF NOT EXISTS idx_items_review_detected "
+                "ON items(review_status, detected_at DESC, id DESC)"
+            )
+            connection.execute(
+                "CREATE INDEX IF NOT EXISTS idx_items_category_detected "
+                "ON items(category, detected_at DESC, id DESC)"
+            )
+            connection.execute(
+                "CREATE INDEX IF NOT EXISTS idx_items_name "
+                "ON items(name COLLATE NOCASE, id)"
+            )
+            connection.execute(
+                "CREATE INDEX IF NOT EXISTS idx_items_expires "
+                "ON items(expires_at, id)"
+            )
+            connection.execute(
+                "CREATE INDEX IF NOT EXISTS idx_items_source_detected "
+                "ON items(source_kind, detected_at DESC, id DESC)"
+            )
+            notification_columns = {
+                row["name"]
+                for row in connection.execute("PRAGMA table_info(notifications)")
+            }
+            for column in ("delivery_token", "delivery_lease_until"):
+                if column not in notification_columns:
+                    connection.execute(f"ALTER TABLE notifications ADD COLUMN {column} TEXT")
             connection.commit()
 
     def backup_to(self, destination: str | os.PathLike[str]) -> Path:
@@ -358,6 +461,9 @@ class Store:
         if row is None:
             return None
         notification = dict(row)
+        # Delivery ownership is internal and must not appear in dashboard data.
+        notification.pop("delivery_token", None)
+        notification.pop("delivery_lease_until", None)
         notification["metadata"] = _safe_json_loads(
             notification.get("metadata_json"), {}
         )
@@ -382,6 +488,9 @@ class Store:
         status = str(data.get("status", "stored")).strip().lower()
         if status not in ITEM_STATUSES:
             raise ValueError("invalid item status")
+        source_kind = str(data.get("source_kind", "manual")).strip().lower()
+        if source_kind not in ITEM_SOURCE_KINDS:
+            raise ValueError("invalid item source kind")
 
         now = _iso_utc(_utc_now())
         recovered_at = data.get("recovered_at")
@@ -405,6 +514,13 @@ class Store:
             "image_path": data.get("image_path"),
             "background_path": data.get("background_path"),
             "provider": data.get("provider"),
+            "review_status": _review_status(
+                data.get("review_status", _legacy_review_status(data.get("provider")))
+            ),
+            "review_reason": data.get("review_reason"),
+            "source_kind": source_kind,
+            "source_event_id": str(data["source_event_id"]).strip() or None
+                if data.get("source_event_id") is not None else None,
             "ai_raw": _serialize_ai_raw(data.get("ai_raw")),
             "created_at": now,
             "updated_at": now,
@@ -430,6 +546,107 @@ class Store:
                 "SELECT * FROM items WHERE id = ?", (int(item_id),)
             ).fetchone()
         return self._item_from_row(row)
+
+    def get_item_by_source_event(self, event_id: str) -> dict[str, Any] | None:
+        normalized = str(event_id).strip()
+        if not normalized:
+            return None
+        with self._connection() as connection:
+            row = connection.execute(
+                "SELECT * FROM items WHERE source_event_id = ?", (normalized,)
+            ).fetchone()
+        return self._item_from_row(row)
+
+    def list_active_items(self) -> list[dict[str, Any]]:
+        """Return every trackable item, independent of dashboard history limits."""
+
+        with self._connection() as connection:
+            rows = connection.execute(
+                "SELECT * FROM items WHERE status IN ('stored', 'due') "
+                "AND review_status != 'dismissed' "
+                "AND source_kind != 'demo' "
+                "AND bbox_json IS NOT NULL ORDER BY detected_at DESC, id DESC"
+            ).fetchall()
+        return [self._item_from_row(row) for row in rows]  # type: ignore[misc]
+
+    def list_active_demo_items(self, limit: int = 1) -> list[dict[str, Any]]:
+        """Return presentation records without risking real inventory actions."""
+
+        with self._connection() as connection:
+            rows = connection.execute(
+                "SELECT * FROM items WHERE source_kind = 'demo' "
+                "AND status IN ('stored', 'due') AND review_status != 'dismissed' "
+                "ORDER BY detected_at DESC, id DESC LIMIT ?",
+                (max(1, min(int(limit), 100)),),
+            ).fetchall()
+        return [self._item_from_row(row) for row in rows]  # type: ignore[misc]
+
+    def item_stats(
+        self, now: datetime | str | None = None, lead_days: int = 7
+    ) -> dict[str, int]:
+        """Count the complete inventory rather than a page of recent records."""
+
+        now_dt = _as_utc(now or _utc_now(), field="now")
+        deadline = now_dt + timedelta(days=max(0, int(lead_days)))
+        with self._connection() as connection:
+            row = connection.execute(
+                """
+                SELECT COUNT(CASE WHEN status = 'stored' AND expires_at > ? THEN 1 END) AS active,
+                       COUNT(CASE WHEN status = 'stored'
+                                   AND expires_at > ? AND expires_at <= ?
+                                  THEN 1 END) AS due_soon,
+                       COUNT(CASE WHEN status = 'due'
+                                   OR (status = 'stored' AND expires_at <= ?) THEN 1 END) AS expired,
+                       COUNT(CASE WHEN status = 'recovered' THEN 1 END) AS recovered,
+                       COUNT(CASE WHEN review_status = 'needs_review'
+                                   AND status IN ('stored', 'due') THEN 1 END) AS review_needed
+                  FROM items WHERE review_status != 'dismissed'
+                """,
+                (_iso_utc(now_dt), _iso_utc(now_dt), _iso_utc(deadline), _iso_utc(now_dt)),
+            ).fetchone()
+        return {key: int(row[key]) for key in ("active", "due_soon", "expired", "recovered", "review_needed")}
+
+    def mark_interrupted_classifications(self) -> int:
+        """At startup, retain abandoned provisional rows for manual review.
+
+        Call before starting classification workers. In-memory jobs cannot be
+        resumed after a process restart, so leaving these rows as ``pending``
+        would display an analysis spinner permanently.
+        """
+
+        now = _iso_utc(_utc_now())
+        with self._connection() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            rows = connection.execute(
+                "SELECT id FROM items WHERE review_status = 'pending'"
+            ).fetchall()
+            connection.execute(
+                """
+                UPDATE items
+                   SET provider = 'offline_review', name = ?, description = ?,
+                       ai_raw = ?, updated_at = ?, review_status = 'needs_review',
+                       review_reason = 'interrupted'
+                 WHERE review_status = 'pending'
+                """,
+                (
+                    "확인 필요한 새 물품",
+                    "앱이 재시작되어 AI 분석이 중단되었습니다. 감지 기록을 확인해 주세요.",
+                    "classification interrupted by restart",
+                    now,
+                ),
+            )
+            connection.executemany(
+                """
+                INSERT INTO activities(type, message, item_id, created_at)
+                VALUES ('classification_interrupted', ?, ?, ?)
+                """,
+                [
+                    ("앱 재시작으로 중단된 AI 분석을 확인 필요 상태로 전환했습니다.", row["id"], now)
+                    for row in rows
+                ],
+            )
+            connection.commit()
+        return len(rows)
 
     def list_items(
         self,
@@ -464,8 +681,128 @@ class Store:
             ).fetchall()
         return [self._item_from_row(row) for row in rows]  # type: ignore[misc]
 
+    def list_items_page(
+        self,
+        status: str | None = None,
+        q: str | None = None,
+        category: str | None = None,
+        sort: str = "newest",
+        limit: int = 48,
+        offset: int = 0,
+        review: str | None = None,
+        now: datetime | str | None = None,
+        lead_days: int = 7,
+    ) -> dict[str, Any]:
+        """Filter and sort the complete inventory before selecting one page.
+
+        Effective expiry filters include stored rows whose scheduler transition
+        has not happened yet. Raw ``stored``/``due`` filters remain available.
+        Dismissed evidence is visible only when explicitly requested. Count and
+        rows share a read snapshot, including when the requested offset is
+        clamped after an item disappears from the final page.
+        """
+
+        normalized_status = str(status or "").strip().lower()
+        normalized_category = str(category or "").strip().lower()
+        normalized_review = str(review or "").strip().lower()
+        normalized_sort = str(sort).strip().lower()
+        orderings = {
+            "newest": "detected_at DESC, id DESC",
+            "expiring": "expires_at ASC, id ASC",
+            "name": "name COLLATE NOCASE ASC, id ASC",
+        }
+        if normalized_sort not in orderings:
+            raise ValueError("invalid item sort")
+        allowed_statuses = ITEM_STATUSES | {"", "all", "active", "holding", "due_soon", "expired", "dismissed", "attention"}
+        if normalized_status not in allowed_statuses:
+            raise ValueError("invalid item status")
+        if normalized_category and normalized_category not in CATEGORY_RETENTION_DAYS:
+            raise ValueError("invalid item category")
+        if normalized_review and normalized_review not in REVIEW_STATUSES:
+            raise ValueError("invalid item review status")
+        safe_limit = max(1, min(int(limit), 100))
+        requested_offset = max(0, int(offset))
+        now_dt = _as_utc(now or _utc_now(), field="now")
+        now_value = _iso_utc(now_dt)
+        deadline = _iso_utc(now_dt + timedelta(days=max(0, int(lead_days))))
+        clauses: list[str] = []
+        parameters: list[Any] = []
+        if normalized_status == "dismissed":
+            clauses.append("review_status = 'dismissed'")
+        elif normalized_review != "dismissed":
+            clauses.append("review_status != 'dismissed'")
+        if normalized_status in ITEM_STATUSES:
+            clauses.append("status = ?")
+            parameters.append(normalized_status)
+        elif normalized_status == "holding":
+            clauses.append("status IN ('stored', 'due')")
+        elif normalized_status == "active":
+            clauses.append("status = 'stored' AND expires_at > ?")
+            parameters.append(now_value)
+        elif normalized_status == "due_soon":
+            clauses.append("status = 'stored' AND expires_at > ? AND expires_at <= ?")
+            parameters.extend((now_value, deadline))
+        elif normalized_status == "expired":
+            clauses.append("(status = 'due' OR (status = 'stored' AND expires_at <= ?))")
+            parameters.append(now_value)
+        elif normalized_status == "attention":
+            clauses.append("(status = 'due' OR (status = 'stored' AND expires_at <= ?))")
+            parameters.append(deadline)
+        if normalized_category:
+            clauses.append("category = ?")
+            parameters.append(normalized_category)
+        if normalized_review:
+            clauses.append("review_status = ?")
+            parameters.append(normalized_review)
+        if q is not None and str(q).strip():
+            literal = str(q).strip().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+            clauses.append(
+                "(name LIKE ? ESCAPE '\\' COLLATE NOCASE OR "
+                "description LIKE ? ESCAPE '\\' COLLATE NOCASE OR "
+                "category LIKE ? ESCAPE '\\' COLLATE NOCASE)"
+            )
+            parameters.extend((f"%{literal}%",) * 3)
+        where = " WHERE " + " AND ".join(clauses) if clauses else ""
+        with self._connection() as connection:
+            connection.execute("BEGIN")
+            total = int(connection.execute(
+                f"SELECT COUNT(*) FROM items{where}", parameters
+            ).fetchone()[0])
+            last_offset = ((total - 1) // safe_limit) * safe_limit if total else 0
+            actual_offset = last_offset if requested_offset >= total else requested_offset
+            rows = connection.execute(
+                f"SELECT * FROM items{where} ORDER BY {orderings[normalized_sort]} LIMIT ? OFFSET ?",
+                (*parameters, safe_limit, actual_offset),
+            ).fetchall()
+        return {
+            "items": [self._item_from_row(row) for row in rows],
+            "total": total, "limit": safe_limit, "offset": actual_offset,
+        }
+
+    def list_attention_items(
+        self, now: datetime | str | None = None, lead_days: int = 7, limit: int = 8
+    ) -> list[dict[str, Any]]:
+        return self.list_items_page(
+            status="attention", sort="expiring", limit=limit, now=now, lead_days=lead_days
+        )["items"]
+
+    def list_review_items(self, limit: int = 8) -> list[dict[str, Any]]:
+        with self._connection() as connection:
+            rows = connection.execute(
+                "SELECT * FROM items WHERE review_status = 'needs_review' "
+                "AND status IN ('stored', 'due') ORDER BY detected_at DESC, id DESC LIMIT ?",
+                (max(1, min(int(limit), 100)),),
+            ).fetchall()
+        return [self._item_from_row(row) for row in rows]  # type: ignore[misc]
+
     def update_item(
-        self, item_id: int, updates: Mapping[str, Any]
+        self,
+        item_id: int,
+        updates: Mapping[str, Any],
+        *,
+        activity_type: str | None = None,
+        activity_message: str | None = None,
+        activity_metadata: Any = None,
     ) -> dict[str, Any] | None:
         if not isinstance(updates, Mapping):
             raise TypeError("updates must be a mapping")
@@ -482,6 +819,8 @@ class Store:
             category = str(normalized["category"]).strip().lower()
             classify_retention(category)
             normalized["category"] = category
+        if "review_status" in normalized:
+            normalized["review_status"] = _review_status(normalized["review_status"])
         if "status" in normalized:
             status = str(normalized["status"]).strip().lower()
             if status not in ITEM_STATUSES:
@@ -498,10 +837,38 @@ class Store:
             normalized["bbox_json"] = _serialize_bbox(normalized["bbox_json"])
         if "ai_raw" in normalized:
             normalized["ai_raw"] = _serialize_ai_raw(normalized["ai_raw"])
+        if "review_reason" in normalized and normalized["review_reason"] is not None:
+            normalized["review_reason"] = str(normalized["review_reason"])
+        if activity_type is not None and not str(activity_type).strip():
+            raise ValueError("activity type is required")
+        metadata_json = None if activity_metadata is None else _json_dumps(activity_metadata)
 
         normalized["updated_at"] = _iso_utc(_utc_now())
         assignments = ", ".join(f"{key} = ?" for key in normalized)
-        parameters = list(normalized.values()) + [int(item_id)]
+        parameters = list(normalized.values())
+        tracking_fields = [
+            field for field in ("bbox_json", "image_path", "background_path", "status")
+            if field in normalized
+        ]
+        if tracking_fields:
+            comparisons: list[str] = []
+            tracking_values: list[Any] = []
+            for field in tracking_fields:
+                if field == "status":
+                    # stored/due is a retention transition, not new physical
+                    # evidence. It must not invalidate an observed removal.
+                    comparisons.append(
+                        "(status IS NOT ? AND NOT (status IN ('stored', 'due') "
+                        "AND ? IN ('stored', 'due')))"
+                    )
+                    tracking_values.extend((normalized[field], normalized[field]))
+                else:
+                    comparisons.append(f"{field} IS NOT ?")
+                    tracking_values.append(normalized[field])
+            differences = " OR ".join(comparisons)
+            assignments += f", tracking_revision = tracking_revision + CASE WHEN {differences} THEN 1 ELSE 0 END"
+            parameters.extend(tracking_values)
+        parameters.append(int(item_id))
         with self._connection() as connection:
             cursor = connection.execute(
                 f"UPDATE items SET {assignments} WHERE id = ?", parameters
@@ -512,6 +879,13 @@ class Store:
             row = connection.execute(
                 "SELECT * FROM items WHERE id = ?", (int(item_id),)
             ).fetchone()
+            if activity_type is not None and row is not None:
+                message = str(activity_message or "{name} 정보를 수정했습니다.").format(name=row["name"])
+                connection.execute(
+                    "INSERT INTO activities(type, message, item_id, metadata_json, created_at) "
+                    "VALUES (?, ?, ?, ?, ?)",
+                    (str(activity_type).strip(), message, int(item_id), metadata_json, normalized["updated_at"]),
+                )
             connection.commit()
         return self._item_from_row(row)
 
@@ -523,9 +897,10 @@ class Store:
         activity_type: str | None = None,
         activity_message: str | None = None,
         activity_metadata: Any = None,
+        review_reason: str | None = None,
         now: datetime | str | None = None,
     ) -> dict[str, Any]:
-        """Atomically apply a recover, dispose, or restore lifecycle action.
+        """Atomically apply recover, dispose, restore, or evidence dismissal.
 
         The returned ``outcome`` is one of ``changed``, ``unchanged``,
         ``conflict``, or ``not_found``. Repeating an action that has already
@@ -542,8 +917,8 @@ class Store:
         """
 
         normalized_action = str(action).strip().lower()
-        if normalized_action not in {"recover", "dispose", "restore"}:
-            raise ValueError("action must be recover, dispose, or restore")
+        if normalized_action not in {"recover", "dispose", "restore", "dismiss"}:
+            raise ValueError("action must be recover, dispose, restore, or dismiss")
 
         normalized_activity_type: str | None = None
         if activity_type is not None:
@@ -577,7 +952,26 @@ class Store:
                     }
 
                 previous_status = str(current_row["status"])
-                if normalized_action == "recover":
+                previous_review = str(current_row["review_status"])
+                target_review = previous_review
+                target_reason = current_row["review_reason"]
+                if normalized_action == "dismiss":
+                    target_status = previous_status
+                    target_review = "dismissed"
+                    target_reason = str(review_reason or "dismissed")
+                    outcome = "unchanged" if previous_review == "dismissed" else "changed"
+                elif normalized_action == "restore" and previous_review == "dismissed":
+                    target_status = (
+                        "due" if _as_utc(current_row["expires_at"], field="expires_at") <= now_dt
+                        else "stored"
+                    )
+                    target_review = "needs_review"
+                    target_reason = "restored"
+                    outcome = "changed"
+                elif previous_review == "dismissed":
+                    target_status = "recovered" if normalized_action == "recover" else "disposed"
+                    outcome = "conflict"
+                elif normalized_action == "recover":
                     target_status = "recovered"
                     if previous_status == target_status:
                         outcome = "unchanged"
@@ -613,23 +1007,33 @@ class Store:
                         "outcome": outcome,
                         "previous_status": previous_status,
                         "target_status": target_status,
+                        "previous_review_status": previous_review,
+                        "target_review_status": target_review,
                         "item": self._item_from_row(current_row),
                         "activity": None,
                     }
 
-                recovered_at = now_value if target_status == "recovered" else None
+                recovered_at = (
+                    current_row["recovered_at"] if normalized_action == "dismiss"
+                    else now_value if target_status == "recovered" else None
+                )
                 cursor = connection.execute(
                     """
                     UPDATE items
-                       SET status = ?, recovered_at = ?, updated_at = ?
-                     WHERE id = ? AND status = ?
+                       SET status = ?, recovered_at = ?, updated_at = ?,
+                           review_status = ?, review_reason = ?,
+                           tracking_revision = tracking_revision + 1
+                     WHERE id = ? AND status = ? AND review_status = ?
                     """,
                     (
                         target_status,
                         recovered_at,
                         now_value,
+                        target_review,
+                        target_reason,
                         numeric_item_id,
                         previous_status,
+                        previous_review,
                     ),
                 )
                 if cursor.rowcount != 1:
@@ -647,6 +1051,7 @@ class Store:
                         "recover": "{name}을(를) 회수 처리했습니다.",
                         "dispose": "{name}을(를) 폐기 처리했습니다.",
                         "restore": "{name}을(를) 보관 목록으로 되돌렸습니다.",
+                        "dismiss": "{name}을(를) 오감지로 제외하고 증거를 보존했습니다.",
                     }
                     message_template = activity_message or default_messages[normalized_action]
                     message = str(message_template).format(name=str(updated_row["name"]))
@@ -677,6 +1082,8 @@ class Store:
                     "outcome": "changed",
                     "previous_status": previous_status,
                     "target_status": target_status,
+                    "previous_review_status": previous_review,
+                    "target_review_status": target_review,
                     "item": self._item_from_row(updated_row),
                     "activity": (
                         self._activity_from_row(activity_row)
@@ -703,17 +1110,29 @@ class Store:
 
         return self.apply_item_action(item_id, "restore")["item"]
 
-    def extend_item(self, item_id: int, days: int) -> dict[str, Any] | None:
+    def extend_item(
+        self,
+        item_id: int,
+        days: int,
+        *,
+        cancel_pending: bool = False,
+        activity_type: str | None = None,
+        activity_message: str | None = None,
+        activity_metadata: Any = None,
+    ) -> dict[str, Any] | None:
         extension_days = int(days)
         if extension_days <= 0:
             raise ValueError("days must be positive")
+        if activity_type is not None and not str(activity_type).strip():
+            raise ValueError("activity type is required")
+        metadata_json = None if activity_metadata is None else _json_dumps(activity_metadata)
 
         now_dt = _utc_now()
         now = _iso_utc(now_dt)
         with self._connection() as connection:
             connection.execute("BEGIN IMMEDIATE")
             row = connection.execute(
-                "SELECT expires_at, retention_days, status FROM items WHERE id = ?",
+                "SELECT * FROM items WHERE id = ?",
                 (int(item_id),),
             ).fetchone()
             if row is None:
@@ -738,9 +1157,24 @@ class Store:
                     int(item_id),
                 ),
             )
+            if cancel_pending and row["review_status"] == "pending":
+                connection.execute(
+                    """
+                    UPDATE items SET review_status = 'needs_review', review_reason = 'retention_changed',
+                        provider = 'manual_review', name = ?, description = ? WHERE id = ?
+                    """,
+                    ("확인 필요한 새 물품", "관리자가 보관 기한을 변경했습니다. 물품 이름과 분류를 확인해 주세요.", int(item_id)),
+                )
             result = connection.execute(
                 "SELECT * FROM items WHERE id = ?", (int(item_id),)
             ).fetchone()
+            if activity_type is not None and result is not None:
+                message = str(activity_message or f"{{name}}의 보관 기한을 {extension_days}일 연장했습니다.").format(name=result["name"])
+                connection.execute(
+                    "INSERT INTO activities(type, message, item_id, metadata_json, created_at) "
+                    "VALUES (?, ?, ?, ?, ?)",
+                    (str(activity_type).strip(), message, int(item_id), metadata_json, now),
+                )
             connection.commit()
         return self._item_from_row(result)
 
@@ -898,22 +1332,44 @@ class Store:
         return [self._notification_from_row(row) for row in rows]  # type: ignore[misc]
 
     def mark_notification_sent(
-        self, notification_id: int, sent_at: datetime | str | None = None
+        self,
+        notification_id: int,
+        sent_at: datetime | str | None = None,
+        *,
+        delivery_token: str | None = None,
+        log_activity: bool = False,
     ) -> dict[str, Any] | None:
         now = _iso_utc(sent_at or _utc_now())
+        condition = " AND delivery_token = ?" if delivery_token is not None else ""
+        parameters: list[Any] = [now, now, int(notification_id)]
+        if delivery_token is not None:
+            parameters.append(delivery_token)
         with self._connection() as connection:
-            connection.execute(
+            cursor = connection.execute(
                 """
                 UPDATE notifications
                    SET status = 'sent', sent_at = ?, failed_at = NULL,
-                       error = NULL, updated_at = ?
-                 WHERE id = ?
-                """,
-                (now, now, int(notification_id)),
+                       error = NULL, updated_at = ?, delivery_token = NULL,
+                       delivery_lease_until = NULL
+                 WHERE id = ? AND status != 'sent'
+                """ + condition,
+                parameters,
             )
+            if delivery_token is not None and cursor.rowcount != 1:
+                connection.rollback()
+                return None
             row = connection.execute(
                 "SELECT * FROM notifications WHERE id = ?", (int(notification_id),)
             ).fetchone()
+            if log_activity and cursor.rowcount == 1 and row is not None:
+                connection.execute(
+                    """
+                    INSERT INTO activities(type, message, item_id, created_at)
+                    SELECT 'email_sent', name || ' 기한 알림 메일을 발송했습니다.', id, ?
+                      FROM items WHERE id = ?
+                    """,
+                    (now, row["item_id"]),
+                )
             connection.commit()
         return self._notification_from_row(row)
 
@@ -922,25 +1378,96 @@ class Store:
         notification_id: int,
         error: str | None = None,
         failed_at: datetime | str | None = None,
+        *,
+        delivery_token: str | None = None,
     ) -> dict[str, Any] | None:
         now = _iso_utc(failed_at or _utc_now())
+        condition = " AND delivery_token = ?" if delivery_token is not None else ""
+        parameters: list[Any] = [
+            now, None if error is None else str(error), now, int(notification_id)
+        ]
+        if delivery_token is not None:
+            parameters.append(delivery_token)
         with self._connection() as connection:
-            connection.execute(
+            cursor = connection.execute(
                 """
                 UPDATE notifications
-                   SET status = 'failed', failed_at = ?, error = ?, updated_at = ?
-                 WHERE id = ?
-                """,
-                (now, None if error is None else str(error), now, int(notification_id)),
+                   SET status = 'failed', failed_at = ?, error = ?, updated_at = ?,
+                       delivery_token = NULL, delivery_lease_until = NULL
+                 WHERE id = ? AND status != 'sent'
+                """ + condition,
+                parameters,
             )
+            if delivery_token is not None and cursor.rowcount != 1:
+                connection.rollback()
+                return None
             row = connection.execute(
                 "SELECT * FROM notifications WHERE id = ?", (int(notification_id),)
             ).fetchone()
             connection.commit()
         return self._notification_from_row(row)
 
+    def claim_due_notification(
+        self,
+        notification_id: int,
+        *,
+        now: datetime | str | None = None,
+        retry_after_seconds: float = 300.0,
+        lease_seconds: float = 300.0,
+    ) -> dict[str, Any] | None:
+        """Lease a current-cycle delivery to one scheduler without holding a DB lock.
+
+        A crashed sender's claim becomes retryable after the lease expires.
+        Completion must pass the returned token so a late sender cannot replace
+        a newer attempt's result. SMTP cannot guarantee exactly-once delivery
+        across a crash after the server accepts a message.
+        """
+
+        retry_delay = float(retry_after_seconds)
+        lease_duration = float(lease_seconds)
+        if retry_delay < 0 or lease_duration <= 0:
+            raise ValueError("retry delay must be nonnegative and lease duration positive")
+        now_dt = _as_utc(now or _utc_now(), field="now")
+        now_value = _iso_utc(now_dt)
+        retry_cutoff = _iso_utc(now_dt - timedelta(seconds=retry_delay))
+        lease_until = _iso_utc(now_dt + timedelta(seconds=lease_duration))
+        with self._connection() as connection:
+            connection.execute("BEGIN IMMEDIATE")
+            notification = connection.execute(
+                """
+                SELECT n.* FROM notifications AS n
+                JOIN items AS i ON i.id = n.item_id
+                WHERE n.id = ? AND n.type = 'disposal_due'
+                  AND n.status IN ('pending', 'failed') AND i.status = 'due'
+                  AND i.review_status != 'dismissed'
+                  AND i.expires_at = n.scheduled_for AND i.expires_at <= ?
+                  AND (n.delivery_lease_until IS NULL OR n.delivery_lease_until <= ?)
+                  AND (n.updated_at <= ? OR (
+                      n.status = 'pending' AND n.delivery_token IS NULL
+                      AND n.failed_at IS NULL
+                  ))
+                """,
+                (int(notification_id), now_value, now_value, retry_cutoff),
+            ).fetchone()
+            if notification is None:
+                connection.commit()
+                return None
+            item_row = connection.execute(
+                "SELECT * FROM items WHERE id = ?", (notification["item_id"],)
+            ).fetchone()
+            token = uuid.uuid4().hex
+            connection.execute(
+                """
+                UPDATE notifications SET status = 'pending', delivery_token = ?,
+                    delivery_lease_until = ?, updated_at = ? WHERE id = ?
+                """,
+                (token, lease_until, now_value, int(notification_id)),
+            )
+            connection.commit()
+        return {"token": token, "item": self._item_from_row(item_row)}
+
     def process_expirations(
-        self, now: datetime | str | None = None
+        self, now: datetime | str | None = None, *, log_activity: bool = False
     ) -> list[dict[str, Any]]:
         """Atomically move newly expired stored items into the due state."""
 
@@ -951,6 +1478,7 @@ class Store:
                 """
                 SELECT id FROM items
                  WHERE status = 'stored' AND expires_at <= ?
+                   AND review_status != 'dismissed'
                  ORDER BY expires_at, id
                 """,
                 (now_value,),
@@ -970,6 +1498,17 @@ class Store:
                 ).fetchall()
             else:
                 changed = []
+            if log_activity:
+                connection.executemany(
+                    """
+                    INSERT INTO activities(type, message, item_id, created_at)
+                    VALUES ('item_due', ?, ?, ?)
+                    """,
+                    [
+                        (f"{row['name']}의 보관 기한이 도래했습니다.", row["id"], now_value)
+                        for row in changed
+                    ],
+                )
             connection.commit()
         return [self._item_from_row(row) for row in changed]  # type: ignore[misc]
 
@@ -985,6 +1524,7 @@ class Store:
                 SELECT i.*
                   FROM items AS i
                  WHERE i.status = 'due'
+                   AND i.review_status != 'dismissed'
                    AND i.expires_at <= ?
                    AND NOT EXISTS (
                        SELECT 1 FROM notifications AS n
@@ -1022,6 +1562,9 @@ class Store:
 
         results: list[dict[str, dict[str, Any]]] = []
         with self._connection() as connection:
+            # SQLite does not start a read transaction for a bare SELECT.
+            # Pin the snapshot while materializing each joined pair.
+            connection.execute("BEGIN")
             pairs = connection.execute(
                 """
                 SELECT n.id AS notification_id, i.id AS item_id
@@ -1030,13 +1573,15 @@ class Store:
                  WHERE n.type = 'disposal_due'
                    AND n.status IN ('pending', 'failed')
                    AND i.status = 'due'
+                   AND i.review_status != 'dismissed'
                    AND i.expires_at = n.scheduled_for
                    AND i.expires_at <= ?
                    AND n.updated_at <= ?
+                   AND (n.delivery_lease_until IS NULL OR n.delivery_lease_until <= ?)
                  ORDER BY n.updated_at, n.id
                  LIMIT ?
                 """,
-                (now_value, retry_cutoff, safe_limit),
+                (now_value, retry_cutoff, now_value, safe_limit),
             ).fetchall()
             for pair in pairs:
                 notification_row = connection.execute(

@@ -1,0 +1,60 @@
+{
+  "slides": 6,
+  "editable": true,
+  "sourceManuscript": "RESEARCH_FRONT_MATTER.md",
+  "excerpts": [
+    {
+      "slide": 1,
+      "characters": 577,
+      "verbatim": true
+    },
+    {
+      "slide": 2,
+      "characters": 241,
+      "verbatim": true
+    },
+    {
+      "slide": 2,
+      "characters": 229,
+      "verbatim": true
+    },
+    {
+      "slide": 3,
+      "characters": 227,
+      "verbatim": true
+    },
+    {
+      "slide": 3,
+      "characters": 262,
+      "verbatim": true
+    },
+    {
+      "slide": 4,
+      "characters": 252,
+      "verbatim": true
+    },
+    {
+      "slide": 4,
+      "characters": 207,
+      "verbatim": true
+    },
+    {
+      "slide": 5,
+      "characters": 200,
+      "verbatim": true
+    },
+    {
+      "slide": 5,
+      "characters": 233,
+      "verbatim": true
+    },
+    {
+      "slide": 6,
+      "characters": 195,
+      "verbatim": true
+    }
+  ],
+  "tableSourceExact": true,
+  "speechScript": false,
+  "final": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\presentation\\REFOUND_EARLY_PAPER_FINAL.pptx"
+}

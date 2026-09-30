@@ -1,0 +1,94 @@
+{
+  "scope": "Synthetic developer CPU benchmark on the executing host; not Pi FPS, paper results, or accuracy evaluation.",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "python": "3.13.3",
+    "opencv": "5.0.0",
+    "numpy": "2.4.6",
+    "opencv_threads": 1,
+    "opencl": false
+  },
+  "run_order": "Separate serialized processes: source snapshot first, final current source second; timings exclude cProfile pass.",
+  "timing_caution": "Desktop timing varied substantially between runs, particularly stable-pair timings. OpenCV thread count is controlled; host CPU scheduling/load and thermals are not. Report observed samples rather than a guaranteed speedup.",
+  "preserved_other_runs": [
+    "benchmark-before-load-variation.json",
+    "benchmark-current-load-variation.json",
+    "benchmark-comparison-pre-diagnostics.json"
+  ],
+  "vision_sha256_before": "6bbff7a3f7642f72305ee9125e2b58fe11cbfad1eb9fabe9de94712090008829",
+  "vision_sha256_after": "80d02cb32b9f32a27b3c12932aa90d5f0ecb4bed6e7f5376b9cf77c267c33c1e",
+  "current_source_hash_matches": true,
+  "opencv4_compatibility_report": "opencv4-compatibility.json",
+  "cases": {
+    "static": {
+      "timing_metric": "work_ms_per_processed_frame",
+      "before_ms": 27.756,
+      "after_ms": 13.212,
+      "observed_reduction_percent": 52.4,
+      "processed_before": 80,
+      "processed_after": 112,
+      "virtual_seconds": 16.0,
+      "preview_before": 80,
+      "preview_after": 80,
+      "preview_size_before": [
+        1280,
+        720
+      ],
+      "preview_size_after": [
+        800,
+        450
+      ],
+      "synthetic_events_before": 0,
+      "synthetic_events_after": 0,
+      "real_work_before_seconds": 2.220481,
+      "real_work_after_seconds": 1.479691
+    },
+    "sensor_noise": {
+      "timing_metric": "work_ms_per_processed_frame",
+      "before_ms": 48.27,
+      "after_ms": 24.382,
+      "observed_reduction_percent": 49.5,
+      "processed_before": 80,
+      "processed_after": 112,
+      "virtual_seconds": 16.0,
+      "preview_before": 80,
+      "preview_after": 80,
+      "preview_size_before": [
+        1280,
+        720
+      ],
+      "preview_size_after": [
+        800,
+        450
+      ],
+      "synthetic_events_before": 0,
+      "synthetic_events_after": 0,
+      "real_work_before_seconds": 3.861583,
+      "real_work_after_seconds": 2.730737
+    },
+    "pair_none": {
+      "timing_metric": "median_ms",
+      "before_ms": 90.661,
+      "after_ms": 59.02,
+      "observed_reduction_percent": 34.9,
+      "pair_outcome_and_evidence_hashes_identical": true,
+      "before_events": [],
+      "after_events": []
+    },
+    "pair_added": {
+      "timing_metric": "median_ms",
+      "before_ms": 112.388,
+      "after_ms": 86.524,
+      "observed_reduction_percent": 23.0,
+      "pair_outcome_and_evidence_hashes_identical": true,
+      "before_events": [
+        "added"
+      ],
+      "after_events": [
+        "added"
+      ]
+    }
+  }
+}

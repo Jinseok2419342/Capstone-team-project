@@ -128,4 +128,4 @@ if expected_proxy not in root_proxies:
     die "The unsafe or incomplete publishing configuration was cleared. Complete any consent flow, then rerun this script."
 fi
 
-log "Tailscale access is ready. Devices must be signed into the same tailnet."
+log "Tailscale access is ready. Use the same tailnet or an accepted device share, subject to access policy."

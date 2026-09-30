@@ -1,0 +1,878 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/8f2psfyx",
+    "id": "8f2psfyx",
+    "slide": 12,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b6d4f2lc",
+      "id": "8",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "4. 핵심 기능 구현 결과",
+      "textPreview": "4. 핵심 기능 구현 결과",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "4. 핵심 기능 구현 결과"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "4. 핵심 기능 구현 결과",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "4. 핵심 기능 구현 결과",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1gbm9s3a",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "실행 가능한 핵심 사건 처리",
+      "textPreview": "실행 가능한 핵심 사건 처리",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "실행 가능한 핵심 사건 처리"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "실행 가능한 핵심 사건 처리",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "실행 가능한 핵심 사건 처리",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0f2lgnmp",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ra943il8",
+      "id": "4",
+      "bbox": [
+        64,
+        668,
+        1085,
+        28
+      ],
+      "geometry": "rect",
+      "text": "자동 회수는 화면상 사라짐을 기록한 상태이며 실제 소유자 반환의 증거는 아님",
+      "textPreview": "자동 회수는 화면상 사라짐을 기록한 상태이며 실제 소유자 반환의 증거는 아님",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "자동 회수는 화면상 사라짐을 기록한 상태이며 실제 소유자 반환의 증거는 아님"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "자동 회수는 화면상 사라짐을 기록한 상태이며 실제 소유자 반환의 증거는 아님",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "자동 회수는 화면상 사라짐을 기록한 상태이며 실제 소유자 반환의 증거는 아님",
+              "fontSize": 16,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q903ad4n",
+      "id": "5",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "12",
+      "textPreview": "12",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "12"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "12",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "12",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/ny1gzqtk",
+      "id": "9",
+      "bbox": [
+        64,
+        181,
+        1152,
+        377
+      ],
+      "text": "입력 사건 | 주요 처리 | 출력\nadded  ·  새 물품 | 임시 기록 저장 후 AI 분류 요청 | 이름·분류 확정 또는 확인 필요\nmoved  ·  같은 물품 이동 | 활성 물품 대응과 위치·사진 갱신 | 기존 ID 유지\nremoved  ·  명확한 제거 | 저장된 배경과 제거 근거 확인 | 회수 상태와 활동 이력\nverify_removed  ·  모호한 제거 | 외부 AI로 사라짐 여부 재검증 | 회수 또는 추적·검토 유지",
+      "textPreview": "입력 사건 | 주요 처리 | 출력 | added  ·  새 물품 | 임시 기록 저장 후 AI 분류 요청 | 이름·분류 확정 또는 확인 필요 | moved  ·  같은 물품 이동 | 활성 물품 대응과 위치·사진 갱신 | 기존 ID 유지 | remo...",
+      "rows": 5,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            376,
+            75.4
+          ],
+          "text": "입력 사건",
+          "textPreview": "입력 사건",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "입력 사건",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "입력 사건",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            440,
+            181,
+            421,
+            75.4
+          ],
+          "text": "주요 처리",
+          "textPreview": "주요 처리",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "주요 처리",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "주요 처리",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            861,
+            181,
+            355,
+            75.4
+          ],
+          "text": "출력",
+          "textPreview": "출력",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "출력",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "출력",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            256.4,
+            376,
+            75.4
+          ],
+          "text": "added  ·  새 물품",
+          "textPreview": "added  ·  새 물품",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "added  ·  새 물품",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "added  ·  새 물품",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            440,
+            256.4,
+            421,
+            75.4
+          ],
+          "text": "임시 기록 저장 후 AI 분류 요청",
+          "textPreview": "임시 기록 저장 후 AI 분류 요청",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "임시 기록 저장 후 AI 분류 요청",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "임시 기록 저장 후 AI 분류 요청",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            861,
+            256.4,
+            355,
+            75.4
+          ],
+          "text": "이름·분류 확정 또는 확인 필요",
+          "textPreview": "이름·분류 확정 또는 확인 필요",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "이름·분류 확정 또는 확인 필요",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "이름·분류 확정 또는 확인 필요",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            331.8,
+            376,
+            75.4
+          ],
+          "text": "moved  ·  같은 물품 이동",
+          "textPreview": "moved  ·  같은 물품 이동",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "moved  ·  같은 물품 이동",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "moved  ·  같은 물품 이동",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            440,
+            331.8,
+            421,
+            75.4
+          ],
+          "text": "활성 물품 대응과 위치·사진 갱신",
+          "textPreview": "활성 물품 대응과 위치·사진 갱신",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "활성 물품 대응과 위치·사진 갱신",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "활성 물품 대응과 위치·사진 갱신",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            861,
+            331.8,
+            355,
+            75.4
+          ],
+          "text": "기존 ID 유지",
+          "textPreview": "기존 ID 유지",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "기존 ID 유지",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "기존 ID 유지",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            407.2,
+            376,
+            75.4
+          ],
+          "text": "removed  ·  명확한 제거",
+          "textPreview": "removed  ·  명확한 제거",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "removed  ·  명확한 제거",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "removed  ·  명확한 제거",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            440,
+            407.2,
+            421,
+            75.4
+          ],
+          "text": "저장된 배경과 제거 근거 확인",
+          "textPreview": "저장된 배경과 제거 근거 확인",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "저장된 배경과 제거 근거 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "저장된 배경과 제거 근거 확인",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            861,
+            407.2,
+            355,
+            75.4
+          ],
+          "text": "회수 상태와 활동 이력",
+          "textPreview": "회수 상태와 활동 이력",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "회수 상태와 활동 이력",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "회수 상태와 활동 이력",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            482.6,
+            376,
+            75.4
+          ],
+          "text": "verify_removed  ·  모호한 제거",
+          "textPreview": "verify_removed  ·  모호한 제거",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "verify_removed  ·  모호한 제거",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "verify_removed  ·  모호한 제거",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            440,
+            482.6,
+            421,
+            75.4
+          ],
+          "text": "외부 AI로 사라짐 여부 재검증",
+          "textPreview": "외부 AI로 사라짐 여부 재검증",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "외부 AI로 사라짐 여부 재검증",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "외부 AI로 사라짐 여부 재검증",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            861,
+            482.6,
+            355,
+            75.4
+          ],
+          "text": "회수 또는 추적·검토 유지",
+          "textPreview": "회수 또는 추적·검토 유지",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "회수 또는 추적·검토 유지",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "회수 또는 추적·검토 유지",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/sb2lcnmd",
+      "id": "7",
+      "bbox": [
+        64,
+        596,
+        1152,
+        39
+      ],
+      "geometry": "rect",
+      "text": "움직임이 끝나고 장면이 안정된 뒤 사건 후보를 처리한다.",
+      "textPreview": "움직임이 끝나고 장면이 안정된 뒤 사건 후보를 처리한다.",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "움직임이 끝나고 장면이 안정된 뒤 사건 후보를 처리한다."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "움직임이 끝나고 장면이 안정된 뒤 사건 후보를 처리한다.",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 27,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "움직임이 끝나고 장면이 안정된 뒤 사건 후보를 처리한다.",
+              "fontSize": 27,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

@@ -2,6 +2,8 @@
 
 이 문서는 Re:Found Raspberry Pi가 처음 보는 Wi-Fi나 Android 핫스팟에 연결되지 않을 때, **모니터와 USB 키보드로 Pi에 직접 로그인해 네트워크를 설정하는 방법**입니다.
 
+새 microSD에는 먼저 [새 SD 설치 절차](FRESH_SD_START.md)를 적용합니다. 이 문서는 접속에 실패했을 때 펼치는 복구 안내이며 이전 카드의 Wi-Fi·계정이 새 카드에도 있다고 가정하지 않습니다.
+
 현재 사용 중인 Raspberry Pi OS Lite는 일반적인 바탕화면 대신 검은색 문자 로그인 화면이 나타나는 것이 정상입니다.
 
 ---
@@ -253,9 +255,9 @@ curl --fail http://127.0.0.1:8000/api/health
 정상 기준은 다음과 같습니다.
 
 - `tailscale status`에 이 Pi가 연결된 상태로 나옵니다.
-- Serve 상태에 `https://refound-pi.tail7a1a61.ts.net/` 주소가 나옵니다.
+- Serve 상태에 이 Pi의 실제 HTTPS 주소가 나옵니다. 새 SD에서는 이전 주소와 달라질 수 있습니다.
 - `refound.service`가 `active (running)`입니다.
-- health 명령이 JSON 형태의 내용을 출력합니다.
+- health 응답의 `ok`가 `true`이고 DB·카메라가 정상입니다. `bash /opt/refound/scripts/raspberry-pi/check-system.sh`로 함께 확인합니다.
 
 기존 Tailscale Serve 설정은 Wi-Fi를 바꿔도 유지됩니다. 위 항목이 정상이면 `setup-tailscale.sh`를 다시 실행하지 않습니다.
 
@@ -268,9 +270,7 @@ curl --fail http://127.0.0.1:8000/api/health
 1. Windows 노트북의 Wi-Fi를 `ReFoundPhone`에 연결합니다.
 2. Windows 작업 표시줄에서 Tailscale을 엽니다.
 3. 상태가 `Connected`인지 확인합니다.
-4. 브라우저에서 다음 주소를 엽니다.
-
-<https://refound-pi.tail7a1a61.ts.net/>
+4. 브라우저에서 `sudo tailscale serve status`에 표시된 이 Pi의 실제 HTTPS 주소를 엽니다. 이전 SD의 북마크를 그대로 사용하지 않습니다.
 
 5. 카메라 라이브뷰가 나오는지 확인합니다.
 6. 감지 상태가 잠시 후 **변화를 기다리는 중**으로 바뀌는지 확인합니다.
@@ -426,7 +426,7 @@ Android 모바일 데이터와 ReFoundPhone 핫스팟 켜기
 → Pi 전원 연결
 → 2~3분 대기
 → 노트북 Tailscale Connected 확인
-→ https://refound-pi.tail7a1a61.ts.net/ 열기
+→ 새 Pi의 tailscale serve status에서 확인한 HTTPS 주소 열기
 ```
 
 ---

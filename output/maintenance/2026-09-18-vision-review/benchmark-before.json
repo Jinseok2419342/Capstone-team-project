@@ -1,0 +1,850 @@
+{
+  "scope": "Synthetic developer CPU benchmark on the executing host; not Pi FPS, paper results, or accuracy evaluation.",
+  "limitations": "Virtual capture clock; no camera blocking, DB, callback consumer, network, browser, power or thermal measurement. Zero active tracked items.",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "python": "3.13.3",
+    "opencv": "5.0.0",
+    "numpy": "2.4.6",
+    "opencv_threads": 1,
+    "opencl": false
+  },
+  "source": "output\\maintenance\\2026-09-18-vision-review\\source-before.zip",
+  "vision_sha256": "6bbff7a3f7642f72305ee9125e2b58fe11cbfad1eb9fabe9de94712090008829",
+  "config": {
+    "camera_index": 0,
+    "camera_width": 1280,
+    "camera_height": 720,
+    "camera_fps": 10.0,
+    "monitor_fps": 7.0,
+    "accumulated_check_fps": 2.0,
+    "fallback_fps": 2.0,
+    "camera_retry_seconds": 2.0,
+    "camera_failures_before_retry": 4,
+    "camera_warmup_seconds": 3.0,
+    "settle_seconds": 3.0,
+    "stable_seconds": 1.2,
+    "motion_threshold": 20,
+    "motion_min_area": 420,
+    "motion_min_ratio": 0.001,
+    "change_threshold": 24,
+    "min_change_area": 1800,
+    "min_change_area_ratio": 0.0007,
+    "compact_change_area_factor": 0.28,
+    "compact_change_min_density": 0.24,
+    "elongated_change_area_factor": 0.035,
+    "elongated_change_min_length": 28,
+    "elongated_change_min_aspect": 3.0,
+    "elongated_change_min_density": 0.08,
+    "max_change_ratio": 0.42,
+    "contour_merge_gap": 22,
+    "bbox_padding": 10,
+    "bbox_support_threshold_factor": 0.55,
+    "bbox_support_max_scale": 3.0,
+    "support_fallback_min_density": 0.55,
+    "support_fallback_edge_factor": 0.1,
+    "support_fallback_structure_similarity": 0.9,
+    "illumination_structure_similarity": 0.65,
+    "illumination_structure_min_energy": 0.2,
+    "illumination_chroma_limit": 8.0,
+    "removal_overlap": 0.18,
+    "reference_match_min": 0.58,
+    "removal_similarity_drop": 0.2,
+    "background_match_min": 0.72,
+    "background_similarity_gain": 0.15,
+    "relocation_match_min": 0.72,
+    "relocation_max_distance_ratio": 0.35,
+    "relocation_min_shift": 8.0,
+    "stabilize_camera": true,
+    "stabilization_max_shift": 6.0,
+    "stabilization_max_feature_shift": 24.0,
+    "stabilization_min_response": 0.12,
+    "stabilization_max_rotation": 0.75,
+    "stabilization_max_scale_change": 0.03,
+    "stabilization_analysis_width": 360,
+    "stabilization_translation_deadband": 0.25,
+    "stabilization_rotation_deadband": 0.025,
+    "stabilization_scale_deadband": 0.0005,
+    "micro_jitter_suppression": true,
+    "micro_jitter_edge_threshold": 12.0,
+    "micro_jitter_edge_radius": 1,
+    "compensate_local_lighting": true,
+    "motion_compensate_local_lighting": false,
+    "lighting_blur_ratio": 0.04,
+    "lighting_analysis_width": 320,
+    "change_border_margin": 8,
+    "change_border_margin_ratio": 0.04,
+    "jpeg_quality": 88,
+    "preview_jpeg_quality": 78,
+    "ai_scene_max_width": 960,
+    "ai_scene_jpeg_quality": 72,
+    "compensate_lighting": true,
+    "draw_active_boxes": true,
+    "active_items_refresh_seconds": 1.0,
+    "event_overlay_seconds": 4.0,
+    "flip_horizontal": false,
+    "rotate": 0,
+    "preview_stream_fps": 5.0,
+    "preview_max_width": 800
+  },
+  "warmup_camera_frames": 40,
+  "scene_seed": 1842,
+  "cases": {
+    "static": {
+      "timing": {
+        "camera_frames": 160,
+        "processed_frames": 80,
+        "published_preview_frames": 80,
+        "preview_size_last": [
+          1280,
+          720
+        ],
+        "phase_after_warmup": "monitoring",
+        "virtual_camera_seconds": 16.0,
+        "processed_per_virtual_second": 5.0,
+        "previews_per_virtual_second": 5.0,
+        "real_work_seconds": 2.220481,
+        "work_ms_per_processed_frame": 27.756,
+        "synthetic_change_events": 0,
+        "profiled": false
+      },
+      "profile_run": {
+        "camera_frames": 160,
+        "processed_frames": 80,
+        "published_preview_frames": 80,
+        "preview_size_last": [
+          1280,
+          720
+        ],
+        "phase_after_warmup": "monitoring",
+        "virtual_camera_seconds": 16.0,
+        "processed_per_virtual_second": 5.0,
+        "previews_per_virtual_second": 5.0,
+        "real_work_seconds": 3.780245,
+        "work_ms_per_processed_frame": 47.253,
+        "synthetic_change_events": 0,
+        "profiled": true,
+        "profile": {
+          "total_profiled_seconds": 3.684219,
+          "top_self": [
+            {
+              "function": "~:0:<Sobel>",
+              "calls": 424,
+              "self_ms": 497.061,
+              "cumulative_ms": 497.061
+            },
+            {
+              "function": "vision.py:1316:_compensated_gray_difference",
+              "calls": 106,
+              "self_ms": 461.922,
+              "cumulative_ms": 828.891
+            },
+            {
+              "function": "~:0:<method 'astype' of 'numpy.ndarray' objects>",
+              "calls": 690,
+              "self_ms": 374.659,
+              "cumulative_ms": 374.659
+            },
+            {
+              "function": "~:0:<GaussianBlur>",
+              "calls": 160,
+              "self_ms": 365.221,
+              "cumulative_ms": 365.221
+            },
+            {
+              "function": "~:0:<resize>",
+              "calls": 160,
+              "self_ms": 284.546,
+              "cumulative_ms": 284.546
+            },
+            {
+              "function": "~:0:<imencode>",
+              "calls": 80,
+              "self_ms": 267.162,
+              "cumulative_ms": 267.162
+            },
+            {
+              "function": "~:0:<magnitude>",
+              "calls": 212,
+              "self_ms": 254.223,
+              "cumulative_ms": 254.223
+            },
+            {
+              "function": "vision.py:1408:_persistent_edge_jitter_mask",
+              "calls": 106,
+              "self_ms": 152.088,
+              "cumulative_ms": 1067.022
+            },
+            {
+              "function": "vision.py:1471:_has_motion",
+              "calls": 106,
+              "self_ms": 146.502,
+              "cumulative_ms": 2168.266
+            },
+            {
+              "function": "~:0:<cvtColor>",
+              "calls": 160,
+              "self_ms": 134.391,
+              "cumulative_ms": 134.391
+            },
+            {
+              "function": "~:0:<addWeighted>",
+              "calls": 80,
+              "self_ms": 127.035,
+              "cumulative_ms": 127.035
+            },
+            {
+              "function": "~:0:<method 'copy' of 'numpy.ndarray' objects>",
+              "calls": 160,
+              "self_ms": 96.235,
+              "cumulative_ms": 96.235
+            }
+          ],
+          "top_cumulative": [
+            {
+              "function": "vision.py:1471:_has_motion",
+              "calls": 106,
+              "self_ms": 146.502,
+              "cumulative_ms": 2168.266
+            },
+            {
+              "function": "vision.py:1408:_persistent_edge_jitter_mask",
+              "calls": 106,
+              "self_ms": 152.088,
+              "cumulative_ms": 1067.022
+            },
+            {
+              "function": "vision.py:1316:_compensated_gray_difference",
+              "calls": 106,
+              "self_ms": 461.922,
+              "cumulative_ms": 828.891
+            },
+            {
+              "function": "vision.py:877:_prepare_gray",
+              "calls": 160,
+              "self_ms": 0.655,
+              "cumulative_ms": 500.267
+            },
+            {
+              "function": "~:0:<Sobel>",
+              "calls": 424,
+              "self_ms": 497.061,
+              "cumulative_ms": 497.061
+            },
+            {
+              "function": "vision.py:1054:_estimate_euclidean_alignment",
+              "calls": 80,
+              "self_ms": 13.274,
+              "cumulative_ms": 482.831
+            },
+            {
+              "function": "~:0:<method 'astype' of 'numpy.ndarray' objects>",
+              "calls": 690,
+              "self_ms": 374.659,
+              "cumulative_ms": 374.659
+            },
+            {
+              "function": "~:0:<GaussianBlur>",
+              "calls": 160,
+              "self_ms": 365.221,
+              "cumulative_ms": 365.221
+            },
+            {
+              "function": "~:0:<resize>",
+              "calls": 160,
+              "self_ms": 284.546,
+              "cumulative_ms": 284.546
+            },
+            {
+              "function": "vision_pipeline.py:130:publish",
+              "calls": 80,
+              "self_ms": 0.74,
+              "cumulative_ms": 269.735
+            },
+            {
+              "function": "vision.py:3841:_publish_frame",
+              "calls": 80,
+              "self_ms": 0.605,
+              "cumulative_ms": 268.953
+            },
+            {
+              "function": "vision.py:3594:_encode_jpeg",
+              "calls": 80,
+              "self_ms": 0.361,
+              "cumulative_ms": 267.925
+            }
+          ]
+        }
+      }
+    },
+    "sensor_noise": {
+      "timing": {
+        "camera_frames": 160,
+        "processed_frames": 80,
+        "published_preview_frames": 80,
+        "preview_size_last": [
+          1280,
+          720
+        ],
+        "phase_after_warmup": "monitoring",
+        "virtual_camera_seconds": 16.0,
+        "processed_per_virtual_second": 5.0,
+        "previews_per_virtual_second": 5.0,
+        "real_work_seconds": 3.861583,
+        "work_ms_per_processed_frame": 48.27,
+        "synthetic_change_events": 0,
+        "profiled": false
+      },
+      "profile_run": {
+        "camera_frames": 160,
+        "processed_frames": 80,
+        "published_preview_frames": 80,
+        "preview_size_last": [
+          1280,
+          720
+        ],
+        "phase_after_warmup": "monitoring",
+        "virtual_camera_seconds": 16.0,
+        "processed_per_virtual_second": 5.0,
+        "previews_per_virtual_second": 5.0,
+        "real_work_seconds": 3.676333,
+        "work_ms_per_processed_frame": 45.954,
+        "synthetic_change_events": 0,
+        "profiled": true,
+        "profile": {
+          "total_profiled_seconds": 3.599075,
+          "top_self": [
+            {
+              "function": "~:0:<Sobel>",
+              "calls": 424,
+              "self_ms": 491.935,
+              "cumulative_ms": 491.935
+            },
+            {
+              "function": "vision.py:1316:_compensated_gray_difference",
+              "calls": 106,
+              "self_ms": 444.379,
+              "cumulative_ms": 822.728
+            },
+            {
+              "function": "~:0:<method 'astype' of 'numpy.ndarray' objects>",
+              "calls": 690,
+              "self_ms": 365.201,
+              "cumulative_ms": 365.201
+            },
+            {
+              "function": "~:0:<GaussianBlur>",
+              "calls": 160,
+              "self_ms": 353.456,
+              "cumulative_ms": 353.456
+            },
+            {
+              "function": "~:0:<resize>",
+              "calls": 160,
+              "self_ms": 288.993,
+              "cumulative_ms": 288.993
+            },
+            {
+              "function": "~:0:<magnitude>",
+              "calls": 212,
+              "self_ms": 262.123,
+              "cumulative_ms": 262.123
+            },
+            {
+              "function": "~:0:<imencode>",
+              "calls": 80,
+              "self_ms": 255.144,
+              "cumulative_ms": 255.144
+            },
+            {
+              "function": "vision.py:1408:_persistent_edge_jitter_mask",
+              "calls": 106,
+              "self_ms": 139.532,
+              "cumulative_ms": 1047.426
+            },
+            {
+              "function": "vision.py:1471:_has_motion",
+              "calls": 106,
+              "self_ms": 136.627,
+              "cumulative_ms": 2123.477
+            },
+            {
+              "function": "~:0:<cvtColor>",
+              "calls": 160,
+              "self_ms": 134.939,
+              "cumulative_ms": 134.939
+            },
+            {
+              "function": "~:0:<addWeighted>",
+              "calls": 80,
+              "self_ms": 118.721,
+              "cumulative_ms": 118.721
+            },
+            {
+              "function": "~:0:<method 'copy' of 'numpy.ndarray' objects>",
+              "calls": 160,
+              "self_ms": 92.222,
+              "cumulative_ms": 92.222
+            }
+          ],
+          "top_cumulative": [
+            {
+              "function": "vision.py:1471:_has_motion",
+              "calls": 106,
+              "self_ms": 136.627,
+              "cumulative_ms": 2123.477
+            },
+            {
+              "function": "vision.py:1408:_persistent_edge_jitter_mask",
+              "calls": 106,
+              "self_ms": 139.532,
+              "cumulative_ms": 1047.426
+            },
+            {
+              "function": "vision.py:1316:_compensated_gray_difference",
+              "calls": 106,
+              "self_ms": 444.379,
+              "cumulative_ms": 822.728
+            },
+            {
+              "function": "~:0:<Sobel>",
+              "calls": 424,
+              "self_ms": 491.935,
+              "cumulative_ms": 491.935
+            },
+            {
+              "function": "vision.py:877:_prepare_gray",
+              "calls": 160,
+              "self_ms": 0.553,
+              "cumulative_ms": 488.948
+            },
+            {
+              "function": "vision.py:1054:_estimate_euclidean_alignment",
+              "calls": 80,
+              "self_ms": 12.295,
+              "cumulative_ms": 482.507
+            },
+            {
+              "function": "~:0:<method 'astype' of 'numpy.ndarray' objects>",
+              "calls": 690,
+              "self_ms": 365.201,
+              "cumulative_ms": 365.201
+            },
+            {
+              "function": "~:0:<GaussianBlur>",
+              "calls": 160,
+              "self_ms": 353.456,
+              "cumulative_ms": 353.456
+            },
+            {
+              "function": "~:0:<resize>",
+              "calls": 160,
+              "self_ms": 288.993,
+              "cumulative_ms": 288.993
+            },
+            {
+              "function": "~:0:<magnitude>",
+              "calls": 212,
+              "self_ms": 262.123,
+              "cumulative_ms": 262.123
+            },
+            {
+              "function": "vision_pipeline.py:130:publish",
+              "calls": 80,
+              "self_ms": 0.646,
+              "cumulative_ms": 257.513
+            },
+            {
+              "function": "vision.py:3841:_publish_frame",
+              "calls": 80,
+              "self_ms": 0.561,
+              "cumulative_ms": 256.829
+            }
+          ]
+        }
+      }
+    },
+    "pair_none": {
+      "timing": {
+        "iterations": 20,
+        "median_ms": 90.661,
+        "p95_ms": 100.351,
+        "event_kinds_last_iteration": [],
+        "events_last_iteration": [],
+        "globally_suppressed_last_iteration": false,
+        "profiled": false
+      },
+      "profile_run": {
+        "iterations": 20,
+        "median_ms": 89.662,
+        "p95_ms": 101.616,
+        "event_kinds_last_iteration": [],
+        "events_last_iteration": [],
+        "globally_suppressed_last_iteration": false,
+        "profiled": true,
+        "profile": {
+          "total_profiled_seconds": 1.775473,
+          "top_self": [
+            {
+              "function": "~:0:<method 'reduce' of 'numpy.ufunc' objects>",
+              "calls": 300,
+              "self_ms": 411.175,
+              "cumulative_ms": 411.175
+            },
+            {
+              "function": "~:0:<absdiff>",
+              "calls": 20,
+              "self_ms": 205.275,
+              "cumulative_ms": 205.275
+            },
+            {
+              "function": "~:0:<cvtColor>",
+              "calls": 80,
+              "self_ms": 200.565,
+              "cumulative_ms": 200.565
+            },
+            {
+              "function": "~:0:<method 'astype' of 'numpy.ndarray' objects>",
+              "calls": 240,
+              "self_ms": 138.424,
+              "cumulative_ms": 138.424
+            },
+            {
+              "function": "~:0:<Sobel>",
+              "calls": 120,
+              "self_ms": 134.875,
+              "cumulative_ms": 134.875
+            },
+            {
+              "function": "~:0:<GaussianBlur>",
+              "calls": 60,
+              "self_ms": 118.682,
+              "cumulative_ms": 118.682
+            },
+            {
+              "function": "~:0:<resize>",
+              "calls": 100,
+              "self_ms": 115.769,
+              "cumulative_ms": 115.769
+            },
+            {
+              "function": "vision.py:1549:_detect_changes",
+              "calls": 20,
+              "self_ms": 98.677,
+              "cumulative_ms": 1775.409
+            },
+            {
+              "function": "vision.py:1316:_compensated_gray_difference",
+              "calls": 20,
+              "self_ms": 95.604,
+              "cumulative_ms": 244.649
+            },
+            {
+              "function": "~:0:<magnitude>",
+              "calls": 60,
+              "self_ms": 69.978,
+              "cumulative_ms": 69.978
+            },
+            {
+              "function": "~:0:<morphologyEx>",
+              "calls": 100,
+              "self_ms": 33.797,
+              "cumulative_ms": 33.797
+            },
+            {
+              "function": "vision.py:1408:_persistent_edge_jitter_mask",
+              "calls": 20,
+              "self_ms": 28.298,
+              "cumulative_ms": 199.22
+            }
+          ],
+          "top_cumulative": [
+            {
+              "function": "vision.py:1549:_detect_changes",
+              "calls": 20,
+              "self_ms": 98.677,
+              "cumulative_ms": 1775.409
+            },
+            {
+              "function": "~:0:<method 'reduce' of 'numpy.ufunc' objects>",
+              "calls": 300,
+              "self_ms": 411.175,
+              "cumulative_ms": 411.175
+            },
+            {
+              "function": "fromnumeric.py:3011:max",
+              "calls": 20,
+              "self_ms": 0.154,
+              "cumulative_ms": 407.496
+            },
+            {
+              "function": "fromnumeric.py:66:_wrapreduction",
+              "calls": 20,
+              "self_ms": 0.186,
+              "cumulative_ms": 407.341
+            },
+            {
+              "function": "vision.py:1316:_compensated_gray_difference",
+              "calls": 20,
+              "self_ms": 95.604,
+              "cumulative_ms": 244.649
+            },
+            {
+              "function": "~:0:<absdiff>",
+              "calls": 20,
+              "self_ms": 205.275,
+              "cumulative_ms": 205.275
+            },
+            {
+              "function": "~:0:<cvtColor>",
+              "calls": 80,
+              "self_ms": 200.565,
+              "cumulative_ms": 200.565
+            },
+            {
+              "function": "vision.py:1408:_persistent_edge_jitter_mask",
+              "calls": 20,
+              "self_ms": 28.298,
+              "cumulative_ms": 199.22
+            },
+            {
+              "function": "~:0:<method 'astype' of 'numpy.ndarray' objects>",
+              "calls": 240,
+              "self_ms": 138.424,
+              "cumulative_ms": 138.424
+            },
+            {
+              "function": "~:0:<Sobel>",
+              "calls": 120,
+              "self_ms": 134.875,
+              "cumulative_ms": 134.875
+            },
+            {
+              "function": "vision.py:877:_prepare_gray",
+              "calls": 40,
+              "self_ms": 0.165,
+              "cumulative_ms": 133.641
+            },
+            {
+              "function": "~:0:<GaussianBlur>",
+              "calls": 60,
+              "self_ms": 118.682,
+              "cumulative_ms": 118.682
+            }
+          ]
+        }
+      }
+    },
+    "pair_added": {
+      "timing": {
+        "iterations": 20,
+        "median_ms": 112.388,
+        "p95_ms": 127.874,
+        "event_kinds_last_iteration": [
+          "added"
+        ],
+        "events_last_iteration": [
+          {
+            "kind": "added",
+            "bbox": [
+              525,
+              261,
+              256,
+              220
+            ],
+            "confidence": 0.802,
+            "evidence_sha256": {
+              "before_jpeg": "275c426104ea48d691bc4eee0f176121a18373a5e5e00f7a38290d215414cf02",
+              "after_jpeg": "ac59834bbab9ab71a4c53dab041cf821fa85a61bbc1f41c9d00616fd7e4546dc",
+              "scene_before_jpeg": "8b5fe51790c4c99181af7838d72047dbf6bfbce584fff0e65e78957b5e9e38f6",
+              "scene_after_jpeg": "20294868a2e07c4c7064d3ecb0b9ace7815b1123b394f6d94b7332cb09c5a38d"
+            }
+          }
+        ],
+        "globally_suppressed_last_iteration": false,
+        "profiled": false
+      },
+      "profile_run": {
+        "iterations": 20,
+        "median_ms": 114.178,
+        "p95_ms": 131.519,
+        "event_kinds_last_iteration": [
+          "added"
+        ],
+        "events_last_iteration": [
+          {
+            "kind": "added",
+            "bbox": [
+              525,
+              261,
+              256,
+              220
+            ],
+            "confidence": 0.802,
+            "evidence_sha256": {
+              "before_jpeg": "275c426104ea48d691bc4eee0f176121a18373a5e5e00f7a38290d215414cf02",
+              "after_jpeg": "ac59834bbab9ab71a4c53dab041cf821fa85a61bbc1f41c9d00616fd7e4546dc",
+              "scene_before_jpeg": "8b5fe51790c4c99181af7838d72047dbf6bfbce584fff0e65e78957b5e9e38f6",
+              "scene_after_jpeg": "20294868a2e07c4c7064d3ecb0b9ace7815b1123b394f6d94b7332cb09c5a38d"
+            }
+          }
+        ],
+        "globally_suppressed_last_iteration": false,
+        "profiled": true,
+        "profile": {
+          "total_profiled_seconds": 2.28089,
+          "top_self": [
+            {
+              "function": "~:0:<method 'reduce' of 'numpy.ufunc' objects>",
+              "calls": 540,
+              "self_ms": 406.439,
+              "cumulative_ms": 406.439
+            },
+            {
+              "function": "~:0:<resize>",
+              "calls": 220,
+              "self_ms": 377.753,
+              "cumulative_ms": 377.753
+            },
+            {
+              "function": "~:0:<absdiff>",
+              "calls": 20,
+              "self_ms": 211.137,
+              "cumulative_ms": 211.137
+            },
+            {
+              "function": "~:0:<cvtColor>",
+              "calls": 160,
+              "self_ms": 210.145,
+              "cumulative_ms": 210.145
+            },
+            {
+              "function": "~:0:<Sobel>",
+              "calls": 120,
+              "self_ms": 143.612,
+              "cumulative_ms": 143.612
+            },
+            {
+              "function": "~:0:<method 'astype' of 'numpy.ndarray' objects>",
+              "calls": 320,
+              "self_ms": 143.45,
+              "cumulative_ms": 143.45
+            },
+            {
+              "function": "~:0:<GaussianBlur>",
+              "calls": 140,
+              "self_ms": 133.634,
+              "cumulative_ms": 133.634
+            },
+            {
+              "function": "vision.py:1549:_detect_changes",
+              "calls": 20,
+              "self_ms": 113.468,
+              "cumulative_ms": 2280.826
+            },
+            {
+              "function": "vision.py:1316:_compensated_gray_difference",
+              "calls": 20,
+              "self_ms": 97.361,
+              "cumulative_ms": 251.853
+            },
+            {
+              "function": "~:0:<imencode>",
+              "calls": 80,
+              "self_ms": 89.78,
+              "cumulative_ms": 89.78
+            },
+            {
+              "function": "~:0:<magnitude>",
+              "calls": 60,
+              "self_ms": 70.49,
+              "cumulative_ms": 70.49
+            },
+            {
+              "function": "~:0:<morphologyEx>",
+              "calls": 140,
+              "self_ms": 51.382,
+              "cumulative_ms": 51.382
+            }
+          ],
+          "top_cumulative": [
+            {
+              "function": "vision.py:1549:_detect_changes",
+              "calls": 20,
+              "self_ms": 113.468,
+              "cumulative_ms": 2280.826
+            },
+            {
+              "function": "~:0:<method 'reduce' of 'numpy.ufunc' objects>",
+              "calls": 540,
+              "self_ms": 406.439,
+              "cumulative_ms": 406.439
+            },
+            {
+              "function": "fromnumeric.py:3011:max",
+              "calls": 20,
+              "self_ms": 0.156,
+              "cumulative_ms": 400.542
+            },
+            {
+              "function": "fromnumeric.py:66:_wrapreduction",
+              "calls": 20,
+              "self_ms": 0.188,
+              "cumulative_ms": 400.386
+            },
+            {
+              "function": "~:0:<resize>",
+              "calls": 220,
+              "self_ms": 377.753,
+              "cumulative_ms": 377.753
+            },
+            {
+              "function": "vision.py:3612:_encode_scene_context",
+              "calls": 40,
+              "self_ms": 7.134,
+              "cumulative_ms": 365.757
+            },
+            {
+              "function": "vision.py:1316:_compensated_gray_difference",
+              "calls": 20,
+              "self_ms": 97.361,
+              "cumulative_ms": 251.853
+            },
+            {
+              "function": "~:0:<absdiff>",
+              "calls": 20,
+              "self_ms": 211.137,
+              "cumulative_ms": 211.137
+            },
+            {
+              "function": "~:0:<cvtColor>",
+              "calls": 160,
+              "self_ms": 210.145,
+              "cumulative_ms": 210.145
+            },
+            {
+              "function": "vision.py:1408:_persistent_edge_jitter_mask",
+              "calls": 20,
+              "self_ms": 26.83,
+              "cumulative_ms": 203.925
+            },
+            {
+              "function": "~:0:<Sobel>",
+              "calls": 120,
+              "self_ms": 143.612,
+              "cumulative_ms": 143.612
+            },
+            {
+              "function": "~:0:<method 'astype' of 'numpy.ndarray' objects>",
+              "calls": 320,
+              "self_ms": 143.45,
+              "cumulative_ms": 143.45
+            }
+          ]
+        }
+      }
+    }
+  }
+}

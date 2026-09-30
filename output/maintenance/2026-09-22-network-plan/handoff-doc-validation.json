@@ -1,0 +1,60 @@
+{
+  "date": "2026-09-22",
+  "scope": "Documentation and handoff validation only; no app tests or Pi actions performed",
+  "documents": [
+    "START_HERE.md",
+    "AGENTS.md",
+    "README.md",
+    "docs/README.md",
+    "docs/SESSION_HANDOFF_2026-09-18.md",
+    "docs/IMPROVEMENTS.md",
+    "docs/guides/PI_ACCEPTANCE_CHECKLIST.md",
+    "docs/guides/FRESH_SD_START.md",
+    "docs/guides/SCHOOL_DEMO_GUIDE.md",
+    "docs/paper/README.md",
+    "docs/paper/REVISION_STATUS.md",
+    "docs/presentation/PRESENTATION.md"
+  ],
+  "local_links_checked": 148,
+  "link_or_encoding_errors": [],
+  "protected_file_count": 71,
+  "protected_files_changed": [],
+  "source_matches_prior_validation": {
+    "app/main.py": true,
+    "static/app.js": true,
+    "static/styles.css": true,
+    "templates/index.html": true,
+    "tests/test_reset.py": true,
+    "tests/test_app_resilience.py": true,
+    "tests/test_store.py": true,
+    "tests/frontend/app.test.cjs": true,
+    "scripts/raspberry-pi/setup-tailscale.sh": true
+  },
+  "package_checksum_matches_installed_record": true,
+  "paper_placeholder_counts": [
+    297,
+    297
+  ],
+  "paper_placeholder_sets_match": true,
+  "presentation_slide_counts": {
+    "REFOUND_PDF_CAPTURE_BRIEFING.pptx": 4,
+    "REFOUND_EARLY_PAPER_FINAL.pptx": 6
+  },
+  "status_json_parsed": true,
+  "document_sha256": {
+    "START_HERE.md": "7cc53eba5de251595d3795ee191f99db4df7b1095c8cc9f5caba09bebed5241b",
+    "AGENTS.md": "031902d1ec4b65e4a0602ab7c9765b426b543aee71d6d3c7301e169f70a55aa0",
+    "README.md": "a416cd5110d79b228cc72f3c4f9527d1a11deb48cfc7f6272ee03334dd37836b",
+    "docs/README.md": "b02370287928acb57d1d425735286b46c4e4ef8ea8007d42edaf823566074ba9",
+    "docs/SESSION_HANDOFF_2026-09-18.md": "bb5950450ca861a0071190dae11707ab132599ada6c89e89b3f489416be9784e",
+    "docs/IMPROVEMENTS.md": "342736c546f62181a077c5d7c143ace149fea67cb813c2cb20877c3a0e8f00a5",
+    "docs/guides/PI_ACCEPTANCE_CHECKLIST.md": "0dfccce611041ed74c3cb1a2b7055bf219987014d54e95425bb37eac7395e7b4",
+    "docs/guides/FRESH_SD_START.md": "1d05d840c8b879167c4d7fa414e0a2d0837f20cbe5005894dc0ad1f42c57d4ec",
+    "docs/guides/SCHOOL_DEMO_GUIDE.md": "0e2c76e3c1a97cf16865a2e20dca9c0ed29b6f89e1570c629c40106ce96e10b8",
+    "docs/paper/README.md": "0071e879d738621651f09095ad74adf108ceb2f276e87437fd0a6c533cdfc21e",
+    "docs/paper/REVISION_STATUS.md": "966b32ee6f411c3a0f63e727b7ed2eb3d591290cb9ec814c57dacbcb13bda4c6",
+    "docs/presentation/PRESENTATION.md": "9008e43f46ea1c87849e550ee8a23a32246d3c7aa6806623c9f3bc4b33315b49"
+  },
+  "status": "passed",
+  "state_record_sha256": "5d7842ac434e073099e99116f1b3a9b770edb45698bed301f44268bd564c34d0"
+}

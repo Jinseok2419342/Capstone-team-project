@@ -1,19 +1,14 @@
-# 프로젝트 문서
+# 문서 찾기
 
-실행에 필요한 핵심 안내는 프로젝트 루트의 [README](../README.md)에 있습니다. 이 폴더에는 설치·시연 절차, 발표 자료, 캡스톤 산출물을 모아 둡니다.
+**전체 시작점은 [여기서 시작하세요](../START_HERE.md)입니다.** 지금 필요한 것 하나만 고르세요.
 
-## 설치 및 시연 가이드
+| 할 일 | 시작 문서 |
+|---|---|
+| 현재 Pi 시연 준비 재개 | [실기 결과·남은 항목](guides/PI_ACCEPTANCE_CHECKLIST.md) → [친구 공유·핫스팟](guides/SCHOOL_DEMO_GUIDE.md) |
+| 새 카드에 처음부터 설치 | [새 SD 시작 안내](guides/FRESH_SD_START.md) |
+| 논문 수정·실험 준비 | [논문 작업 안내](paper/README.md) |
+| 프로젝트·개선점 발표 PPT 준비 | [발표 준비와 개선점](IMPROVEMENTS.md) |
 
-- [Raspberry Pi 전체 설치 가이드](guides/RASPBERRY_PI_GUIDE.md)
-- [학교 시연 운영 가이드](guides/SCHOOL_DEMO_GUIDE.md)
-- [모니터·키보드 현장 Wi-Fi 연결 가이드](guides/PI_MONITOR_WIFI_GUIDE.md)
+설치 중 문제가 있을 때만 [전체 설치 참고서](guides/RASPBERRY_PI_GUIDE.md), [학교 운영](guides/SCHOOL_DEMO_GUIDE.md), [모니터·Wi-Fi 복구](guides/PI_MONITOR_WIFI_GUIDE.md)를 찾아봅니다.
 
-## 발표 자료
-
-- [발표 원고](presentation/PRESENTATION.md)
-- [브라우저용 발표 화면](presentation/PRESENTATION.html)
-- [초기 시스템 구성도](presentation/Blueprint.jpg)
-- [발표 이미지 준비 목록](presentation/assets/README.md)
-- [발표용 Mermaid 다이어그램](presentation/diagrams/README.md)
-
-나머지 PDF·HWP 파일과 `Meeting_Minutes`, `Original_Ideas` 폴더는 팀 프로젝트의 기획·보고·회의 기록 원본입니다.
+현재는 새 SD 설치·기본 실물 동작·재부팅·본인 PC Tailscale 접속을 확인했고, **친구에게 초대 링크를 보낸 뒤 수락·친구 노트북·핫스팟 시험을 기다리는 상태**입니다. 다음 AI 세션용 [인계 문서](SESSION_HANDOFF_2026-09-18.md)는 파일명을 유지하고 9월 22일 상태로 갱신했습니다. 나머지 검토 기록, 과거 발표·기획·회의 자료는 참고용이며 모두 읽을 필요가 없습니다. 기존 `presentation/`은 과거 프로젝트 발표 자료이고, 새 발표의 완성본이 아닙니다.

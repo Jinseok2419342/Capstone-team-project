@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-18",
+  "python_tests": {
+    "command": "python -X utf8 -m unittest discover -s tests -q",
+    "exit_code": 0,
+    "elapsed_seconds": 27.179,
+    "count": 268
+  },
+  "deployment_tests_included": 10,
+  "static_checks": {
+    "local_doc_links_missing": [],
+    "compileall": true,
+    "shell_files_with_crlf": []
+  },
+  "package": {
+    "path": "dist\\refound-pi.tar.gz",
+    "sha256": "f062a3f1ca64b97a7d291d8141c6b4180592f32222c991401f6ff6559e503113",
+    "file_count": 47,
+    "all_files_match_source": true,
+    "runtime_secrets_and_data_excluded": true
+  },
+  "changed_or_added_files_sha256": {
+    "AGENTS.md": "a43767afe7e49547fed8216d64212ee51dc3629c87546f78b30505227c22e1f5",
+    "README.md": "012634bcef041ec061562c2feb219cb79af248f11e6508d338b5ae31c7e17fe8",
+    ".env.example": "164eb265a8b3676307e7290518b04ba1c3cfcc2f38e6695d263df8d3e6064037",
+    "docs/README.md": "102cfcb0c6e8e8b82926b017db4cdcf90b00e90f3a4dad36596a1f0c8f7f247d",
+    "docs/guides/PI_MONITOR_WIFI_GUIDE.md": "9f96f687391d8714963f4568b32830db4b7a9fdaeeb2699709bf457532ff75c3",
+    "docs/guides/RASPBERRY_PI_GUIDE.md": "1078d5b316e5d13930b03da737fd90485078d9bc0c85f302b0ee13116ad72a64",
+    "docs/guides/SCHOOL_DEMO_GUIDE.md": "0829a0ba6e02c26ad80ba06c1fce4acc9738279c515dfac003373f4fa7c73577",
+    "scripts/raspberry-pi/install.sh": "c005668792cebd6652798513113b63fd1c81a8e1386c2aa5a08bfa45db1bfda1",
+    "scripts/raspberry-pi/package-for-pi.ps1": "a5e6883c61fd6dc0bbd5b8d3651a92f61b6c490a8af77c6ee4dc2ca9f9525442",
+    "tests/test_pi_deployment.py": "bd6f44cfcac89db3ac9dd70394bd654d71d04de73e679d2ee56be62bbb05e0b5",
+    "scripts/raspberry-pi/check-runtime.py": "45653e4174c4929a2a02f7b8c628d320ac9e8a387cbb0badfaea020e02c47363",
+    "scripts/raspberry-pi/check-system.sh": "a9dc5bcc925052a14ffd09c0bf0691b1c2211a32a397622117dfbcae8e37547f",
+    "docs/guides/FRESH_SD_START.md": "f742ad29485e9504f99d6b04bb3c6c2755ec7d01b66cbba9dc36ea4b06db1c20",
+    "docs/guides/PI_ACCEPTANCE_CHECKLIST.md": "91cee29b9849b963dc2ad4d29c1ded6fb60f8e2710425eba143e2249d6147196",
+    "docs/SESSION_HANDOFF_2026-09-18.md": "d3499d425efc1a3ec844223ddef4a8bf46121213dc8d12bcf41e91418f62a236",
+    "tests/test_pi_readiness.py": "6ff7d62ce1ed13ff3323e8f33dcfe10cef1a13cfbdc0b209c9bbd89a740767c5"
+  },
+  "official_references": [
+    "https://www.raspberrypi.com/software/operating-systems/",
+    "https://www.raspberrypi.com/documentation/computers/getting-started.html",
+    "https://github.com/raspberrypi/picamera2/blob/main/README.md",
+    "https://tailscale.com/docs/concepts/machine-names",
+    "https://tailscale.com/docs/reference/tailscale-cli/serve"
+  ],
+  "not_run": [
+    "physical SD flashing",
+    "apt installation on Raspberry Pi",
+    "real camera capture",
+    "paid VLM API call",
+    "SMTP delivery",
+    "paper quantitative experiments",
+    "Node and browser retest (unchanged app)"
+  ]
+}

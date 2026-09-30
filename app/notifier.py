@@ -5,6 +5,7 @@ import logging
 import smtplib
 import ssl
 import threading
+import time
 from datetime import datetime, timezone
 from email.message import EmailMessage
 from typing import Any, Callable
@@ -21,7 +22,9 @@ class EmailNotifier:
         self.settings_getter = settings_getter
 
     def configured(self) -> bool:
-        settings = self.settings_getter()
+        return self._configured(self.settings_getter())
+
+    def _configured(self, settings: dict[str, Any]) -> bool:
         return bool(
             settings.get("admin_email")
             and settings.get("smtp_host")
@@ -32,7 +35,7 @@ class EmailNotifier:
     def send_due(self, item: dict[str, Any]) -> tuple[bool, str | None]:
         try:
             settings = self.settings_getter()
-            if not self.configured():
+            if not self._configured(settings):
                 return False, "SMTP 설정이 없어 웹 알림만 생성했습니다."
             clean_name = str(item.get("name", "분실물")).replace("\r", " ").replace("\n", " ")
             recipient = str(settings["admin_email"]).replace("\r", "").replace("\n", "")
@@ -90,18 +93,34 @@ class ExpirationScheduler:
         self._stop = threading.Event()
         self._thread: threading.Thread | None = None
         self._run_lock = threading.Lock()
+        self._lifecycle_lock = threading.Lock()
 
     def start(self) -> None:
-        if self._thread and self._thread.is_alive():
-            return
-        self._stop.clear()
-        self._thread = threading.Thread(target=self._run, name="expiration-scheduler", daemon=True)
-        self._thread.start()
+        with self._lifecycle_lock:
+            if self._thread and self._thread.is_alive():
+                return
+            if self._stop.is_set() and self._run_lock.locked():
+                return
+            self._stop.clear()
+            self._thread = threading.Thread(target=self._run, name="expiration-scheduler", daemon=True)
+            self._thread.start()
 
-    def stop(self) -> None:
-        self._stop.set()
-        if self._thread and self._thread.is_alive():
-            self._thread.join(timeout=3)
+    def stop(self, timeout: float = 3.0) -> bool:
+        """Request a stop and report whether all scheduled/manual work drained."""
+
+        deadline = time.monotonic() + max(0.0, float(timeout))
+        with self._lifecycle_lock:
+            self._stop.set()
+            if self._thread and self._thread.is_alive():
+                if self._thread is threading.current_thread():
+                    return False
+                self._thread.join(timeout=max(0.0, deadline - time.monotonic()))
+                if self._thread.is_alive():
+                    return False
+            acquired = self._run_lock.acquire(timeout=max(0.0, deadline - time.monotonic()))
+            if acquired:
+                self._run_lock.release()
+            return acquired
 
     def run_once(self) -> list[dict[str, Any]]:
         # The HTTP maintenance route and background loop may race. Holding one
@@ -109,14 +128,10 @@ class ExpirationScheduler:
         if not self._run_lock.acquire(blocking=False):
             return []
         try:
+            if self._stop.is_set():
+                return []
             now = datetime.now(timezone.utc)
-            expired = self.store.process_expirations(now)
-            for item in expired:
-                self.store.create_activity(
-                    "item_due",
-                    f"{item['name']}의 보관 기한이 도래했습니다.",
-                    item_id=item["id"],
-                )
+            expired = self.store.process_expirations(now, log_activity=True)
             # Snapshot retries before attempting any new delivery, otherwise a
             # fast retry interval could resend a failure from this same pass.
             retries = self.store.list_retryable_due_notifications(
@@ -125,33 +140,47 @@ class ExpirationScheduler:
                 limit=25,
             )
             for retry in retries:
-                self._deliver(retry["notification"], retry["item"])
+                if self._stop.is_set():
+                    return expired
+                self._deliver(retry["notification"])
 
             candidates = self.store.get_due_notifications_candidates(now)
             for item in candidates:
+                if self._stop.is_set():
+                    return expired
                 notification = self.store.create_notification(
                     item_id=item["id"],
                     notification_type="disposal_due",
                     status="pending",
                     scheduled_for=item["expires_at"],
                 )
-                self._deliver(notification, item)
+                self._deliver(notification)
             return expired
         finally:
             self._run_lock.release()
 
-    def _deliver(self, notification: dict[str, Any], item: dict[str, Any]) -> None:
-        sent, error = self.notifier.send_due(item)
+    def _deliver(self, notification: dict[str, Any]) -> None:
+        # The durable lease coordinates independent scheduler instances. The
+        # item is re-read inside the claim transaction because it may have been
+        # recovered or extended since the candidates/retry snapshot was taken.
+        claim = self.store.claim_due_notification(
+            notification["id"], retry_after_seconds=self.retry_after_seconds
+        )
+        if claim is None:
+            return
+        try:
+            sent, error = self.notifier.send_due(claim["item"])
+        except Exception as exc:
+            logger.exception("Notification sender failed")
+            sent, error = False, str(exc)[:500]
         if sent:
-            self.store.mark_notification_sent(notification["id"])
-            self.store.create_activity(
-                "email_sent",
-                f"{item['name']} 기한 알림 메일을 발송했습니다.",
-                item_id=item["id"],
+            self.store.mark_notification_sent(
+                notification["id"], delivery_token=claim["token"], log_activity=True
             )
         else:
             self.store.mark_notification_failed(
-                notification["id"], error or "알 수 없는 오류"
+                notification["id"], error or "알 수 없는 오류",
+                delivery_token=claim["token"],
             )
 
     def _run(self) -> None:

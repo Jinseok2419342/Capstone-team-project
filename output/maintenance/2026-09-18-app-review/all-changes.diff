@@ -1,0 +1,4054 @@
+--- before/AGENTS.md
++++ after/AGENTS.md
+@@ -1,6 +1,16 @@
+ # Re:Found 작업 인계 및 재개 지침
+ 
+ 이 파일은 2026-09-16까지의 사용자 대화와 작업 상태를 다음 세션이 이어받기 위한 저장소 수준의 인계 문서다.
++
++## 최신 코드 개선 — 2026-09-18
++
++- 사용자가 논문 실험 전에 앱 코드를 전체 검토하고 적극적으로 개선하도록 요청했다. 이번 우선순위는 앱 안정성·데이터 보존·관리 화면 오류 수정이다.
++- 카메라 종료·재연결, 개인정보 보호 설정 복원, AI 지연 응답과 관리자 수정 충돌, 재시작 후 분석 대기 복구, 전체 활성 물품 조회, 알림 발송 동시성, 화면 갱신·설정 입력을 개선했다. 상세 내용과 검증 범위는 `docs/APP_REVIEW_2026-09-18.md`를 따른다.
++- `VisionMonitor.stop()`과 `ExpirationScheduler.stop()`은 완전 종료 여부를 bool로 반환한다. 초기화는 종료 실패 시 409로 취소하고, 작업이 끝나면 별도 복구 worker가 감시를 재개한다. 데이터 초기화를 자동 재시도하지 않는다.
++- `added` 분석에도 최초 추적 signature를 전달한다. 분석 대기·호출 중 이동/기록 변경이 있었다면 늦은 부정 판정으로 현재 물품을 삭제하지 않는다.
++- 부팅 시 저장된 privacy 설정을 카메라 시작 전에 적용한다. 이미 접수된 callback/VLM 작업까지 취소하는 기능은 아니다.
++- 원본 소스 백업은 `output/maintenance/2026-09-18-app-review/source-before.zip`이다. 실제 운영 DB·촬영 자료·API 키를 수정하거나 Pi/유료 API/SMTP 실험을 수행하지 않았다.
++- 기존 논문/PDF/PPTX는 이번 구현 변경에 맞춰 다시 작성하지 않았다. 논문 실험 전 구현 기준일을 갱신하고, 이전 원고의 privacy·AI 지연 응답 설명을 최신 코드와 대조한다. 아래 2026-09-16 문서 작업 내역은 과거 기록이다.
+ 
+ ## 0. 최신 원고·발표 작업 상태 — 2026-09-16
+ 
+@@ -64,9 +74,9 @@
+ - callback worker가 정상 접수한 `added`만 VLM 전에 provisional DB 행을 만든다. change callback queue가 그 전에 포화되면 사건이 drop될 수 있다.
+ - 이미 생성된 provisional 행은 API key 부재, timeout, parse 실패, 낮은 신뢰도 또는 원격 작업 queue 포화 후에도 보존된다.
+ - `added`의 낮은 신뢰도는 확인 필요 상태로 남는다. `verify_removed`의 uncertain·저신뢰는 별도 item review flag를 보장하지 않으며, 기존 물품과 추적을 유지하고 활동 로그를 남긴다.
+-- `added` 응답은 pending 여부와 필요한 현재 상태를 확인한다. 전체 tracking signature 재검사는 `verify_removed` 경로에 적용된다.
++- `added` 응답은 pending 여부·현재 상태와 최초 tracking signature를 확인한다. 기록이 갱신된 물품은 늦은 부정 판정으로 삭제하지 않는다. `verify_removed`는 signature가 달라지면 결과 적용을 취소한다.
+ - 실행 중 privacy 모드를 켜면 이후 capture 분석은 중단되지만 이미 callback/VLM queue에 들어간 작업은 계속될 수 있다.
+-- 현재 구현은 재시작 시 DB에 저장된 privacy 설정을 `VisionMonitor`에 자동 재적용하지 않는다. 배포 전 보완 대상이다.
++- 2026-09-18 개선으로 재시작 시 DB의 privacy 설정을 `VisionMonitor` 시작 전에 재적용한다.
+ - `recovered`는 시스템에서 화면상 사라짐을 뜻하는 운영 상태이며 실제 소유자에게 물리적으로 반환됐음을 증명하지 않는다.
+ - valuable/general/food의 90/60/1일은 법정 기한이 아니라 현재 애플리케이션 기본 운영 정책이다.
+ 
+@@ -143,7 +153,7 @@
+ 1. 실제 `VisionMonitor`의 motion 시작, action 종료, stable 확정, local callback, provisional DB와 final commit timestamp를 영속 원장에 추가한다.
+ 2. VLM logical job ID, provider attempt, 성공 여부, model ID, prompt hash, 직렬화 payload byte, token/usage/cost와 request/response timestamp를 기록한다.
+ 3. capture read 실패, scheduler skip, change callback drop, diagnostic callback drop과 reconnect 시간을 분리 계측한다.
+-4. privacy 설정의 부팅 동기화를 보완한다.
++4. privacy 설정의 부팅 동기화는 2026-09-18 구현·회귀 검증 완료. 실제 Pi 재시작에서도 확인한다.
+ 5. B0/B1/B2 공통 replay runner와 fault-injection runner를 구현한다.
+ 6. `EXPERIMENT_GUIDE.md` 기준 20–50건 파일럿으로 촬영·라벨·threshold protocol을 고정한다.
+ 7. 본 실험을 `D_pair`, `D_stream`, `D_vlm`, `D_fault`로 분리해 수행한다.
+
+--- before/README.md
++++ after/README.md
+@@ -185,7 +185,7 @@
+ 
+ ## 검증 현황과 다음 과제
+ 
+-현재 저장소의 자동화 테스트 **136개**는 API, SQLite 저장소, 서비스 수명 주기, 합성 카메라 장면, AI·메일 실패 처리, 초기화 안전장치와 논문 실험 스키마·사건 매칭·지표 집계를 검증합니다. 이는 소프트웨어 회귀 테스트 결과이며 실제 AI 정확도나 현장 감지율을 의미하지 않습니다.
++2026-09-18 검증에서 Python 자동화 테스트 **175개**와 프런트엔드 동작 테스트 **10개**가 통과했습니다. API, SQLite, 서비스 수명 주기, 합성 카메라 장면, AI·메일 실패 처리, 초기화 안전장치, 화면 요청 순서와 논문 실험 도구를 검증합니다. 이는 소프트웨어 회귀 검증이며 실제 AI 정확도나 현장 감지율을 의미하지 않습니다. [앱 개선 내역과 검증 범위](docs/APP_REVIEW_2026-09-18.md)를 참고하세요.
+ 
+ 다음 단계에서 우선 보완할 항목은 아래와 같습니다.
+ 
+@@ -308,7 +308,7 @@
+ - API 키/SMTP 비밀번호: `.env` (Git에서 제외됨)
+ - 개인 정보 보호 모드에서는 실시간 화면을 흐리게 표시할 수 있습니다.
+ - OpenAI 또는 Gemini를 사용하면 변화가 감지된 시점의 **전체 카메라 장면 전·후 이미지**와 변화 영역 확대 이미지가 해당 외부 서비스로 전송됩니다. 카메라는 분실물 보관대만 촬영하도록 고정하고 사람, 문서, 모니터, 출입구는 구도에서 제외하세요.
+-- 촬영 또는 외부 전송을 즉시 멈춰야 할 때는 **개인정보 보호 모드**를 켭니다.
++- **개인정보 보호 모드**는 화면 영상과 이후 감지 분석을 중단하며 재시작 후에도 유지됩니다. 켜기 전에 이미 접수된 callback·AI 분석 작업은 계속 처리될 수 있습니다.
+ 
+ 기본 서버 주소는 같은 컴퓨터에서만 접속 가능한 `127.0.0.1`입니다. 교내망 공개가 필요하면 `.env`의 `HOST=0.0.0.0`으로 바꾸되, 실제 운영 전에는 로그인·HTTPS·방화벽을 추가하세요.
+ 
+@@ -344,6 +344,15 @@
+ .\.venv\Scripts\python.exe -m pytest
+ ```
+ 
++기본 Python 테스트와 Node.js가 설치된 개발 환경에서의 프런트엔드 회귀 검사:
++
++```powershell
++python -m unittest discover -s tests -q
++node --test tests/frontend/app.test.cjs
++```
++
++프런트엔드 검사는 별도 npm 패키지 없이 실행되며, 브라우저에서의 시각 검사는 별도로 수행합니다.
++
+ 서버 실행 후 상태 확인:
+ 
+ ```powershell
+
+--- before/app/ai.py
++++ after/app/ai.py
+@@ -3,6 +3,7 @@
+ import base64
+ import json
+ import logging
++import math
+ import re
+ from dataclasses import asdict, dataclass
+ from typing import Any, Callable, Iterable
+@@ -256,14 +257,24 @@
+         category = str(data.get("category", "general")).lower()
+         if category not in {"valuable", "general", "food"}:
+             category = "general"
++        raw_confidence = data.get("confidence")
++        valid_confidence = True
+         try:
+-            confidence = max(0.0, min(1.0, float(data.get("confidence", 0.65))))
+-        except (TypeError, ValueError):
+-            confidence = 0.65
++            confidence = float(raw_confidence)
++            if isinstance(raw_confidence, bool) or not math.isfinite(confidence):
++                raise ValueError("invalid confidence")
++            confidence = max(0.0, min(1.0, confidence))
++        except (TypeError, ValueError, OverflowError):
++            # Malformed or missing evidence must never authorize automatic
++            # registration cancellation or recovery of a tracked item.
++            confidence = 0.0
++            valid_confidence = False
+         estimated = data.get("estimated_value_krw")
+         try:
+-            estimated = int(estimated) if estimated is not None else None
+-        except (TypeError, ValueError):
++            estimated = int(estimated) if estimated is not None and not isinstance(estimated, bool) else None
++            if estimated is not None and estimated < 0:
++                estimated = None
++        except (TypeError, ValueError, OverflowError):
+             estimated = None
+         try:
+             threshold = int(self.settings_getter().get("valuable_value_threshold_krw", 100000))
+@@ -275,7 +286,7 @@
+         # Offline fallback explicitly opts into ``added`` so camera events are
+         # still retained when no remote model is available.
+         action = str(data.get("action", "uncertain")).strip().lower()
+-        if action not in {"added", "removed", "uncertain"}:
++        if not valid_confidence or action not in {"added", "removed", "uncertain"}:
+             action = "uncertain"
+         if action == "uncertain":
+             confidence = min(confidence, 0.45)
+
+--- before/app/config.py
++++ after/app/config.py
+@@ -1,6 +1,7 @@
+ from __future__ import annotations
+ 
+ import os
++import math
+ from dataclasses import dataclass
+ from pathlib import Path
+ from typing import Any
+@@ -38,13 +39,14 @@
+ def _int(value: Any, default: int) -> int:
+     try:
+         return int(value)
+-    except (TypeError, ValueError):
++    except (TypeError, ValueError, OverflowError):
+         return default
+ 
+ 
+ def _float(value: Any, default: float) -> float:
+     try:
+-        return float(value)
++        result = float(value)
++        return result if math.isfinite(result) else default
+     except (TypeError, ValueError):
+         return default
+ 
+@@ -203,6 +205,35 @@
+     return str(value)
+ 
+ 
++def validate_setting(key: str, value: Any) -> Any:
++    """Parse an administrator input without silently replacing bad values."""
++    target = SETTING_TYPES[key]
++    if target is bool:
++        if isinstance(value, bool):
++            return value
++        if isinstance(value, (str, int)) and str(value).strip().lower() in {
++            "1", "true", "yes", "on", "y", "0", "false", "no", "off", "n"
++        }:
++            return _bool(value)
++        raise ValueError(f"{key}: 켜짐/꺼짐 값을 확인해 주세요.")
++    if target in {int, float}:
++        if isinstance(value, bool) or not isinstance(value, (str, int, float)):
++            raise ValueError(f"{key}: 숫자를 입력해 주세요.")
++        try:
++            number = float(value)
++            if not math.isfinite(number) or (target is int and not number.is_integer()):
++                raise ValueError
++            return target(number)
++        except (TypeError, ValueError, OverflowError) as exc:
++            raise ValueError(f"{key}: 유효한 {'정수' if target is int else '숫자'}를 입력해 주세요.") from exc
++    if not isinstance(value, str) or len(value) > 300 or "\n" in value or "\r" in value:
++        raise ValueError(f"{key}: 300자 이내의 한 줄 문자열을 입력해 주세요.")
++    value = value.strip()
++    if key in {"site_name", "openai_model", "gemini_model"} and not value:
++        raise ValueError(f"{key}: 빈 값은 사용할 수 없습니다.")
++    return value
++
++
+ def public_provider_state(config: AppConfig, settings: dict[str, Any]) -> dict[str, Any]:
+     requested = settings.get("provider", "auto")
+     openai_ready = bool(config.openai_api_key)
+
+--- before/app/main.py
++++ after/app/main.py
+@@ -1,17 +1,17 @@
+ from __future__ import annotations
+ 
++import asyncio
+ import json
+ import logging
+ import shutil
+ import threading
+-import time
+ import uuid
+ from collections import OrderedDict
+ from concurrent.futures import ThreadPoolExecutor
+ from contextlib import asynccontextmanager
+ from datetime import datetime, timedelta, timezone
+ from pathlib import Path
+-from typing import Any, Generator
++from typing import Any, AsyncIterator
+ 
+ from fastapi import Body, FastAPI, HTTPException, Query
+ from fastapi.responses import FileResponse, StreamingResponse
+@@ -25,6 +25,7 @@
+     AppConfig,
+     coerce_setting,
+     public_provider_state,
++    validate_setting,
+ )
+ from .notifier import EmailNotifier, ExpirationScheduler
+ from .store import Store, classify_retention
+@@ -49,6 +50,9 @@
+ _reference_cache_bytes = 0
+ _item_mutation_lock = threading.RLock()
+ _reset_lock = threading.Lock()
++_service_lifecycle_lock = threading.RLock()
++_service_shutdown = threading.Event()
++_reset_recovery_thread: threading.Thread | None = None
+ 
+ RESET_CONFIRMATION = "초기화"
+ 
+@@ -139,7 +143,7 @@
+ 
+ def active_items_for_vision() -> list[dict[str, Any]]:
+     active: list[dict[str, Any]] = []
+-    for item in store.list_items(limit=500):
++    for item in store.list_active_items():
+         bbox = item.get("bbox") or item.get("bbox_json")
+         # Presentation presets do not correspond to a physical camera object.
+         if item.get("status") not in {"stored", "due"} or not bbox or item.get("provider") == "demo":
+@@ -190,7 +194,16 @@
+         return None
+     filename = f"{prefix}-{utc_now().strftime('%Y%m%d-%H%M%S')}-{uuid.uuid4().hex[:8]}.jpg"
+     path = (config.capture_dir / filename).resolve()
+-    path.write_bytes(image)
++    try:
++        path.write_bytes(image)
++    except OSError:
++        # A full disk may leave a partial file even though no path was returned
++        # to the caller's rollback handler.
++        try:
++            path.unlink(missing_ok=True)
++        except OSError:
++            logger.warning("Could not clean up incomplete capture: %s", path.name)
++        raise
+     return str(path)
+ 
+ 
+@@ -337,31 +350,40 @@
+ def create_provisional_item(event: ChangeEvent) -> dict[str, Any]:
+     """Persist the observation before any remote call so quick removals remain trackable."""
+     detected_at = utc_now()
+-    image_path = save_capture(event.crop_jpeg or event.after_jpeg)
+-    background_path = save_capture(event.before_jpeg, prefix="background")
+-    item = store.create_item(
+-        {
+-            "name": "분석 중인 새 물품",
+-            "description": "이미지는 안전하게 등록되었으며 AI가 물품 종류를 확인하고 있습니다.",
+-            "category": "general",
+-            "retention_days": 60,
+-            "detected_at": iso(detected_at),
+-            "expires_at": iso(detected_at + timedelta(days=60)),
+-            "status": "stored",
+-            "bbox_json": json.dumps(list(event.bbox)),
+-            "confidence": event.confidence,
+-            "image_path": image_path,
+-            "background_path": background_path,
+-            "provider": "pending",
+-            "ai_raw": "classification pending",
+-        }
+-    )
+-    store.create_activity(
+-        "item_detected",
+-        "새 물품을 감지해 우선 등록했습니다. AI 분석을 시작합니다.",
+-        item_id=item["id"],
+-        metadata={"source": "camera"},
+-    )
++    image_path = None
++    background_path = None
++    try:
++        image_path = save_capture(event.crop_jpeg or event.after_jpeg)
++        background_path = save_capture(event.before_jpeg, prefix="background")
++        item = store.create_item(
++            {
++                "name": "분석 중인 새 물품",
++                "description": "이미지는 안전하게 등록되었으며 AI가 물품 종류를 확인하고 있습니다.",
++                "category": "general",
++                "retention_days": 60,
++                "detected_at": iso(detected_at),
++                "expires_at": iso(detected_at + timedelta(days=60)),
++                "status": "stored",
++                "bbox_json": json.dumps(list(event.bbox)),
++                "confidence": event.confidence,
++                "image_path": image_path,
++                "background_path": background_path,
++                "provider": "pending",
++                "ai_raw": "classification pending",
++            }
++        )
++    except Exception:
++        remove_managed_captures([image_path, background_path])
++        raise
++    try:
++        store.create_activity(
++            "item_detected",
++            "새 물품을 감지해 우선 등록했습니다. AI 분석을 시작합니다.",
++            item_id=item["id"],
++            metadata={"source": "camera"},
++        )
++    except Exception:
++        logger.exception("Item persisted but detection activity could not be recorded")
+     return item
+ 
+ 
+@@ -391,8 +413,20 @@
+     return float(result.confidence) >= max(0.7, min(1.0, configured))
+ 
+ 
+-def classify_existing_item(item_id: int, event: ChangeEvent) -> None:
++def classify_existing_item(
++    item_id: int,
++    event: ChangeEvent,
++    expected_signature: tuple[Any, ...] | None = None,
++) -> None:
+     try:
++        with _item_mutation_lock:
++            initial = store.get_item(item_id)
++            if not initial or initial.get("provider") != "pending":
++                return
++            initial_signature = (
++                expected_signature if expected_signature is not None
++                else item_tracking_signature(initial)
++            )
+         result = classifier.classify(
+             [event.before_jpeg, event.after_jpeg],
+             scene_images=[event.scene_before_jpeg, event.scene_after_jpeg],
+@@ -418,9 +452,12 @@
+                     except (TypeError, ValueError, json.JSONDecodeError):
+                         current_bbox = None
+                 visually_reconfirmed = (
+-                    isinstance(current_bbox, (list, tuple))
+-                    and len(current_bbox) == 4
+-                    and [int(value) for value in current_bbox] != original_bbox
++                    item_tracking_signature(existing) != initial_signature
++                    or (
++                        isinstance(current_bbox, (list, tuple))
++                        and len(current_bbox) == 4
++                        and [int(value) for value in current_bbox] != original_bbox
++                    )
+                 )
+                 if (
+                     existing.get("status") not in {"stored", "due"}
+@@ -430,7 +467,7 @@
+                         result.name
+                         if result.name and result.name not in {"확인 필요한 물건", "새 분실물"}
+                         else (
+-                            "이동이 확인된 미확인 물품"
++                            "추적 중인 미확인 물품"
+                             if visually_reconfirmed
+                             else "빠르게 회수된 미확인 물품"
+                         )
+@@ -439,17 +476,16 @@
+                         item_id,
+                         {
+                             "name": fallback_name,
+-                            "description": result.description,
+-                            "category": result.category,
++                            "description": "AI가 물품 분류를 확정하지 못했습니다. 이동·처리 기록을 유지하며 관리자 확인이 필요합니다.",
+                             "confidence": result.confidence,
+-                            "provider": result.provider,
++                            "provider": f"{result.provider}_review",
+                             "ai_raw": result.raw,
+                         },
+                     )
+                     store.create_activity(
+                         "classification_inconclusive",
+                         (
+-                            "AI 분석 중 동일 물품의 이동이 다시 확인되어 등록을 유지했습니다."
++                            "AI 분석 중 물품의 추적·상태 기록이 갱신되어 등록을 유지했습니다."
+                             if visually_reconfirmed
+                             else "물품이 AI 분석 전에 처리되어 기존 회수·폐기 기록을 유지했습니다."
+                         ),
+@@ -457,6 +493,7 @@
+                         metadata={
+                             "provider": result.provider,
+                             "action": result.action,
++                            "review_required": True,
+                         },
+                     )
+                     return
+@@ -682,7 +719,8 @@
+ def handle_vision_change(event: ChangeEvent) -> None:
+     if event.kind == "added":
+         try:
+-            item = create_provisional_item(event)
++            with _item_mutation_lock:
++                item = create_provisional_item(event)
+         except Exception as exc:
+             logger.exception("Failed to persist provisional detected item")
+             try:
+@@ -690,23 +728,26 @@
+             except Exception:
+                 pass
+             return
+-        if classification_slots.acquire(blocking=False):
+-            classification_pool.submit(classify_existing_item, item["id"], event)
+-        else:
+-            store.update_item(
+-                item["id"],
+-                {
+-                    "name": "확인 필요한 새 물품",
+-                    "description": "분석 대기열이 가득 차 임시 등록되었습니다. 관리자 화면에서 확인해 주세요.",
+-                    "provider": "offline",
+-                    "ai_raw": "classification queue full",
+-                },
+-            )
+-            store.create_activity(
+-                "classification_deferred",
+-                "AI 분석 대기열이 가득 차 물품을 임시 등록했습니다.",
+-                item_id=item["id"],
+-            )
++        if not submit_classification(
++            classify_existing_item, item["id"], event, item_tracking_signature(item)
++        ):
++            with _item_mutation_lock:
++                latest = store.get_item(item["id"])
++                if latest and latest.get("provider") == "pending":
++                    store.update_item(
++                        item["id"],
++                        {
++                            "name": "확인 필요한 새 물품",
++                            "description": "분석 대기열이 가득 차 임시 등록되었습니다. 관리자 화면에서 확인해 주세요.",
++                            "provider": "offline_review",
++                            "ai_raw": "classification queue full",
++                        },
++                    )
++                    store.create_activity(
++                        "classification_deferred",
++                        "AI 분석 대기열이 가득 차 물품을 임시 등록했습니다.",
++                        item_id=item["id"],
++                    )
+         return
+     if event.kind == "verify_removed" and event.matched_item_id is not None:
+         item_id = int(event.matched_item_id)
+@@ -720,14 +761,7 @@
+             )
+         if expected_signature is None:
+             return
+-        if classification_slots.acquire(blocking=False):
+-            classification_pool.submit(
+-                verify_removed_item,
+-                item_id,
+-                event,
+-                expected_signature,
+-            )
+-        else:
++        if not submit_classification(verify_removed_item, item_id, event, expected_signature):
+             try:
+                 store.create_activity(
+                     "recovery_check_deferred",
+@@ -810,18 +844,105 @@
+ )
+ 
+ 
++def submit_classification(worker: Any, *args: Any) -> bool:
++    """Reserve bounded work; failed submission must release its reservation."""
++    if not classification_slots.acquire(blocking=False):
++        return False
++    try:
++        classification_pool.submit(worker, *args)
++    except RuntimeError:
++        classification_slots.release()
++        logger.warning("Classification deferred while executor is stopping")
++        return False
++    return True
++
++
++def _resume_operational_services(shutdown_event: threading.Event) -> None:
++    with _service_lifecycle_lock:
++        if shutdown_event is not _service_shutdown or shutdown_event.is_set():
++            return
++        scheduler.start()
++        vision.start()
++
++
++def _recover_after_aborted_reset(
++    shutdown_event: threading.Event,
++    camera_stopped: bool,
++    scheduler_stopped: bool,
++) -> None:
++    """Resume service after slow workers finish; never repeat the reset itself."""
++    global _reset_recovery_thread
++    try:
++        while not shutdown_event.is_set():
++            if not camera_stopped:
++                camera_stopped = vision.stop(timeout=0.25) is not False
++            if not scheduler_stopped:
++                scheduler_stopped = scheduler.stop(timeout=0.25) is not False
++            if camera_stopped and scheduler_stopped:
++                _resume_operational_services(shutdown_event)
++                return
++            shutdown_event.wait(0.1)
++    except Exception:
++        logger.exception("Could not resume workers after an aborted reset")
++    finally:
++        _reset_lock.release()
++        with _service_lifecycle_lock:
++            if _reset_recovery_thread is threading.current_thread():
++                _reset_recovery_thread = None
++
++
++def _defer_reset_recovery(
++    shutdown_event: threading.Event,
++    camera_stopped: bool,
++    scheduler_stopped: bool,
++) -> bool:
++    """Transfer reset-lock ownership to one recovery worker, if still serving."""
++    global _reset_recovery_thread
++    with _service_lifecycle_lock:
++        if shutdown_event is not _service_shutdown or shutdown_event.is_set():
++            return False
++        worker = threading.Thread(
++            target=_recover_after_aborted_reset,
++            args=(shutdown_event, camera_stopped, scheduler_stopped),
++            name="reset-recovery",
++            daemon=True,
++        )
++        _reset_recovery_thread = worker
++        try:
++            worker.start()
++        except Exception:
++            _reset_recovery_thread = None
++            raise
++        return True
++
++
+ @asynccontextmanager
+ async def lifespan(_: FastAPI):
++    global classification_pool, _service_shutdown
+     store.initialize()
+-    store.create_activity("system_started", "분실물 감지 시스템을 시작했습니다.")
+-    scheduler.start()
+-    vision.start()
++    store.mark_interrupted_classifications()
++    classification_pool = ThreadPoolExecutor(
++        max_workers=config.classifier_workers, thread_name_prefix="item-classifier"
++    )
++    with _service_lifecycle_lock:
++        shutdown_event = threading.Event()
++        _service_shutdown = shutdown_event
+     try:
++        vision.set_privacy(bool(current_settings().get("privacy_mode", False)))
++        store.create_activity("system_started", "분실물 감지 시스템을 시작했습니다.")
++        _resume_operational_services(shutdown_event)
+         yield
+     finally:
++        with _service_lifecycle_lock:
++            shutdown_event.set()
++            recovery = _reset_recovery_thread
+         vision.stop()
+         scheduler.stop()
+-        classification_pool.shutdown(wait=False, cancel_futures=True)
++        if recovery is not None:
++            await asyncio.to_thread(recovery.join)
++        # Drain accepted jobs so rows and semaphore permits cannot be stranded
++        # by cancellation, and a later lifespan can use a fresh executor.
++        await asyncio.to_thread(classification_pool.shutdown, wait=True)
+ 
+ 
+ app = FastAPI(
+@@ -901,21 +1022,9 @@
+ 
+ 
+ def dashboard_payload() -> dict[str, Any]:
+-    items = store.list_items(limit=500)
++    items = store.list_items(limit=100)
+     now = utc_now()
+-    lead = timedelta(days=int(current_settings().get("alert_lead_days", 7)))
+-    stored = [item for item in items if item.get("status") == "stored"]
+-    due_soon = [
+-        item
+-        for item in stored
+-        if (expiry := parse_dt(item.get("expires_at"))) is not None and now <= expiry <= now + lead
+-    ]
+-    stats = {
+-        "active": len(stored),
+-        "due_soon": len(due_soon),
+-        "expired": sum(item.get("status") == "due" for item in items),
+-        "recovered": sum(item.get("status") == "recovered" for item in items),
+-    }
++    stats = store.item_stats(now=now, lead_days=int(current_settings().get("alert_lead_days", 7)))
+     return {
+         "stats": stats,
+         "items": [item_for_api(item) for item in items[:100]],
+@@ -998,6 +1107,12 @@
+         if not existing:
+             raise HTTPException(404, "물품을 찾을 수 없습니다.")
+         updates = {key: value for key, value in edit.model_dump(exclude_none=True).items()}
++        if not updates:
++            raise HTTPException(400, "수정할 정보를 입력해 주세요.")
++        if "name" in updates:
++            updates["name"] = updates["name"].strip()
++            if not updates["name"]:
++                raise HTTPException(400, "물품 이름은 공백만 입력할 수 없습니다.")
+         if "category" in updates:
+             category = updates["category"]
+             if category not in {"valuable", "general", "food"}:
+@@ -1014,9 +1129,8 @@
+             effective_expiry = parse_dt(updates.get("expires_at", existing.get("expires_at")))
+             if effective_expiry:
+                 updates["status"] = "due" if effective_expiry <= utc_now() else "stored"
+-        if existing.get("provider") == "pending":
++        if existing.get("provider") in {"pending", "offline"} or str(existing.get("provider", "")).endswith("_review"):
+             updates["provider"] = "manual"
+-            updates["ai_raw"] = "manual edit while classification was pending"
+         item = store.update_item(item_id, updates)
+     store.create_activity("item_edited", f"{item['name']} 정보를 수정했습니다.", item_id=item_id)
+     return item_for_api(item)
+@@ -1060,9 +1174,19 @@
+ 
+ @app.post("/api/items/{item_id}/extend")
+ def extend_item(item_id: int, request: ExtendRequest) -> dict[str, Any]:
+-    item = store.extend_item(item_id, request.days)
+-    if not item:
+-        raise HTTPException(404, "물품을 찾을 수 없습니다.")
++    with _item_mutation_lock:
++        item = store.extend_item(item_id, request.days)
++        if not item:
++            raise HTTPException(404, "물품을 찾을 수 없습니다.")
++        if item.get("provider") == "pending":
++            item = store.update_item(
++                item_id,
++                {
++                    "provider": "manual_review",
++                    "name": "확인 필요한 새 물품",
++                    "description": "관리자가 보관 기한을 변경했습니다. 물품 이름과 분류를 확인해 주세요.",
++                },
++            )
+     store.create_activity(
+         "item_extended",
+         f"{item['name']}의 보관 기한을 {request.days}일 연장했습니다.",
+@@ -1162,7 +1286,10 @@
+ @app.put("/api/settings")
+ def update_settings(payload: dict[str, Any]) -> dict[str, Any]:
+     allowed = set(SETTING_TYPES)
+-    updates = {key: coerce_setting(key, value) for key, value in payload.items() if key in allowed}
++    try:
++        updates = {key: validate_setting(key, value) for key, value in payload.items() if key in allowed}
++    except ValueError as exc:
++        raise HTTPException(400, str(exc)) from exc
+     if not updates:
+         raise HTTPException(400, "저장할 수 있는 설정이 없습니다.")
+     if updates.get("provider") not in {None, "auto", "openai", "gemini", "offline"}:
+@@ -1199,6 +1326,7 @@
+         "max_change_ratio": (0.01, 1.0),
+         "settle_seconds": (0.5, 30),
+         "stable_seconds": (0.2, 15),
++        "camera_retry_seconds": (0.5, 300),
+         "smtp_port": (1, 65535),
+         "alert_lead_days": (0, 90),
+         "ai_min_confidence": (0.0, 1.0),
+@@ -1209,8 +1337,8 @@
+             raise HTTPException(400, f"{key} 값은 {minimum}~{maximum} 범위여야 합니다.")
+     with _settings_lock:
+         store.update_settings(updates)
+-    if "privacy_mode" in updates:
+-        vision.set_privacy(bool(current_settings().get("privacy_mode", False)))
++        if "privacy_mode" in updates:
++            vision.set_privacy(updates["privacy_mode"])
+     vision_keys = {
+         "camera_index",
+         "camera_backend",
+@@ -1272,17 +1400,32 @@
+     if not _reset_lock.acquire(blocking=False):
+         raise HTTPException(409, "다른 초기화 작업이 이미 진행 중입니다.")
+ 
++    deferred_recovery = False
++    with _service_lifecycle_lock:
++        shutdown_event = _service_shutdown
+     try:
+         # Stopping the producer first drains camera callbacks. Pending remote
+         # classifications become harmless because their item rows no longer
+         # exist when they return.
+-        vision.stop()
+-        scheduler.stop()
+         try:
++            camera_stopped = vision.stop()
++            scheduler_stopped = scheduler.stop()
++            if camera_stopped is False or scheduler_stopped is False:
++                deferred_recovery = _defer_reset_recovery(
++                    shutdown_event,
++                    camera_stopped is not False,
++                    scheduler_stopped is not False,
++                )
++                raise HTTPException(
++                    409,
++                    "진행 중인 카메라 또는 알림 작업 때문에 초기화를 취소했습니다. 작업이 끝나면 감시를 자동 재개합니다. 초기화가 필요하면 그 후 다시 시도해 주세요.",
++                )
+             with _item_mutation_lock:
+                 with store.maintenance_window():
+                     result = backup_and_reset_operational_data()
+             vision.rebaseline()
++        except HTTPException:
++            raise
+         except Exception as exc:
+             logger.exception("Operational data reset failed")
+             raise HTTPException(
+@@ -1290,10 +1433,11 @@
+                 "초기화 중 오류가 발생했습니다. 생성된 백업은 삭제하지 않았습니다.",
+             ) from exc
+         finally:
+-            scheduler.start()
+-            vision.start()
++            if not deferred_recovery:
++                _resume_operational_services(shutdown_event)
+     finally:
+-        _reset_lock.release()
++        if not deferred_recovery:
++            _reset_lock.release()
+ 
+     return {
+         "ok": True,
+@@ -1304,14 +1448,14 @@
+ 
+ @app.get("/camera/stream", include_in_schema=False)
+ def camera_stream() -> StreamingResponse:
+-    def frames() -> Generator[bytes, None, None]:
++    async def frames() -> AsyncIterator[bytes]:
+         stream_fps = float(current_settings().get("preview_stream_fps", 8.0))
+         frame_delay = 1.0 / max(1.0, min(15.0, stream_fps))
+         while True:
+             frame = vision.get_jpeg()
+             if frame:
+                 yield b"--frame\r\nContent-Type: image/jpeg\r\nCache-Control: no-cache\r\n\r\n" + frame + b"\r\n"
+-            time.sleep(frame_delay)
++            await asyncio.sleep(frame_delay)
+ 
+     return StreamingResponse(
+         frames(),
+
+--- before/app/notifier.py
++++ after/app/notifier.py
+@@ -5,6 +5,7 @@
+ import smtplib
+ import ssl
+ import threading
++import time
+ from datetime import datetime, timezone
+ from email.message import EmailMessage
+ from typing import Any, Callable
+@@ -21,7 +22,9 @@
+         self.settings_getter = settings_getter
+ 
+     def configured(self) -> bool:
+-        settings = self.settings_getter()
++        return self._configured(self.settings_getter())
++
++    def _configured(self, settings: dict[str, Any]) -> bool:
+         return bool(
+             settings.get("admin_email")
+             and settings.get("smtp_host")
+@@ -32,7 +35,7 @@
+     def send_due(self, item: dict[str, Any]) -> tuple[bool, str | None]:
+         try:
+             settings = self.settings_getter()
+-            if not self.configured():
++            if not self._configured(settings):
+                 return False, "SMTP 설정이 없어 웹 알림만 생성했습니다."
+             clean_name = str(item.get("name", "분실물")).replace("\r", " ").replace("\n", " ")
+             recipient = str(settings["admin_email"]).replace("\r", "").replace("\n", "")
+@@ -90,18 +93,34 @@
+         self._stop = threading.Event()
+         self._thread: threading.Thread | None = None
+         self._run_lock = threading.Lock()
++        self._lifecycle_lock = threading.Lock()
+ 
+     def start(self) -> None:
+-        if self._thread and self._thread.is_alive():
+-            return
+-        self._stop.clear()
+-        self._thread = threading.Thread(target=self._run, name="expiration-scheduler", daemon=True)
+-        self._thread.start()
++        with self._lifecycle_lock:
++            if self._thread and self._thread.is_alive():
++                return
++            if self._stop.is_set() and self._run_lock.locked():
++                return
++            self._stop.clear()
++            self._thread = threading.Thread(target=self._run, name="expiration-scheduler", daemon=True)
++            self._thread.start()
+ 
+-    def stop(self) -> None:
+-        self._stop.set()
+-        if self._thread and self._thread.is_alive():
+-            self._thread.join(timeout=3)
++    def stop(self, timeout: float = 3.0) -> bool:
++        """Request a stop and report whether all scheduled/manual work drained."""
++
++        deadline = time.monotonic() + max(0.0, float(timeout))
++        with self._lifecycle_lock:
++            self._stop.set()
++            if self._thread and self._thread.is_alive():
++                if self._thread is threading.current_thread():
++                    return False
++                self._thread.join(timeout=max(0.0, deadline - time.monotonic()))
++                if self._thread.is_alive():
++                    return False
++            acquired = self._run_lock.acquire(timeout=max(0.0, deadline - time.monotonic()))
++            if acquired:
++                self._run_lock.release()
++            return acquired
+ 
+     def run_once(self) -> list[dict[str, Any]]:
+         # The HTTP maintenance route and background loop may race. Holding one
+@@ -109,14 +128,10 @@
+         if not self._run_lock.acquire(blocking=False):
+             return []
+         try:
++            if self._stop.is_set():
++                return []
+             now = datetime.now(timezone.utc)
+-            expired = self.store.process_expirations(now)
+-            for item in expired:
+-                self.store.create_activity(
+-                    "item_due",
+-                    f"{item['name']}의 보관 기한이 도래했습니다.",
+-                    item_id=item["id"],
+-                )
++            expired = self.store.process_expirations(now, log_activity=True)
+             # Snapshot retries before attempting any new delivery, otherwise a
+             # fast retry interval could resend a failure from this same pass.
+             retries = self.store.list_retryable_due_notifications(
+@@ -125,33 +140,47 @@
+                 limit=25,
+             )
+             for retry in retries:
+-                self._deliver(retry["notification"], retry["item"])
++                if self._stop.is_set():
++                    return expired
++                self._deliver(retry["notification"])
+ 
+             candidates = self.store.get_due_notifications_candidates(now)
+             for item in candidates:
++                if self._stop.is_set():
++                    return expired
+                 notification = self.store.create_notification(
+                     item_id=item["id"],
+                     notification_type="disposal_due",
+                     status="pending",
+                     scheduled_for=item["expires_at"],
+                 )
+-                self._deliver(notification, item)
++                self._deliver(notification)
+             return expired
+         finally:
+             self._run_lock.release()
+ 
+-    def _deliver(self, notification: dict[str, Any], item: dict[str, Any]) -> None:
+-        sent, error = self.notifier.send_due(item)
++    def _deliver(self, notification: dict[str, Any]) -> None:
++        # The durable lease coordinates independent scheduler instances. The
++        # item is re-read inside the claim transaction because it may have been
++        # recovered or extended since the candidates/retry snapshot was taken.
++        claim = self.store.claim_due_notification(
++            notification["id"], retry_after_seconds=self.retry_after_seconds
++        )
++        if claim is None:
++            return
++        try:
++            sent, error = self.notifier.send_due(claim["item"])
++        except Exception as exc:
++            logger.exception("Notification sender failed")
++            sent, error = False, str(exc)[:500]
+         if sent:
+-            self.store.mark_notification_sent(notification["id"])
+-            self.store.create_activity(
+-                "email_sent",
+-                f"{item['name']} 기한 알림 메일을 발송했습니다.",
+-                item_id=item["id"],
++            self.store.mark_notification_sent(
++                notification["id"], delivery_token=claim["token"], log_activity=True
+             )
+         else:
+             self.store.mark_notification_failed(
+-                notification["id"], error or "알 수 없는 오류"
++                notification["id"], error or "알 수 없는 오류",
++                delivery_token=claim["token"],
+             )
+ 
+     def _run(self) -> None:
+
+--- before/app/store.py
++++ after/app/store.py
+@@ -11,6 +11,7 @@
+ import os
+ import sqlite3
+ import threading
++import uuid
+ from collections.abc import Mapping
+ from contextlib import closing, contextmanager
+ from datetime import datetime, timedelta, timezone
+@@ -257,6 +258,8 @@
+                     metadata_json   TEXT,
+                     created_at      TEXT NOT NULL,
+                     updated_at      TEXT NOT NULL,
++                    delivery_token  TEXT,
++                    delivery_lease_until TEXT,
+                     FOREIGN KEY(item_id) REFERENCES items(id) ON DELETE SET NULL
+                 );
+ 
+@@ -277,12 +280,21 @@
+                 );
+                 """
+             )
++            # Serialize check-and-add migrations when multiple workers start.
++            connection.execute("BEGIN IMMEDIATE")
+             item_columns = {
+                 row["name"]
+                 for row in connection.execute("PRAGMA table_info(items)").fetchall()
+             }
+             if "background_path" not in item_columns:
+                 connection.execute("ALTER TABLE items ADD COLUMN background_path TEXT")
++            notification_columns = {
++                row["name"]
++                for row in connection.execute("PRAGMA table_info(notifications)")
++            }
++            for column in ("delivery_token", "delivery_lease_until"):
++                if column not in notification_columns:
++                    connection.execute(f"ALTER TABLE notifications ADD COLUMN {column} TEXT")
+             connection.commit()
+ 
+     def backup_to(self, destination: str | os.PathLike[str]) -> Path:
+@@ -358,6 +370,9 @@
+         if row is None:
+             return None
+         notification = dict(row)
++        # Delivery ownership is internal and must not appear in dashboard data.
++        notification.pop("delivery_token", None)
++        notification.pop("delivery_lease_until", None)
+         notification["metadata"] = _safe_json_loads(
+             notification.get("metadata_json"), {}
+         )
+@@ -430,6 +445,79 @@
+                 "SELECT * FROM items WHERE id = ?", (int(item_id),)
+             ).fetchone()
+         return self._item_from_row(row)
++
++    def list_active_items(self) -> list[dict[str, Any]]:
++        """Return every trackable item, independent of dashboard history limits."""
++
++        with self._connection() as connection:
++            rows = connection.execute(
++                "SELECT * FROM items WHERE status IN ('stored', 'due') "
++                "AND bbox_json IS NOT NULL ORDER BY detected_at DESC, id DESC"
++            ).fetchall()
++        return [self._item_from_row(row) for row in rows]  # type: ignore[misc]
++
++    def item_stats(
++        self, now: datetime | str | None = None, lead_days: int = 7
++    ) -> dict[str, int]:
++        """Count the complete inventory rather than a page of recent records."""
++
++        now_dt = _as_utc(now or _utc_now(), field="now")
++        deadline = now_dt + timedelta(days=max(0, int(lead_days)))
++        with self._connection() as connection:
++            row = connection.execute(
++                """
++                SELECT COUNT(CASE WHEN status = 'stored' THEN 1 END) AS active,
++                       COUNT(CASE WHEN status = 'stored'
++                                   AND expires_at >= ? AND expires_at <= ?
++                                  THEN 1 END) AS due_soon,
++                       COUNT(CASE WHEN status = 'due' THEN 1 END) AS expired,
++                       COUNT(CASE WHEN status = 'recovered' THEN 1 END) AS recovered
++                  FROM items
++                """,
++                (_iso_utc(now_dt), _iso_utc(deadline)),
++            ).fetchone()
++        return {key: int(row[key]) for key in ("active", "due_soon", "expired", "recovered")}
++
++    def mark_interrupted_classifications(self) -> int:
++        """At startup, retain abandoned provisional rows for manual review.
++
++        Call before starting classification workers. In-memory jobs cannot be
++        resumed after a process restart, so leaving these rows as ``pending``
++        would display an analysis spinner permanently.
++        """
++
++        now = _iso_utc(_utc_now())
++        with self._connection() as connection:
++            connection.execute("BEGIN IMMEDIATE")
++            rows = connection.execute(
++                "SELECT id FROM items WHERE provider = 'pending'"
++            ).fetchall()
++            connection.execute(
++                """
++                UPDATE items
++                   SET provider = 'offline_review', name = ?, description = ?,
++                       ai_raw = ?, updated_at = ?
++                 WHERE provider = 'pending'
++                """,
++                (
++                    "확인 필요한 새 물품",
++                    "앱이 재시작되어 AI 분석이 중단되었습니다. 감지 기록을 확인해 주세요.",
++                    "classification interrupted by restart",
++                    now,
++                ),
++            )
++            connection.executemany(
++                """
++                INSERT INTO activities(type, message, item_id, created_at)
++                VALUES ('classification_interrupted', ?, ?, ?)
++                """,
++                [
++                    ("앱 재시작으로 중단된 AI 분석을 확인 필요 상태로 전환했습니다.", row["id"], now)
++                    for row in rows
++                ],
++            )
++            connection.commit()
++        return len(rows)
+ 
+     def list_items(
+         self,
+@@ -898,22 +986,44 @@
+         return [self._notification_from_row(row) for row in rows]  # type: ignore[misc]
+ 
+     def mark_notification_sent(
+-        self, notification_id: int, sent_at: datetime | str | None = None
++        self,
++        notification_id: int,
++        sent_at: datetime | str | None = None,
++        *,
++        delivery_token: str | None = None,
++        log_activity: bool = False,
+     ) -> dict[str, Any] | None:
+         now = _iso_utc(sent_at or _utc_now())
+-        with self._connection() as connection:
+-            connection.execute(
++        condition = " AND delivery_token = ?" if delivery_token is not None else ""
++        parameters: list[Any] = [now, now, int(notification_id)]
++        if delivery_token is not None:
++            parameters.append(delivery_token)
++        with self._connection() as connection:
++            cursor = connection.execute(
+                 """
+                 UPDATE notifications
+                    SET status = 'sent', sent_at = ?, failed_at = NULL,
+-                       error = NULL, updated_at = ?
+-                 WHERE id = ?
+-                """,
+-                (now, now, int(notification_id)),
+-            )
++                       error = NULL, updated_at = ?, delivery_token = NULL,
++                       delivery_lease_until = NULL
++                 WHERE id = ? AND status != 'sent'
++                """ + condition,
++                parameters,
++            )
++            if delivery_token is not None and cursor.rowcount != 1:
++                connection.rollback()
++                return None
+             row = connection.execute(
+                 "SELECT * FROM notifications WHERE id = ?", (int(notification_id),)
+             ).fetchone()
++            if log_activity and cursor.rowcount == 1 and row is not None:
++                connection.execute(
++                    """
++                    INSERT INTO activities(type, message, item_id, created_at)
++                    SELECT 'email_sent', name || ' 기한 알림 메일을 발송했습니다.', id, ?
++                      FROM items WHERE id = ?
++                    """,
++                    (now, row["item_id"]),
++                )
+             connection.commit()
+         return self._notification_from_row(row)
+ 
+@@ -922,25 +1032,95 @@
+         notification_id: int,
+         error: str | None = None,
+         failed_at: datetime | str | None = None,
++        *,
++        delivery_token: str | None = None,
+     ) -> dict[str, Any] | None:
+         now = _iso_utc(failed_at or _utc_now())
+-        with self._connection() as connection:
+-            connection.execute(
++        condition = " AND delivery_token = ?" if delivery_token is not None else ""
++        parameters: list[Any] = [
++            now, None if error is None else str(error), now, int(notification_id)
++        ]
++        if delivery_token is not None:
++            parameters.append(delivery_token)
++        with self._connection() as connection:
++            cursor = connection.execute(
+                 """
+                 UPDATE notifications
+-                   SET status = 'failed', failed_at = ?, error = ?, updated_at = ?
+-                 WHERE id = ?
+-                """,
+-                (now, None if error is None else str(error), now, int(notification_id)),
+-            )
++                   SET status = 'failed', failed_at = ?, error = ?, updated_at = ?,
++                       delivery_token = NULL, delivery_lease_until = NULL
++                 WHERE id = ? AND status != 'sent'
++                """ + condition,
++                parameters,
++            )
++            if delivery_token is not None and cursor.rowcount != 1:
++                connection.rollback()
++                return None
+             row = connection.execute(
+                 "SELECT * FROM notifications WHERE id = ?", (int(notification_id),)
+             ).fetchone()
+             connection.commit()
+         return self._notification_from_row(row)
+ 
++    def claim_due_notification(
++        self,
++        notification_id: int,
++        *,
++        now: datetime | str | None = None,
++        retry_after_seconds: float = 300.0,
++        lease_seconds: float = 300.0,
++    ) -> dict[str, Any] | None:
++        """Lease a current-cycle delivery to one scheduler without holding a DB lock.
++
++        A crashed sender's claim becomes retryable after the lease expires.
++        Completion must pass the returned token so a late sender cannot replace
++        a newer attempt's result. SMTP cannot guarantee exactly-once delivery
++        across a crash after the server accepts a message.
++        """
++
++        retry_delay = float(retry_after_seconds)
++        lease_duration = float(lease_seconds)
++        if retry_delay < 0 or lease_duration <= 0:
++            raise ValueError("retry delay must be nonnegative and lease duration positive")
++        now_dt = _as_utc(now or _utc_now(), field="now")
++        now_value = _iso_utc(now_dt)
++        retry_cutoff = _iso_utc(now_dt - timedelta(seconds=retry_delay))
++        lease_until = _iso_utc(now_dt + timedelta(seconds=lease_duration))
++        with self._connection() as connection:
++            connection.execute("BEGIN IMMEDIATE")
++            notification = connection.execute(
++                """
++                SELECT n.* FROM notifications AS n
++                JOIN items AS i ON i.id = n.item_id
++                WHERE n.id = ? AND n.type = 'disposal_due'
++                  AND n.status IN ('pending', 'failed') AND i.status = 'due'
++                  AND i.expires_at = n.scheduled_for AND i.expires_at <= ?
++                  AND (n.delivery_lease_until IS NULL OR n.delivery_lease_until <= ?)
++                  AND (n.updated_at <= ? OR (
++                      n.status = 'pending' AND n.delivery_token IS NULL
++                      AND n.failed_at IS NULL
++                  ))
++                """,
++                (int(notification_id), now_value, now_value, retry_cutoff),
++            ).fetchone()
++            if notification is None:
++                connection.commit()
++                return None
++            item_row = connection.execute(
++                "SELECT * FROM items WHERE id = ?", (notification["item_id"],)
++            ).fetchone()
++            token = uuid.uuid4().hex
++            connection.execute(
++                """
++                UPDATE notifications SET status = 'pending', delivery_token = ?,
++                    delivery_lease_until = ?, updated_at = ? WHERE id = ?
++                """,
++                (token, lease_until, now_value, int(notification_id)),
++            )
++            connection.commit()
++        return {"token": token, "item": self._item_from_row(item_row)}
++
+     def process_expirations(
+-        self, now: datetime | str | None = None
++        self, now: datetime | str | None = None, *, log_activity: bool = False
+     ) -> list[dict[str, Any]]:
+         """Atomically move newly expired stored items into the due state."""
+ 
+@@ -970,6 +1150,17 @@
+                 ).fetchall()
+             else:
+                 changed = []
++            if log_activity:
++                connection.executemany(
++                    """
++                    INSERT INTO activities(type, message, item_id, created_at)
++                    VALUES ('item_due', ?, ?, ?)
++                    """,
++                    [
++                        (f"{row['name']}의 보관 기한이 도래했습니다.", row["id"], now_value)
++                        for row in changed
++                    ],
++                )
+             connection.commit()
+         return [self._item_from_row(row) for row in changed]  # type: ignore[misc]
+ 
+@@ -1022,6 +1213,9 @@
+ 
+         results: list[dict[str, dict[str, Any]]] = []
+         with self._connection() as connection:
++            # SQLite does not start a read transaction for a bare SELECT.
++            # Pin the snapshot while materializing each joined pair.
++            connection.execute("BEGIN")
+             pairs = connection.execute(
+                 """
+                 SELECT n.id AS notification_id, i.id AS item_id
+@@ -1033,10 +1227,11 @@
+                    AND i.expires_at = n.scheduled_for
+                    AND i.expires_at <= ?
+                    AND n.updated_at <= ?
++                   AND (n.delivery_lease_until IS NULL OR n.delivery_lease_until <= ?)
+                  ORDER BY n.updated_at, n.id
+                  LIMIT ?
+                 """,
+-                (now_value, retry_cutoff, safe_limit),
++                (now_value, retry_cutoff, now_value, safe_limit),
+             ).fetchall()
+             for pair in pairs:
+                 notification_row = connection.execute(
+
+--- before/app/vision.py
++++ after/app/vision.py
+@@ -77,9 +77,6 @@
+     bbox: BBox
+     reference_jpeg: bytes | None = None
+     background_jpeg: bytes | None = None
+-
+-
+-_CALLBACK_STOP = object()
+ 
+ 
+ class VisionMonitor:
+@@ -218,6 +215,7 @@
+         self._thread: threading.Thread | None = None
+         self._dispatcher_thread: threading.Thread | None = None
+         self._stop_event: threading.Event | None = None
++        self._capture_done: threading.Event | None = None
+         self._callback_queue: queue.Queue[Any] | None = None
+         self._capture: CameraCapture | None = None
+         self._rebaseline_generation = 0
+@@ -240,12 +238,17 @@
+         """Start capture and callback workers.  Calling twice is harmless."""
+ 
+         with self._lock:
+-            if self._thread is not None and self._thread.is_alive():
++            if any(
++                worker is not None and worker.is_alive()
++                for worker in (self._thread, self._dispatcher_thread)
++            ):
+                 return
+ 
+             stop_event = threading.Event()
++            capture_done = threading.Event()
+             callback_queue: queue.Queue[Any] = queue.Queue(maxsize=128)
+             self._stop_event = stop_event
++            self._capture_done = capture_done
+             self._callback_queue = callback_queue
+             self._status.running = True
+             self._status.phase = "starting"
+@@ -253,75 +256,84 @@
+ 
+             dispatcher = threading.Thread(
+                 target=self._dispatch_callbacks,
+-                args=(callback_queue,),
++                args=(callback_queue, capture_done),
+                 name="vision-callbacks",
+                 daemon=True,
+             )
+             monitor = threading.Thread(
+                 target=self._run,
+-                args=(stop_event, callback_queue),
++                args=(stop_event, callback_queue, capture_done),
+                 name="vision-monitor",
+                 daemon=True,
+             )
+             self._dispatcher_thread = dispatcher
+             self._thread = monitor
+ 
+-        dispatcher.start()
+-        monitor.start()
+-        self._enqueue_callback(
+-            callback_queue,
+-            "event",
+-            {"type": "monitor_started", "timestamp": time.time()},
+-        )
+-
+-    def stop(self, timeout: float = 5.0) -> None:
+-        """Stop capture, release the camera, and drain queued callbacks."""
++            # Publish/start while holding the lifecycle lock so a concurrent
++            # start/stop cannot see a worker that has not been started yet.
++            self._enqueue_callback(
++                callback_queue,
++                "event",
++                {"type": "monitor_started", "timestamp": time.time()},
++            )
++            try:
++                dispatcher.start()
++                monitor.start()
++            except Exception:
++                stop_event.set()
++                capture_done.set()
++                self._status.running = False
++                self._status.phase = "stopping"
++                raise
++
++    def stop(self, timeout: float = 5.0) -> bool:
++        """Request shutdown and drain accepted callbacks within ``timeout``.
++
++        Return ``True`` only after both workers have exited. A blocked backend
++        or callback may outlive the timeout; keep its handles to prevent a new
++        monitor from racing it. Camera release belongs to the capture worker:
++        releasing a native capture concurrently with ``read`` is not safe.
++        """
++
++        deadline = time.monotonic() + max(0.0, timeout)
+ 
+         with self._lock:
+             monitor = self._thread
+             dispatcher = self._dispatcher_thread
+             stop_event = self._stop_event
+-            callback_queue = self._callback_queue
+-
+-        if stop_event is not None:
+-            stop_event.set()
+-
+-        if monitor is not None and monitor.is_alive():
+-            monitor.join(max(0.1, timeout))
+-            if monitor.is_alive():
+-                # Some camera backends block inside read().  Releasing from the
+-                # outside is a best-effort escape hatch after the normal join.
+-                with self._capture_lock:
+-                    capture = self._capture
+-                    if capture is not None:
+-                        capture.release()
+-                monitor.join(1.0)
+-
+-        if callback_queue is not None:
+-            try:
+-                callback_queue.put_nowait(_CALLBACK_STOP)
+-            except queue.Full:
+-                try:
+-                    callback_queue.get_nowait()
+-                except queue.Empty:
+-                    pass
+-                try:
+-                    callback_queue.put_nowait(_CALLBACK_STOP)
+-                except queue.Full:
+-                    pass
+-
+-        if dispatcher is not None and dispatcher.is_alive():
+-            dispatcher.join(min(max(0.1, timeout), 2.0))
++            if stop_event is not None:
++                stop_event.set()
++
++        current = threading.current_thread()
++        for worker in (monitor, dispatcher):
++            if worker is not None and worker is not current and worker.is_alive():
++                worker.join(max(0.0, deadline - time.monotonic()))
+ 
+         with self._lock:
+-            if self._thread is monitor:
++            stopped = all(
++                worker is None or not worker.is_alive()
++                for worker in (monitor, dispatcher)
++            )
++            if self._thread is monitor and self._dispatcher_thread is dispatcher:
++                if not stopped:
++                    self._status.phase = "stopping"
++                    return False
+                 self._thread = None
+                 self._dispatcher_thread = None
+                 self._stop_event = None
++                self._capture_done = None
+                 self._callback_queue = None
+-            self._status.running = False
+-            self._status.phase = "stopped"
+-            self._status.motion_detected = False
++                self._status.running = False
++                self._status.phase = "stopped"
++                self._status.camera_connected = False
++                self._status.using_fallback = True
++                self._status.motion_detected = False
++                self._status.baseline_ready = False
++                self._status.fps = 0.0
++                return True
++            # Another caller may have started a new generation just after the
++            # old workers exited. Do not report the whole monitor as quiescent.
++            return False
+ 
+     def get_jpeg(self) -> bytes:
+         """Return the latest complete JPEG, suitable for an MJPEG endpoint."""
+@@ -399,6 +411,7 @@
+         self,
+         stop_event: threading.Event,
+         callback_queue: queue.Queue[Any],
++        capture_done: threading.Event,
+     ) -> None:
+         capture: CameraCapture | None = None
+         capture_signature: tuple[Any, ...] | None = None
+@@ -450,7 +463,7 @@
+                     capture, open_error = self._open_capture(config)
+                     if capture is not None:
+                         capture_signature = signature
+-                        camera_opened_mono = now_mono
++                        camera_opened_mono = time.monotonic()
+                         read_failures = 0
+                         baseline_frame = None
+                         previous_gray = None
+@@ -497,8 +510,26 @@
+                     stop_event.wait(0.05)
+                     continue
+ 
+-                ok, frame = capture.read()
+-                if not ok or frame is None or frame.size == 0:
++                read_error = "Camera stopped returning frames"
++                try:
++                    ok, frame = capture.read()
++                except Exception as exc:
++                    ok, frame = False, None
++                    read_error = f"Camera read failed: {exc}"
++                # A shutdown requested during a blocking read must not publish
++                # or analyse one more camera frame when the call returns.
++                if stop_event.is_set():
++                    break
++                valid_frame = (
++                    isinstance(frame, np.ndarray)
++                    and frame.size > 0
++                    and frame.dtype == np.uint8
++                    and (
++                        frame.ndim == 2
++                        or (frame.ndim == 3 and frame.shape[2] in (3, 4))
++                    )
++                )
++                if not ok or not valid_frame:
+                     read_failures += 1
+                     allowed_failures = self._int_config(
+                         config,
+@@ -507,7 +538,7 @@
+                         maximum=30,
+                     )
+                     if read_failures >= allowed_failures:
+-                        error = "Camera stopped returning frames"
++                        error = read_error
+                         self._release_capture(capture)
+                         capture = None
+                         capture_signature = None
+@@ -716,7 +747,7 @@
+                     ):
+                         baseline_frame = frame.copy()
+                         phase = "monitoring"
+-                        self._set_baseline_ready()
++                        self._set_baseline_ready(generation)
+                         self._emit_event(callback_queue, "baseline_ready")
+                         if reconcile_on_baseline:
+                             active_boxes = self._fetch_active_boxes(
+@@ -729,25 +760,18 @@
+                             )
+                             reconcile_on_baseline = False
+                             if reconciled:
+-                                self._record_events(reconciled, config)
+-                                for event in reconciled:
+-                                    self._enqueue_callback(
+-                                        callback_queue, "change", event
+-                                    )
+-                                    self._emit_event(
+-                                        callback_queue,
+-                                        "change_detected",
+-                                        kind=event.kind,
+-                                        bbox=list(event.bbox),
+-                                        confidence=event.confidence,
+-                                        matched_item_id=event.matched_item_id,
+-                                        source="manual_rebaseline",
+-                                    )
++                                self._queue_changes(
++                                    reconciled,
++                                    config,
++                                    callback_queue,
++                                    generation,
++                                    source="manual_rebaseline",
++                                )
+                     else:
+                         phase = "calibrating"
+ 
+                     self._set_detection_status(
+-                        phase, moving, baseline_frame is not None
++                        phase, moving, baseline_frame is not None, generation
+                     )
+                     output = self._draw_overlay(
+                         analysis_frame, phase, moving, active_boxes, config
+@@ -762,14 +786,14 @@
+                         phase = "settling"
+                         last_motion_mono = now_mono
+                         stable_since = None
+-                        self._mark_motion()
++                        self._mark_motion(generation)
+                         self._emit_event(callback_queue, "motion_detected")
+                 else:
+                     if moving:
+                         phase = "settling"
+                         last_motion_mono = now_mono
+                         stable_since = None
+-                        self._mark_motion()
++                        self._mark_motion(generation)
+                     else:
+                         settle_seconds = self._float_config(
+                             config, "settle_seconds", minimum=0.0, maximum=60.0
+@@ -799,10 +823,12 @@
+                                     active_boxes,
+                                     config,
+                                 )
++                                if not self._analysis_is_current(generation):
++                                    continue
+                                 baseline_frame = analysis_frame.copy()
+                                 stable_since = None
+                                 phase = "monitoring"
+-                                self._set_baseline_ready()
++                                self._set_baseline_ready(generation)
+ 
+                                 if globally_changed:
+                                     self._emit_event(
+@@ -810,23 +836,11 @@
+                                         "global_change_suppressed",
+                                     )
+                                 elif events:
+-                                    self._record_events(events, config)
+-                                    for event in events:
+-                                        self._enqueue_callback(
+-                                            callback_queue,
+-                                            "change",
+-                                            event,
+-                                        )
+-                                        self._emit_event(
+-                                            callback_queue,
+-                                            "change_detected",
+-                                            kind=event.kind,
+-                                            bbox=list(event.bbox),
+-                                            confidence=event.confidence,
+-                                            matched_item_id=event.matched_item_id,
+-                                        )
+-
+-                self._set_detection_status(phase, moving, True)
++                                    self._queue_changes(
++                                        events, config, callback_queue, generation
++                                    )
++
++                self._set_detection_status(phase, moving, True, generation)
+                 output = self._draw_overlay(
+                     analysis_frame, phase, moving, active_boxes, config
+                 )
+@@ -852,7 +866,9 @@
+                 self._status.motion_detected = False
+                 self._status.baseline_ready = False
+                 self._status.phase = "stopped"
++                self._status.fps = 0.0
+             self._emit_event(callback_queue, "monitor_stopped")
++            capture_done.set()
+ 
+     # ------------------------------------------------------------------
+     # Detection
+@@ -3895,26 +3911,39 @@
+         with self._lock:
+             self._status.camera_connected = connected
+             self._status.using_fallback = not connected
+-            self._status.baseline_ready = False if not connected else self._status.baseline_ready
+-            self._status.motion_detected = False if not connected else self._status.motion_detected
+-            self._status.phase = "calibrating" if connected else "offline"
++            self._status.baseline_ready = False
++            self._status.motion_detected = False
++            self._status.phase = (
++                "privacy" if self._status.privacy_enabled
++                else "calibrating" if connected else "offline"
++            )
+             self._status.last_error = error
+ 
+     def _set_detection_status(
+-        self, phase: str, moving: bool, baseline_ready: bool
++        self,
++        phase: str,
++        moving: bool,
++        baseline_ready: bool,
++        generation: int | None = None,
+     ) -> None:
+         with self._lock:
++            if generation is not None and not self._analysis_is_current(generation):
++                return
+             self._status.phase = phase
+             self._status.motion_detected = bool(moving or phase in ("settling", "stabilizing"))
+             self._status.baseline_ready = baseline_ready
+ 
+-    def _set_baseline_ready(self) -> None:
++    def _set_baseline_ready(self, generation: int | None = None) -> None:
+         with self._lock:
++            if generation is not None and not self._analysis_is_current(generation):
++                return
+             self._status.baseline_ready = True
+             self._status.last_baseline_at = time.time()
+ 
+-    def _mark_motion(self) -> None:
++    def _mark_motion(self, generation: int | None = None) -> None:
+         with self._lock:
++            if generation is not None and not self._analysis_is_current(generation):
++                return
+             self._status.motion_detected = True
+             self._status.last_motion_at = time.time()
+ 
+@@ -3933,6 +3962,42 @@
+     def _set_error(self, message: str) -> None:
+         with self._lock:
+             self._status.last_error = str(message)
++
++    def _analysis_is_current(self, generation: int) -> bool:
++        with self._lock:
++            return (
++                generation == self._rebaseline_generation
++                and not self._status.privacy_enabled
++                and (self._stop_event is None or not self._stop_event.is_set())
++            )
++
++    def _queue_changes(
++        self,
++        events: list[ChangeEvent],
++        config: dict[str, Any],
++        callback_queue: queue.Queue[Any],
++        generation: int,
++        **details: Any,
++    ) -> None:
++        # Detection/reconciliation runs outside the lock. Privacy, rebaseline
++        # or shutdown may invalidate it while OpenCV is working. Commit the
++        # batch under the same lock as those controls; previously accepted
++        # callbacks still drain in their original order.
++        with self._lock:
++            if not self._analysis_is_current(generation):
++                return
++            self._record_events(events, config)
++            for event in events:
++                self._enqueue_callback(callback_queue, "change", event)
++                self._emit_event(
++                    callback_queue,
++                    "change_detected",
++                    kind=event.kind,
++                    bbox=list(event.bbox),
++                    confidence=event.confidence,
++                    matched_item_id=event.matched_item_id,
++                    **details,
++                )
+ 
+     def _privacy_enabled(self) -> bool:
+         with self._lock:
+@@ -3970,17 +4035,36 @@
+             return
+         if callback_type == "event" and not callable(self._event_callback):
+             return
+-        try:
+-            callback_queue.put_nowait((callback_type, payload))
+-        except queue.Full:
+-            self._set_error("Vision callback queue is full; an event was dropped")
+-
+-    def _dispatch_callbacks(self, callback_queue: queue.Queue[Any]) -> None:
++        with self._lock:
++            if (
++                callback_queue is self._callback_queue
++                and self._capture_done is not None
++                and self._capture_done.is_set()
++            ):
++                return
++            try:
++                callback_queue.put_nowait((callback_type, payload))
++            except queue.Full:
++                self._set_error("Vision callback queue is full; an event was dropped")
++
++    def _dispatch_callbacks(
++        self,
++        callback_queue: queue.Queue[Any],
++        capture_done: threading.Event,
++    ) -> None:
+         while True:
+-            item = callback_queue.get()
+             try:
+-                if item is _CALLBACK_STOP:
++                item = callback_queue.get(timeout=0.1)
++            except queue.Empty:
++                # Completion is separate from the bounded queue: stopping
++                # must never evict an accepted change to make room for a token.
++                if capture_done.is_set():
++                    with self._lock:
++                        if self._callback_queue is callback_queue:
++                            self._status.phase = "stopped"
+                     return
++                continue
++            try:
+                 callback_type, payload = item
+                 if callback_type == "change" and callable(self._change_callback):
+                     self._change_callback(payload)
+
+--- before/docs/APP_REVIEW_2026-09-18.md
++++ after/docs/APP_REVIEW_2026-09-18.md
+@@ -0,0 +1,52 @@
++# Re:Found 앱 개선 기록 — 2026-09-18
++
++논문 실험 전에 실제 실행 코드를 검토하고 재현 가능한 동작·동시성 오류를 수정했다. 감지 임계값과 모델 선택은 변경하지 않았다.
++
++## 주요 변경
++
++| 영역 | 확인한 문제와 수정 |
++|---|---|
++| 물품 작업 화면 | 회수·폐기·복원이 서버에서 성공한 뒤 JavaScript 예외로 실패 표시되던 문제 수정 |
++| 화면 갱신 | 검색·새로고침·상세 화면의 오래된 응답이 최신 선택을 덮어쓰지 않도록 요청 순서 관리 |
++| 설정 화면 | 초기 로딩 중 설정창을 열 때 빈 값이 표시되는 경쟁 조건 수정. 변경 항목만 저장하고 모델 전환 중 입력·소수 설정값 보존 |
++| 설정 검증 | 잘못된 숫자·불리언·비유한 수를 기본값으로 대체하지 않고 전체 요청 거절. 공백 이름·빈 편집 요청도 거절 |
++| 카메라 수명 주기 | 종료 지연 시 worker 참조 유지 및 중복 재시작 차단. 종료 시 callback queue가 가득 차도 이미 접수된 사건을 제거하지 않고 처리 |
++| 카메라 복구 | read 예외·잘못된 프레임을 재연결로 처리. 카메라 열기 완료 이후 warmup 계산 |
++| 개인정보 보호 | 저장된 privacy 설정을 카메라 시작 전에 적용. 동시 설정 요청을 직렬화하고, 분석 도중 privacy·기준 재설정·종료가 발생하면 이전 분석 결과 접수 차단 |
++| AI 지연 응답 | 최초 추적 signature로 이동 후 원위치 복귀까지 확인하여 오래된 부정 응답이 현재 물품·사진을 삭제하지 않도록 보호 |
++| 수동 수정 | AI 응답·대기열 오류가 관리자 편집을 덮어쓰지 않도록 보호. 분석 중 보관 연장은 기한을 유지하고 이름·분류 확인이 필요한 상태로 전환 |
++| 분석 실패·재시작 | 재시작 후 남은 pending 물품은 확인 필요로 복구. 잘못된 AI confidence는 uncertain 처리. 제출 실패 시 작업 슬롯 반환 |
++| 불확실한 물품 | 이동·회수 후 불확실한 AI 결과도 확인 필요 표시를 유지하며, 미확정 category만 바뀌어 보관 기한과 불일치하지 않도록 처리 |
++| 저장 실패 | 등록 실패·부분 파일 쓰기 실패 시 새로 만든 이미지 정리. 활동 로그만 실패한 경우 이미 등록된 물품의 분석은 계속 가능 |
++| 재고 조회 | 과거 기록 500건 제한 때문에 물리적 활성 물품이 추적에서 빠지던 문제 수정. 대시보드 통계는 전체 DB 집계 |
++| 알림 발송 | SQLite 발송 임대·토큰으로 여러 scheduler의 동시 발송 조정. 발송 직전 현재 물품 상태·기한 재검증 및 오래된 완료 응답 무시 |
++| 데이터 초기화 | 카메라·알림 작업이 완전히 종료되지 않으면 409로 초기화 취소. 작업 종료 후 감시 자동 재개. 앱 종료 중에는 재개 차단 |
++| 화면 사용성 | AI 대기·확인 필요 배지, 설정 탭 키보드/ARIA, 변경하지 않은 만료 시각 정밀도, 설정된 폐기 임박 기간 반영 |
++| 스트리밍 | 숨겨진 화면·탭의 영상 연결 종료. 빈 프레임 중에도 서버 스트림 취소 가능 |
++
++## 검증 결과
++
++- 변경 전 Python: 136개 통과.
++- 변경 후 `python -m unittest discover -s tests -q`: **175개 통과**.
++- `node --test tests/frontend/app.test.cjs`: **10개 통과**.
++- `python -m compileall -q app experiments tests`, `node --check static/app.js`: 통과.
++- `/`, `/static/app.js`, `/static/styles.css`, `/static/favicon.svg`: ASGI 클라이언트에서 200 응답 확인.
++- HTML ID 중복 없음, ARIA 대상 존재, 설정 탭 5개의 연결 검사 통과.
++- 테스트 DB·이미지는 임시 디렉터리를 사용했다. 실제 운영 DB 초기화·메일 발송·외부 AI 호출·실제 카메라 실행은 수행하지 않았다.
++- 이 세션의 Browser 연결 목록이 비어 있어 실제 브라우저 조작·시각 검증은 수행하지 못했다. Node 테스트는 지연 HTTP 응답과 간단한 DOM 대역으로 실제 화면 제어 코드를 실행한다.
++
++## 운영 시 남는 경계
++
++- privacy 설정 전에 이미 접수된 callback/VLM 작업은 계속 처리될 수 있다. 카메라 장치의 물리적 전원 차단 기능은 아니다.
++- 네이티브 카메라 read가 영구 정지하면 안전하게 강제 중단할 수 없다. 이 경우 감시는 종료 대기 상태에 머물고 데이터 초기화는 수행하지 않는다.
++- SMTP 접수 직후 프로세스가 종료되는 경우 발송 여부를 확정할 수 없어 재시도 중복이 가능하다. 이미 시작한 SMTP 발송도 회수할 수 없다.
++- 화면의 일반 물품 목록 API는 기존 최근 500건 제한을 유지한다. 이번 수정으로 전체 통계와 카메라 활성 추적에서는 이 제한을 제거했다.
++- 로컬 인증·사용자 권한 체계는 이번 작업에 추가하지 않았다. 실제 배포 환경과 접근 범위를 별도로 결정해야 한다.
++- 자동화 검증은 현장 정확도·성능 결과가 아니다. Pi에서 추가→이동→제거, privacy 후 재시작, 네트워크 단절, 알림·초기화 흐름을 확인한 뒤 논문용 실험을 시작한다.
++
++## 백업과 논문 반영
++
++- 변경 전 소스: `output/maintenance/2026-09-18-app-review/source-before.zip`.
++- 검사 기록과 최종 변경 목록: 같은 디렉터리의 `python-tests.log`, `frontend-tests.log`, `CHANGE_MANIFEST.json`.
++- 기존 운영 DB에는 다음 실행 시 알림 발송용 두 열을 추가하는 호환 마이그레이션이 적용된다. 기존 물품·알림·설정은 유지한다.
++- 기존 논문·PDF·발표본은 재생성하지 않았다. 논문에서 privacy 부팅 동기화 미구현, added의 제한된 stale 검사, 이전 테스트 수를 설명한 부분은 새 구현 기준에 맞춰 갱신해야 한다.
+
+--- before/static/app.js
++++ after/static/app.js
+@@ -46,12 +46,15 @@
+     camera_disconnected: { title: "카메라 연결이 끊어졌어요", icon: "camera", tone: "expired" },
+     change_ignored: { title: "오검출 후보를 제외했어요", icon: "activity", tone: "updated" },
+     classification_inconclusive: { title: "AI 판정을 확인해 주세요", icon: "activity", tone: "updated" },
++    classification_interrupted: { title: "중단된 AI 분석을 확인해 주세요", icon: "alert", tone: "updated" },
++    classification_deferred: { title: "AI 분석을 보류했어요", icon: "activity", tone: "updated" },
+     recovery_check_inconclusive: { title: "회수 여부를 계속 추적하고 있어요", icon: "activity", tone: "updated" },
+     recovery_check_deferred: { title: "회수 재확인을 보류했어요", icon: "activity", tone: "updated" },
+   };
+ 
+   const CAMERA_PHASES = {
+     stopped: ["감지 중지됨", "카메라 모니터가 중지되어 있습니다."],
++    stopping: ["카메라 중지 중", "진행 중인 카메라 작업을 정리하고 있습니다."],
+     starting: ["카메라 시작 중", "카메라 연결을 준비하고 있습니다."],
+     opening: ["카메라 연결 중", "웹캠 연결을 기다리고 있습니다."],
+     calibrating: ["기준 화면 준비 중", "화면이 안정되면 기준 화면을 자동으로 저장합니다."],
+@@ -92,6 +95,15 @@
+     dashboardLoading: false,
+     itemsLoading: false,
+     settingsLoading: false,
++    settingsPromise: null,
++    settingsReady: false,
++    settingsSaving: false,
++    dashboardRequest: 0,
++    itemsRequest: 0,
++    itemsQuery: "",
++    itemDetailRequest: 0,
++    itemDetailId: null,
++    itemMutations: new Set(),
+     requestCount: 0,
+     pollTimer: null,
+     itemPollTick: 0,
+@@ -102,6 +114,8 @@
+     searchTimer: null,
+     motionTimer: null,
+     settingsModelCache: {},
++    settingsModelProvider: null,
++    lastClockMinute: null,
+   };
+ 
+   document.addEventListener("DOMContentLoaded", init);
+@@ -116,9 +130,9 @@
+     const route = location.hash.replace(/^#\/?/, "");
+     navigate(ROUTE_TITLES[route] ? route : "dashboard", { updateHash: false, focus: false });
+ 
+-    if (sessionStorage.getItem("refound-demo-hint-dismissed") === "1") {
+-      $("#demo-hint")?.classList.add("is-dismissed");
+-    }
++    try {
++      if (sessionStorage.getItem("refound-demo-hint-dismissed") === "1") $("#demo-hint")?.classList.add("is-dismissed");
++    } catch { /* Storage may be unavailable in private browsing. */ }
+ 
+     loadDashboard({ initial: true });
+     loadSettings({ populate: false, silent: true });
+@@ -169,9 +183,15 @@
+       });
+     });
+     $("#confirm-dialog")?.addEventListener("close", () => {
++      if ($("#confirm-dialog")?.open) return;
+       if (state.confirmResolve) resolveConfirmation(false, { close: false });
+     });
+     $("#reset-dialog")?.addEventListener("close", clearResetDialog);
++    $("#item-dialog")?.addEventListener("close", () => {
++      if ($("#item-dialog")?.open) return;
++      state.itemDetailId = null;
++      state.itemDetailRequest += 1;
++    });
+     $("#reset-dialog")?.addEventListener("cancel", (event) => {
+       if (state.resetInProgress) event.preventDefault();
+     });
+@@ -183,6 +203,7 @@
+     window.addEventListener("online", () => loadDashboard({ force: true }));
+     window.addEventListener("offline", () => setServerConnection(false));
+     document.addEventListener("visibilitychange", () => {
++      syncCameraStreams();
+       if (!document.hidden) {
+         loadDashboard({ force: true });
+         if (state.route === "items") loadItems({ preserve: true, silent: true });
+@@ -213,12 +234,12 @@
+       return;
+     }
+     if (event.target.closest("[data-close-notifications]")) {
+-      closeNotifications();
++      closeNotifications({ restoreFocus: true });
+       return;
+     }
+     if (event.target.closest("[data-dismiss-demo-hint]")) {
+       $("#demo-hint")?.classList.add("is-dismissed");
+-      sessionStorage.setItem("refound-demo-hint-dismissed", "1");
++      try { sessionStorage.setItem("refound-demo-hint-dismissed", "1"); } catch { /* Optional preference. */ }
+       return;
+     }
+     const settingsTab = event.target.closest("[data-settings-tab]");
+@@ -279,13 +300,24 @@
+   }
+ 
+   function handleKeydown(event) {
++    const settingsTab = event.target.closest("[data-settings-tab]");
++    if (settingsTab && ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown", "Home", "End"].includes(event.key)) {
++      const tabs = $$("[data-settings-tab]");
++      const current = tabs.indexOf(settingsTab);
++      const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1 : (current + (["ArrowLeft", "ArrowUp"].includes(event.key) ? -1 : 1) + tabs.length) % tabs.length;
++      event.preventDefault();
++      selectSettingsTab(tabs[next].dataset.settingsTab);
++      tabs[next].focus();
++      return;
++    }
+     if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
++      if ($("dialog[open]")) return;
+       event.preventDefault();
+       navigate("items");
+       window.setTimeout(() => $("#item-search")?.focus(), 80);
+       return;
+     }
+-    if (event.key === "Escape") closeNotifications();
++    if (event.key === "Escape") closeNotifications({ restoreFocus: true });
+     if ((event.key === "Enter" || event.key === " ") && event.target.matches("[data-item-id]:not(button)")) {
+       event.preventDefault();
+       openItem(event.target.dataset.itemId);
+@@ -315,7 +347,7 @@
+ 
+     if (route === "items") loadItems({ preserve: state.items.length > 0 });
+     if (route === "activity" && state.dashboard) renderFullActivities(state.dashboard.activities || []);
+-    if (route === "camera") activateSecondaryStream();
++    syncCameraStreams();
+   }
+ 
+   async function api(path, options = {}) {
+@@ -381,19 +413,22 @@
+ 
+   async function loadDashboard(options = {}) {
+     if (state.dashboardLoading && !options.force) return;
++    const request = ++state.dashboardRequest;
+     state.dashboardLoading = true;
+     try {
+       const data = await api("/api/dashboard", { silent: !options.initial });
++      if (request !== state.dashboardRequest) return;
+       if (!data || typeof data !== "object") throw new Error("대시보드 응답 형식이 올바르지 않습니다.");
+       state.dashboard = data;
++      setServerConnection(true);
+       updateDashboard(data);
+-      setServerConnection(true);
+     } catch (error) {
++      if (request !== state.dashboardRequest) return;
+       setServerConnection(false);
+       if (options.initial || options.force) showToast("연결 오류", friendlyError(error), "error");
+       if (options.initial) renderInitialFailure();
+     } finally {
+-      state.dashboardLoading = false;
++      if (request === state.dashboardRequest) state.dashboardLoading = false;
+     }
+   }
+ 
+@@ -408,7 +443,7 @@
+ 
+     const items = normalizeItems(data.items);
+     const activities = Array.isArray(data.activities) ? data.activities : [];
+-    const itemSignature = signature(items.map((item) => [item.id, item.name, item.status, item.expires_at, item.updated_at]));
++    const itemSignature = signature([new Date().toDateString(), items.map((item) => [item.id, item.name, effectiveStatus(item), item.expires_at, item.updated_at])]);
+     if (state.signatures.attention !== itemSignature) {
+       renderAttention(items);
+       state.signatures.attention = itemSignature;
+@@ -431,7 +466,6 @@
+   }
+ 
+   function renderInitialFailure() {
+-    $$('[data-stat]').forEach((node) => { if (node.textContent === "—") node.textContent = "0"; });
+     const attention = $("#attention-list");
+     if (attention) attention.innerHTML = `<div class="attention-empty"><span><svg><use href="#icon-wifi"></use></svg></span><strong>현황을 불러오지 못했어요</strong><p>서버가 시작되면 자동으로 다시 연결합니다.</p></div>`;
+     const activity = $("#activity-preview");
+@@ -446,8 +480,9 @@
+       node.classList.toggle("is-online", online);
+       node.classList.toggle("is-offline", !online);
+     });
+-    $$('[data-system-label]').forEach((node) => { node.textContent = online ? "시스템 정상" : "서버 연결 끊김"; });
+-    $$('[data-system-detail]').forEach((node) => { node.textContent = online ? "모든 서비스가 동작 중입니다" : "연결을 다시 시도하고 있습니다"; });
++    $$('[data-system-label]').forEach((node) => { node.textContent = online ? "서버 연결됨" : "서버 연결 끊김"; });
++    $$('[data-system-detail]').forEach((node) => { node.textContent = online ? "카메라와 AI 상태를 확인해 주세요" : "연결을 다시 시도하고 있습니다"; });
++    if (!online) updateCamera(state.dashboard?.camera || {});
+   }
+ 
+   function renderAttention(items) {
+@@ -458,7 +493,7 @@
+       .sort((a, b) => dateValue(a.expires_at) - dateValue(b.expires_at))
+       .slice(0, 4);
+     if (!attentionItems.length) {
+-      container.innerHTML = `<div class="attention-empty"><span><svg><use href="#icon-recovered"></use></svg></span><strong>모든 물품이 여유 있어요</strong><p>7일 이내 처리할 물품이 없습니다.</p></div>`;
++      container.innerHTML = `<div class="attention-empty"><span><svg><use href="#icon-recovered"></use></svg></span><strong>모든 물품이 여유 있어요</strong><p>기한이 임박하거나 만료된 물품이 없습니다.</p></div>`;
+       return;
+     }
+     container.innerHTML = attentionItems.map((item) => {
+@@ -554,11 +589,12 @@
+     const running = camera.running !== false;
+     const privacy = camera.privacy_enabled === true;
+     const phase = String(camera.phase || (connected ? "monitoring" : fallback ? "fallback" : "starting"));
+-    const phaseInfo = CAMERA_PHASES[phase] || CAMERA_PHASES[connected ? "monitoring" : "starting"];
+-    const online = connected && running && !privacy;
+-    const displayMode = privacy ? "paused" : online ? "live" : fallback ? "demo" : "wait";
++    const reachable = state.serverOnline !== false;
++    const phaseInfo = !reachable ? ["서버 연결 끊김", "연결이 복구되면 카메라 상태를 다시 확인합니다."] : CAMERA_PHASES[phase] || CAMERA_PHASES[connected ? "monitoring" : "starting"];
++    const online = reachable && connected && running && !privacy;
++    const displayMode = !reachable ? "wait" : privacy ? "paused" : online ? "live" : fallback ? "demo" : "wait";
+     const modeLabel = { live: "LIVE", demo: "DEMO", paused: "PAUSED", wait: "WAIT" }[displayMode];
+-    const pendingLabel = CAMERA_PENDING_LABELS[phase] || "";
++    const pendingLabel = online ? CAMERA_PENDING_LABELS[phase] || "" : "";
+ 
+     $$('[data-camera-dot]').forEach((node) => {
+       node.classList.toggle("is-online", online);
+@@ -567,7 +603,7 @@
+       node.classList.toggle("is-offline", displayMode === "wait" && state.serverOnline === true);
+     });
+     $$('[data-camera-status]').forEach((node) => {
+-      node.textContent = privacy ? "보호 모드" : online ? "실시간" : fallback ? "대체 화면" : "연결 대기";
++      node.textContent = !reachable ? "서버 연결 끊김" : privacy ? "보호 모드" : online ? "실시간" : fallback ? "대체 화면" : "연결 대기";
+       const label = node.closest(".live-label");
+       label?.classList.toggle("is-offline", displayMode === "wait");
+       label?.classList.toggle("is-demo", displayMode === "demo");
+@@ -577,7 +613,7 @@
+     $$('[data-camera-mode]').forEach((node) => { node.textContent = modeLabel; });
+     $$('[data-camera-message]').forEach((node) => { node.textContent = phaseInfo[1]; });
+     $$('[data-motion-title]').forEach((node) => { node.textContent = phaseInfo[0]; });
+-    $$('[data-camera-health]').forEach((node) => { node.textContent = online ? "연결됨" : fallback ? "대체 화면" : "확인 필요"; });
++    $$('[data-camera-health]').forEach((node) => { node.textContent = !reachable ? "확인 불가" : privacy ? "보호 모드" : online ? "연결됨" : fallback ? "대체 화면" : "확인 필요"; });
+     $$('[data-motion-health]').forEach((node) => {
+       node.textContent = privacy ? "일시 중지" : !online ? "확인 필요" : camera.baseline_ready ? "감지 중" : "준비 중";
+     });
+@@ -592,43 +628,53 @@
+       if (label) label.textContent = pendingLabel;
+       motion.hidden = !pendingLabel;
+     }
++    syncCameraStreams();
+   }
+ 
+   function updateProvider(provider) {
+     state.provider = provider;
+     const active = String(provider.active || provider.name || provider.provider || "offline").toLowerCase();
+     const configured = provider.configured ?? active !== "offline";
+-    const display = active === "openai" ? "OpenAI" : active === "gemini" ? "Google Gemini" : active === "mock" || active === "demo" ? "시연 분석 모델" : "로컬 대체 분석";
++    const display = active === "openai" ? "OpenAI" : active === "gemini" ? "Google Gemini" : active === "mock" || active === "demo" ? "시연 분석 모델" : "외부 AI 미사용";
+     $$('[data-provider-name]').forEach((node) => { node.textContent = provider.model ? `${display} · ${provider.model}` : display; });
+     $$('[data-provider-status]').forEach((node) => {
+-      node.textContent = configured ? "사용 가능" : "오프라인";
++      node.textContent = configured ? "사용 가능" : "수동 확인";
+       node.classList.toggle("is-online", configured);
+       node.classList.toggle("is-offline", !configured);
+     });
+   }
+ 
+   async function loadItems(options = {}) {
+-    if (state.itemsLoading) return;
+-    state.itemsLoading = true;
+     const loading = $("#inventory-loading");
+-    if (loading && (!options.preserve || !state.items.length)) loading.hidden = false;
+     const query = $("#item-search")?.value.trim() || "";
+     const uiStatus = $("#status-filter")?.value || "";
+     const serverStatus = serverStatusFor(uiStatus);
+     const params = new URLSearchParams();
+     if (serverStatus) params.set("status", serverStatus);
+     if (query) params.set("q", query);
++    const requestQuery = params.toString();
++    if (state.itemsLoading && state.itemsQuery === requestQuery && !options.force) return;
++    const request = ++state.itemsRequest;
++    state.itemsQuery = requestQuery;
++    state.itemsLoading = true;
++    if (loading && (!options.preserve || !state.items.length)) loading.hidden = false;
++    $("#inventory-table-wrap")?.setAttribute("aria-busy", "true");
+     try {
+       const data = await api(`/api/items${params.size ? `?${params}` : ""}`, { silent: options.silent === true });
++      if (request !== state.itemsRequest) return;
+       state.items = normalizeItems(data);
+       renderInventory();
+       if ($("#inventory-updated")) $("#inventory-updated").textContent = `${formatClock(new Date())} 업데이트`;
+     } catch (error) {
++      if (request !== state.itemsRequest) return;
+       showInventoryError(friendlyError(error));
+       if (!options.silent) showToast("물품을 불러오지 못했어요", friendlyError(error), "error");
+     } finally {
+-      state.itemsLoading = false;
+-      if (loading) loading.hidden = true;
++      if (request === state.itemsRequest) {
++        state.itemsLoading = false;
++        if (loading) loading.hidden = true;
++        $("#inventory-table-wrap")?.removeAttribute("aria-busy");
++      }
+     }
+   }
+ 
+@@ -645,14 +691,14 @@
+     state.filteredItems = items;
+     if ($("#inventory-count")) $("#inventory-count").textContent = String(items.length);
+ 
+-    const nextSignature = signature(items.map((item) => [item.id, item.name, item.description, item.category, item.status, item.expires_at, item.updated_at]));
++    const nextSignature = signature(items.map((item) => [item.id, item.name, item.description, item.category, effectiveStatus(item), item.expires_at, item.updated_at, item.provider, item.confidence, item.image_url]));
++    $("#inventory-table-wrap")?.toggleAttribute("hidden", items.length === 0);
+     if (state.signatures.inventory === nextSignature) {
+       empty.hidden = items.length !== 0;
+       return;
+     }
+     state.signatures.inventory = nextSignature;
+     empty.hidden = items.length !== 0;
+-    $("#inventory-table-wrap")?.toggleAttribute("hidden", items.length === 0);
+     if (!items.length) {
+       table.innerHTML = "";
+       mobile.innerHTML = "";
+@@ -672,7 +718,7 @@
+       <td><span class="category-badge ${category}">${CATEGORY[category].label}</span></td>
+       <td class="date-cell"><strong>${escapeHTML(detected.date)}</strong><small>${escapeHTML(detected.time)}</small></td>
+       <td class="date-cell"><strong>${escapeHTML(expires.date)}</strong><small>${escapeHTML(expiryLabel(item.expires_at))}</small></td>
+-      <td><span class="status-badge ${status}">${STATUS[status]?.label || "확인 필요"}</span></td>
++      <td><div class="item-status-stack"><span class="status-badge ${status}">${STATUS[status]?.label || "확인 필요"}</span>${analysisBadgeMarkup(item)}</div></td>
+       <td><button class="row-more" type="button" data-item-id="${escapeAttr(item.id)}" aria-label="${escapeAttr(item.name || "물품")} 상세 보기"><svg><use href="#icon-more"></use></svg></button></td>
+     </tr>`;
+   }
+@@ -681,7 +727,7 @@
+     const status = effectiveStatus(item);
+     const category = normalizeCategory(item.category);
+     return `<article class="mobile-item-card" data-item-id="${escapeAttr(item.id)}" tabindex="0" role="button" aria-label="${escapeAttr(item.name || "물품")} 상세 보기">
+-      ${thumbMarkup(item)}<div><h2>${escapeHTML(item.name || "이름 없는 물품")}</h2><p>${escapeHTML(formatDate(item.detected_at))} 감지 · ${escapeHTML(expiryLabel(item.expires_at))}</p><div class="mobile-badges"><span class="category-badge ${category}">${CATEGORY[category].label}</span><span class="status-badge ${status}">${STATUS[status]?.label || "확인 필요"}</span></div></div><svg><use href="#icon-chevron"></use></svg>
++      ${thumbMarkup(item)}<div><h2>${escapeHTML(item.name || "이름 없는 물품")}</h2><p>${escapeHTML(formatDate(item.detected_at))} 감지 · ${escapeHTML(expiryLabel(item.expires_at))}</p><div class="mobile-badges"><span class="category-badge ${category}">${CATEGORY[category].label}</span><span class="status-badge ${status}">${STATUS[status]?.label || "확인 필요"}</span>${analysisBadgeMarkup(item)}</div></div><svg><use href="#icon-chevron"></use></svg>
+     </article>`;
+   }
+ 
+@@ -690,12 +736,14 @@
+     const table = $("#inventory-table-body");
+     const mobile = $("#inventory-mobile");
+     const empty = $("#inventory-empty");
++    $("#inventory-table-wrap")?.removeAttribute("hidden");
+     if (table) table.innerHTML = `<tr><td colspan="6"><div class="inline-error"><svg><use href="#icon-alert"></use></svg><strong>목록을 불러오지 못했습니다</strong><span>${escapeHTML(message)}</span><button class="button secondary compact-button" type="button" data-route="items">다시 시도</button></div></td></tr>`;
+     if (mobile) mobile.innerHTML = `<div class="inline-error"><svg><use href="#icon-alert"></use></svg><strong>목록을 불러오지 못했습니다</strong><span>${escapeHTML(message)}</span><button class="button secondary compact-button" type="button" data-route="items">다시 시도</button></div>`;
+     if (empty) empty.hidden = true;
+   }
+ 
+   function clearFilters() {
++    window.clearTimeout(state.searchTimer);
+     if ($("#item-search")) $("#item-search").value = "";
+     if ($("#status-filter")) $("#status-filter").value = "";
+     if ($("#category-filter")) $("#category-filter").value = "";
+@@ -705,6 +753,9 @@
+ 
+   async function openItem(id) {
+     if (!id) return;
++    closeNotifications();
++    const request = ++state.itemDetailRequest;
++    state.itemDetailId = String(id);
+     const title = $("#item-dialog-title");
+     const content = $("#item-dialog-content");
+     if (title) title.textContent = "물품 정보를 불러오는 중…";
+@@ -712,8 +763,10 @@
+     showDialog("item-dialog");
+     try {
+       const item = await api(`/api/items/${encodeURIComponent(id)}`);
++      if (request !== state.itemDetailRequest) return;
+       renderItemDetail(item);
+     } catch (error) {
++      if (request !== state.itemDetailRequest) return;
+       if (title) title.textContent = "물품을 열 수 없습니다";
+       if (content) content.innerHTML = `<div class="dialog-error"><span><svg><use href="#icon-alert"></use></svg></span><h3>상세 정보를 불러오지 못했어요</h3><p>${escapeHTML(friendlyError(error))}</p><button class="button secondary" type="button" data-close-dialog="item-dialog">닫기</button></div>`;
+     }
+@@ -721,6 +774,7 @@
+ 
+   function renderItemDetail(item) {
+     if (!item || typeof item !== "object") return;
++    if (String(item.id) !== state.itemDetailId || !$("#item-dialog")?.open) return;
+     const title = $("#item-dialog-title");
+     const content = $("#item-dialog-content");
+     if (!content) return;
+@@ -735,10 +789,10 @@
+     content.innerHTML = `<div class="item-detail-hero">
+       <div class="item-detail-image">${image ? `<img src="${escapeAttr(image)}" alt="${escapeAttr(item.name || "감지된 물품")}">` : `<svg><use href="#icon-box"></use></svg>`}</div>
+       <div class="item-detail-summary">
+-        <div class="detail-badges"><span class="category-badge ${category}">${CATEGORY[category].label}</span><span class="status-badge ${status}">${STATUS[status]?.label || "확인 필요"}</span></div>
++        <div class="detail-badges"><span class="category-badge ${category}">${CATEGORY[category].label}</span><span class="status-badge ${status}">${STATUS[status]?.label || "확인 필요"}</span>${analysisBadgeMarkup(item)}</div>
+         <h3>${escapeHTML(item.name || "이름 없는 물품")}</h3>
+         <p>${escapeHTML(item.description || "AI가 추가 설명을 제공하지 않았습니다.")}</p>
+-        <div class="confidence"><span>AI 신뢰도</span><div class="confidence-track"><span style="width:${confidence}%"></span></div><strong>${confidence}%</strong></div>
++        ${item.provider === "pending" ? '<p class="analysis-note">AI 분석을 기다리고 있습니다. 먼저 정보를 확인하고 저장할 수도 있습니다.</p>' : String(item.provider || "").endsWith("_review") || item.provider === "offline" ? '<p class="analysis-note">자동 분석을 확정하지 못했습니다. 이름과 분류를 확인한 뒤 정보를 저장해 주세요.</p>' : item.provider === "manual" ? '<p class="analysis-note">관리자가 확인한 물품 정보입니다.</p>' : `<div class="confidence"><span>${/demo|mock/.test(item.provider || "") ? "시연 확신도" : "AI 확신도"}</span><div class="confidence-track"><span style="width:${confidence}%"></span></div><strong>${confidence}%</strong></div>`}
+       </div>
+     </div>
+     <dl class="detail-meta">
+@@ -766,6 +820,8 @@
+   }
+ 
+   async function saveItemEdit(form) {
++    const id = String(form.dataset.id);
++    if (state.itemMutations.has(id)) return;
+     const button = $('button[type="submit"]', form);
+     const values = new FormData(form);
+     const localExpiry = values.get("expires_at");
+@@ -774,9 +830,22 @@
+       description: String(values.get("description") || "").trim(),
+       category: String(values.get("category") || "general"),
+     };
+-    const categoryChanged = payload.category !== form.dataset.originalCategory;
++    if (!payload.name) {
++      showToast("물품 이름을 입력해 주세요", "공백만으로는 저장할 수 없습니다.", "error");
++      form.elements.namedItem("name")?.focus();
++      return;
++    }
+     const expiryChanged = String(localExpiry || "") !== String(form.dataset.originalExpiry || "");
+-    if (localExpiry && (!categoryChanged || expiryChanged)) payload.expires_at = new Date(String(localExpiry)).toISOString();
++    if (expiryChanged) {
++      const expiry = localExpiry ? new Date(String(localExpiry)) : null;
++      if (!expiry || Number.isNaN(expiry.getTime())) {
++        showToast("보관 만료일을 확인해 주세요", "유효한 날짜와 시간을 입력해 주세요.", "error");
++        form.elements.namedItem("expires_at")?.focus();
++        return;
++      }
++      payload.expires_at = expiry.toISOString();
++    }
++    state.itemMutations.add(id);
+     try {
+       const item = await withButtonBusy(button, "저장 중…", () => api(`/api/items/${encodeURIComponent(form.dataset.id)}`, { method: "PATCH", body: payload }));
+       showToast("변경사항을 저장했어요", "물품 정보와 보관 정책을 반영했습니다.", "success");
+@@ -784,13 +853,15 @@
+       await refreshAfterMutation();
+     } catch (error) {
+       showToast("저장하지 못했어요", friendlyError(error), "error");
++    } finally {
++      state.itemMutations.delete(id);
+     }
+   }
+ 
+   async function handleItemAction(button) {
+     const id = button.dataset.id;
+     const action = button.dataset.itemAction;
+-    if (!id || !action) return;
++    if (!id || !["recover", "dispose", "restore", "extend"].includes(action) || state.itemMutations.has(String(id))) return;
+     if (action === "recover") {
+       const ok = await confirmAction({ title: "회수 완료로 처리할까요?", message: "이 물품은 보관 목록에서 제외되고 회수 기록으로 남습니다.", acceptLabel: "회수 완료", tone: "warning" });
+       if (!ok) return;
+@@ -813,13 +884,15 @@
+       body = { days };
+       busyLabel = "연장 중…";
+     }
++    if (state.itemMutations.has(String(id))) return;
++    state.itemMutations.add(String(id));
+     try {
+       const item = await withButtonBusy(button, busyLabel, () => api(endpoint, { method: "POST", body }));
+       const messages = {
+         recover: ["회수 완료로 처리했어요", "물품이 회수 기록으로 이동했습니다."],
+         dispose: ["폐기 완료로 처리했어요", "물품이 폐기 기록으로 이동했습니다."],
+         restore: ["보관 목록으로 복원했어요", "카메라 감지 대상에 다시 포함됩니다."],
+-        extend: ["보관 기한을 연장했어요", `${body.days}일이 새 만료일에 반영되었습니다.`],
++        extend: ["보관 기한을 연장했어요", `${body?.days ?? ""}일이 새 만료일에 반영되었습니다.`],
+       };
+       showToast(messages[action][0], messages[action][1], "success");
+       renderItemDetail(item);
+@@ -840,6 +913,8 @@
+         return;
+       }
+       showToast("처리하지 못했어요", friendlyError(error), "error");
++    } finally {
++      state.itemMutations.delete(String(id));
+     }
+   }
+ 
+@@ -886,36 +961,61 @@
+   async function refreshAfterMutation() {
+     state.signatures.inventory = "";
+     const operations = [loadDashboard({ force: true })];
+-    if (state.route === "items" || state.items.length) operations.push(loadItems({ preserve: true, silent: true }));
++    if (state.route === "items" || state.items.length) operations.push(loadItems({ preserve: true, silent: true, force: true }));
+     await Promise.allSettled(operations);
+   }
+ 
+   async function openSettings() {
++    if ($("#settings-dialog")?.open) return;
+     showDialog("settings-dialog");
+     selectSettingsTab("ai");
+     await loadSettings({ populate: true });
+   }
+ 
+   async function loadSettings(options = {}) {
+-    if (state.settingsLoading) return;
+-    state.settingsLoading = true;
+     const status = $("#settings-state");
+-    if (options.populate && status) status.textContent = "설정을 불러오는 중…";
++    if (options.populate) {
++      setSettingsReady(false);
++      if (status) status.textContent = "설정을 불러오는 중…";
++    }
++    if (!state.settingsPromise) {
++      state.settingsLoading = true;
++      state.settingsPromise = api("/api/settings", { silent: options.silent === true });
++    }
++    const pending = state.settingsPromise;
+     try {
+-      const data = await api("/api/settings", { silent: options.silent === true });
++      const data = await pending;
+       state.settings = data?.settings || data || {};
+       state.provider = data?.provider || state.provider;
+-      if (options.populate) populateSettings(state.settings, data?.provider || {});
++      if (options.populate) {
++        populateSettings(state.settings, data?.provider || {});
++        setSettingsReady(true);
++      }
+       updateEmailHealth(state.settings);
+-      if (status) status.textContent = "";
++      refreshItemTiming();
++      if (options.populate && status) status.textContent = "";
+     } catch (error) {
+       if (options.populate) {
+-        if (status) status.textContent = "설정을 불러오지 못했습니다.";
++        if (status) status.textContent = "설정을 불러오지 못했습니다. 창을 닫고 다시 열어 주세요.";
+         showToast("설정을 불러오지 못했어요", friendlyError(error), "error");
+       }
+     } finally {
+-      state.settingsLoading = false;
+-    }
++      if (state.settingsPromise === pending) {
++        state.settingsLoading = false;
++        state.settingsPromise = null;
++      }
++    }
++  }
++
++  function setSettingsReady(ready) {
++    state.settingsReady = ready;
++    const content = $("#settings-content");
++    if (content) {
++      content.inert = !ready;
++      content.setAttribute("aria-busy", String(!ready));
++    }
++    const button = $("#save-settings");
++    if (button) button.disabled = !ready;
+   }
+ 
+   function populateSettings(settings, provider) {
+@@ -932,12 +1032,12 @@
+       gemini: settings.gemini_model || "gemini-3.5-flash-lite",
+     };
+     const activeForModel = ["openai", "gemini"].includes(selectedProvider) ? selectedProvider : (provider.active === "gemini" ? "gemini" : "openai");
++    state.settingsModelProvider = activeForModel;
+     set("ai_model", state.settingsModelCache[activeForModel]);
+     set("ai_min_confidence", settings.ai_min_confidence ?? 0.5);
+     set("camera_index", settings.camera_index ?? 0);
+     set("motion_delay_seconds", settings.settle_seconds ?? 3);
+-    const threshold = Number(settings.motion_threshold);
+-    set("motion_threshold", Number.isFinite(threshold) ? Math.max(6, Math.min(60, Math.round(threshold))) : 20);
++    set("motion_threshold", settings.motion_threshold ?? 20);
+     set("valuable_value_threshold_krw", settings.valuable_value_threshold_krw ?? 100000);
+     const privacyInput = form.elements.namedItem("privacy_mode");
+     if (privacyInput) privacyInput.checked = Boolean(settings.privacy_mode);
+@@ -958,10 +1058,10 @@
+     const provider = String(values.get("ai_provider") || "auto");
+     const payload = {
+       provider,
+-      ai_min_confidence: Math.max(0.3, Math.min(0.9, Number(values.get("ai_min_confidence") || 0.5))),
++      ai_min_confidence: Number(values.get("ai_min_confidence") ?? 0.5),
+       camera_index: Number(values.get("camera_index") || 0),
+       settle_seconds: Number(values.get("motion_delay_seconds") || 3),
+-      motion_threshold: Math.max(6, Math.min(60, Number(values.get("motion_threshold") || 20))),
++      motion_threshold: Number(values.get("motion_threshold") ?? 20),
+       privacy_mode: Boolean(form.elements.namedItem("privacy_mode")?.checked),
+       admin_email: String(values.get("admin_email") || "").trim(),
+       smtp_host: String(values.get("smtp_host") || "").trim(),
+@@ -970,21 +1070,47 @@
+       valuable_value_threshold_krw: Number(values.get("valuable_value_threshold_krw") || 100000),
+     };
+     const model = String(values.get("ai_model") || "").trim();
+-    const modelProvider = ["openai", "gemini"].includes(provider) ? provider : (state.provider?.active === "gemini" ? "gemini" : "openai");
+-    if (model) payload[`${modelProvider}_model`] = model;
+-    return payload;
++    if (model && provider !== "offline") state.settingsModelCache[state.settingsModelProvider] = model;
++    for (const [modelProvider, modelName] of Object.entries(state.settingsModelCache)) {
++      if (modelName) payload[`${modelProvider}_model`] = modelName;
++    }
++    // An unrelated edit must preserve settings maintained outside this dialog.
++    return Object.fromEntries(Object.entries(payload).filter(([key, value]) => value !== state.settings?.[key]));
++  }
++
++  function validateSettingsForm() {
++    const form = $("#settings-form");
++    if (!form || !state.settingsReady) return false;
++    const invalid = [...form.elements].find((input) => input.willValidate && !input.validity.valid);
++    if (!invalid) return true;
++    const panel = invalid.closest("[data-settings-panel]");
++    if (panel) selectSettingsTab(panel.dataset.settingsPanel);
++    invalid.focus();
++    invalid.reportValidity();
++    return false;
+   }
+ 
+   async function saveSettings(options = {}) {
++    if (state.settingsSaving || !validateSettingsForm()) return false;
+     const button = $("#save-settings");
+     const status = $("#settings-state");
++    const payload = settingsPayload();
++    if (!Object.keys(payload).length) {
++      if (status) status.textContent = "변경된 설정이 없습니다.";
++      if (!options.quiet) closeDialog("settings-dialog");
++      return true;
++    }
++    state.settingsSaving = true;
++    const content = $("#settings-content");
++    if (content) content.inert = true;
+     try {
+-      const data = await withButtonBusy(button, "저장 중…", () => api("/api/settings", { method: "PUT", body: settingsPayload() }));
++      const data = await withButtonBusy(button, "저장 중…", () => api("/api/settings", { method: "PUT", body: payload }));
+       state.settings = data?.settings || data || {};
+       state.provider = data?.provider || state.provider;
+       if (status) status.textContent = "방금 저장됨";
+       updateProvider(data?.provider || {});
+       updateEmailHealth(state.settings);
++      refreshItemTiming();
+       if (!options.quiet) {
+         showToast("설정을 저장했어요", "카메라와 분석 시스템에 변경사항을 반영했습니다.", "success");
+         closeDialog("settings-dialog");
+@@ -995,15 +1121,22 @@
+       if (status) status.textContent = "저장하지 못했습니다.";
+       showToast("설정을 저장하지 못했어요", friendlyError(error), "error");
+       return false;
++    } finally {
++      state.settingsSaving = false;
++      if (content) content.inert = !state.settingsReady;
+     }
+   }
+ 
+   async function testEmail(event) {
+     const button = event.currentTarget;
+-    const saved = await saveSettings({ quiet: true });
+-    if (!saved) return;
++    if (button.disabled || state.settingsSaving || !validateSettingsForm()) return;
+     try {
+-      const result = await withButtonBusy(button, "발송 중…", () => api("/api/settings/test-email", { method: "POST", body: {}, timeout: 30000 }));
++      const result = await withButtonBusy(button, "발송 중…", async () => {
++        const saved = await saveSettings({ quiet: true });
++        if (!saved) return null;
++        return api("/api/settings/test-email", { method: "POST", body: {}, timeout: 30000 });
++      });
++      if (!result) return;
+       showToast("테스트 메일을 보냈어요", result?.message || "관리자 받은편지함을 확인해 주세요.", "success");
+     } catch (error) {
+       showToast("테스트 메일을 보내지 못했어요", friendlyError(error), "error");
+@@ -1016,7 +1149,12 @@
+   }
+ 
+   function selectSettingsTab(tab) {
+-    $$('[data-settings-tab]').forEach((button) => button.classList.toggle("is-active", button.dataset.settingsTab === tab));
++    $$('[data-settings-tab]').forEach((button) => {
++      const active = button.dataset.settingsTab === tab;
++      button.classList.toggle("is-active", active);
++      button.setAttribute("aria-selected", String(active));
++      button.tabIndex = active ? 0 : -1;
++    });
+     $$('[data-settings-panel]').forEach((panel) => {
+       const active = panel.dataset.settingsPanel === tab;
+       panel.hidden = !active;
+@@ -1040,7 +1178,7 @@
+   function updateResetConfirmation() {
+     const input = $("#reset-confirmation");
+     const button = $("#reset-submit");
+-    const confirmed = input?.value.trim() === "초기화";
++    const confirmed = !state.resetInProgress && input?.value.trim() === "초기화";
+     if (button) button.disabled = !confirmed;
+     if (confirmed && $("#reset-status")) $("#reset-status").textContent = "";
+   }
+@@ -1085,7 +1223,7 @@
+       closeDialog("settings-dialog");
+       await Promise.allSettled([
+         loadDashboard({ force: true }),
+-        loadItems({ preserve: false, silent: true }),
++        loadItems({ preserve: false, silent: true, force: true }),
+         loadSettings({ populate: false, silent: true }),
+       ]);
+       showToast("운영 데이터를 초기화했어요", backupPath ? `백업 위치: ${backupPath}` : (result?.message || "초기화 전 백업도 함께 생성했습니다."), "success", 8000);
+@@ -1103,7 +1241,11 @@
+   function handleProviderChange() {
+     const current = $("#ai-provider")?.value;
+     const modelInput = $("#ai-model");
+-    if (modelInput && state.settingsModelCache[current]) modelInput.value = state.settingsModelCache[current];
++    if (modelInput) {
++      if (!modelInput.disabled && state.settingsModelProvider) state.settingsModelCache[state.settingsModelProvider] = modelInput.value.trim();
++      state.settingsModelProvider = ["openai", "gemini"].includes(current) ? current : (state.provider?.active === "gemini" ? "gemini" : "openai");
++      modelInput.value = state.settingsModelCache[state.settingsModelProvider] || "";
++    }
+     updateProviderFields();
+   }
+ 
+@@ -1118,7 +1260,7 @@
+ 
+   function updateSettingOutputs() {
+     const delay = $("#delay-range")?.value || 3;
+-    if ($("#delay-output")) $("#delay-output").textContent = `${delay}초`;
++    if ($("#delay-output")) $("#delay-output").textContent = `${formatDecimal(delay)}초`;
+     const threshold = Number($("#threshold-range")?.value || 20);
+     if ($("#threshold-output")) $("#threshold-output").textContent = sensitivityLabel(threshold);
+     const aiConfidence = Number($("#ai-confidence-range")?.value || 0.5);
+@@ -1145,21 +1287,34 @@
+     });
+   }
+ 
+-  function activateSecondaryStream() {
+-    const image = $("[data-camera-stream-secondary]");
+-    if (image && !image.getAttribute("src")) image.src = `${image.dataset.streamSrc}?t=${Date.now()}`;
++  function syncCameraStreams(options = {}) {
++    const privacy = state.dashboard?.camera?.privacy_enabled === true;
++    $$('[data-camera-stream], [data-camera-stream-secondary]').forEach((image) => {
++      const view = image.closest("[data-view]");
++      const secondary = image.hasAttribute("data-camera-stream-secondary");
++      const fallback = $(secondary ? "[data-camera-fallback-secondary]" : "[data-camera-fallback]");
++      const active = !document.hidden && !view?.hidden && state.serverOnline !== false && !privacy;
++      image.hidden = !active;
++      if (!active) {
++        // Removing src closes the MJPEG connection and releases its server worker.
++        image.removeAttribute("src");
++        if (privacy && fallback) fallback.hidden = true;
++        return;
++      }
++      if (options.retry || !image.getAttribute("src")) {
++        if (fallback) fallback.hidden = true;
++        image.src = `${image.dataset.streamSrc || "/camera/stream"}?t=${Date.now()}`;
++      }
++    });
+   }
+ 
+   function retryCameraStreams() {
+-    $$('[data-camera-fallback], [data-camera-fallback-secondary]').forEach((fallback) => { fallback.hidden = true; });
+-    $$('[data-camera-stream], [data-camera-stream-secondary]').forEach((image) => {
+-      const source = image.dataset.streamSrc || "/camera/stream";
+-      image.src = `${source}?t=${Date.now()}`;
+-    });
++    syncCameraStreams({ retry: true });
+     showToast("카메라에 다시 연결하고 있어요", "잠시 후 실시간 화면이 표시됩니다.", "info");
+   }
+ 
+   function setStreamHealth(image, healthy) {
++    if (!image.getAttribute("src")) return;
+     state.cameraStreamHealthy = healthy;
+     const secondary = image.hasAttribute("data-camera-stream-secondary");
+     const fallback = $(secondary ? "[data-camera-fallback-secondary]" : "[data-camera-fallback]");
+@@ -1207,11 +1362,13 @@
+     if (open) window.setTimeout(() => $("[data-close-notifications]")?.focus(), 0);
+   }
+ 
+-  function closeNotifications() {
++  function closeNotifications(options = {}) {
+     const panel = $("#notification-panel");
+     const button = $("#notification-button");
++    const wasOpen = panel && !panel.hidden;
+     if (panel) panel.hidden = true;
+     if (button) button.setAttribute("aria-expanded", "false");
++    if (wasOpen && options.restoreFocus) button?.focus();
+   }
+ 
+   function confirmAction({ title, message, acceptLabel = "확인", tone = "info" }) {
+@@ -1257,13 +1414,14 @@
+   async function withButtonBusy(button, label, operation) {
+     if (!button) return operation();
+     const previous = button.innerHTML;
++    const wasDisabled = button.disabled;
+     button.disabled = true;
+     button.setAttribute("aria-busy", "true");
+     button.textContent = label;
+     try {
+       return await operation();
+     } finally {
+-      button.disabled = false;
++      button.disabled = wasDisabled;
+       button.removeAttribute("aria-busy");
+       button.innerHTML = previous;
+     }
+@@ -1272,6 +1430,24 @@
+   function normalizeItems(payload) {
+     const items = Array.isArray(payload) ? payload : Array.isArray(payload?.items) ? payload.items : [];
+     return items.filter((item) => item && typeof item === "object");
++  }
++
++  function analysisBadgeMarkup(item) {
++    const provider = String(item?.provider || "");
++    if (provider === "pending") return '<span class="status-badge analysis-pending">AI 분석 중</span>';
++    if (provider === "offline" || provider.endsWith("_review")) return '<span class="status-badge analysis-review">확인 필요</span>';
++    return "";
++  }
++
++  function refreshItemTiming() {
++    if (state.dashboard) {
++      const items = normalizeItems(state.dashboard.items);
++      renderAttention(items);
++      renderNotifications(items, state.dashboard.notifications);
++      delete state.signatures.attention;
++      delete state.signatures.notifications;
++    }
++    if (state.items.length) renderInventory();
+   }
+ 
+   function normalizeCategory(value) {
+@@ -1291,7 +1467,8 @@
+     if (Number.isFinite(expires)) {
+       const difference = expires - Date.now();
+       if (difference < 0) return "expired";
+-      if (difference <= 7 * 86400000) return "due_soon";
++      const leadDays = Math.max(0, finiteNumber(state.settings?.alert_lead_days, 7));
++      if (difference <= leadDays * 86400000) return "due_soon";
+     }
+     return "active";
+   }
+@@ -1343,9 +1520,12 @@
+ 
+   function providerLabel(value) {
+     const provider = String(value || "").toLowerCase();
++    if (provider === "pending") return "AI 분석 대기";
++    if (provider === "offline" || provider === "offline_review") return "외부 AI 미사용 · 확인 필요";
+     if (provider.includes("openai") || provider.includes("gpt")) return "OpenAI";
+     if (provider.includes("gemini") || provider.includes("google")) return "Google Gemini";
+     if (provider.includes("demo") || provider.includes("mock")) return "내장 시연 모델";
++    if (provider === "manual_review") return "관리자 기한 수정 · 확인 필요";
+     if (provider === "manual") return "관리자 수정";
+     return value || "로컬 분석";
+   }
+@@ -1361,6 +1541,12 @@
+     const text = formatClock(now, true);
+     if ($("#camera-clock")) $("#camera-clock").textContent = text;
+     if ($("#camera-clock-large")) $("#camera-clock-large").textContent = text;
++    const minute = Math.floor(now.getTime() / 60000);
++    if (state.lastClockMinute !== minute) {
++      state.lastClockMinute = minute;
++      setTodayLabel();
++      $$("time[datetime]").forEach((node) => { node.textContent = relativeTime(node.getAttribute("datetime")); });
++    }
+   }
+ 
+   function formatClock(date, seconds = false) {
+@@ -1403,6 +1589,9 @@
+     if (!expires) return "기한 미정";
+     const difference = expires.getTime() - Date.now();
+     if (difference < 0) {
++      if (difference > -60000) return "방금 만료";
++      if (difference > -3600000) return `${Math.floor(Math.abs(difference) / 60000)}분 지남`;
++      if (difference > -86400000) return `${Math.floor(Math.abs(difference) / 3600000)}시간 지남`;
+       const days = Math.max(1, Math.floor(Math.abs(difference) / 86400000));
+       return `${days}일 지남`;
+     }
+
+--- before/static/styles.css
++++ after/static/styles.css
+@@ -581,6 +581,12 @@
+ .status-badge.expired { color: var(--red); background: var(--red-soft); }
+ .status-badge.recovered { color: var(--green); background: var(--green-soft); }
+ .status-badge.disposed { color: var(--text-secondary); background: var(--fill); }
++.status-badge.analysis-pending { color: var(--purple); background: var(--purple-soft); }
++.status-badge.analysis-review { color: var(--orange); background: var(--orange-soft); }
++.item-status-stack { display: flex; align-items: flex-start; flex-direction: column; gap: 5px; }
++.mobile-badges { flex-wrap: wrap; }
++.item-detail-summary .analysis-note { padding: 10px 12px; border-radius: 10px; color: var(--text-secondary); background: var(--surface-secondary); line-height: 1.65; }
++.settings-content[aria-busy="true"] { opacity: .55; }
+ .row-more { display: grid; width: 36px; height: 36px; place-items: center; border: 0; border-radius: 50%; color: var(--text-tertiary); background: transparent; }
+ .row-more:hover { color: var(--text); background: var(--surface-tertiary); }
+ .row-more svg { width: 18px; height: 18px; }
+
+--- before/templates/index.html
++++ after/templates/index.html
+@@ -85,7 +85,7 @@
+           <strong>Re:Found</strong>
+         </div>
+         <div class="topbar-spacer"></div>
+-        <span class="last-sync" id="last-sync" aria-live="polite">동기화 중…</span>
++        <span class="last-sync" id="last-sync">동기화 중…</span>
+         <div class="notification-wrap">
+           <button class="icon-button" id="notification-button" type="button" aria-label="알림 열기" aria-haspopup="true" aria-expanded="false" aria-controls="notification-panel">
+             <svg><use href="#icon-bell"></use></svg><span class="notification-badge" id="notification-badge" hidden>0</span>
+@@ -155,7 +155,7 @@
+                 <span class="live-label"><span data-camera-dot></span><span data-camera-status>연결 중</span></span>
+               </header>
+               <div class="camera-stage" id="dashboard-camera-stage">
+-                <img src="/camera/stream" data-camera-stream alt="고정 카메라가 촬영하는 분실물 보관 구역 실시간 화면">
++                <img data-stream-src="/camera/stream" data-camera-stream alt="고정 카메라가 촬영하는 분실물 보관 구역 실시간 화면">
+                 <div class="camera-fallback" data-camera-fallback hidden>
+                   <span><svg><use href="#icon-camera"></use></svg></span><strong>카메라 화면을 불러올 수 없습니다</strong><p>연결과 권한을 확인한 뒤 다시 시도해 주세요.</p><button class="button secondary compact-button" type="button" data-retry-camera>다시 연결</button>
+                 </div>
+@@ -212,7 +212,7 @@
+           </div>
+ 
+           <div class="inventory-toolbar panel">
+-            <label class="search-field" for="item-search"><svg><use href="#icon-search"></use></svg><input id="item-search" type="search" placeholder="물품 이름이나 설명 검색" autocomplete="off"><kbd>⌘ K</kbd></label>
++            <label class="search-field" for="item-search"><svg><use href="#icon-search"></use></svg><input id="item-search" type="search" maxlength="100" placeholder="물품 이름이나 설명 검색" autocomplete="off"><kbd>⌘ K</kbd></label>
+             <div class="filter-row">
+               <label><span class="sr-only">상태</span><select id="status-filter"><option value="">모든 상태</option><option value="active">보관 중</option><option value="due_soon">폐기 임박</option><option value="expired">기한 만료</option><option value="recovered">회수 완료</option><option value="disposed">폐기 완료</option></select></label>
+               <label><span class="sr-only">분류</span><select id="category-filter"><option value="">모든 분류</option><option value="valuable">귀중품</option><option value="general">일반 물품</option><option value="food">음식물</option></select></label>
+@@ -287,50 +287,50 @@
+   </dialog>
+ 
+   <dialog class="modal settings-modal" id="settings-dialog" aria-labelledby="settings-title">
+-    <form class="modal-shell" id="settings-form" method="dialog">
++    <form class="modal-shell" id="settings-form" method="dialog" novalidate>
+       <header class="modal-header"><div><p class="modal-eyebrow">System</p><h2 id="settings-title">설정</h2><p>AI 분석, 카메라와 알림을 관리합니다.</p></div><button class="icon-button" type="button" data-close-dialog="settings-dialog" aria-label="닫기"><svg><use href="#icon-close"></use></svg></button></header>
+       <div class="settings-layout">
+-        <nav class="settings-nav" aria-label="설정 항목">
+-          <button type="button" class="is-active" data-settings-tab="ai"><svg><use href="#icon-sparkles"></use></svg><span>AI 분석</span></button>
+-          <button type="button" data-settings-tab="camera"><svg><use href="#icon-camera"></use></svg><span>카메라</span></button>
+-          <button type="button" data-settings-tab="email"><svg><use href="#icon-mail"></use></svg><span>메일 알림</span></button>
+-          <button type="button" data-settings-tab="policy"><svg><use href="#icon-calendar"></use></svg><span>보관 정책</span></button>
+-          <button type="button" data-settings-tab="system"><svg><use href="#icon-settings"></use></svg><span>시스템</span></button>
++        <nav class="settings-nav" aria-label="설정 항목" role="tablist">
++          <button type="button" class="is-active" data-settings-tab="ai" id="settings-tab-ai" role="tab" aria-controls="settings-panel-ai" aria-selected="true"><svg><use href="#icon-sparkles"></use></svg><span>AI 분석</span></button>
++          <button type="button" data-settings-tab="camera" id="settings-tab-camera" role="tab" aria-controls="settings-panel-camera" aria-selected="false" tabindex="-1"><svg><use href="#icon-camera"></use></svg><span>카메라</span></button>
++          <button type="button" data-settings-tab="email" id="settings-tab-email" role="tab" aria-controls="settings-panel-email" aria-selected="false" tabindex="-1"><svg><use href="#icon-mail"></use></svg><span>메일 알림</span></button>
++          <button type="button" data-settings-tab="policy" id="settings-tab-policy" role="tab" aria-controls="settings-panel-policy" aria-selected="false" tabindex="-1"><svg><use href="#icon-calendar"></use></svg><span>보관 정책</span></button>
++          <button type="button" data-settings-tab="system" id="settings-tab-system" role="tab" aria-controls="settings-panel-system" aria-selected="false" tabindex="-1"><svg><use href="#icon-settings"></use></svg><span>시스템</span></button>
+         </nav>
+         <div class="settings-content" id="settings-content">
+-          <section class="settings-section is-active" data-settings-panel="ai">
++          <section class="settings-section is-active" data-settings-panel="ai" id="settings-panel-ai" role="tabpanel" aria-labelledby="settings-tab-ai">
+             <div class="section-heading"><h3>AI 분석</h3><p>장면 전체의 맥락과 변화 영역을 함께 비교할 멀티모달 모델을 선택하세요.</p></div>
+-            <label class="field"><span>AI 제공자</span><select name="ai_provider" id="ai-provider"><option value="auto">자동 선택 (권장)</option><option value="openai">OpenAI</option><option value="gemini">Google Gemini</option><option value="offline">오프라인 분석 (API 불필요)</option></select></label>
++            <label class="field"><span>AI 제공자</span><select name="ai_provider" id="ai-provider"><option value="auto">자동 선택 (권장)</option><option value="openai">OpenAI</option><option value="gemini">Google Gemini</option><option value="offline">외부 AI 사용 안 함 (수동 확인)</option></select></label>
+             <label class="field"><span>모델</span><input name="ai_model" id="ai-model" type="text" placeholder="예: gpt-5.6-luna" autocomplete="off"></label>
+-            <label class="field"><span>최소 AI 확신도 <output id="ai-confidence-output">50%</output></span><input name="ai_min_confidence" id="ai-confidence-range" type="range" min="0.3" max="0.9" step="0.05" value="0.5"><small>이 값보다 낮거나 판단이 불확실한 결과도 삭제하지 않고 ‘확인 필요한 새 물품’으로 보존합니다.</small></label>
++            <label class="field"><span>최소 AI 확신도 <output id="ai-confidence-output">50%</output></span><input name="ai_min_confidence" id="ai-confidence-range" type="range" min="0" max="1" step="any" value="0.5"><small>새 물품의 확신도가 낮으면 ‘확인 필요’로 보존합니다. 제거 여부가 불확실하면 기존 물품을 유지합니다.</small></label>
+             <div class="demo-note"><svg><use href="#icon-info"></use></svg><p>외부 AI를 사용하면 변경 전·후의 전체 장면과 변화 영역 확대 이미지가 전송됩니다. 사람, 문서, 모니터가 촬영되지 않도록 카메라 구역을 제한하세요.</p></div>
+             <label class="field" data-provider-key="openai"><span>OpenAI API 키</span><input name="openai_api_key" type="password" placeholder=".env 파일에서 설정" autocomplete="off" disabled><small>보안을 위해 OPENAI_API_KEY 환경변수로 관리합니다.</small></label>
+             <label class="field" data-provider-key="gemini" hidden><span>Gemini API 키</span><input name="gemini_api_key" type="password" placeholder=".env 파일에서 설정" autocomplete="off" disabled><small>보안을 위해 GEMINI_API_KEY 환경변수로 관리합니다.</small></label>
+           </section>
+-          <section class="settings-section" data-settings-panel="camera" hidden>
++          <section class="settings-section" data-settings-panel="camera" id="settings-panel-camera" role="tabpanel" aria-labelledby="settings-tab-camera" hidden>
+             <div class="section-heading"><h3>카메라와 움직임 감지</h3><p>시연 장소의 조명과 카메라 거리에 맞춰 조정하세요.</p></div>
+-            <label class="field"><span>카메라 번호</span><input name="camera_index" type="number" min="0" step="1" value="0"><small>기본 웹캠은 0입니다.</small></label>
+-            <label class="field"><span>움직임 후 안정화 대기 <output id="delay-output">3초</output></span><input name="motion_delay_seconds" id="delay-range" type="range" min="1" max="15" step="1" value="3"></label>
+-            <label class="field"><span>픽셀 변화 민감도 <output id="threshold-output">높음 (20)</output></span><input name="motion_threshold" id="threshold-range" type="range" min="6" max="60" step="1" value="20"><small>권장값은 18~28입니다. 값을 낮추면 더 민감하지만 조명 변화와 카메라 진동도 감지할 수 있습니다.</small></label>
+-            <label class="toggle-row"><span><strong>개인정보 보호 모드</strong><small>영상 표시, 물품 감지와 외부 AI 이미지 전송을 일시 중지합니다.</small></span><span class="switch"><input name="privacy_mode" type="checkbox"><span aria-hidden="true"></span></span></label>
++            <label class="field"><span>카메라 번호</span><input name="camera_index" type="number" min="-1" max="20" step="1" value="0" required><small>기본 웹캠은 0입니다. 장치에 연결된 카메라 번호를 입력하세요.</small></label>
++            <label class="field"><span>움직임 후 안정화 대기 <output id="delay-output">3초</output></span><input name="motion_delay_seconds" id="delay-range" type="range" min="0.5" max="30" step="any" value="3"></label>
++            <label class="field"><span>픽셀 변화 민감도 <output id="threshold-output">높음 (20)</output></span><input name="motion_threshold" id="threshold-range" type="range" min="2" max="100" step="any" value="20"><small>값을 낮추면 더 민감하지만 조명 변화와 카메라 진동도 감지할 수 있습니다.</small></label>
++            <label class="toggle-row"><span><strong>개인정보 보호 모드</strong><small>저장하면 영상 표시와 새 물품 감지를 중지합니다. 이미 접수된 AI 분석은 완료될 수 있습니다.</small></span><span class="switch"><input name="privacy_mode" type="checkbox"><span aria-hidden="true"></span></span></label>
+             <button class="button secondary inline-action" type="button" data-rebaseline><svg><use href="#icon-refresh"></use></svg>현재 화면을 기준으로 설정</button>
+           </section>
+-          <section class="settings-section" data-settings-panel="email" hidden>
++          <section class="settings-section" data-settings-panel="email" id="settings-panel-email" role="tabpanel" aria-labelledby="settings-tab-email" hidden>
+             <div class="section-heading"><h3>메일 알림</h3><p>보관 기한이 만료될 때 관리자에게 안내 메일을 보냅니다.</p></div>
+             <label class="field"><span>관리자 이메일</span><input name="admin_email" type="email" placeholder="admin@school.ac.kr" autocomplete="email"></label>
+-            <div class="field-split"><label class="field"><span>SMTP 서버</span><input name="smtp_host" type="text" placeholder="smtp.gmail.com" autocomplete="off"></label><label class="field narrow"><span>포트</span><input name="smtp_port" type="number" value="587" min="1" max="65535"></label></div>
++            <div class="field-split"><label class="field"><span>SMTP 서버</span><input name="smtp_host" type="text" placeholder="smtp.gmail.com" autocomplete="off"></label><label class="field narrow"><span>포트</span><input name="smtp_port" type="number" value="587" min="1" max="65535" step="1" required></label></div>
+             <label class="field"><span>SMTP 사용자 이름</span><input name="smtp_username" type="text" autocomplete="username"></label>
+             <label class="field"><span>앱 비밀번호</span><input name="smtp_password" type="password" placeholder=".env 파일에서 설정" autocomplete="off" disabled><small>SMTP_PASSWORD 환경변수에 Gmail 앱 비밀번호를 입력하세요.</small></label>
+             <button class="button secondary inline-action" type="button" id="test-email"><svg><use href="#icon-mail"></use></svg>테스트 메일 보내기</button>
+           </section>
+-          <section class="settings-section" data-settings-panel="policy" hidden>
++          <section class="settings-section" data-settings-panel="policy" id="settings-panel-policy" role="tabpanel" aria-labelledby="settings-tab-policy" hidden>
+             <div class="section-heading"><h3>기본 보관 정책</h3><p>AI가 분류한 물품 종류에 따라 자동으로 적용됩니다.</p></div>
+             <div class="policy-row"><span class="policy-icon valuable"><svg><use href="#icon-sparkles"></use></svg></span><div><strong>귀중품</strong><small>전자기기, 지갑, 귀금속 등</small></div><label><input name="valuable_retention_days" type="number" value="90" readonly aria-label="귀중품 보관 기간"><span>일</span></label></div>
+             <div class="policy-row"><span class="policy-icon general"><svg><use href="#icon-box"></use></svg></span><div><strong>일반 물품</strong><small>의류, 우산, 문구류 등</small></div><label><input name="general_retention_days" type="number" value="60" readonly aria-label="일반 물품 보관 기간"><span>일</span></label></div>
+             <div class="policy-row"><span class="policy-icon food"><svg><use href="#icon-clock"></use></svg></span><div><strong>음식물</strong><small>식품, 음료 등 변질 가능 물품</small></div><label><input name="food_retention_days" type="number" value="1" readonly aria-label="음식물 보관 기간"><span>일</span></label></div>
+-            <label class="field"><span>귀중품 판단 최소 추정가</span><input name="valuable_value_threshold_krw" type="number" min="10000" max="1000000000" step="10000" value="100000"><small>AI 추정가가 이 금액 이상이면 귀중품 90일 정책을 우선 적용합니다.</small></label>
+-          </section>
+-          <section class="settings-section" data-settings-panel="system" hidden>
++            <label class="field"><span>귀중품 판단 최소 추정가</span><input name="valuable_value_threshold_krw" type="number" min="10000" max="1000000000" step="1" value="100000" required><small>AI 추정가가 이 금액 이상이면 귀중품 90일 정책을 우선 적용합니다. 보관 기간은 앱의 기본 운영 정책입니다.</small></label>
++          </section>
++          <section class="settings-section" data-settings-panel="system" id="settings-panel-system" role="tabpanel" aria-labelledby="settings-tab-system" hidden>
+             <div class="section-heading"><h3>시스템 관리</h3><p>저장된 운영 데이터를 정리하거나 새 시연을 준비합니다.</p></div>
+             <div class="danger-zone">
+               <div class="danger-zone-heading">
+@@ -362,7 +362,7 @@
+     </div>
+   </dialog>
+ 
+-  <dialog class="modal confirm-modal" id="confirm-dialog" aria-labelledby="confirm-title">
++  <dialog class="modal confirm-modal" id="confirm-dialog" aria-labelledby="confirm-title" aria-describedby="confirm-message">
+     <div class="modal-shell"><div class="confirm-icon" id="confirm-icon"><svg><use href="#icon-info"></use></svg></div><h2 id="confirm-title">계속할까요?</h2><p id="confirm-message"></p><div class="confirm-actions"><button class="button secondary" type="button" id="confirm-cancel">취소</button><button class="button primary" type="button" id="confirm-accept">확인</button></div></div>
+   </dialog>
+ 
+
+--- before/tests/frontend/app.test.cjs
++++ after/tests/frontend/app.test.cjs
+@@ -0,0 +1,276 @@
++"use strict";
++
++// Run with: node --test tests/frontend/app.test.cjs
++// Exercise the production controller with deferred HTTP responses and a tiny DOM.
++const { test } = require("node:test");
++const assert = require("node:assert/strict");
++const { readFileSync } = require("node:fs");
++const { join } = require("node:path");
++const vm = require("node:vm");
++
++class Element {
++  constructor(options = {}) {
++    this.dataset = {};
++    this.attributes = new Map();
++    this.children = [];
++    this.innerHTML = "";
++    this.textContent = "";
++    this.value = "";
++    this.disabled = false;
++    this.hidden = false;
++    this.open = false;
++    this.isConnected = true;
++    this.classes = new Set();
++    this.classList = {
++      add: (...names) => names.forEach((name) => this.classes.add(name)),
++      remove: (...names) => names.forEach((name) => this.classes.delete(name)),
++      contains: (name) => this.classes.has(name),
++      toggle: (name, on) => on ? this.classes.add(name) : this.classes.delete(name),
++    };
++    Object.assign(this, options);
++  }
++  setAttribute(name, value) { this.attributes.set(name, String(value)); }
++  getAttribute(name) { return this.attributes.get(name) ?? null; }
++  hasAttribute(name) { return this.attributes.has(name); }
++  removeAttribute(name) { this.attributes.delete(name); }
++  toggleAttribute(name, on) { if (on) this.setAttribute(name, ""); else this.removeAttribute(name); }
++  querySelector(selector) { return this.nodes?.[selector] || null; }
++  querySelectorAll() { return []; }
++  closest() { return null; }
++  addEventListener() {}
++  appendChild(child) { this.children.push(child); }
++  focus() { this.focused = true; }
++  showModal() { this.open = true; }
++  close() { this.open = false; }
++  set src(value) { this.setAttribute("src", value); }
++  get src() { return this.getAttribute("src"); }
++}
++
++function setup() {
++  const nodes = new Map();
++  const groups = new Map();
++  const requests = [];
++  const document = {
++    hidden: false,
++    querySelector: (selector) => nodes.get(selector) || null,
++    querySelectorAll: (selector) => groups.get(selector) || [],
++    getElementById: (id) => nodes.get(`#${id}`) || null,
++    createElement: () => new Element(),
++    addEventListener() {},
++  };
++  const sandbox = {
++    document, HTMLDialogElement: Element, HTMLImageElement: Element,
++    URL, URLSearchParams, AbortController,
++    navigator: { onLine: true },
++    location: { origin: "http://localhost", hash: "" },
++    history: { pushState() {} },
++    window: { matchMedia: () => ({ matches: true }), setTimeout: () => 1, clearTimeout() {}, setInterval: () => 1, clearInterval() {}, scrollTo() {}, confirm: () => true, addEventListener() {} },
++    FormData: class {
++      constructor(form) { this.form = form; }
++      get(name) { const input = this.form.elements.namedItem(name); return input && !input.disabled ? input.value : null; }
++    },
++    fetch(path, options) {
++      return new Promise((resolve, reject) => {
++        requests.push({ path, options, reject, reply: (data, status = 200) => resolve({ ok: status < 400, status, headers: { get: () => "application/json" }, json: async () => data }) });
++      });
++    },
++  };
++  const source = readFileSync(join(__dirname, "../../static/app.js"), "utf8");
++  const exports = "state, loadDashboard, loadItems, openItem, loadSettings, settingsPayload, populateSettings, handleProviderChange, handleItemAction, saveItemEdit, syncCameraStreams, validateSettingsForm, effectiveStatus";
++  vm.createContext(sandbox);
++  vm.runInContext(source.replace(/\}\)\(\);\s*$/, `globalThis.app = { ${exports} }; })();`), sandbox);
++  return { ...sandbox.app, document, nodes, groups, requests, add(selector, options) { const node = new Element(options); nodes.set(selector, node); return node; } };
++}
++
++const flush = () => new Promise((resolve) => setImmediate(resolve));
++const item = (id, name = `물품 ${id}`) => ({ id, name, provider: "manual", category: "general", status: "stored", expires_at: "2099-01-01T12:34:56+00:00" });
++
++test("recover, dispose and restore report success after the server commits", async () => {
++  for (const action of ["recover", "dispose", "restore"]) {
++    const app = setup();
++    const toasts = app.add("#toast-region");
++    const button = new Element({ dataset: { id: "1", itemAction: action } });
++    const pending = app.handleItemAction(button);
++    await flush();
++    assert.equal(app.requests[0].path, `/api/items/1/${action}`);
++    app.requests[0].reply(item(1));
++    await flush();
++    assert.equal(app.requests[1].path, "/api/dashboard");
++    app.requests[1].reply({});
++    await pending;
++    assert.equal(toasts.children.length, 1);
++    assert.equal(toasts.children[0].className, "toast success");
++    assert.equal(button.disabled, false);
++  }
++});
++
++test("a newer search survives an older response and an older error", async () => {
++  for (const failOlder of [false, true]) {
++    const app = setup();
++    const search = app.add("#item-search", { value: "first" });
++    const first = app.loadItems({ silent: true });
++    search.value = "second";
++    const second = app.loadItems({ silent: true });
++    assert.equal(app.requests.length, 2);
++    app.requests[1].reply({ items: [item(2)] });
++    await second;
++    if (failOlder) app.requests[0].reject(new Error("connection lost"));
++    else app.requests[0].reply({ items: [item(1)] });
++    await first;
++    assert.equal(app.state.items[0].id, 2);
++    assert.equal(app.state.itemsLoading, false);
++  }
++});
++
++test("a refresh after mutation supersedes an in-flight identical query", async () => {
++  const app = setup();
++  const first = app.loadItems({ silent: true });
++  const refresh = app.loadItems({ silent: true, force: true });
++  app.requests[1].reply({ items: [item(3)] });
++  await refresh;
++  app.requests[0].reply({ items: [] });
++  await first;
++  assert.equal(app.state.items[0].id, 3);
++});
++
++test("older dashboard failure cannot take a newer successful connection offline", async () => {
++  const app = setup();
++  const first = app.loadDashboard();
++  const refresh = app.loadDashboard({ force: true });
++  app.requests[1].reply({ stats: { active: 3 } });
++  await refresh;
++  app.requests[0].reject(new Error("stale failure"));
++  await first;
++  assert.equal(app.state.dashboard.stats.active, 3);
++  assert.equal(app.state.serverOnline, true);
++});
++
++test("opening a second item cannot be overwritten by the first item's response", async () => {
++  const app = setup();
++  app.add("#item-dialog");
++  const title = app.add("#item-dialog-title");
++  app.add("#item-dialog-content");
++  const first = app.openItem(1);
++  const second = app.openItem(2);
++  app.requests[1].reply(item(2, "두 번째 물품"));
++  await second;
++  app.requests[0].reply(item(1, "첫 번째 물품"));
++  await first;
++  assert.equal(title.textContent, "두 번째 물품");
++});
++
++function settingsForm(app) {
++  const values = {
++    ai_provider: "auto", ai_model: "model-a", ai_min_confidence: "0.15", camera_index: "0",
++    motion_delay_seconds: "20.25", motion_threshold: "3.75", privacy_mode: "",
++    admin_email: "", smtp_host: "smtp.local", smtp_port: "587", smtp_username: "",
++    valuable_value_threshold_krw: "100000",
++  };
++  const elements = Object.entries(values).map(([name, value]) => new Element({ name, value }));
++  elements.namedItem = (name) => elements.find((element) => element.name === name) || null;
++  app.add("#settings-form", { elements });
++  app.nodes.set("#ai-provider", elements.namedItem("ai_provider"));
++  app.nodes.set("#ai-model", elements.namedItem("ai_model"));
++  return elements;
++}
++
++const settings = {
++  provider: "auto", openai_model: "model-a", gemini_model: "model-b", ai_min_confidence: 0.15,
++  camera_index: 0, settle_seconds: 20.25, motion_threshold: 3.75, privacy_mode: false,
++  admin_email: "", smtp_host: "smtp.local", smtp_port: 587, smtp_username: "", valuable_value_threshold_krw: 100000,
++};
++
++test("opening settings during startup awaits the shared request and populates safe values", async () => {
++  const app = setup();
++  const fields = settingsForm(app);
++  const button = app.add("#save-settings");
++  const content = app.add("#settings-content");
++  const startup = app.loadSettings({ populate: false, silent: true });
++  const opened = app.loadSettings({ populate: true });
++  assert.equal(app.requests.length, 1);
++  assert.equal(button.disabled, true);
++  assert.equal(content.inert, true);
++  app.requests[0].reply({ settings, provider: { active: "openai" } });
++  await Promise.all([startup, opened]);
++  assert.equal(fields.namedItem("motion_threshold").value, "3.75");
++  assert.equal(fields.namedItem("motion_delay_seconds").value, "20.25");
++  assert.equal(fields.namedItem("ai_min_confidence").value, "0.15");
++  assert.equal(button.disabled, false);
++  assert.equal(content.inert, false);
++  assert.equal(Object.keys(app.settingsPayload()).length, 0);
++  fields.namedItem("admin_email").value = "test@example.invalid";
++  assert.deepEqual(JSON.parse(JSON.stringify(app.settingsPayload())), { admin_email: "test@example.invalid" });
++});
++
++test("model edits survive switching providers and automatic selection", () => {
++  const app = setup();
++  const fields = settingsForm(app);
++  app.state.settings = settings;
++  app.state.provider = { active: "openai" };
++  app.populateSettings(settings, app.state.provider);
++  fields.namedItem("ai_model").value = "edited-a";
++  fields.namedItem("ai_provider").value = "gemini";
++  app.handleProviderChange();
++  assert.equal(fields.namedItem("ai_model").value, "model-b");
++  fields.namedItem("ai_model").value = "edited-b";
++  fields.namedItem("ai_provider").value = "auto";
++  app.handleProviderChange();
++  assert.equal(fields.namedItem("ai_model").value, "edited-a");
++  assert.deepEqual(JSON.parse(JSON.stringify(app.settingsPayload())), { openai_model: "edited-a", gemini_model: "edited-b" });
++});
++
++test("hidden streams disconnect; returning to the view opens only its stream", () => {
++  const app = setup();
++  const dashboard = { hidden: false };
++  const camera = { hidden: true };
++  const main = new Element({ dataset: { streamSrc: "/camera/stream" }, closest: () => dashboard });
++  const secondary = new Element({ dataset: { streamSrc: "/camera/stream" }, closest: () => camera });
++  secondary.setAttribute("data-camera-stream-secondary", "");
++  app.groups.set('[data-camera-stream], [data-camera-stream-secondary]', [main, secondary]);
++  app.syncCameraStreams();
++  assert.ok(main.src);
++  assert.equal(secondary.src, null);
++  dashboard.hidden = true;
++  camera.hidden = false;
++  app.syncCameraStreams();
++  assert.equal(main.src, null);
++  assert.ok(secondary.src);
++  app.document.hidden = true;
++  app.syncCameraStreams();
++  assert.equal(secondary.src, null);
++  app.document.hidden = false;
++  app.state.dashboard = { camera: { privacy_enabled: true } };
++  app.syncCameraStreams();
++  assert.equal(secondary.src, null);
++  assert.equal(secondary.hidden, true);
++});
++
++test("saving only the name preserves the full-precision expiry timestamp", async () => {
++  const app = setup();
++  const fields = [
++    new Element({ name: "name", value: "수정한 물품" }), new Element({ name: "description", value: "" }),
++    new Element({ name: "category", value: "general" }), new Element({ name: "expires_at", value: "2099-01-01T12:34" }),
++  ];
++  fields.namedItem = (name) => fields.find((field) => field.name === name);
++  const form = new Element({ elements: fields, dataset: { id: "1", originalCategory: "general", originalExpiry: "2099-01-01T12:34" } });
++  const pending = app.saveItemEdit(form);
++  const body = JSON.parse(app.requests[0].options.body);
++  assert.equal(body.name, "수정한 물품");
++  assert.equal("expires_at" in body, false);
++  app.requests[0].reply(item(1));
++  await flush();
++  app.requests[1].reply({});
++  await pending;
++});
++
++test("upcoming expiry follows the configured alert period, including zero days", () => {
++  const app = setup();
++  const stored = { status: "stored", expires_at: new Date(Date.now() + 3 * 86400000).toISOString() };
++  assert.equal(app.effectiveStatus(stored), "due_soon");
++  app.state.settings = { alert_lead_days: 1 };
++  assert.equal(app.effectiveStatus(stored), "active");
++  app.state.settings.alert_lead_days = 5;
++  assert.equal(app.effectiveStatus(stored), "due_soon");
++  app.state.settings.alert_lead_days = 0;
++  assert.equal(app.effectiveStatus(stored), "active");
++});
+
+--- before/tests/test_api.py
++++ after/tests/test_api.py
+@@ -177,7 +177,7 @@
+         preserved = self.store.get_item(provisional["id"])
+         self.assertIsNotNone(preserved)
+         self.assertEqual(preserved["status"], "recovered")
+-        self.assertEqual(preserved["provider"], "openai")
++        self.assertEqual(preserved["provider"], "openai_review")
+         self.assertNotEqual(preserved["name"], "분석 중인 새 물품")
+ 
+     def test_low_confidence_remote_addition_is_kept_for_review(self) -> None:
+@@ -588,7 +588,7 @@
+         uncertain = Classification(
+             name="확인 필요한 물건",
+             description="첫 이미지 쌍만으로는 불확실합니다.",
+-            category="general",
++            category="food",
+             confidence=0.3,
+             provider="openai",
+             action="uncertain",
+@@ -601,7 +601,75 @@
+         self.assertIsNotNone(preserved)
+         self.assertEqual(preserved["status"], "stored")
+         self.assertEqual(preserved["bbox"], [115, 85, 60, 45])
+-        self.assertNotEqual(preserved["provider"], "pending")
++        self.assertEqual(preserved["provider"], "openai_review")
++        self.assertEqual(preserved["category"], "general")
++        self.assertEqual(preserved["retention_days"], 60)
++        self.assertEqual(preserved["expires_at"], provisional["expires_at"])
++
++    def _assert_late_rejection_preserves_reconfirmed_item(self, *, queued: bool) -> None:
++        with tempfile.TemporaryDirectory() as directory:
++            capture_dir = Path(directory)
++            with patch.object(main, "config", replace(main.config, capture_dir=capture_dir)):
++                event = ChangeEvent(
++                    kind="added", bbox=(80, 80, 60, 45), crop_jpeg=b"original crop",
++                    before_jpeg=b"original background", after_jpeg=b"original after",
++                    confidence=0.7,
++                )
++                provisional = main.create_provisional_item(event)
++                initial_signature = main.item_tracking_signature(provisional)
++                reconfirmed: dict = {}
++                rejection = Classification(
++                    name="확인 필요한 물건", description="이전 증거를 제거로 판정했습니다.",
++                    category="food", confidence=0.95, provider="openai", action="removed",
++                )
++
++                def move_away_and_back() -> None:
++                    for index, bbox in enumerate(((160, 90, 60, 45), event.bbox)):
++                        main.handle_vision_change(
++                            ChangeEvent(
++                                kind="moved", bbox=bbox,
++                                crop_jpeg=f"new crop {index}".encode(),
++                                before_jpeg=f"new background {index}".encode(),
++                                after_jpeg=f"new after {index}".encode(),
++                                confidence=0.9, matched_item_id=provisional["id"],
++                            )
++                        )
++                    reconfirmed.update(self.store.get_item(provisional["id"]))
++                    self.assertEqual(reconfirmed["bbox"], list(event.bbox))
++                    self.assertNotEqual(main.item_tracking_signature(reconfirmed), initial_signature)
++
++                def respond_after_movement(*_args, **_kwargs) -> Classification:
++                    if not queued:
++                        move_away_and_back()
++                    return rejection
++
++                if queued:
++                    move_away_and_back()
++                self.assertTrue(main.classification_slots.acquire(blocking=False))
++                with patch.object(main.classifier, "classify", side_effect=respond_after_movement):
++                    if queued:
++                        main.classify_existing_item(provisional["id"], event, initial_signature)
++                    else:
++                        main.classify_existing_item(provisional["id"], event)
++
++                preserved = self.store.get_item(provisional["id"])
++                self.assertIsNotNone(preserved)
++                self.assertEqual(preserved["status"], "stored")
++                self.assertEqual(preserved["provider"], "openai_review")
++                self.assertEqual(preserved["bbox"], list(event.bbox))
++                self.assertEqual(preserved["category"], "general")
++                self.assertEqual(preserved["expires_at"], provisional["expires_at"])
++                for field in ("image_path", "background_path"):
++                    self.assertEqual(preserved[field], reconfirmed[field])
++                    self.assertTrue(Path(preserved[field]).is_file())
++                self.assertEqual(Path(preserved["image_path"]).read_bytes(), b"new crop 1")
++                self.assertEqual(Path(preserved["background_path"]).read_bytes(), b"new background 1")
++
++    def test_late_rejection_after_move_back_preserves_item_and_current_captures(self) -> None:
++        self._assert_late_rejection_preserves_reconfirmed_item(queued=False)
++
++    def test_queued_addition_uses_original_signature_after_move_back(self) -> None:
++        self._assert_late_rejection_preserves_reconfirmed_item(queued=True)
+ 
+     def test_demo_phone_edit_recover_restore_and_extend(self) -> None:
+         phone = self.create_demo_phone()
+
+--- before/tests/test_app_resilience.py
++++ after/tests/test_app_resilience.py
+@@ -0,0 +1,315 @@
++from __future__ import annotations
++
++import asyncio
++import json
++import tempfile
++import threading
++import unittest
++from contextlib import ExitStack
++from dataclasses import replace
++from pathlib import Path
++from unittest.mock import Mock, patch
++
++from fastapi.testclient import TestClient
++
++from app import main
++from app.ai import Classification, ObjectClassifier
++from app.store import Store
++from app.vision import ChangeEvent
++
++
++class AppResilienceTests(unittest.TestCase):
++    def setUp(self) -> None:
++        self.stack = ExitStack()
++        self.addCleanup(self.stack.close)
++        root = Path(self.stack.enter_context(tempfile.TemporaryDirectory()))
++        captures = root / "captures"
++        captures.mkdir()
++        self.store = Store(root / "app.sqlite3")
++        self.store.initialize()
++        self.stack.enter_context(patch.object(main, "store", self.store))
++        self.stack.enter_context(patch.object(main.scheduler, "store", self.store))
++        self.stack.enter_context(patch.object(main, "config", replace(
++            main.config, data_dir=root, capture_dir=captures, db_path=self.store.db_path,
++        )))
++        self.stack.enter_context(patch.object(main, "classification_slots", threading.BoundedSemaphore(1)))
++        self.stack.enter_context(patch.object(main, "_service_shutdown", threading.Event()))
++        self.stack.enter_context(patch.object(main, "_reset_lock", threading.Lock()))
++        self.stack.enter_context(patch.object(main, "_reset_recovery_thread", None))
++        self.stack.enter_context(patch.object(main.vision, "rebaseline"))
++        self.stack.enter_context(patch.object(main.vision, "set_privacy"))
++        # Most route tests intentionally avoid lifespan/camera/SMTP startup.
++        self.client = TestClient(main.app)
++        self.stack.callback(self.client.close)
++        self.event = ChangeEvent(
++            kind="added", bbox=(10, 20, 30, 40), confidence=0.9,
++            before_jpeg=b"before", after_jpeg=b"after", crop_jpeg=b"crop",
++        )
++
++    def test_invalid_settings_leave_entire_update_unchanged(self) -> None:
++        self.store.update_settings({"site_name": "Original", "motion_threshold": 20})
++        before = self.store.get_settings()
++        for values in (
++            {"motion_threshold": "oops"}, {"camera_index": 1.5},
++            {"motion_threshold": True}, {"privacy_mode": "maybe"},
++            {"stable_seconds": "NaN"}, {"stable_seconds": "Infinity"},
++            {"smtp_port": None}, {"camera_retry_seconds": -1},
++            {"admin_email": "person@example.com\nBcc: other@example.com"},
++            {"openai_model": " "},
++        ):
++            with self.subTest(values=values):
++                response = self.client.put("/api/settings", json={"site_name": "Changed", **values})
++                self.assertEqual(response.status_code, 400, response.text)
++                self.assertEqual(self.store.get_settings(), before)
++
++    def test_settings_support_valid_numeric_strings_and_explicit_false(self) -> None:
++        response = self.client.put("/api/settings", json={
++            "camera_index": "2", "stable_seconds": "1.25", "privacy_mode": "false",
++        })
++        self.assertEqual(response.status_code, 200, response.text)
++        values = response.json()["settings"]
++        self.assertEqual(values["camera_index"], 2)
++        self.assertEqual(values["stable_seconds"], 1.25)
++        self.assertIs(values["privacy_mode"], False)
++
++    def test_concurrent_privacy_updates_keep_live_and_saved_state_in_order(self) -> None:
++        first_applying = threading.Event()
++        resume_first = threading.Event()
++        second_finished = threading.Event()
++        applied = []
++        errors = []
++
++        def apply_privacy(value):
++            if threading.current_thread().name == "first-privacy-update":
++                first_applying.set()
++                resume_first.wait(3)
++            applied.append(value)
++
++        def update(value):
++            try:
++                main.update_settings({"privacy_mode": value})
++            except Exception as exc:
++                errors.append(exc)
++            finally:
++                if value:
++                    second_finished.set()
++
++        first = threading.Thread(target=update, args=(False,), name="first-privacy-update")
++        second = threading.Thread(target=update, args=(True,))
++        with patch.object(main.vision, "set_privacy", side_effect=apply_privacy):
++            first.start()
++            try:
++                self.assertTrue(first_applying.wait(1))
++                second.start()
++                # The older request is paused inside the camera update. A
++                # newer privacy write must wait for that update to finish.
++                self.assertFalse(second_finished.wait(0.2))
++            finally:
++                resume_first.set()
++                first.join(2)
++                if second.ident is not None:
++                    second.join(2)
++        self.assertEqual(errors, [])
++        self.assertEqual(applied, [False, True])
++        self.assertIs(self.store.get_settings()["privacy_mode"], True)
++
++    def test_failed_provisional_persistence_removes_captures(self) -> None:
++        with patch.object(self.store, "create_item", side_effect=RuntimeError("DB unavailable")):
++            with self.assertRaises(RuntimeError):
++                main.create_provisional_item(self.event)
++        self.assertEqual(list(main.config.capture_dir.iterdir()), [])
++        self.assertEqual(self.store.list_items(), [])
++
++    def test_partial_capture_write_failure_removes_first_capture(self) -> None:
++        save_capture = main.save_capture
++
++        def fail_background(image, prefix="item"):
++            if prefix == "background":
++                raise OSError("disk full")
++            return save_capture(image, prefix)
++
++        with patch.object(main, "save_capture", side_effect=fail_background):
++            with self.assertRaises(OSError):
++                main.create_provisional_item(self.event)
++        self.assertEqual(list(main.config.capture_dir.iterdir()), [])
++
++    def test_capture_write_failure_removes_its_partial_file(self) -> None:
++        write_bytes = Path.write_bytes
++
++        def partial_write(path, content):
++            write_bytes(path, content[:2])
++            raise OSError("disk full during write")
++
++        with patch.object(Path, "write_bytes", autospec=True, side_effect=partial_write):
++            with self.assertRaisesRegex(OSError, "disk full"):
++                main.save_capture(b"image bytes")
++
++        self.assertEqual(list(main.config.capture_dir.iterdir()), [])
++
++    def test_activity_failure_keeps_committed_item_available_for_analysis(self) -> None:
++        with patch.object(self.store, "create_activity", side_effect=RuntimeError("activity failure")):
++            with self.assertLogs("lost-item-admin", level="ERROR"):
++                item = main.create_provisional_item(self.event)
++        self.assertEqual(self.store.get_item(item["id"])["provider"], "pending")
++        self.assertTrue(Path(item["image_path"]).exists())
++
++    def test_executor_rejection_preserves_item_and_releases_slot(self) -> None:
++        with patch.object(main, "classification_pool") as pool:
++            pool.submit.side_effect = RuntimeError("executor is stopping")
++            with self.assertLogs("lost-item-admin", level="WARNING"):
++                main.handle_vision_change(self.event)
++        item = self.store.list_items()[0]
++        self.assertEqual(item["provider"], "offline_review")
++        self.assertTrue(main.classification_slots.acquire(blocking=False))
++        main.classification_slots.release()
++
++    def test_rejected_submission_preserves_concurrent_manual_edit(self) -> None:
++        def edit_then_reject(worker, item_id, event, *context):
++            main.edit_item(item_id, main.ItemEdit(name="Administrator name"))
++            return False
++
++        with patch.object(main, "submit_classification", side_effect=edit_then_reject):
++            main.handle_vision_change(self.event)
++
++        item = self.store.list_items()[0]
++        self.assertEqual(item["name"], "Administrator name")
++        self.assertEqual(item["provider"], "manual")
++
++    def test_late_classification_preserves_manual_extension(self) -> None:
++        item = main.create_provisional_item(self.event)
++        response = self.client.post(f"/api/items/{item['id']}/extend", json={"days": 7})
++        self.assertEqual(response.status_code, 200)
++        manual_expiry = response.json()["expires_at"]
++        result = Classification("음식", "음식 설명", "food", 0.95, "test", action="added")
++        self.assertTrue(main.classification_slots.acquire(blocking=False))
++        with patch.object(main.classifier, "classify", return_value=result):
++            main.classify_existing_item(item["id"], self.event)
++        preserved = self.store.get_item(item["id"])
++        self.assertEqual(preserved["expires_at"], manual_expiry)
++        self.assertEqual(preserved["provider"], "manual_review")
++        self.assertNotEqual(preserved["name"], "분석 중인 새 물품")
++
++    def test_manual_edit_resolves_review_and_rejects_empty_names(self) -> None:
++        item = self.store.create_item({"name": "확인 필요", "category": "general", "provider": "offline_review"})
++        for body in ({}, {"name": "   "}):
++            response = self.client.patch(f"/api/items/{item['id']}", json=body)
++            self.assertEqual(response.status_code, 400)
++            self.assertEqual(self.store.get_item(item["id"])["provider"], "offline_review")
++        response = self.client.patch(f"/api/items/{item['id']}", json={"name": "  우산  "})
++        self.assertEqual(response.status_code, 200)
++        self.assertEqual(response.json()["name"], "우산")
++        self.assertEqual(response.json()["provider"], "manual")
++
++    def test_startup_restores_privacy_before_camera_and_recovers_pending_jobs(self) -> None:
++        pending = main.create_provisional_item(self.event)
++        self.store.update_settings({"privacy_mode": True})
++        order = []
++        pools = []
++        with patch.object(main.vision, "set_privacy", side_effect=lambda value: order.append(("privacy", value))), \
++             patch.object(main.vision, "start", side_effect=lambda: order.append(("start", None))), \
++             patch.object(main.vision, "stop", return_value=True), \
++             patch.object(main.scheduler, "start"), patch.object(main.scheduler, "stop", return_value=True), \
++             patch.object(main, "classification_pool"):
++            for _ in range(2):
++                with TestClient(main.app):
++                    pools.append(main.classification_pool)
++                    self.assertEqual(main.classification_pool.submit(lambda: 42).result(), 42)
++        self.assertIsNot(pools[0], pools[1])
++        self.assertEqual(order, [("privacy", True), ("start", None)] * 2)
++        self.assertEqual(self.store.get_item(pending["id"])["provider"], "offline_review")
++
++    def test_reset_waits_for_camera_and_notification_workers(self) -> None:
++        for camera_done, scheduler_done in ((False, True), (True, False)):
++            finish_worker = threading.Event()
++
++            def slow_stop(timeout=None):
++                if timeout is None:
++                    return False
++                return finish_worker.wait(0.05)
++
++            with self.subTest(camera_done=camera_done), \
++                 patch.object(main.vision, "stop", side_effect=(None if camera_done else slow_stop), return_value=True), \
++                 patch.object(main.scheduler, "stop", side_effect=(None if scheduler_done else slow_stop), return_value=True), \
++                 patch.object(main.vision, "start") as camera_start, \
++                 patch.object(main.scheduler, "start") as scheduler_start, \
++                 patch.object(main, "backup_and_reset_operational_data") as reset:
++                recovery = None
++                try:
++                    response = self.client.post("/api/maintenance/reset", json={"confirmation": "초기화"})
++                    self.assertEqual(response.status_code, 409)
++                    self.assertIn("자동 재개", response.json()["detail"])
++                    recovery = main._reset_recovery_thread
++                    self.assertIsNotNone(recovery)
++                    self.assertTrue(main._reset_lock.locked())
++                    camera_start.assert_not_called()
++                    scheduler_start.assert_not_called()
++                    retry = self.client.post("/api/maintenance/reset", json={"confirmation": "초기화"})
++                    self.assertEqual(retry.status_code, 409)
++                    reset.assert_not_called()
++                finally:
++                    finish_worker.set()
++                    if recovery is not None:
++                        recovery.join(2)
++                self.assertFalse(recovery.is_alive())
++                self.assertFalse(main._reset_lock.locked())
++                camera_start.assert_called_once()
++                scheduler_start.assert_called_once()
++                reset.assert_not_called()
++
++    def test_lifespan_shutdown_cancels_deferred_reset_restart(self) -> None:
++        recovery_waiting = threading.Event()
++        foreground_stops = []
++
++        def camera_stop(timeout=None):
++            if timeout is None:
++                foreground_stops.append(True)
++                return len(foreground_stops) > 1
++            recovery_waiting.set()
++            main._service_shutdown.wait(0.05)
++            return False
++
++        with patch.object(main.vision, "start") as camera_start, \
++             patch.object(main.vision, "stop", side_effect=camera_stop), \
++             patch.object(main.scheduler, "start") as scheduler_start, \
++             patch.object(main.scheduler, "stop", return_value=True), \
++             patch.object(main, "classification_pool"), \
++             patch.object(main, "backup_and_reset_operational_data") as reset:
++            with TestClient(main.app) as client:
++                response = client.post("/api/maintenance/reset", json={"confirmation": "초기화"})
++                self.assertEqual(response.status_code, 409)
++                self.assertTrue(recovery_waiting.wait(1))
++                recovery = main._reset_recovery_thread
++                self.assertIsNotNone(recovery)
++            self.assertFalse(recovery.is_alive())
++            self.assertFalse(main._reset_lock.locked())
++            camera_start.assert_called_once()
++            scheduler_start.assert_called_once()
++            reset.assert_not_called()
++
++    def test_empty_camera_stream_can_be_cancelled(self) -> None:
++        async def exercise():
++            response = main.camera_stream()
++            with self.assertRaises(asyncio.TimeoutError):
++                await asyncio.wait_for(anext(response.body_iterator), timeout=0.01)
++            await response.body_iterator.aclose()
++        with patch.object(main.vision, "get_jpeg", return_value=b""):
++            asyncio.run(exercise())
++
++
++class AIConfidenceValidationTests(unittest.TestCase):
++    def test_invalid_confidence_never_authorizes_automatic_actions(self) -> None:
++        classifier = ObjectClassifier(Mock(), lambda: {})
++        for action in ("added", "removed"):
++            for confidence in (None, "wrong", "NaN", float("inf"), float("nan"), True, [], {}):
++                with self.subTest(action=action, confidence=confidence):
++                    result = classifier._normalize(json.dumps({
++                        "action": action, "confidence": confidence,
++                        "estimated_value_krw": float("inf"),
++                    }), "test")
++                    self.assertEqual(result.confidence, 0.0)
++                    self.assertEqual(result.action, "uncertain")
++                    self.assertIsNone(result.estimated_value_krw)
++
++
++if __name__ == "__main__":
++    unittest.main()
+
+--- before/tests/test_notifier.py
++++ after/tests/test_notifier.py
+@@ -0,0 +1,179 @@
++from __future__ import annotations
++
++import tempfile
++import unittest
++from concurrent.futures import ThreadPoolExecutor
++from datetime import datetime, timedelta, timezone
++from pathlib import Path
++from threading import Barrier, Event
++from types import SimpleNamespace
++from unittest.mock import Mock, patch
++
++from app.notifier import EmailNotifier, ExpirationScheduler
++from app.store import Store
++
++
++class NotificationTestCase(unittest.TestCase):
++    def setUp(self) -> None:
++        self.directory = tempfile.TemporaryDirectory()
++        self.addCleanup(self.directory.cleanup)
++        self.store = Store(Path(self.directory.name) / "notifications.db")
++        self.store.initialize()
++
++    def create_expired(self, name: str = "Lunch") -> dict:
++        return self.store.create_item(
++            {"name": name, "category": "food",
++             "expires_at": datetime.now(timezone.utc) - timedelta(days=1)}
++        )
++
++    def test_separate_schedulers_deliver_one_message_per_expiry_cycle(self) -> None:
++        self.create_expired()
++        sender = Mock()
++        sender.send_due.return_value = (True, None)
++        schedulers = [ExpirationScheduler(Store(self.store.db_path), sender) for _ in range(2)]
++        barrier = Barrier(2)
++        original = Store.get_due_notifications_candidates
++
++        def simultaneous_candidates(store: Store, now=None) -> list[dict]:
++            items = original(store, now)
++            barrier.wait(timeout=5)
++            return items
++
++        with patch.object(Store, "get_due_notifications_candidates", simultaneous_candidates):
++            with ThreadPoolExecutor(max_workers=2) as pool:
++                list(pool.map(lambda scheduler: scheduler.run_once(), schedulers))
++
++        self.assertEqual(sender.send_due.call_count, 1)
++        self.assertEqual(len(self.store.list_notifications()), 1)
++        self.assertEqual(self.store.list_notifications()[0]["status"], "sent")
++        self.assertCountEqual(
++            [row["type"] for row in self.store.list_activities()], ["item_due", "email_sent"]
++        )
++
++    def test_separate_schedulers_cannot_both_retry_a_failed_notification(self) -> None:
++        self.create_expired()
++        sender = Mock()
++        sender.send_due.return_value = (False, "Temporary mail failure")
++        ExpirationScheduler(self.store, sender).run_once()
++        sender.reset_mock()
++        sender.send_due.return_value = (True, None)
++        schedulers = [
++            ExpirationScheduler(Store(self.store.db_path), sender, retry_after_seconds=0)
++            for _ in range(2)
++        ]
++        barrier = Barrier(2)
++        original = Store.list_retryable_due_notifications
++
++        def simultaneous_retries(store: Store, *args, **kwargs) -> list[dict]:
++            retries = original(store, *args, **kwargs)
++            barrier.wait(timeout=5)
++            return retries
++
++        with patch.object(Store, "list_retryable_due_notifications", simultaneous_retries):
++            with ThreadPoolExecutor(max_workers=2) as pool:
++                list(pool.map(lambda scheduler: scheduler.run_once(), schedulers))
++        self.assertEqual(sender.send_due.call_count, 1)
++        self.assertEqual(self.store.list_notifications()[0]["status"], "sent")
++
++    def test_recovery_after_candidate_snapshot_prevents_obsolete_email(self) -> None:
++        item = self.create_expired()
++        sender = Mock()
++        original = self.store.create_notification
++
++        def recover_before_delivery(*args, **kwargs) -> dict:
++            notification = original(*args, **kwargs)
++            self.store.mark_recovered(item["id"])
++            return notification
++
++        with patch.object(self.store, "create_notification", recover_before_delivery):
++            ExpirationScheduler(self.store, sender).run_once()
++        sender.send_due.assert_not_called()
++        self.assertEqual(self.store.get_item(item["id"])["status"], "recovered")
++
++    def test_sender_exception_records_failure_and_continues_other_items(self) -> None:
++        self.create_expired("First")
++        self.create_expired("Second")
++        sender = Mock()
++        sender.send_due.side_effect = [RuntimeError("SMTP disconnected"), (True, None)]
++        with self.assertLogs("app.notifier", level="ERROR"):
++            ExpirationScheduler(self.store, sender).run_once()
++        self.assertCountEqual(
++            [row["status"] for row in self.store.list_notifications()], ["failed", "sent"]
++        )
++
++    def test_stop_reports_live_send_and_start_does_not_revive_stopping_worker(self) -> None:
++        self.create_expired("First")
++        self.create_expired("Second")
++        entered, release = Event(), Event()
++        sender = Mock()
++
++        def block_delivery(item: dict) -> tuple[bool, None]:
++            entered.set()
++            if not release.wait(timeout=5):
++                raise TimeoutError("test did not release sender")
++            return True, None
++
++        sender.send_due.side_effect = block_delivery
++        scheduler = ExpirationScheduler(self.store, sender)
++        scheduler.start()
++        try:
++            self.assertTrue(entered.wait(timeout=5))
++            worker = scheduler._thread
++            self.assertFalse(scheduler.stop(timeout=0.01))
++            scheduler.start()
++            self.assertIs(scheduler._thread, worker)
++            self.assertTrue(scheduler._stop.is_set())
++        finally:
++            release.set()
++            self.assertTrue(scheduler.stop(timeout=5))
++        self.assertEqual(sender.send_due.call_count, 1)
++        self.assertEqual(scheduler.run_once(), [])
++
++    def test_stop_also_waits_for_manual_scheduler_pass(self) -> None:
++        self.create_expired()
++        entered, release = Event(), Event()
++        sender = Mock()
++
++        def block_delivery(item: dict) -> tuple[bool, None]:
++            entered.set()
++            if not release.wait(timeout=5):
++                raise TimeoutError("test did not release sender")
++            return True, None
++
++        sender.send_due.side_effect = block_delivery
++        scheduler = ExpirationScheduler(self.store, sender)
++        with ThreadPoolExecutor(max_workers=1) as pool:
++            future = pool.submit(scheduler.run_once)
++            try:
++                self.assertTrue(entered.wait(timeout=5))
++                self.assertFalse(scheduler.stop(timeout=0.01))
++                scheduler.start()
++                self.assertTrue(scheduler._stop.is_set())
++                self.assertIsNone(scheduler._thread)
++            finally:
++                release.set()
++                future.result(timeout=5)
++        self.assertTrue(scheduler.stop(timeout=1))
++
++    def test_email_uses_one_consistent_settings_snapshot(self) -> None:
++        settings = {
++            "admin_email": "admin@example.test", "smtp_username": "sender@example.test",
++            "smtp_host": "mail.example.test", "smtp_port": 587, "smtp_use_tls": True,
++        }
++        getter = Mock(side_effect=[settings, {}])
++        notifier = EmailNotifier(SimpleNamespace(smtp_password="test-only-password"), getter)
++        with patch("app.notifier.smtplib.SMTP") as smtp:
++            sent, error = notifier.send_due(
++                {"id": 1, "name": "<object>\r\nBcc: unintended@example.test", "expires_at": "2026-09-01"}
++            )
++        self.assertTrue(sent)
++        self.assertIsNone(error)
++        getter.assert_called_once_with()
++        message = smtp.return_value.__enter__.return_value.send_message.call_args.args[0]
++        self.assertIsNone(message["Bcc"])
++        self.assertNotIn("\n", str(message["Subject"]))
++        self.assertIn("&lt;object&gt;", message.get_body(preferencelist=("html",)).get_content())
++
++
++if __name__ == "__main__":
++    unittest.main()
+
+--- before/tests/test_store.py
++++ after/tests/test_store.py
+@@ -9,6 +9,7 @@
+ from datetime import datetime, timedelta, timezone
+ from pathlib import Path
+ from threading import Barrier
++from unittest.mock import patch
+ 
+ from app.store import Store, classify_retention
+ 
+@@ -447,6 +448,185 @@
+         self.assertIn("uq_disposal_due_per_item_schedule", names)
+         self.assertEqual(columns, ["item_id", "type", "scheduled_for"])
+ 
++    def test_inventory_tracking_and_counts_include_older_active_items(self) -> None:
++        now = datetime.now(timezone.utc)
++        tracked = self.store.create_item(
++            {"name": "Still on shelf", "bbox": [10, 20, 30, 40],
++             "detected_at": now - timedelta(days=20), "expires_at": now + timedelta(days=1)}
++        )
++        self.store.create_item(
++            {"name": "No camera location", "expires_at": now + timedelta(days=20)}
++        )
++        due = self.store.create_item(
++            {"name": "Due", "status": "due", "bbox": [1, 2, 3, 4]}
++        )
++        for index in range(505):
++            self.store.create_item({"name": f"Returned {index}", "status": "recovered"})
++
++        self.assertEqual(
++            {item["id"] for item in self.store.list_active_items()},
++            {tracked["id"], due["id"]},
++        )
++        self.assertEqual(
++            self.store.item_stats(now, lead_days=7),
++            {"active": 2, "due_soon": 1, "expired": 1, "recovered": 505},
++        )
++
++    def test_interrupted_classifications_retain_evidence_and_terminal_status(self) -> None:
++        items = [
++            self.store.create_item(
++                {"name": "Analyzing", "provider": "pending", "status": status,
++                 "bbox": [1, 2, 3, 4], "image_path": "capture.jpg",
++                 "background_path": "before.jpg", "confidence": 0.4}
++            )
++            for status in ("stored", "recovered")
++        ]
++        manual = self.store.create_item({"name": "Manual", "provider": "manual"})
++
++        self.assertEqual(self.store.mark_interrupted_classifications(), 2)
++        self.assertEqual(self.store.mark_interrupted_classifications(), 0)
++        for original in items:
++            updated = self.store.get_item(original["id"])
++            self.assertEqual(updated["provider"], "offline_review")
++            for field in ("id", "status", "recovered_at", "expires_at", "retention_days",
++                          "bbox", "image_path", "background_path", "confidence"):
++                self.assertEqual(updated[field], original[field])
++        self.assertEqual(self.store.get_item(manual["id"]), manual)
++        self.assertEqual(len(self.store.list_activities()), 2)
++
++    def test_due_notification_claim_is_exclusive_and_old_completions_are_ignored(self) -> None:
++        now = datetime.now(timezone.utc) + timedelta(seconds=1)
++        item = self.store.create_item(
++            {"name": "Due", "status": "due", "expires_at": now - timedelta(days=1)}
++        )
++        notification = self.store.create_notification(
++            "disposal_due", item_id=item["id"], scheduled_for=item["expires_at"]
++        )
++
++        def claim(_: int) -> dict | None:
++            # Distinct Store instances emulate independent application workers.
++            return Store(self.db_path).claim_due_notification(
++                notification["id"], now=now, retry_after_seconds=0, lease_seconds=30
++            )
++
++        with ThreadPoolExecutor(max_workers=6) as pool:
++            claims = [row for row in pool.map(claim, range(12)) if row is not None]
++        self.assertEqual(len(claims), 1)
++        self.assertNotIn("delivery_token", self.store.list_notifications()[0])
++        self.assertEqual(
++            self.store.list_retryable_due_notifications(now + timedelta(seconds=29), 0), []
++        )
++        second = self.store.claim_due_notification(
++            notification["id"], now=now + timedelta(seconds=30),
++            retry_after_seconds=0, lease_seconds=30,
++        )
++        self.assertIsNotNone(second)
++        self.assertNotEqual(claims[0]["token"], second["token"])
++        self.assertIsNone(self.store.mark_notification_sent(
++            notification["id"], delivery_token=claims[0]["token"]
++        ))
++        self.assertEqual(self.store.list_notifications()[0]["status"], "pending")
++        self.store.mark_notification_sent(notification["id"], delivery_token=second["token"])
++        self.assertIsNone(self.store.mark_notification_failed(
++            notification["id"], "late timeout", delivery_token=claims[0]["token"]
++        ))
++        self.store.mark_notification_failed(notification["id"], "legacy stale timeout")
++        self.assertEqual(self.store.list_notifications()[0]["status"], "sent")
++
++    def test_notification_claim_skips_superseded_and_terminal_items(self) -> None:
++        for action in ("recover", "dispose", "extend", "delete"):
++            with self.subTest(action=action):
++                item = self.store.create_item(
++                    {"status": "due", "expires_at": datetime.now(timezone.utc) - timedelta(days=1)}
++                )
++                notification = self.store.create_notification(
++                    "disposal_due", item_id=item["id"], scheduled_for=item["expires_at"]
++                )
++                if action == "extend":
++                    self.store.extend_item(item["id"], 7)
++                elif action == "delete":
++                    self.store.delete_item(item["id"])
++                else:
++                    self.store.apply_item_action(item["id"], action)
++                self.assertIsNone(self.store.claim_due_notification(notification["id"]))
++
++    def test_expiration_activity_failure_rolls_back_transition(self) -> None:
++        item = self.store.create_item(
++            {"expires_at": datetime.now(timezone.utc) - timedelta(days=1)}
++        )
++        with closing(sqlite3.connect(self.db_path)) as connection:
++            connection.executescript(
++                """
++                CREATE TRIGGER fail_due_activity BEFORE INSERT ON activities
++                WHEN NEW.type = 'item_due'
++                BEGIN SELECT RAISE(ABORT, 'forced due activity failure'); END;
++                """
++            )
++        with self.assertRaises(sqlite3.IntegrityError):
++            self.store.process_expirations(log_activity=True)
++        self.assertEqual(self.store.get_item(item["id"])["status"], "stored")
++        self.assertEqual(self.store.list_activities(), [])
++        with closing(sqlite3.connect(self.db_path)) as connection:
++            connection.execute("DROP TRIGGER fail_due_activity")
++        self.store.process_expirations(log_activity=True)
++        self.store.process_expirations(log_activity=True)
++        self.assertEqual(len(self.store.list_activities()), 1)
++
++    def test_initialize_adds_delivery_claim_columns_without_losing_notifications(self) -> None:
++        legacy_path = Path(self.temp_dir.name) / "legacy.sqlite3"
++        with closing(sqlite3.connect(legacy_path)) as connection:
++            connection.executescript(
++                """
++                CREATE TABLE notifications (
++                    id INTEGER PRIMARY KEY, type TEXT NOT NULL, message TEXT,
++                    item_id INTEGER, status TEXT, scheduled_for TEXT,
++                    sent_at TEXT, failed_at TEXT, error TEXT, metadata_json TEXT,
++                    created_at TEXT, updated_at TEXT
++                );
++                INSERT INTO notifications(id, type, message, status, scheduled_for)
++                VALUES (1, 'manual', 'Keep this history', 'pending', '2026-01-01T00:00:00Z');
++                """
++            )
++            connection.commit()
++        migrated = Store(legacy_path)
++        migrated.initialize()
++        migrated.initialize()
++        self.assertEqual(migrated.list_notifications()[0]["message"], "Keep this history")
++        with closing(sqlite3.connect(legacy_path)) as connection:
++            columns = {row[1] for row in connection.execute("PRAGMA table_info(notifications)")}
++        self.assertTrue({"delivery_token", "delivery_lease_until"}.issubset(columns))
++
++    def test_retry_snapshot_remains_consistent_during_concurrent_deletion(self) -> None:
++        now = datetime.now(timezone.utc) + timedelta(seconds=1)
++        item = self.store.create_item(
++            {"status": "due", "expires_at": now - timedelta(days=1)}
++        )
++        notification = self.store.create_notification(
++            "disposal_due", item_id=item["id"], scheduled_for=item["expires_at"]
++        )
++        original_connect = sqlite3.connect
++        database_path = self.db_path
++
++        class DeleteAfterSnapshot(sqlite3.Connection):
++            def execute(self, sql, parameters=(), /):
++                cursor = super().execute(sql, parameters)
++                if "SELECT n.id AS notification_id" in sql:
++                    with closing(original_connect(database_path)) as other:
++                        other.execute("DELETE FROM notifications WHERE id = ?", (notification["id"],))
++                        other.execute("DELETE FROM items WHERE id = ?", (item["id"],))
++                        other.commit()
++                return cursor
++
++        with patch("app.store.sqlite3.connect", side_effect=lambda *args, **kwargs:
++                   original_connect(*args, factory=DeleteAfterSnapshot, **kwargs)):
++            retries = self.store.list_retryable_due_notifications(now, retry_after_seconds=0)
++        self.assertEqual(len(retries), 1)
++        self.assertEqual(retries[0]["notification"]["id"], notification["id"])
++        self.assertEqual(retries[0]["item"]["id"], item["id"])
++        # The returned historical snapshot is coherent; the delivery claim
++        # then rejects it because the current item no longer exists.
++        self.assertIsNone(self.store.claim_due_notification(notification["id"], now=now))
++
+     def test_backup_and_operational_reset_preserve_settings(self) -> None:
+         self.store.update_settings(
+             {"motion_threshold": 37, "admin_email": "admin@example.test"}
+
+--- before/tests/test_vision.py
++++ after/tests/test_vision.py
+@@ -1,12 +1,15 @@
+ from __future__ import annotations
+ 
+ import unittest
+-from unittest.mock import patch
++import itertools
++import queue
++import threading
++from unittest.mock import Mock, patch
+ 
+ import cv2
+ import numpy as np
+ 
+-from app.vision import VisionMonitor, _ActiveBox
++from app.vision import ChangeEvent, VisionMonitor, _ActiveBox
+ 
+ 
+ class VisionDetectionTests(unittest.TestCase):
+@@ -1196,5 +1199,231 @@
+         self.assertEqual(self.monitor.get_jpeg(), b"preview")
+ 
+ 
++class VisionLifecycleTests(unittest.TestCase):
++    @staticmethod
++    def monitor(change_callback=None) -> VisionMonitor:
++        return VisionMonitor(
++            lambda: {
++                "camera_warmup_seconds": 0,
++                "stable_seconds": 0,
++                "settle_seconds": 0,
++                "stabilize_camera": False,
++                "camera_failures_before_retry": 2,
++                "camera_retry_seconds": 0.25,
++            },
++            change_callback or (lambda event: None),
++            lambda: [],
++        )
++
++    def test_timed_out_read_cannot_start_second_camera_worker(self) -> None:
++        monitor = self.monitor()
++        reading = threading.Event()
++        resume_read = threading.Event()
++        capture = Mock()
++
++        def read():
++            reading.set()
++            resume_read.wait(2)
++            return True, np.zeros((120, 160, 3), dtype=np.uint8)
++
++        capture.read.side_effect = read
++        with patch.object(monitor, "_open_capture", return_value=(capture, None)) as opener:
++            monitor.start()
++            first_worker = monitor._thread
++            try:
++                self.assertTrue(reading.wait(1))
++                self.assertFalse(monitor.stop(timeout=0.01))
++                self.assertEqual(monitor.get_status()["phase"], "stopping")
++                monitor.start()
++                self.assertIs(monitor._thread, first_worker)
++                opener.assert_called_once()
++                capture.release.assert_not_called()
++            finally:
++                resume_read.set()
++                self.assertTrue(monitor.stop(timeout=2))
++        # A read completed after shutdown must not reach analysis/preview.
++        self.assertEqual(monitor.get_status()["frame_sequence"], 0)
++        capture.release.assert_called_once()
++
++    def test_full_callback_queue_drains_every_accepted_change_on_stop(self) -> None:
++        accepted = []
++        callback_started = threading.Event()
++        resume_callback = threading.Event()
++
++        def callback(event):
++            if event == 0:
++                callback_started.set()
++                resume_callback.wait(3)
++            accepted.append(event)
++
++        monitor = self.monitor(callback)
++        capture = Mock()
++
++        def read():
++            monitor._stop_event.wait(2)
++            return False, None
++
++        capture.read.side_effect = read
++        with patch.object(monitor, "_open_capture", return_value=(capture, None)):
++            monitor.start()
++            callback_queue = monitor._callback_queue
++            self.assertIsNotNone(callback_queue)
++            try:
++                monitor._enqueue_callback(callback_queue, "change", 0)
++                self.assertTrue(callback_started.wait(1))
++                for index in range(1, 129):
++                    monitor._enqueue_callback(callback_queue, "change", index)
++                self.assertTrue(callback_queue.full())
++                self.assertFalse(monitor.stop(timeout=0.05))
++                self.assertEqual(callback_queue.qsize(), 128)
++                dispatcher = monitor._dispatcher_thread
++                monitor.start()
++                self.assertIs(monitor._dispatcher_thread, dispatcher)
++            finally:
++                resume_callback.set()
++                self.assertTrue(monitor.stop(timeout=2))
++        self.assertEqual(accepted, list(range(129)))
++        self.assertEqual(callback_queue.unfinished_tasks, 0)
++
++    def test_callback_can_request_stop_without_joining_itself(self) -> None:
++        stop_results = []
++        callback_finished = threading.Event()
++        monitor = self.monitor()
++
++        def callback(event):
++            try:
++                stop_results.append(monitor.stop(timeout=1))
++            finally:
++                callback_finished.set()
++
++        monitor._change_callback = callback
++        capture = Mock()
++        capture.read.side_effect = lambda: (
++            monitor._stop_event.wait(2) and False,
++            None,
++        )
++        with patch.object(monitor, "_open_capture", return_value=(capture, None)):
++            monitor.start()
++            try:
++                monitor._enqueue_callback(monitor._callback_queue, "change", "stop")
++                self.assertTrue(callback_finished.wait(2))
++                self.assertEqual(stop_results, [False])
++            finally:
++                self.assertTrue(monitor.stop(timeout=2))
++        self.assertIsNone(monitor.get_status()["last_error"])
++
++    def test_unexpected_monitor_exit_also_finishes_callback_worker(self) -> None:
++        monitor = self.monitor()
++        capture = Mock()
++        capture.read.return_value = True, np.zeros((120, 160, 3), dtype=np.uint8)
++        with (
++            patch.object(monitor, "_open_capture", return_value=(capture, None)),
++            patch.object(monitor, "_transform_frame", side_effect=RuntimeError("failure")),
++        ):
++            monitor.start()
++            try:
++                monitor._thread.join(2)
++                monitor._dispatcher_thread.join(2)
++                self.assertFalse(monitor._thread.is_alive())
++                self.assertFalse(monitor._dispatcher_thread.is_alive())
++                self.assertIn("failure", monitor.get_status()["last_error"])
++            finally:
++                self.assertTrue(monitor.stop(timeout=2))
++        capture.release.assert_called_once()
++
++    def test_read_exception_and_malformed_frame_reconnect_instead_of_killing_monitor(self) -> None:
++        monitor = self.monitor()
++        bad_capture = Mock()
++        bad_capture.read.side_effect = [
++            RuntimeError("device disconnected"),
++            (True, np.zeros((120, 160, 2), dtype=np.uint8)),
++        ]
++        good_capture = Mock()
++        good_capture.read.return_value = True, np.zeros((120, 160, 3), dtype=np.uint8)
++        published = threading.Event()
++        with (
++            patch.object(
++                monitor, "_open_capture", side_effect=[(bad_capture, None), (good_capture, None)]
++            ) as opener,
++            patch.object(monitor, "_publish_frame", side_effect=lambda *a, **k: published.set()),
++        ):
++            monitor.start()
++            try:
++                # Offline notice is also a publication; wait specifically for
++                # the first healthy frame, without opening any real device.
++                for _ in range(30):
++                    if monitor.get_status()["frame_sequence"]:
++                        break
++                    published.wait(0.05)
++                    published.clear()
++                self.assertGreater(monitor.get_status()["frame_sequence"], 0)
++                self.assertTrue(monitor.get_status()["running"])
++                self.assertEqual(opener.call_count, 2)
++                bad_capture.release.assert_called_once()
++            finally:
++                self.assertTrue(monitor.stop(timeout=2))
++        good_capture.release.assert_called_once()
++
++    def test_controls_during_detection_discard_uncommitted_changes(self) -> None:
++        for control in ("privacy", "rebaseline", "stop", "none"):
++            with self.subTest(control=control):
++                monitor = self.monitor()
++                stop_event = threading.Event()
++                capture_done = threading.Event()
++                callback_queue = queue.Queue()
++                monitor._stop_event = stop_event
++                capture = Mock()
++                reads = itertools.count()
++                event = ChangeEvent("added", (20, 20, 30, 30), None, None, None, 0.9)
++
++                def read():
++                    if next(reads) >= 3:
++                        stop_event.set()
++                    return True, np.zeros((120, 160, 3), dtype=np.uint8)
++
++                def detect(*args):
++                    if control == "privacy":
++                        monitor.set_privacy(True)
++                    elif control == "rebaseline":
++                        monitor.rebaseline()
++                    elif control == "stop":
++                        stop_event.set()
++                    return [event], False
++
++                capture.read.side_effect = read
++                with (
++                    patch.object(monitor, "_open_capture", return_value=(capture, None)),
++                    patch.object(monitor, "_has_motion", side_effect=[(True, None), (False, None)]),
++                    patch.object(monitor, "_detect_changes", side_effect=detect) as detector,
++                    patch("app.vision.time.monotonic", side_effect=itertools.count(1)),
++                ):
++                    monitor._run(stop_event, callback_queue, capture_done)
++
++                detector.assert_called_once()
++                if control == "none":
++                    self.assertEqual(callback_queue.get_nowait(), ("change", event))
++                    callback_queue.task_done()
++                    self.assertEqual(monitor.get_status()["detected_changes"], 1)
++                else:
++                    self.assertEqual(monitor.get_status()["detected_changes"], 0)
++                self.assertTrue(callback_queue.empty())
++                self.assertTrue(capture_done.is_set())
++                capture.release.assert_called_once()
++
++    def test_privacy_still_drains_changes_accepted_before_it_was_enabled(self) -> None:
++        accepted = []
++        monitor = self.monitor(accepted.append)
++        callback_queue = queue.Queue()
++        capture_done = threading.Event()
++        monitor._enqueue_callback(callback_queue, "change", "accepted")
++        monitor.set_privacy(True)
++        capture_done.set()
++
++        monitor._dispatch_callbacks(callback_queue, capture_done)
++
++        self.assertEqual(accepted, ["accepted"])
++        self.assertEqual(callback_queue.unfinished_tasks, 0)
++
++
+ if __name__ == "__main__":
+     unittest.main()

@@ -1,0 +1,125 @@
+{
+  "python": {
+    "tests": 240,
+    "passed": true,
+    "log": "python-final.log"
+  },
+  "node": {
+    "tests": 25,
+    "passed": true,
+    "log": "node-final.log"
+  },
+  "compileall": {
+    "passed": true,
+    "log": "compile-final.log"
+  },
+  "javascript_syntax": {
+    "passed": true,
+    "log": "javascript-syntax.log"
+  },
+  "html": {
+    "unique_ids": 121,
+    "duplicate_ids": [],
+    "missing_references": []
+  },
+  "vision_preservation": {
+    "source_hash_matches_final": true,
+    "report": "vision-preservation-comparison.json"
+  },
+  "limitations": [
+    "No Raspberry Pi or physical camera verification",
+    "No live VLM or SMTP requests",
+    "No actual browser rendering validation",
+    "Temporary databases only; production migration not executed"
+  ],
+  "changed_files": [
+    {
+      "path": "AGENTS.md",
+      "state": "modified"
+    },
+    {
+      "path": "README.md",
+      "state": "modified"
+    },
+    {
+      "path": "app/ai.py",
+      "state": "modified"
+    },
+    {
+      "path": "app/classification.py",
+      "state": "added"
+    },
+    {
+      "path": "app/item_policy.py",
+      "state": "added"
+    },
+    {
+      "path": "app/main.py",
+      "state": "modified"
+    },
+    {
+      "path": "app/store.py",
+      "state": "modified"
+    },
+    {
+      "path": "app/vision.py",
+      "state": "modified"
+    },
+    {
+      "path": "docs/ARCHITECTURE_REVIEW_2026-09-18.md",
+      "state": "added"
+    },
+    {
+      "path": "static/app.js",
+      "state": "modified"
+    },
+    {
+      "path": "static/styles.css",
+      "state": "modified"
+    },
+    {
+      "path": "templates/index.html",
+      "state": "modified"
+    },
+    {
+      "path": "tests/frontend/app.test.cjs",
+      "state": "modified"
+    },
+    {
+      "path": "tests/test_api.py",
+      "state": "modified"
+    },
+    {
+      "path": "tests/test_app_resilience.py",
+      "state": "modified"
+    },
+    {
+      "path": "tests/test_inventory_queries.py",
+      "state": "added"
+    },
+    {
+      "path": "tests/test_inventory_workflow.py",
+      "state": "added"
+    },
+    {
+      "path": "tests/test_services.py",
+      "state": "modified"
+    },
+    {
+      "path": "tests/test_store.py",
+      "state": "modified"
+    },
+    {
+      "path": "tests/test_vision.py",
+      "state": "modified"
+    },
+    {
+      "path": "tests/test_vision_delivery.py",
+      "state": "added"
+    },
+    {
+      "path": "tests/test_vision_preview.py",
+      "state": "modified"
+    }
+  ]
+}

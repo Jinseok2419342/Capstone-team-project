@@ -1,0 +1,903 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/zyxsni5k",
+    "id": "zyxsni5k",
+    "slide": 20,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gjuhg7ql",
+      "id": "8",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "5. AI 모델 및 데이터 개발 현황",
+      "textPreview": "5. AI 모델 및 데이터 개발 현황",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "5. AI 모델 및 데이터 개발 현황"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "5. AI 모델 및 데이터 개발 현황",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "5. AI 모델 및 데이터 개발 현황",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/qpwjmh8n",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "Baseline 비교와 AI 개선 방향",
+      "textPreview": "Baseline 비교와 AI 개선 방향",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "Baseline 비교와 AI 개선 방향"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "Baseline 비교와 AI 개선 방향",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "Baseline 비교와 AI 개선 방향",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rq50vmp8",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4nu1krqh",
+      "id": "4",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "20",
+      "textPreview": "20",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "20"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "20",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "20",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/sbql8vah",
+      "id": "9",
+      "bbox": [
+        64,
+        181,
+        1152,
+        335
+      ],
+      "text": "비교군 | 목적 | 현재 상태\nB0  순수 grayscale 차분 | 기본 변화 검출과 비교 | 공통 스트림 실행기 구현 예정\nB1  안정화 상태기계 제거 | 안정화 대기의 효과·지연 확인 | 공통 스트림 실행기 구현 예정\nB2  OpenCV MOG2 | 배경 모델 방식과 비교 | 공통 스트림 실행기 구현 예정\nP1  Re:Found 전체 로컬 처리 | 현재 제안 파이프라인 평가 | 앱 구현 / 동일 조건 실측 대기",
+      "textPreview": "비교군 | 목적 | 현재 상태 | B0  순수 grayscale 차분 | 기본 변화 검출과 비교 | 공통 스트림 실행기 구현 예정 | B1  안정화 상태기계 제거 | 안정화 대기의 효과·지연 확인 | 공통 스트림 실행기 구현 예정 | B2  Op...",
+      "rows": 5,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            442,
+            67
+          ],
+          "text": "비교군",
+          "textPreview": "비교군",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "비교군",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "비교군",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            506,
+            181,
+            419,
+            67
+          ],
+          "text": "목적",
+          "textPreview": "목적",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "목적",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "목적",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            925,
+            181,
+            291,
+            67
+          ],
+          "text": "현재 상태",
+          "textPreview": "현재 상태",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "현재 상태",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "현재 상태",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            248,
+            442,
+            67
+          ],
+          "text": "B0  순수 grayscale 차분",
+          "textPreview": "B0  순수 grayscale 차분",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "B0  순수 grayscale 차분",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "B0  순수 grayscale 차분",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            506,
+            248,
+            419,
+            67
+          ],
+          "text": "기본 변화 검출과 비교",
+          "textPreview": "기본 변화 검출과 비교",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "기본 변화 검출과 비교",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "기본 변화 검출과 비교",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            925,
+            248,
+            291,
+            67
+          ],
+          "text": "공통 스트림 실행기 구현 예정",
+          "textPreview": "공통 스트림 실행기 구현 예정",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "공통 스트림 실행기 구현 예정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "공통 스트림 실행기 구현 예정",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            315,
+            442,
+            67
+          ],
+          "text": "B1  안정화 상태기계 제거",
+          "textPreview": "B1  안정화 상태기계 제거",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "B1  안정화 상태기계 제거",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "B1  안정화 상태기계 제거",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            506,
+            315,
+            419,
+            67
+          ],
+          "text": "안정화 대기의 효과·지연 확인",
+          "textPreview": "안정화 대기의 효과·지연 확인",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "안정화 대기의 효과·지연 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "안정화 대기의 효과·지연 확인",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            925,
+            315,
+            291,
+            67
+          ],
+          "text": "공통 스트림 실행기 구현 예정",
+          "textPreview": "공통 스트림 실행기 구현 예정",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "공통 스트림 실행기 구현 예정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "공통 스트림 실행기 구현 예정",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            382,
+            442,
+            67
+          ],
+          "text": "B2  OpenCV MOG2",
+          "textPreview": "B2  OpenCV MOG2",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "B2  OpenCV MOG2",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "B2  OpenCV MOG2",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            506,
+            382,
+            419,
+            67
+          ],
+          "text": "배경 모델 방식과 비교",
+          "textPreview": "배경 모델 방식과 비교",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "배경 모델 방식과 비교",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "배경 모델 방식과 비교",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            925,
+            382,
+            291,
+            67
+          ],
+          "text": "공통 스트림 실행기 구현 예정",
+          "textPreview": "공통 스트림 실행기 구현 예정",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "공통 스트림 실행기 구현 예정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "공통 스트림 실행기 구현 예정",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            449,
+            442,
+            67
+          ],
+          "text": "P1  Re:Found 전체 로컬 처리",
+          "textPreview": "P1  Re:Found 전체 로컬 처리",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "P1  Re:Found 전체 로컬 처리",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "P1  Re:Found 전체 로컬 처리",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            506,
+            449,
+            419,
+            67
+          ],
+          "text": "현재 제안 파이프라인 평가",
+          "textPreview": "현재 제안 파이프라인 평가",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "현재 제안 파이프라인 평가",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "현재 제안 파이프라인 평가",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            925,
+            449,
+            291,
+            67
+          ],
+          "text": "앱 구현 / 동일 조건 실측 대기",
+          "textPreview": "앱 구현 / 동일 조건 실측 대기",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "앱 구현 / 동일 조건 실측 대기",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "앱 구현 / 동일 조건 실측 대기",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2lczih8r",
+      "id": "6",
+      "bbox": [
+        64,
+        548,
+        242,
+        40
+      ],
+      "geometry": "rect",
+      "text": "개선 방향",
+      "textPreview": "개선 방향",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "개선 방향"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "개선 방향",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 28,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "개선 방향",
+              "fontSize": 28,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3ml0rmpw",
+      "id": "7",
+      "bbox": [
+        309,
+        548,
+        907,
+        87
+      ],
+      "geometry": "rect",
+      "text": "그림자·손 가림·저대비·다중 물품 사례를 확보하고\n같은 데이터에서 입력 구성과 판정 기준을 비교한다.",
+      "textPreview": "그림자·손 가림·저대비·다중 물품 사례를 확보하고 | 같은 데이터에서 입력 구성과 판정 기준을 비교한다.",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "그림자·손 가림·저대비·다중 물품 사례를 확보하고"
+          },
+          {
+            "index": 2,
+            "text": "같은 데이터에서 입력 구성과 판정 기준을 비교한다."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "그림자·손 가림·저대비·다중 물품 사례를 확보하고",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 26,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "그림자·손 가림·저대비·다중 물품 사례를 확보하고",
+              "fontSize": 26,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "같은 데이터에서 입력 구성과 판정 기준을 비교한다.",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 26,
+            "typeface": "Malgun Gothic",
+            "color": "#183442"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "같은 데이터에서 입력 구성과 판정 기준을 비교한다.",
+              "fontSize": 26,
+              "typeface": "Malgun Gothic",
+              "color": "#183442"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

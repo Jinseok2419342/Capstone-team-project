@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="481.8897637795276" height="263" preserveAspectRatio="xMinYMin meet" viewBox="0 0 481 263" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="481.8897637795276" height="263"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-263)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="202" width="225" height="45" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(14%,21%,27%); fill-rule: evenodd;"/>
+			<text x="56.56640624999999" y="230.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,461) scale(1,-1)">added · callback 정상 접수</text>
+			<text x="58.23632812499999" y="218.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,437) scale(1,-1)">DB 저장 실패 시 오류 처리</text>
+			<rect x="257" y="202" width="225" height="45" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(14%,21%,27%); fill-rule: evenodd;"/>
+			<text x="336.7080078125" y="230.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,461) scale(1,-1)">verify_removed</text>
+			<text x="295.164306640625" y="218.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,437) scale(1,-1)">기존 물품 유지 · 추적 signature 보관</text>
+			<rect x="0" y="123" width="225" height="48" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="76.25390625" y="153.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,306) scale(1,-1)">임시 행 저장 성공</text>
+			<text x="50.86450195312499" y="141.0" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,282) scale(1,-1)">crop 저장 / provider=pending</text>
+			<rect x="257" y="123" width="225" height="48" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="334.17236328125" y="153.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,306) scale(1,-1)">선택적 VLM 요청</text>
+			<text x="313.671875" y="141.0" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,282) scale(1,-1)">기존 물품의 제거 여부 검증</text>
+			<path d="M 112,202 L 112,171 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="112 171, 113.9177 174.5103, 110.0823 174.5103" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 369,202 L 369,171 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="369 171, 370.9177 174.5103, 367.0823 174.5103" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<rect x="0" y="34" width="225" height="53" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="63.974414062499996" y="72.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 8.4px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,145) scale(1,-1)">선택적 VLM 후 상태 확인</text>
+			<text x="44.98212890625" y="60.5" style="font-family: Malgun Gothic; font-size: 8.4px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,121) scale(1,-1)">신뢰 결과: 정보 갱신 / 필요 시 취소</text>
+			<text x="50.15624999999999" y="48.5" style="font-family: Malgun Gothic; font-size: 8.4px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,97) scale(1,-1)">실패·불확실: 생성된 임시 행 보존</text>
+			<rect x="257" y="34" width="225" height="53" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="326.85810546875" y="72.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 8.4px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,145) scale(1,-1)">현재 signature 재검사</text>
+			<text x="315.74287109375" y="60.5" style="font-family: Malgun Gothic; font-size: 8.4px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,121) scale(1,-1)">일치 + 신뢰 제거: recovered</text>
+			<text x="312.8328125" y="48.5" style="font-family: Malgun Gothic; font-size: 8.4px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,97) scale(1,-1)">불확실·오래된 응답: 상태 유지</text>
+			<path d="M 112,123 L 112,87 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="112 87, 113.9177 90.51033, 110.0823 90.51033" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 369,123 L 369,87 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="369 87, 370.9177 90.51033, 367.0823 90.51033" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<text x="139.478515625" y="11" style="font-family: Malgun Gothic; font-size: 8px;fill: rgb(35%,40%,44%); stroke:none;" transform="translate(0,22) scale(1,-1)">임시 저장 이전 callback queue drop은 별도의 실패 경로</text>
+		</g>
+	</g>
+</svg>

@@ -3,6 +3,7 @@ from __future__ import annotations
 import base64
 import json
 import logging
+import math
 import re
 from dataclasses import asdict, dataclass
 from typing import Any, Callable, Iterable
@@ -50,6 +51,25 @@ SYSTEM_PROMPT = """당신은 고정 카메라로 촬영한 학교 분실물 보�
 변화 후 이미지에 물건이 새로 생긴 경우에만 action을 added로 하세요. 전 이미지의 물건이 사라졌다면 removed, 방향을 판단할 수 없으면 uncertain입니다.
 category 기준: 음식·음료·부패 가능 내용물은 food, 휴대전화·노트북·태블릿·카메라·지갑·귀금속·고가 전자기기는 valuable, 나머지는 general입니다.
 브랜드나 소유자를 근거 없이 단정하지 마세요. 확실하지 않으면 포괄적인 이름과 낮은 confidence를 사용하세요."""
+
+
+# Both transports request the same result shape. Semantic validation below
+# remains necessary: a schema cannot establish that a physical item exists.
+CLASSIFICATION_SCHEMA: dict[str, Any] = {
+    "type": "object",
+    "properties": {
+        "action": {"type": "string", "enum": ["added", "removed", "uncertain"]},
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "category": {"type": "string", "enum": ["valuable", "general", "food"]},
+        "estimated_value_krw": {"type": ["integer", "null"]},
+        # Numeric ranges are checked locally; fine-tuned OpenAI models do not
+        # support minimum/maximum in their structured-output schema subset.
+        "confidence": {"type": "number"},
+    },
+    "required": ["action", "name", "description", "category", "estimated_value_krw", "confidence"],
+    "additionalProperties": False,
+}
 
 
 class ObjectClassifier:
@@ -166,8 +186,19 @@ class ObjectClassifier:
         payload = {
             "model": model,
             "input": [{"role": "user", "content": content}],
-            "max_output_tokens": 450,
+            # This limit includes reasoning tokens, not just the final JSON.
+            "max_output_tokens": 2048,
+            "text": {"format": {
+                "type": "json_schema",
+                "name": "lost_item_classification",
+                "strict": True,
+                "schema": CLASSIFICATION_SCHEMA,
+            }},
         }
+        # Bound the default model's reasoning effort for a short classification
+        # job. Do not force a model-specific parameter on custom model IDs.
+        if model == "gpt-5.6-luna" or model.startswith("gpt-5.6-luna-"):
+            payload["reasoning"] = {"effort": "low"}
         timeout = httpx.Timeout(30.0, connect=8.0)
         with httpx.Client(timeout=timeout) as client:
             response = client.post(
@@ -180,7 +211,10 @@ class ObjectClassifier:
             )
             response.raise_for_status()
             body = response.json()
-        text = body.get("output_text") or self._extract_openai_text(body)
+        if body.get("status") != "completed":
+            reason = (body.get("incomplete_details") or {}).get("reason", "unknown")
+            raise ValueError(f"AI 응답이 완료되지 않았습니다: {reason}")
+        text = self._extract_openai_text(body) or body.get("output_text")
         return self._normalize(text, "openai")
 
     @staticmethod
@@ -188,6 +222,8 @@ class ObjectClassifier:
         chunks: list[str] = []
         for output in body.get("output", []):
             for part in output.get("content", []):
+                if part.get("type") == "refusal":
+                    raise ValueError("AI가 이미지 분석 요청에 답하지 못했습니다.")
                 if part.get("type") in {"output_text", "text"} and part.get("text"):
                     chunks.append(str(part["text"]))
         return "\n".join(chunks)
@@ -221,9 +257,9 @@ class ObjectClassifier:
         payload = {
             "contents": [{"role": "user", "parts": parts}],
             "generationConfig": {
-                "temperature": 0.1,
-                "maxOutputTokens": 450,
+                "maxOutputTokens": 2048,
                 "responseMimeType": "application/json",
+                "responseJsonSchema": CLASSIFICATION_SCHEMA,
             },
         }
         url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
@@ -237,12 +273,14 @@ class ObjectClassifier:
             response.raise_for_status()
             body = response.json()
         candidates = body.get("candidates", [])
-        text = ""
-        if candidates:
-            text = "".join(
-                str(part.get("text", ""))
-                for part in candidates[0].get("content", {}).get("parts", [])
-            )
+        if not candidates or candidates[0].get("finishReason") != "STOP":
+            reason = candidates[0].get("finishReason", "unknown") if candidates else "no_candidates"
+            raise ValueError(f"AI 응답이 완료되지 않았습니다: {reason}")
+        text = "".join(
+            str(part.get("text", ""))
+            for part in candidates[0].get("content", {}).get("parts", [])
+            if not part.get("thought")
+        )
         return self._normalize(text, "gemini")
 
     def _normalize(self, raw: str, provider: str) -> Classification:
@@ -256,14 +294,27 @@ class ObjectClassifier:
         category = str(data.get("category", "general")).lower()
         if category not in {"valuable", "general", "food"}:
             category = "general"
+        raw_confidence = data.get("confidence")
+        valid_confidence = True
         try:
-            confidence = max(0.0, min(1.0, float(data.get("confidence", 0.65))))
-        except (TypeError, ValueError):
-            confidence = 0.65
+            confidence = float(raw_confidence)
+            if (
+                isinstance(raw_confidence, bool)
+                or not math.isfinite(confidence)
+                or not 0.0 <= confidence <= 1.0
+            ):
+                raise ValueError("invalid confidence")
+        except (TypeError, ValueError, OverflowError):
+            # Malformed or missing evidence must never authorize automatic
+            # registration cancellation or recovery of a tracked item.
+            confidence = 0.0
+            valid_confidence = False
         estimated = data.get("estimated_value_krw")
         try:
-            estimated = int(estimated) if estimated is not None else None
-        except (TypeError, ValueError):
+            estimated = int(estimated) if estimated is not None and not isinstance(estimated, bool) else None
+            if estimated is not None and estimated < 0:
+                estimated = None
+        except (TypeError, ValueError, OverflowError):
             estimated = None
         try:
             threshold = int(self.settings_getter().get("valuable_value_threshold_krw", 100000))
@@ -271,11 +322,10 @@ class ObjectClassifier:
             threshold = 100000
         if category == "general" and estimated is not None and estimated >= max(1, threshold):
             category = "valuable"
-        # Missing polarity is not enough evidence to persist a detected item.
-        # Offline fallback explicitly opts into ``added`` so camera events are
-        # still retained when no remote model is available.
+        # Invalid polarity cannot confirm a semantic or removal decision.
+        # The local observation is already persisted independently of AI.
         action = str(data.get("action", "uncertain")).strip().lower()
-        if action not in {"added", "removed", "uncertain"}:
+        if not valid_confidence or action not in {"added", "removed", "uncertain"}:
             action = "uncertain"
         if action == "uncertain":
             confidence = min(confidence, 0.45)
@@ -298,16 +348,18 @@ class ObjectClassifier:
                 detail = exc.response.json()
                 if isinstance(detail, dict):
                     detail = detail.get("error", detail)
-                message = json.dumps(detail, ensure_ascii=False)[:500]
+                message = json.dumps(detail, ensure_ascii=False)
             except Exception:
-                message = exc.response.text[:500]
+                message = exc.response.text
             value = f"HTTP {status}: {message}"
         elif isinstance(exc, httpx.TimeoutException):
             value = "API 응답 시간이 초과되었습니다."
         elif isinstance(exc, httpx.RequestError):
             value = f"API 연결 실패: {exc.__class__.__name__}"
         else:
-            value = f"{exc.__class__.__name__}: {str(exc)[:500]}"
+            value = f"{exc.__class__.__name__}: {exc}"
+        # Redact before truncating: cutting through a credential first would
+        # leave a recognizable prefix that a whole-secret replacement misses.
         for secret in (self.config.openai_api_key, self.config.gemini_api_key):
             if secret:
                 value = value.replace(secret, "[REDACTED]")

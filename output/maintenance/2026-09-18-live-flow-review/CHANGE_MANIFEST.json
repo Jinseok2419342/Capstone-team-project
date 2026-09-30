@@ -1,0 +1,29 @@
+{
+  "changed_backed_up_files": [
+    "app/ai.py",
+    "app/main.py",
+    "static/app.js",
+    "static/styles.css",
+    "templates/index.html",
+    "tests/frontend/app.test.cjs",
+    "scripts/raspberry-pi/install.sh",
+    "scripts/raspberry-pi/package-for-pi.ps1",
+    "scripts/raspberry-pi/refound.service",
+    "scripts/raspberry-pi/lib/common.sh",
+    "README.md",
+    "AGENTS.md",
+    "docs/guides/SCHOOL_DEMO_GUIDE.md"
+  ],
+  "missing_backed_up_files": [],
+  "new_test_files": [
+    "tests/test_ai_transport.py",
+    "tests/test_health.py",
+    "tests/test_live_management.py",
+    "tests/test_live_stream.py",
+    "tests/test_pi_deployment.py"
+  ],
+  "additional_documents": [
+    "docs/README.md",
+    "docs/LIVE_FLOW_REVIEW_2026-09-18.md"
+  ]
+}

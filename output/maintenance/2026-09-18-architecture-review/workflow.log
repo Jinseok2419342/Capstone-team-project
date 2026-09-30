@@ -1,0 +1,23 @@
+2026-09-18 11:05:26,402 | INFO | httpx | HTTP Request: POST http://testserver/api/items/1/dismiss "HTTP/1.1 200 OK"
+2026-09-18 11:05:26,406 | INFO | httpx | HTTP Request: GET http://testserver/api/items "HTTP/1.1 200 OK"
+2026-09-18 11:05:26,411 | INFO | httpx | HTTP Request: GET http://testserver/api/items?status=dismissed "HTTP/1.1 200 OK"
+2026-09-18 11:05:26,415 | INFO | httpx | HTTP Request: POST http://testserver/api/items/1/recover "HTTP/1.1 409 Conflict"
+2026-09-18 11:05:26,419 | INFO | httpx | HTTP Request: POST http://testserver/api/items/1/dispose "HTTP/1.1 409 Conflict"
+2026-09-18 11:05:26,424 | INFO | httpx | HTTP Request: POST http://testserver/api/items/1/extend "HTTP/1.1 409 Conflict"
+2026-09-18 11:05:26,432 | INFO | httpx | HTTP Request: POST http://testserver/api/items/1/restore "HTTP/1.1 200 OK"
+2026-09-18 11:05:26,459 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/1 "HTTP/1.1 200 OK"
+2026-09-18 11:05:26,465 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/1 "HTTP/1.1 200 OK"
+2026-09-18 11:05:26,541 | INFO | httpx | HTTP Request: GET http://testserver/api/items?category=food&sort=name&limit=2 "HTTP/1.1 200 OK"
+2026-09-18 11:05:26,545 | INFO | httpx | HTTP Request: GET http://testserver/api/items?category=food&sort=name&limit=2&offset=2 "HTTP/1.1 200 OK"
+2026-09-18 11:05:26,546 | INFO | httpx | HTTP Request: GET http://testserver/api/items?limit=0 "HTTP/1.1 422 Unprocessable Entity"
+2026-09-18 11:05:26,548 | INFO | httpx | HTTP Request: GET http://testserver/api/items?limit=101 "HTTP/1.1 422 Unprocessable Entity"
+2026-09-18 11:05:26,549 | INFO | httpx | HTTP Request: GET http://testserver/api/items?offset=-1 "HTTP/1.1 422 Unprocessable Entity"
+2026-09-18 11:05:26,552 | INFO | httpx | HTTP Request: GET http://testserver/api/items?sort=sql "HTTP/1.1 400 Bad Request"
+2026-09-18 11:05:26,555 | INFO | httpx | HTTP Request: GET http://testserver/api/items?review=unknown "HTTP/1.1 400 Bad Request"
+2026-09-18 11:05:26,557 | INFO | httpx | HTTP Request: GET http://testserver/api/items?category=unknown "HTTP/1.1 400 Bad Request"
+2026-09-18 11:05:26,658 | INFO | httpx | HTTP Request: PATCH http://testserver/api/items/1 "HTTP/1.1 409 Conflict"
+2026-09-18 11:05:26,692 | INFO | httpx | HTTP Request: GET http://testserver/api/dashboard "HTTP/1.1 200 OK"
+----------------------------------------------------------------------
+Ran 9 tests in 0.324s
+
+OK

@@ -14,7 +14,8 @@ EnvironmentFile=-/etc/refound/runtime.env
 ExecStart=/opt/refound/.venv/bin/python /opt/refound/run.py
 Restart=on-failure
 RestartSec=5s
-TimeoutStopSec=20s
+# Allow the default Pi queue (four jobs, up to two remote attempts each) to drain.
+TimeoutStopSec=300s
 KillSignal=SIGINT
 UMask=0077
 NoNewPrivileges=true
@@ -25,4 +26,3 @@ RestrictSUIDSGID=true
 
 [Install]
 WantedBy=multi-user.target
-

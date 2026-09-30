@@ -1,0 +1,965 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/nid43ytk",
+    "id": "nid43ytk",
+    "slide": 19,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jmd83atk",
+      "id": "8",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "5. AI 모델 및 데이터 개발 현황",
+      "textPreview": "5. AI 모델 및 데이터 개발 현황",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "5. AI 모델 및 데이터 개발 현황"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "5. AI 모델 및 데이터 개발 현황",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "5. AI 모델 및 데이터 개발 현황",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9gb6xgbi",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "AI 성능과 사건 정확도는 측정 예정",
+      "textPreview": "AI 성능과 사건 정확도는 측정 예정",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "AI 성능과 사건 정확도는 측정 예정"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "AI 성능과 사건 정확도는 측정 예정",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "AI 성능과 사건 정확도는 측정 예정",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8v2pobax",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vitozqt8",
+      "id": "4",
+      "bbox": [
+        64,
+        668,
+        1085,
+        28
+      ],
+      "geometry": "rect",
+      "text": "빈칸은 미측정값. 0 또는 자동화 테스트 통과율로 채우지 않음",
+      "textPreview": "빈칸은 미측정값. 0 또는 자동화 테스트 통과율로 채우지 않음",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "빈칸은 미측정값. 0 또는 자동화 테스트 통과율로 채우지 않음"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "빈칸은 미측정값. 0 또는 자동화 테스트 통과율로 채우지 않음",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "빈칸은 미측정값. 0 또는 자동화 테스트 통과율로 채우지 않음",
+              "fontSize": 16,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ahk7qls3",
+      "id": "5",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "19",
+      "textPreview": "19",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "19"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "19",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "19",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/nex4jets",
+      "id": "9",
+      "bbox": [
+        64,
+        181,
+        1152,
+        396
+      ],
+      "text": "평가 항목 | 현재 값 | 측정 단위·조건\n사건 감지 Precision / Recall / F1 | [입력] | 추가·이동·제거별 정답 라벨\n물품 분류 정확도 | [입력] % | 정답 분류와 응답 비교 / 표본 N=[입력]\n불확실 판정 비율 | [입력] % | 전체 평가 사건에서 uncertain 비율\n감지 후 DB 반영 지연 | p50 [입력] / p95 [입력] ms | 행동 종료·기록 반영 시각을 함께 수집\n성공·오류 사례 | [사례 입력] | 같은 사건의 원본 사진·정답·AI 응답 보존",
+      "textPreview": "평가 항목 | 현재 값 | 측정 단위·조건 | 사건 감지 Precision / Recall / F1 | [입력] | 추가·이동·제거별 정답 라벨 | 물품 분류 정확도 | [입력] % | 정답 분류와 응답 비교 / 표본 N=[입력] | 불확실 판정...",
+      "rows": 6,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            443,
+            66
+          ],
+          "text": "평가 항목",
+          "textPreview": "평가 항목",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "평가 항목",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "평가 항목",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            507,
+            181,
+            313,
+            66
+          ],
+          "text": "현재 값",
+          "textPreview": "현재 값",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "현재 값",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "현재 값",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            820,
+            181,
+            396,
+            66
+          ],
+          "text": "측정 단위·조건",
+          "textPreview": "측정 단위·조건",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "측정 단위·조건",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "측정 단위·조건",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            247,
+            443,
+            66
+          ],
+          "text": "사건 감지 Precision / Recall / F1",
+          "textPreview": "사건 감지 Precision / Recall / F1",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "사건 감지 Precision / Recall / F1",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "사건 감지 Precision / Recall / F1",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            507,
+            247,
+            313,
+            66
+          ],
+          "text": "[입력]",
+          "textPreview": "[입력]",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "[입력]",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "[입력]",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            820,
+            247,
+            396,
+            66
+          ],
+          "text": "추가·이동·제거별 정답 라벨",
+          "textPreview": "추가·이동·제거별 정답 라벨",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "추가·이동·제거별 정답 라벨",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "추가·이동·제거별 정답 라벨",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            313,
+            443,
+            66
+          ],
+          "text": "물품 분류 정확도",
+          "textPreview": "물품 분류 정확도",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "물품 분류 정확도",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "물품 분류 정확도",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            507,
+            313,
+            313,
+            66
+          ],
+          "text": "[입력] %",
+          "textPreview": "[입력] %",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "[입력] %",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "[입력] %",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            820,
+            313,
+            396,
+            66
+          ],
+          "text": "정답 분류와 응답 비교 / 표본 N=[입력]",
+          "textPreview": "정답 분류와 응답 비교 / 표본 N=[입력]",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "정답 분류와 응답 비교 / 표본 N=[입력]",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "정답 분류와 응답 비교 / 표본 N=[입력]",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            379,
+            443,
+            66
+          ],
+          "text": "불확실 판정 비율",
+          "textPreview": "불확실 판정 비율",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "불확실 판정 비율",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "불확실 판정 비율",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            507,
+            379,
+            313,
+            66
+          ],
+          "text": "[입력] %",
+          "textPreview": "[입력] %",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "[입력] %",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "[입력] %",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            820,
+            379,
+            396,
+            66
+          ],
+          "text": "전체 평가 사건에서 uncertain 비율",
+          "textPreview": "전체 평가 사건에서 uncertain 비율",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "전체 평가 사건에서 uncertain 비율",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "전체 평가 사건에서 uncertain 비율",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            445,
+            443,
+            66
+          ],
+          "text": "감지 후 DB 반영 지연",
+          "textPreview": "감지 후 DB 반영 지연",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "감지 후 DB 반영 지연",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "감지 후 DB 반영 지연",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            507,
+            445,
+            313,
+            66
+          ],
+          "text": "p50 [입력] / p95 [입력] ms",
+          "textPreview": "p50 [입력] / p95 [입력] ms",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "p50 [입력] / p95 [입력] ms",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "p50 [입력] / p95 [입력] ms",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            820,
+            445,
+            396,
+            66
+          ],
+          "text": "행동 종료·기록 반영 시각을 함께 수집",
+          "textPreview": "행동 종료·기록 반영 시각을 함께 수집",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "행동 종료·기록 반영 시각을 함께 수집",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "행동 종료·기록 반영 시각을 함께 수집",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            511,
+            443,
+            66
+          ],
+          "text": "성공·오류 사례",
+          "textPreview": "성공·오류 사례",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "성공·오류 사례",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "성공·오류 사례",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            507,
+            511,
+            313,
+            66
+          ],
+          "text": "[사례 입력]",
+          "textPreview": "[사례 입력]",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "[사례 입력]",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "[사례 입력]",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "row": 6,
+          "column": 3,
+          "bbox": [
+            820,
+            511,
+            396,
+            66
+          ],
+          "text": "같은 사건의 원본 사진·정답·AI 응답 보존",
+          "textPreview": "같은 사건의 원본 사진·정답·AI 응답 보존",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "같은 사건의 원본 사진·정답·AI 응답 보존",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "같은 사건의 원본 사진·정답·AI 응답 보존",
+                  "fontSize": 22,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wj2psvat",
+      "id": "7",
+      "bbox": [
+        64,
+        603,
+        1152,
+        35
+      ],
+      "geometry": "rect",
+      "text": "현재 확보한 기본 동작 성공 보고만으로 인식 정확도를 계산할 수 없다.",
+      "textPreview": "현재 확보한 기본 동작 성공 보고만으로 인식 정확도를 계산할 수 없다.",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "현재 확보한 기본 동작 성공 보고만으로 인식 정확도를 계산할 수 없다."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "현재 확보한 기본 동작 성공 보고만으로 인식 정확도를 계산할 수 없다.",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 25,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "현재 확보한 기본 동작 성공 보고만으로 인식 정확도를 계산할 수 없다.",
+              "fontSize": 25,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

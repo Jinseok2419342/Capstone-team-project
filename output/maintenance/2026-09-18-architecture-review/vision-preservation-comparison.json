@@ -1,0 +1,84 @@
+{
+  "scope": "One sequential before/current synthetic CPU preservation check on Windows host; not Raspberry Pi performance or a paper result. Timing differences are single-pass variation, not statistical evidence.",
+  "limitations": "160 virtual camera frames after 60-frame warmup; pair_added 10 timed iterations. No camera blocking, DB, callback consumer, network, browser, power or thermal measurement. Static case intentionally generates no changes; receipt/retry costs are not benchmarked.",
+  "host": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 151 Stepping 2, GenuineIntel",
+    "python": "3.13.3",
+    "opencv": "5.0.0",
+    "numpy": "2.4.6",
+    "opencv_threads": 1,
+    "opencl": false
+  },
+  "source_before_sha256": "80d02cb32b9f32a27b3c12932aa90d5f0ecb4bed6e7f5376b9cf77c267c33c1e",
+  "source_current_sha256": "bbf6a360b3399102d34a55bf99112f6f7b3ff63fdfbcc310a858eab82f0cf7b6",
+  "config_identical": true,
+  "checks": {
+    "timing": {
+      "static_behavior_identical": true,
+      "pair_event_kind_bbox_confidence_and_four_jpeg_sha256_identical": true,
+      "pair_global_suppression_identical": true
+    },
+    "profile_run": {
+      "static_behavior_identical": true,
+      "pair_event_kind_bbox_confidence_and_four_jpeg_sha256_identical": true,
+      "pair_global_suppression_identical": true
+    }
+  },
+  "unprofiled_measurements": {
+    "static.work_ms_per_processed_frame": {
+      "before": 13.809,
+      "current": 13.791,
+      "relative_percent": -0.13
+    },
+    "pair_added.median_ms": {
+      "before": 86.864,
+      "current": 87.731,
+      "relative_percent": 0.998
+    },
+    "pair_added.p95_ms": {
+      "before": 94.813,
+      "current": 92.723,
+      "relative_percent": -2.204
+    }
+  },
+  "static_behavior_current": {
+    "camera_frames": 160,
+    "processed_frames": 112,
+    "published_preview_frames": 80,
+    "preview_size_last": [
+      800,
+      450
+    ],
+    "phase_after_warmup": "monitoring",
+    "virtual_camera_seconds": 16.0,
+    "processed_per_virtual_second": 7.0,
+    "previews_per_virtual_second": 5.0,
+    "synthetic_change_events": 0
+  },
+  "pair_events_current": [
+    {
+      "kind": "added",
+      "bbox": [
+        525,
+        261,
+        256,
+        220
+      ],
+      "confidence": 0.802,
+      "evidence_sha256": {
+        "before_jpeg": "275c426104ea48d691bc4eee0f176121a18373a5e5e00f7a38290d215414cf02",
+        "after_jpeg": "ac59834bbab9ab71a4c53dab041cf821fa85a61bbc1f41c9d00616fd7e4546dc",
+        "scene_before_jpeg": "8b5fe51790c4c99181af7838d72047dbf6bfbce584fff0e65e78957b5e9e38f6",
+        "scene_after_jpeg": "20294868a2e07c4c7064d3ecb0b9ace7815b1123b394f6d94b7332cb09c5a38d"
+      }
+    }
+  ],
+  "artifacts": [
+    "vision-preservation-before.json",
+    "vision-preservation-current.json",
+    "vision-preservation-before.log",
+    "vision-preservation-current.log"
+  ]
+}

@@ -102,7 +102,7 @@ class ApiIntegrationTests(unittest.TestCase):
         self.assertEqual(dashboard_response.status_code, 200)
         dashboard = dashboard_response.json()
         self.assertEqual(
-            set(dashboard["stats"]), {"active", "due_soon", "expired", "recovered"}
+            set(dashboard["stats"]), {"active", "due_soon", "expired", "recovered", "review_needed"}
         )
         self.assertIsInstance(dashboard["items"], list)
         self.assertIsInstance(dashboard["activities"], list)
@@ -177,7 +177,7 @@ class ApiIntegrationTests(unittest.TestCase):
         preserved = self.store.get_item(provisional["id"])
         self.assertIsNotNone(preserved)
         self.assertEqual(preserved["status"], "recovered")
-        self.assertEqual(preserved["provider"], "openai")
+        self.assertEqual(preserved["provider"], "openai_review")
         self.assertNotEqual(preserved["name"], "분석 중인 새 물품")
 
     def test_low_confidence_remote_addition_is_kept_for_review(self) -> None:
@@ -233,8 +233,8 @@ class ApiIntegrationTests(unittest.TestCase):
         self.assertEqual(reviewed["status"], "stored")
         self.assertEqual(reviewed["provider"], "openai_review")
 
-    def test_strong_remote_removal_discards_false_provisional_addition(self) -> None:
-        """A baseline-object disappearance must not survive as a new item."""
+    def test_strong_remote_rejection_preserves_reviewable_evidence(self) -> None:
+        """A model's polarity decision cannot erase a camera observation."""
 
         with tempfile.TemporaryDirectory() as capture_temp_dir:
             capture_dir = Path(capture_temp_dir)
@@ -277,20 +277,22 @@ class ApiIntegrationTests(unittest.TestCase):
                     [b"candidate-before", b"candidate-after"],
                     scene_images=[b"scene-before", b"scene-after"],
                 )
-                self.assertIsNone(self.store.get_item(provisional["id"]))
-                self.assertFalse(image_path.exists())
-                self.assertFalse(background_path.exists())
-                self.assertEqual(list(capture_dir.iterdir()), [])
+                preserved = self.store.get_item(provisional["id"])
+                self.assertEqual(preserved["review_status"], "needs_review")
+                self.assertEqual(preserved["review_reason"], "ai_rejected")
+                self.assertEqual(image_path.read_bytes(), b"candidate-after")
+                self.assertEqual(background_path.read_bytes(), b"candidate-before")
+                self.assertEqual(len(list(capture_dir.iterdir())), 2)
 
         ignored = [
             activity
             for activity in self.store.list_activities(limit=100)
-            if activity["type"] == "change_ignored"
-            and activity["metadata"].get("reason") == "removed"
+            if activity["type"] == "classification_inconclusive"
+            and activity["metadata"].get("reason") == "ai_rejected"
             and activity["metadata"].get("confidence") == 0.87
         ]
         self.assertEqual(len(ignored), 1)
-        self.assertIsNone(ignored[0]["item_id"])
+        self.assertEqual(ignored[0]["item_id"], provisional["id"])
 
     def test_offline_addition_is_explicitly_kept_for_review(self) -> None:
         event = ChangeEvent(
@@ -588,7 +590,7 @@ class ApiIntegrationTests(unittest.TestCase):
         uncertain = Classification(
             name="확인 필요한 물건",
             description="첫 이미지 쌍만으로는 불확실합니다.",
-            category="general",
+            category="food",
             confidence=0.3,
             provider="openai",
             action="uncertain",
@@ -601,7 +603,75 @@ class ApiIntegrationTests(unittest.TestCase):
         self.assertIsNotNone(preserved)
         self.assertEqual(preserved["status"], "stored")
         self.assertEqual(preserved["bbox"], [115, 85, 60, 45])
-        self.assertNotEqual(preserved["provider"], "pending")
+        self.assertEqual(preserved["provider"], "openai_review")
+        self.assertEqual(preserved["category"], "general")
+        self.assertEqual(preserved["retention_days"], 60)
+        self.assertEqual(preserved["expires_at"], provisional["expires_at"])
+
+    def _assert_late_rejection_preserves_reconfirmed_item(self, *, queued: bool) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            capture_dir = Path(directory)
+            with patch.object(main, "config", replace(main.config, capture_dir=capture_dir)):
+                event = ChangeEvent(
+                    kind="added", bbox=(80, 80, 60, 45), crop_jpeg=b"original crop",
+                    before_jpeg=b"original background", after_jpeg=b"original after",
+                    confidence=0.7,
+                )
+                provisional = main.create_provisional_item(event)
+                initial_signature = main.item_tracking_signature(provisional)
+                reconfirmed: dict = {}
+                rejection = Classification(
+                    name="확인 필요한 물건", description="이전 증거를 제거로 판정했습니다.",
+                    category="food", confidence=0.95, provider="openai", action="removed",
+                )
+
+                def move_away_and_back() -> None:
+                    for index, bbox in enumerate(((160, 90, 60, 45), event.bbox)):
+                        main.handle_vision_change(
+                            ChangeEvent(
+                                kind="moved", bbox=bbox,
+                                crop_jpeg=f"new crop {index}".encode(),
+                                before_jpeg=f"new background {index}".encode(),
+                                after_jpeg=f"new after {index}".encode(),
+                                confidence=0.9, matched_item_id=provisional["id"],
+                            )
+                        )
+                    reconfirmed.update(self.store.get_item(provisional["id"]))
+                    self.assertEqual(reconfirmed["bbox"], list(event.bbox))
+                    self.assertNotEqual(main.item_tracking_signature(reconfirmed), initial_signature)
+
+                def respond_after_movement(*_args, **_kwargs) -> Classification:
+                    if not queued:
+                        move_away_and_back()
+                    return rejection
+
+                if queued:
+                    move_away_and_back()
+                self.assertTrue(main.classification_slots.acquire(blocking=False))
+                with patch.object(main.classifier, "classify", side_effect=respond_after_movement):
+                    if queued:
+                        main.classify_existing_item(provisional["id"], event, initial_signature)
+                    else:
+                        main.classify_existing_item(provisional["id"], event)
+
+                preserved = self.store.get_item(provisional["id"])
+                self.assertIsNotNone(preserved)
+                self.assertEqual(preserved["status"], "stored")
+                self.assertEqual(preserved["provider"], "openai_review")
+                self.assertEqual(preserved["bbox"], list(event.bbox))
+                self.assertEqual(preserved["category"], "general")
+                self.assertEqual(preserved["expires_at"], provisional["expires_at"])
+                for field in ("image_path", "background_path"):
+                    self.assertEqual(preserved[field], reconfirmed[field])
+                    self.assertTrue(Path(preserved[field]).is_file())
+                self.assertEqual(Path(preserved["image_path"]).read_bytes(), b"new crop 1")
+                self.assertEqual(Path(preserved["background_path"]).read_bytes(), b"new background 1")
+
+    def test_late_rejection_after_move_back_preserves_item_and_current_captures(self) -> None:
+        self._assert_late_rejection_preserves_reconfirmed_item(queued=False)
+
+    def test_queued_addition_uses_original_signature_after_move_back(self) -> None:
+        self._assert_late_rejection_preserves_reconfirmed_item(queued=True)
 
     def test_demo_phone_edit_recover_restore_and_extend(self) -> None:
         phone = self.create_demo_phone()
@@ -609,7 +679,8 @@ class ApiIntegrationTests(unittest.TestCase):
         self.assertEqual(phone["category"], "valuable")
         self.assertEqual(phone["retention_days"], 90)
         self.assertEqual(phone["provider"], "demo")
-        self.assertEqual(phone["bbox"], [430, 265, 240, 250])
+        self.assertIsNone(phone["bbox"])
+        self.assertEqual(phone["source_kind"], "demo")
         self.assertIsNone(phone["image_url"])
         self.assertEqual(
             parse_datetime(phone["expires_at"]) - parse_datetime(phone["detected_at"]),
@@ -882,9 +953,32 @@ class ApiIntegrationTests(unittest.TestCase):
             "/api/settings", json={"preview_stream_fps": 30}
         )
         self.assertEqual(invalid_preview_fps.status_code, 400)
+        for invalid in ({"preview_max_width": 100}, {"camera_mains_frequency_hz": 59}):
+            with self.subTest(invalid=invalid):
+                previous = self.store.get_settings()
+                response = self.client.put("/api/settings", json=invalid)
+                self.assertEqual(response.status_code, 400)
+                self.assertEqual(self.store.get_settings(), previous)
 
         # Deterministic demo presets never read the camera or call external services.
         self.vision_get_jpeg.assert_not_called()
+
+    def test_camera_preview_and_flicker_settings_persist(self) -> None:
+        previous = main.current_settings()
+        try:
+            response = self.client.put("/api/settings", json={
+                "camera_mains_frequency_hz": 60, "preview_max_width": 800,
+            })
+            self.assertEqual(response.status_code, 200, response.text)
+            settings = self.client.get("/api/settings").json()["settings"]
+            self.assertEqual(settings["camera_mains_frequency_hz"], 60)
+            self.assertEqual(settings["preview_max_width"], 800)
+            self.assertEqual(settings["camera_width"], previous["camera_width"])
+            self.assertEqual(settings["jpeg_quality"], previous["jpeg_quality"])
+        finally:
+            self.store.update_settings({key: previous[key] for key in (
+                "camera_mains_frequency_hz", "preview_max_width",
+            )})
 
 
 if __name__ == "__main__":

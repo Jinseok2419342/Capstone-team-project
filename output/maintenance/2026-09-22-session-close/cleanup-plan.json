@@ -1,0 +1,212 @@
+{
+  "workspace": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main",
+  "authorized_by": "User explicitly requested end-of-session cache and unnecessary data cleanup, 2026-09-22",
+  "targets": [
+    {
+      "relative_path": ".chart-data-2vj7f1",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\.chart-data-2vj7f1",
+      "kind": "directory",
+      "reason": "PPT chart workbook packaging scratch, final values already embedded",
+      "files": 2,
+      "bytes": 128589
+    },
+    {
+      "relative_path": ".chart-data-Wivkll",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\.chart-data-Wivkll",
+      "kind": "directory",
+      "reason": "PPT chart workbook packaging scratch, final values already embedded",
+      "files": 2,
+      "bytes": 128510
+    },
+    {
+      "relative_path": ".chart-data-XqjZc8",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\.chart-data-XqjZc8",
+      "kind": "directory",
+      "reason": "PPT chart workbook packaging scratch, final values already embedded",
+      "files": 2,
+      "bytes": 128517
+    },
+    {
+      "relative_path": ".chart-data-ZOeRKc",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\.chart-data-ZOeRKc",
+      "kind": "directory",
+      "reason": "PPT chart workbook packaging scratch, final values already embedded",
+      "files": 2,
+      "bytes": 128545
+    },
+    {
+      "relative_path": "app/__pycache__",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\app\\__pycache__",
+      "kind": "directory",
+      "reason": "Regenerable Python bytecode cache",
+      "files": 10,
+      "bytes": 461671
+    },
+    {
+      "relative_path": "experiments/__pycache__",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\experiments\\__pycache__",
+      "kind": "directory",
+      "reason": "Regenerable Python bytecode cache",
+      "files": 11,
+      "bytes": 199131
+    },
+    {
+      "relative_path": "scripts/raspberry-pi/__pycache__",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\scripts\\raspberry-pi\\__pycache__",
+      "kind": "directory",
+      "reason": "Regenerable Python bytecode cache",
+      "files": 1,
+      "bytes": 2436
+    },
+    {
+      "relative_path": "tests/__pycache__",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\tests\\__pycache__",
+      "kind": "directory",
+      "reason": "Regenerable Python bytecode cache",
+      "files": 30,
+      "bytes": 706994
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-18-live-flow-review/__pycache__",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\__pycache__",
+      "kind": "directory",
+      "reason": "Regenerable Python bytecode cache",
+      "files": 2,
+      "bytes": 59416
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-quick-reset/uv-cache",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-quick-reset\\uv-cache",
+      "kind": "directory",
+      "reason": "Package download cache; installed test-runtime preserved",
+      "files": 1969,
+      "bytes": 189144848
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-quick-reset/browser-fixture-2i5wdccj",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-quick-reset\\browser-fixture-2i5wdccj",
+      "kind": "directory",
+      "reason": "Isolated synthetic browser test DB/images, not operational data",
+      "files": 1,
+      "bytes": 122880
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-quick-reset/browser-fixture-huhm4w6n",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-quick-reset\\browser-fixture-huhm4w6n",
+      "kind": "directory",
+      "reason": "Isolated synthetic browser test DB/images, not operational data",
+      "files": 113,
+      "bytes": 334261
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-quick-reset/browser-fixture-ka097h63",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-quick-reset\\browser-fixture-ka097h63",
+      "kind": "directory",
+      "reason": "Isolated synthetic browser test DB/images, not operational data",
+      "files": 113,
+      "bytes": 334261
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/render-v1",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\render-v1",
+      "kind": "directory",
+      "reason": "Superseded slide previews; final render-v3 and all validation receipts preserved",
+      "files": 60,
+      "bytes": 2623693
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/render-v2",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\render-v2",
+      "kind": "directory",
+      "reason": "Superseded slide previews; final render-v3 and all validation receipts preserved",
+      "files": 60,
+      "bytes": 2614461
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/candidate-v1.pptx",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\candidate-v1.pptx",
+      "kind": "file",
+      "reason": "Intermediate generated deck or inspection dump, final v3 and authoring source preserved",
+      "files": 1,
+      "bytes": 126408
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/candidate-v2.pptx",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\candidate-v2.pptx",
+      "kind": "file",
+      "reason": "Intermediate generated deck or inspection dump, final v3 and authoring source preserved",
+      "files": 1,
+      "bytes": 126475
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/candidate-v3.pptx",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\candidate-v3.pptx",
+      "kind": "file",
+      "reason": "Intermediate generated deck or inspection dump, final v3 and authoring source preserved",
+      "files": 1,
+      "bytes": 126459
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/candidate-v1.pptx.inspect.ndjson",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\candidate-v1.pptx.inspect.ndjson",
+      "kind": "file",
+      "reason": "Intermediate generated deck or inspection dump, final v3 and authoring source preserved",
+      "files": 1,
+      "bytes": 75427
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/candidate-v2.pptx.inspect.ndjson",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\candidate-v2.pptx.inspect.ndjson",
+      "kind": "file",
+      "reason": "Intermediate generated deck or inspection dump, final v3 and authoring source preserved",
+      "files": 1,
+      "bytes": 75372
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/candidate-v3.pptx.inspect.ndjson",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\candidate-v3.pptx.inspect.ndjson",
+      "kind": "file",
+      "reason": "Intermediate generated deck or inspection dump, final v3 and authoring source preserved",
+      "files": 1,
+      "bytes": 75317
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/superseded-REFOUND_PROJECT_MIDTERM_2026-09-22.pptx",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\superseded-REFOUND_PROJECT_MIDTERM_2026-09-22.pptx",
+      "kind": "file",
+      "reason": "Intermediate generated deck or inspection dump, final v3 and authoring source preserved",
+      "files": 1,
+      "bytes": 127438
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/superseded-REFOUND_PROJECT_MIDTERM_2026-09-22_v2.pptx",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\superseded-REFOUND_PROJECT_MIDTERM_2026-09-22_v2.pptx",
+      "kind": "file",
+      "reason": "Intermediate generated deck or inspection dump, final v3 and authoring source preserved",
+      "files": 1,
+      "bytes": 127517
+    },
+    {
+      "relative_path": "output/maintenance/2026-09-22-midterm-build/node_modules",
+      "absolute_path": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-midterm-build\\node_modules",
+      "kind": "junction",
+      "reason": "Remove junction only; external bundled runtime must stay untouched",
+      "files": 0,
+      "bytes": 0
+    }
+  ],
+  "file_count": 2386,
+  "bytes": 197978626,
+  "preserve": [
+    "data",
+    "dist",
+    "app source",
+    "paper artifacts",
+    "final PPT and guide",
+    "render-v3",
+    "validation logs and source backups",
+    ".venv",
+    "installed test-runtime",
+    "browser profiles (active-process status unavailable)"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-09-16T15:42:21.469422+09:00",
+  "status": "complete",
+  "removed_directory_trees": [
+    "tmp/pdfs",
+    "tmp/paper-revision",
+    "tmp/paper-capture-slides",
+    ".pytest_cache"
+  ],
+  "python_cache_directories_remaining": 0,
+  "junction_removed": "tmp/paper-revision/node_modules",
+  "external_junction_target_preserved": "C:\\Users\\pppp\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\node_modules",
+  "preserved_receipts": [
+    "PDF_CAPTURE_SLIDES.validation.json",
+    "PREVIOUS_6_SLIDES.validation.json"
+  ],
+  "retained_files_hash_check_before_after_cleanup": "passed before log serialization; no preserved file changed during deletion",
+  "deleted_file_count": null,
+  "deleted_bytes": null,
+  "inventory_limit": "Cleanup and retained-file hash verification succeeded. The initial PowerShell log serialization failed at Measure-Object on ordered dictionaries; the process-local per-file deletion inventory and counts were not saved. This log records verified directory scopes and post-cleanup artifact checks instead of estimating counts.",
+  "placeholder_sets_match": 297,
+  "artifacts": {
+    "REFOUND_FULL_MANUSCRIPT.pdf": {
+      "pages": 19,
+      "sha256": "0f0b84ab45260dfc392971df48ffbec88f02f6ac071b7a4f5916d716b36cba56"
+    },
+    "RESEARCH_FRONT_MATTER.pdf": {
+      "pages": 4,
+      "sha256": "ca0b4f502e84e7ea089ef5e02c148e4a0e7afe954c9531780c46715fd52c237f"
+    },
+    "REFOUND_PDF_CAPTURE_BRIEFING.pptx": {
+      "slides": 4,
+      "source_pngs_verified": 4,
+      "sha256": "21af1cd3e380d2c7e393b39f9d2483ac67584f2f1e93d05bc312c771070797b4"
+    }
+  },
+  "application_tests_rerun": false
+}

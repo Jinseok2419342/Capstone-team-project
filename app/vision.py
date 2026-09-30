@@ -13,11 +13,14 @@ for an addition/relocation and the before crop for a removal.
 from __future__ import annotations
 
 import json
+import logging
 import math
 import queue
 import threading
 import time
-from dataclasses import asdict, dataclass, replace
+import uuid
+from collections import deque
+from dataclasses import asdict, dataclass, field, replace
 from typing import Any, Callable, Literal
 
 import cv2
@@ -27,6 +30,27 @@ from .camera_sources import CameraCapture, open_camera_capture
 
 
 BBox = tuple[int, int, int, int]
+logger = logging.getLogger(__name__)
+
+
+@dataclass(slots=True)
+class _FramePacer:
+    """Keep a target cadence without rounding it down to the camera divisor."""
+
+    fps: float = 0.0
+    next_at: float | None = None
+
+    def ready(self, now: float, fps: float) -> bool:
+        interval = 1.0 / fps
+        if self.next_at is None or self.fps != fps:
+            self.fps = fps
+            self.next_at = now + interval
+            return True
+        if now + 1e-9 < self.next_at:
+            return False
+        periods = max(1, math.floor((now - self.next_at + 1e-9) / interval) + 1)
+        self.next_at += periods * interval
+        return True
 
 
 @dataclass(frozen=True, slots=True)
@@ -46,6 +70,8 @@ class ChangeEvent:
     # surrounding context.
     scene_before_jpeg: bytes | None = None
     scene_after_jpeg: bytes | None = None
+    event_id: str = field(default_factory=lambda: uuid.uuid4().hex)
+    expected_revision: int | None = None
 
 
 @dataclass(slots=True)
@@ -69,6 +95,14 @@ class VisionStatus:
     last_change_at: float | None = None
     last_baseline_at: float | None = None
     last_error: str | None = None
+    processing_ms: float = 0.0
+    preview_width: int = 0
+    preview_height: int = 0
+    camera_diagnostics: dict[str, Any] | None = None
+    pending_changes: int = 0
+    callback_retry_count: int = 0
+    uncommitted_changes: int = 0
+    inventory_connected: bool = False
 
 
 @dataclass(frozen=True, slots=True)
@@ -77,9 +111,23 @@ class _ActiveBox:
     bbox: BBox
     reference_jpeg: bytes | None = None
     background_jpeg: bytes | None = None
+    tracking_revision: int | None = None
 
 
-_CALLBACK_STOP = object()
+@dataclass(slots=True)
+class _ChangeBatch:
+    events: tuple[ChangeEvent, ...]
+    generation: int
+    done: threading.Event = field(default_factory=threading.Event)
+    cancelled: threading.Event = field(default_factory=threading.Event)
+    committed: int = 0
+    queued: bool = False
+    retry_at: float = 0.0
+    retry_delay: float = 0.5
+
+    @property
+    def succeeded(self) -> bool:
+        return self.committed == len(self.events)
 
 
 class VisionMonitor:
@@ -190,6 +238,9 @@ class VisionMonitor:
         "change_border_margin_ratio": 0.04,
         "jpeg_quality": 88,
         "preview_jpeg_quality": 84,
+        "preview_stream_fps": 8.0,
+        "preview_max_width": 1280,
+        "camera_mains_frequency_hz": 0,
         "ai_scene_max_width": 960,
         "ai_scene_jpeg_quality": 72,
         "compensate_lighting": True,
@@ -218,11 +269,15 @@ class VisionMonitor:
         self._thread: threading.Thread | None = None
         self._dispatcher_thread: threading.Thread | None = None
         self._stop_event: threading.Event | None = None
+        self._capture_done: threading.Event | None = None
         self._callback_queue: queue.Queue[Any] | None = None
+        self._diagnostic_queue: queue.Queue[Any] | None = None
+        self._pending_batch: _ChangeBatch | None = None
         self._capture: CameraCapture | None = None
         self._rebaseline_generation = 0
         self._manual_reconcile_generation: int | None = None
         self._recent_boxes: list[tuple[BBox, str, float]] = []
+        self._preview_pacer = _FramePacer()
 
         initial = self._make_notice_frame(
             self.DEFAULTS["camera_width"],
@@ -240,88 +295,117 @@ class VisionMonitor:
         """Start capture and callback workers.  Calling twice is harmless."""
 
         with self._lock:
-            if self._thread is not None and self._thread.is_alive():
+            if any(
+                worker is not None and worker.is_alive()
+                for worker in (self._thread, self._dispatcher_thread)
+            ):
                 return
 
             stop_event = threading.Event()
+            capture_done = threading.Event()
             callback_queue: queue.Queue[Any] = queue.Queue(maxsize=128)
+            diagnostic_queue: queue.Queue[Any] = queue.Queue(maxsize=128)
             self._stop_event = stop_event
+            self._capture_done = capture_done
             self._callback_queue = callback_queue
+            self._diagnostic_queue = diagnostic_queue
+            self._pending_batch = None
+            self._status.pending_changes = 0
+            self._status.inventory_connected = False
             self._status.running = True
             self._status.phase = "starting"
             self._status.last_error = None
+            self._status.camera_diagnostics = None
+            self._status.preview_width = 0
+            self._status.preview_height = 0
+            self._status.processing_ms = 0.0
+            self._preview_pacer = _FramePacer()
 
             dispatcher = threading.Thread(
                 target=self._dispatch_callbacks,
-                args=(callback_queue,),
+                args=(callback_queue, capture_done, diagnostic_queue, stop_event),
                 name="vision-callbacks",
                 daemon=True,
             )
             monitor = threading.Thread(
                 target=self._run,
-                args=(stop_event, callback_queue),
+                args=(stop_event, callback_queue, capture_done),
                 name="vision-monitor",
                 daemon=True,
             )
             self._dispatcher_thread = dispatcher
             self._thread = monitor
 
-        dispatcher.start()
-        monitor.start()
-        self._enqueue_callback(
-            callback_queue,
-            "event",
-            {"type": "monitor_started", "timestamp": time.time()},
-        )
+            # Publish/start while holding the lifecycle lock so a concurrent
+            # start/stop cannot see a worker that has not been started yet.
+            self._enqueue_callback(
+                callback_queue,
+                "event",
+                {"type": "monitor_started", "timestamp": time.time()},
+            )
+            try:
+                dispatcher.start()
+                monitor.start()
+            except Exception:
+                stop_event.set()
+                capture_done.set()
+                self._status.running = False
+                self._status.phase = "stopping"
+                raise
 
-    def stop(self, timeout: float = 5.0) -> None:
-        """Stop capture, release the camera, and drain queued callbacks."""
+    def stop(self, timeout: float = 5.0) -> bool:
+        """Request shutdown and drain accepted callbacks within ``timeout``.
+
+        Return ``True`` only after both workers have exited. A blocked backend
+        or callback may outlive the timeout; keep its handles to prevent a new
+        monitor from racing it. Camera release belongs to the capture worker:
+        releasing a native capture concurrently with ``read`` is not safe.
+        """
+
+        deadline = time.monotonic() + max(0.0, timeout)
 
         with self._lock:
             monitor = self._thread
             dispatcher = self._dispatcher_thread
             stop_event = self._stop_event
-            callback_queue = self._callback_queue
+            if stop_event is not None:
+                stop_event.set()
 
-        if stop_event is not None:
-            stop_event.set()
-
-        if monitor is not None and monitor.is_alive():
-            monitor.join(max(0.1, timeout))
-            if monitor.is_alive():
-                # Some camera backends block inside read().  Releasing from the
-                # outside is a best-effort escape hatch after the normal join.
-                with self._capture_lock:
-                    capture = self._capture
-                    if capture is not None:
-                        capture.release()
-                monitor.join(1.0)
-
-        if callback_queue is not None:
-            try:
-                callback_queue.put_nowait(_CALLBACK_STOP)
-            except queue.Full:
-                try:
-                    callback_queue.get_nowait()
-                except queue.Empty:
-                    pass
-                try:
-                    callback_queue.put_nowait(_CALLBACK_STOP)
-                except queue.Full:
-                    pass
-
-        if dispatcher is not None and dispatcher.is_alive():
-            dispatcher.join(min(max(0.1, timeout), 2.0))
+        current = threading.current_thread()
+        for worker in (monitor, dispatcher):
+            if worker is not None and worker is not current and worker.is_alive():
+                worker.join(max(0.0, deadline - time.monotonic()))
 
         with self._lock:
-            if self._thread is monitor:
+            stopped = all(
+                worker is None or not worker.is_alive()
+                for worker in (monitor, dispatcher)
+            )
+            if self._thread is monitor and self._dispatcher_thread is dispatcher:
+                if not stopped:
+                    self._status.phase = "stopping"
+                    return False
                 self._thread = None
                 self._dispatcher_thread = None
                 self._stop_event = None
+                self._capture_done = None
                 self._callback_queue = None
-            self._status.running = False
-            self._status.phase = "stopped"
-            self._status.motion_detected = False
+                self._diagnostic_queue = None
+                self._pending_batch = None
+                self._status.running = False
+                self._status.phase = "stopped"
+                self._status.camera_connected = False
+                self._status.using_fallback = True
+                self._status.motion_detected = False
+                self._status.baseline_ready = False
+                self._status.fps = 0.0
+                self._status.camera_diagnostics = None
+                self._status.preview_width = 0
+                self._status.preview_height = 0
+                return True
+            # Another caller may have started a new generation just after the
+            # old workers exited. Do not report the whole monitor as quiescent.
+            return False
 
     def get_jpeg(self) -> bytes:
         """Return the latest complete JPEG, suitable for an MJPEG endpoint."""
@@ -345,6 +429,8 @@ class VisionMonitor:
 
         with self._lock:
             self._rebaseline_generation += 1
+            if self._pending_batch is not None:
+                self._pending_batch.cancelled.set()
             if reconcile_items:
                 self._manual_reconcile_generation = self._rebaseline_generation
             self._status.baseline_ready = False
@@ -365,6 +451,8 @@ class VisionMonitor:
             if self._status.privacy_enabled == enabled:
                 return
             self._status.privacy_enabled = enabled
+            if self._pending_batch is not None:
+                self._pending_batch.cancelled.set()
             self._status.baseline_ready = False
             self._status.motion_detected = False
             self._status.phase = "privacy" if enabled else "rebaseline_pending"
@@ -399,6 +487,7 @@ class VisionMonitor:
         self,
         stop_event: threading.Event,
         callback_queue: queue.Queue[Any],
+        capture_done: threading.Event,
     ) -> None:
         capture: CameraCapture | None = None
         capture_signature: tuple[Any, ...] | None = None
@@ -409,6 +498,8 @@ class VisionMonitor:
         offline_error_reported = False
 
         baseline_frame: np.ndarray | None = None
+        baseline_gray: np.ndarray | None = None
+        pending_scene: tuple[_ChangeBatch, np.ndarray, np.ndarray, int] | None = None
         previous_gray: np.ndarray | None = None
         calibration_still_since: float | None = None
         last_motion_mono = 0.0
@@ -421,11 +512,12 @@ class VisionMonitor:
         next_active_refresh = 0.0
         config = dict(self.DEFAULTS)
         next_config_refresh = 0.0
-        last_processed_mono = 0.0
+        processing_pacer = _FramePacer()
         last_accumulated_check_mono = 0.0
         last_fallback_mono = 0.0
-        last_frame_mono: float | None = None
         smoothed_fps = 0.0
+        processed_times: deque[float] = deque(maxlen=30)
+        next_camera_diagnostics = 0.0
 
         try:
             while not stop_event.is_set():
@@ -443,6 +535,7 @@ class VisionMonitor:
                     camera_opened_mono = None
                     next_open_attempt = now_mono
                     baseline_frame = None
+                    baseline_gray = None
                     previous_gray = None
                     phase = "calibrating"
 
@@ -450,14 +543,18 @@ class VisionMonitor:
                     capture, open_error = self._open_capture(config)
                     if capture is not None:
                         capture_signature = signature
-                        camera_opened_mono = now_mono
+                        camera_opened_mono = time.monotonic()
                         read_failures = 0
                         baseline_frame = None
+                        baseline_gray = None
                         previous_gray = None
                         calibration_still_since = None
                         stable_since = None
                         phase = "calibrating"
-                        observed_rebaseline = self._current_rebaseline_generation()
+                        # A manual request made while offline must be consumed
+                        # by the first usable frame after reconnect.
+                        if pending_scene is None:
+                            observed_rebaseline = -1
                         with self._capture_lock:
                             self._capture = capture
                         self._set_camera_status(True, None)
@@ -497,8 +594,26 @@ class VisionMonitor:
                     stop_event.wait(0.05)
                     continue
 
-                ok, frame = capture.read()
-                if not ok or frame is None or frame.size == 0:
+                read_error = "Camera stopped returning frames"
+                try:
+                    ok, frame = capture.read()
+                except Exception as exc:
+                    ok, frame = False, None
+                    read_error = f"Camera read failed: {exc}"
+                # A shutdown requested during a blocking read must not publish
+                # or analyse one more camera frame when the call returns.
+                if stop_event.is_set():
+                    break
+                valid_frame = (
+                    isinstance(frame, np.ndarray)
+                    and frame.size > 0
+                    and frame.dtype == np.uint8
+                    and (
+                        frame.ndim == 2
+                        or (frame.ndim == 3 and frame.shape[2] in (3, 4))
+                    )
+                )
+                if not ok or not valid_frame:
                     read_failures += 1
                     allowed_failures = self._int_config(
                         config,
@@ -507,7 +622,7 @@ class VisionMonitor:
                         maximum=30,
                     )
                     if read_failures >= allowed_failures:
-                        error = "Camera stopped returning frames"
+                        error = read_error
                         self._release_capture(capture)
                         capture = None
                         capture_signature = None
@@ -534,48 +649,98 @@ class VisionMonitor:
                             offline_error_reported = True
                         camera_was_connected = False
                         baseline_frame = None
+                        baseline_gray = None
                         previous_gray = None
                     else:
                         stop_event.wait(0.03)
                     continue
 
                 read_failures = 0
-                frame = self._transform_frame(frame, config)
                 now_mono = time.monotonic()
                 monitor_fps = self._float_config(
                     config, "monitor_fps", minimum=1.0, maximum=60.0
                 )
-                if now_mono - last_processed_mono < 1.0 / monitor_fps:
+                if not processing_pacer.ready(now_mono, monitor_fps):
                     continue
-                last_processed_mono = now_mono
-
-                if last_frame_mono is not None and now_mono > last_frame_mono:
-                    instant_fps = 1.0 / (now_mono - last_frame_mono)
-                    smoothed_fps = (
-                        instant_fps
-                        if smoothed_fps <= 0.0
-                        else smoothed_fps * 0.88 + instant_fps * 0.12
-                    )
-                last_frame_mono = now_mono
+                processing_started = time.perf_counter()
+                frame = self._transform_frame(frame, config)
+                processed_times.append(now_mono)
+                if len(processed_times) >= 2 and now_mono > processed_times[0]:
+                    smoothed_fps = (len(processed_times) - 1) / (now_mono - processed_times[0])
                 self._mark_live_frame(frame, smoothed_fps)
+                if now_mono >= next_camera_diagnostics:
+                    self._update_camera_diagnostics(capture)
+                    next_camera_diagnostics = now_mono + 1.0
+
+                if pending_scene is not None:
+                    batch, candidate_frame, candidate_gray, batch_generation = pending_scene
+                    if not batch.queued:
+                        self._try_queue_batch(callback_queue, batch)
+                    receipt_ready = batch.done.is_set() and (
+                        not batch.succeeded
+                        or not self._analysis_is_current(batch_generation)
+                        or self._camera_warmup_complete(camera_opened_mono, now_mono, config)
+                    )
+                    if receipt_ready:
+                        with self._lock:
+                            if self._pending_batch is batch:
+                                self._pending_batch = None
+                        pending_scene = None
+                        active_boxes = self._fetch_active_boxes(
+                            frame.shape[1], frame.shape[0], active_boxes
+                        )
+                        next_active_refresh = 0.0
+                        if batch.succeeded and self._analysis_is_current(batch_generation):
+                            baseline_frame = candidate_frame
+                            baseline_gray = candidate_gray
+                            previous_gray = candidate_gray
+                            phase = "monitoring"
+                            self._set_baseline_ready(batch_generation)
+                        else:
+                            baseline_frame = None
+                            baseline_gray = None
+                            previous_gray = None
+                            calibration_still_since = None
+                            stable_since = None
+                            phase = "calibrating"
+                            observed_rebaseline = -1
+                    else:
+                        if self._privacy_enabled():
+                            self._set_detection_status("privacy", False, False)
+                            if self._preview_pacer.ready(now_mono, self._float_config(
+                                config, "preview_stream_fps", minimum=1.0, maximum=15.0
+                            )):
+                                self._publish_privacy(frame.shape[1], frame.shape[0], config)
+                        else:
+                            waiting_phase = "calibrating" if batch.done.is_set() else "commit_pending"
+                            self._set_detection_status(waiting_phase, False, baseline_frame is not None)
+                            self._publish_live_preview(frame, waiting_phase, False, active_boxes, config)
+                        self._mark_processing_time(processing_started)
+                        continue
 
                 if self._privacy_enabled():
                     baseline_frame = None
+                    baseline_gray = None
                     previous_gray = None
                     calibration_still_since = None
                     stable_since = None
                     phase = "privacy"
                     self._set_detection_status(phase, False, False)
-                    self._publish_privacy(frame.shape[1], frame.shape[0], config)
+                    if self._preview_pacer.ready(now_mono, self._float_config(
+                        config, "preview_stream_fps", minimum=1.0, maximum=15.0
+                    )):
+                        self._publish_privacy(frame.shape[1], frame.shape[0], config)
+                    self._mark_processing_time(processing_started)
                     continue
 
                 generation = self._current_rebaseline_generation()
                 if generation != observed_rebaseline:
                     observed_rebaseline = generation
-                    reconcile_on_baseline = self._should_reconcile_generation(
-                        generation
+                    reconcile_on_baseline = (
+                        self._should_reconcile_generation(generation) or reconcile_on_baseline
                     )
                     baseline_frame = None
+                    baseline_gray = None
                     previous_gray = None
                     calibration_still_since = None
                     stable_since = None
@@ -588,6 +753,7 @@ class VisionMonitor:
                 # object boxes away from their real location.
                 analysis_frame = frame
                 analysis_aligned = False
+                current_to_reference: np.ndarray | None = None
                 gray = self._prepare_gray(frame)
                 reference_gray: np.ndarray | None = None
                 if (
@@ -595,7 +761,9 @@ class VisionMonitor:
                     and baseline_frame.shape[:2] == frame.shape[:2]
                     and self._bool_config(config, "stabilize_camera")
                 ):
-                    reference_gray = self._prepare_gray(baseline_frame)
+                    if baseline_gray is None:
+                        baseline_gray = self._prepare_gray(baseline_frame)
+                    reference_gray = baseline_gray
                     euclidean = self._estimate_euclidean_alignment(
                         reference_gray, gray, config
                     )
@@ -606,6 +774,7 @@ class VisionMonitor:
                         maximum=1.0,
                     )
                     if euclidean is not None and euclidean[1] >= minimum_response:
+                        current_to_reference = euclidean[0]
                         analysis_frame, valid_mask = self._warp_affine(
                             frame, euclidean[0]
                         )
@@ -617,6 +786,10 @@ class VisionMonitor:
                         if self._translation_is_usable(
                             translation, gray.shape, config
                         ):
+                            current_to_reference = np.array(
+                                [[1.0, 0.0, -translation[0]], [0.0, 1.0, -translation[1]]],
+                                dtype=np.float32,
+                            )
                             analysis_frame, valid_mask = self._warp_translation(
                                 frame, translation[0], translation[1]
                             )
@@ -634,6 +807,7 @@ class VisionMonitor:
                         gray = self._prepare_gray(analysis_frame)
                 if previous_gray is not None and previous_gray.shape != gray.shape:
                     baseline_frame = None
+                    baseline_gray = None
                     previous_gray = None
                     calibration_still_since = None
                     phase = "calibrating"
@@ -649,6 +823,13 @@ class VisionMonitor:
                         maximum=60.0,
                     )
                     next_active_refresh = now_mono + refresh
+
+                if not self._inventory_ready():
+                    self._set_detection_status("inventory_unavailable", False, baseline_frame is not None)
+                    self._publish_live_preview(frame, "inventory_unavailable", False, active_boxes, config,
+                                               current_to_reference=current_to_reference)
+                    self._mark_processing_time(processing_started)
+                    continue
 
                 moving = False
                 if previous_gray is not None:
@@ -715,13 +896,22 @@ class VisionMonitor:
                         and camera_warmed_up
                     ):
                         baseline_frame = frame.copy()
+                        baseline_gray = gray.copy()
                         phase = "monitoring"
-                        self._set_baseline_ready()
+                        self._set_baseline_ready(generation)
                         self._emit_event(callback_queue, "baseline_ready")
                         if reconcile_on_baseline:
                             active_boxes = self._fetch_active_boxes(
                                 frame.shape[1], frame.shape[0], active_boxes
                             )
+                            if not self._inventory_ready():
+                                baseline_frame = None
+                                baseline_gray = None
+                                phase = "calibrating"
+                                self._set_detection_status("inventory_unavailable", False, False)
+                                self._publish_live_preview(frame, "inventory_unavailable", False, active_boxes, config)
+                                self._mark_processing_time(processing_started)
+                                continue
                             reconciled = self._reconcile_absent_active_items(
                                 frame,
                                 active_boxes,
@@ -729,30 +919,29 @@ class VisionMonitor:
                             )
                             reconcile_on_baseline = False
                             if reconciled:
-                                self._record_events(reconciled, config)
-                                for event in reconciled:
-                                    self._enqueue_callback(
-                                        callback_queue, "change", event
-                                    )
-                                    self._emit_event(
-                                        callback_queue,
-                                        "change_detected",
-                                        kind=event.kind,
-                                        bbox=list(event.bbox),
-                                        confidence=event.confidence,
-                                        matched_item_id=event.matched_item_id,
-                                        source="manual_rebaseline",
-                                    )
+                                batch = self._queue_changes(
+                                    reconciled,
+                                    config,
+                                    callback_queue,
+                                    generation,
+                                    source="manual_rebaseline",
+                                )
+                                if batch is not None:
+                                    pending_scene = (batch, frame.copy(), gray.copy(), generation)
+                                    baseline_frame = None
+                                    baseline_gray = None
+                                    phase = "commit_pending"
                     else:
                         phase = "calibrating"
 
                     self._set_detection_status(
-                        phase, moving, baseline_frame is not None
+                        phase, moving, baseline_frame is not None, generation
                     )
-                    output = self._draw_overlay(
-                        analysis_frame, phase, moving, active_boxes, config
+                    self._publish_live_preview(
+                        frame, phase, moving, active_boxes, config,
+                        current_to_reference=current_to_reference,
                     )
-                    self._publish_frame(output, config, contains_camera_image=True)
+                    self._mark_processing_time(processing_started)
                     previous_gray = gray
                     continue
 
@@ -762,14 +951,14 @@ class VisionMonitor:
                         phase = "settling"
                         last_motion_mono = now_mono
                         stable_since = None
-                        self._mark_motion()
+                        self._mark_motion(generation)
                         self._emit_event(callback_queue, "motion_detected")
                 else:
                     if moving:
                         phase = "settling"
                         last_motion_mono = now_mono
                         stable_since = None
-                        self._mark_motion()
+                        self._mark_motion(generation)
                     else:
                         settle_seconds = self._float_config(
                             config, "settle_seconds", minimum=0.0, maximum=60.0
@@ -793,44 +982,51 @@ class VisionMonitor:
                                     analysis_frame.shape[0],
                                     active_boxes,
                                 )
+                                if not self._inventory_ready():
+                                    phase = "stabilizing"
+                                    self._set_detection_status("inventory_unavailable", False, True)
+                                    self._publish_live_preview(
+                                        frame, "inventory_unavailable", False, active_boxes, config,
+                                        current_to_reference=current_to_reference,
+                                    )
+                                    self._mark_processing_time(processing_started)
+                                    continue
                                 events, globally_changed = self._detect_changes(
                                     baseline_frame,
                                     analysis_frame,
                                     active_boxes,
                                     config,
+                                    already_aligned=analysis_aligned,
                                 )
-                                baseline_frame = analysis_frame.copy()
+                                if not self._analysis_is_current(generation):
+                                    continue
                                 stable_since = None
                                 phase = "monitoring"
-                                self._set_baseline_ready()
-
                                 if globally_changed:
                                     self._emit_event(
                                         callback_queue,
                                         "global_change_suppressed",
                                     )
                                 elif events:
-                                    self._record_events(events, config)
-                                    for event in events:
-                                        self._enqueue_callback(
-                                            callback_queue,
-                                            "change",
-                                            event,
+                                    batch = self._queue_changes(
+                                        events, config, callback_queue, generation
+                                    )
+                                    if batch is not None:
+                                        pending_scene = (
+                                            batch, analysis_frame.copy(), gray.copy(), generation
                                         )
-                                        self._emit_event(
-                                            callback_queue,
-                                            "change_detected",
-                                            kind=event.kind,
-                                            bbox=list(event.bbox),
-                                            confidence=event.confidence,
-                                            matched_item_id=event.matched_item_id,
-                                        )
+                                        phase = "commit_pending"
+                                if pending_scene is None:
+                                    baseline_frame = analysis_frame.copy()
+                                    baseline_gray = gray.copy()
+                                    self._set_baseline_ready(generation)
 
-                self._set_detection_status(phase, moving, True)
-                output = self._draw_overlay(
-                    analysis_frame, phase, moving, active_boxes, config
+                self._set_detection_status(phase, moving, True, generation)
+                self._publish_live_preview(
+                    frame, phase, moving, active_boxes, config,
+                    current_to_reference=current_to_reference,
                 )
-                self._publish_frame(output, config, contains_camera_image=True)
+                self._mark_processing_time(processing_started)
                 previous_gray = gray
 
         except Exception as exc:  # keep health information if a backend surprises us
@@ -841,6 +1037,9 @@ class VisionMonitor:
                 error=str(exc),
             )
         finally:
+            if pending_scene is not None and not pending_scene[0].queued:
+                pending_scene[0].cancelled.set()
+                self._finish_batch(pending_scene[0])
             if capture is not None:
                 self._release_capture(capture)
             with self._capture_lock:
@@ -852,7 +1051,12 @@ class VisionMonitor:
                 self._status.motion_detected = False
                 self._status.baseline_ready = False
                 self._status.phase = "stopped"
+                self._status.fps = 0.0
+                self._status.camera_diagnostics = None
+                self._status.preview_width = 0
+                self._status.preview_height = 0
             self._emit_event(callback_queue, "monitor_stopped")
+            capture_done.set()
 
     # ------------------------------------------------------------------
     # Detection
@@ -1318,9 +1522,8 @@ class VisionMonitor:
             if np.any(sampled_valid):
                 signed -= float(np.median(sampled_signed[sampled_valid]))
 
-            raw_magnitude = np.abs(signed)
-
             if allow_local and self._bool_config(config, "compensate_local_lighting"):
+                raw_magnitude = np.abs(signed)
                 blur_ratio = self._float_config(
                     config,
                     "lighting_blur_ratio",
@@ -1496,6 +1699,14 @@ class VisionMonitor:
                 config, "motion_compensate_local_lighting"
             ),
         )
+        threshold = self._int_config(
+            config, "motion_threshold", minimum=2, maximum=100
+        )
+        # Jitter suppression can only remove difference evidence. If no pixel
+        # would survive thresholding, the later Sobel, morphology and contour
+        # passes necessarily produce an empty mask as well.
+        if int(np.max(diff)) <= threshold:
+            return False, 0.0
         jitter_mask = self._persistent_edge_jitter_mask(
             previous_gray,
             aligned_current,
@@ -1504,9 +1715,6 @@ class VisionMonitor:
         )
         if jitter_mask is not None:
             diff[jitter_mask > 0] = 0
-        threshold = self._int_config(
-            config, "motion_threshold", minimum=2, maximum=100
-        )
         _, mask = cv2.threshold(diff, threshold, 255, cv2.THRESH_BINARY)
         mask = cv2.bitwise_and(mask, valid_mask)
         mask = cv2.morphologyEx(
@@ -1536,6 +1744,8 @@ class VisionMonitor:
         after: np.ndarray,
         active_boxes: list[_ActiveBox],
         config: dict[str, Any],
+        *,
+        already_aligned: bool = False,
     ) -> tuple[list[ChangeEvent], bool]:
         if before.shape[:2] != after.shape[:2]:
             return [], True
@@ -1544,22 +1754,23 @@ class VisionMonitor:
         after_gray = self._prepare_gray(after)
         aligned_after = after
         valid_mask = np.full(before_gray.shape, 255, dtype=np.uint8)
-        euclidean = self._estimate_euclidean_alignment(
-            before_gray, after_gray, config
-        )
-        minimum_response = self._float_config(
-            config, "stabilization_min_response", minimum=0.0, maximum=1.0
-        )
-        if euclidean is not None and euclidean[1] >= minimum_response:
-            aligned_after, valid_mask = self._warp_affine(after, euclidean[0])
-        else:
-            translation = self._estimate_translation(before_gray, after_gray, config)
-            if self._translation_is_usable(
-                translation, before_gray.shape, config
-            ):
-                aligned_after, valid_mask = self._warp_translation(
-                    after, translation[0], translation[1]
-                )
+        if not already_aligned:
+            euclidean = self._estimate_euclidean_alignment(
+                before_gray, after_gray, config
+            )
+            minimum_response = self._float_config(
+                config, "stabilization_min_response", minimum=0.0, maximum=1.0
+            )
+            if euclidean is not None and euclidean[1] >= minimum_response:
+                aligned_after, valid_mask = self._warp_affine(after, euclidean[0])
+            else:
+                translation = self._estimate_translation(before_gray, after_gray, config)
+                if self._translation_is_usable(
+                    translation, before_gray.shape, config
+                ):
+                    aligned_after, valid_mask = self._warp_translation(
+                        after, translation[0], translation[1]
+                    )
 
         if aligned_after is not after:
             if aligned_after.shape == before.shape:
@@ -1604,10 +1815,10 @@ class VisionMonitor:
             )
             before_lab = cv2.cvtColor(before_bgr, cv2.COLOR_BGR2LAB)
             after_lab = cv2.cvtColor(after_bgr, cv2.COLOR_BGR2LAB)
-            chroma_diff = np.max(
-                cv2.absdiff(before_lab[:, :, 1:3], after_lab[:, :, 1:3]),
-                axis=2,
-            ).astype(np.uint8)
+            lab_delta = cv2.absdiff(before_lab, after_lab)
+            chroma_diff = cv2.max(
+                cv2.extractChannel(lab_delta, 1), cv2.extractChannel(lab_delta, 2)
+            )
             diff = np.maximum(diff, chroma_diff)
             support_diff = np.maximum(support_diff, chroma_diff)
         threshold = self._int_config(
@@ -2125,6 +2336,7 @@ class VisionMonitor:
                     after_jpeg=after_jpeg,
                     confidence=round(max(0.5, min(0.99, match_score)), 3),
                     matched_item_id=active.item_id,
+                    expected_revision=active.tracking_revision,
                 )
             )
 
@@ -2152,6 +2364,7 @@ class VisionMonitor:
                     after_jpeg=after_jpeg,
                     confidence=confidence,
                     matched_item_id=active.item_id,
+                    expected_revision=active.tracking_revision,
                 )
             )
 
@@ -2182,6 +2395,7 @@ class VisionMonitor:
                         event_box, frame_area, density, max_overlap
                     ),
                     matched_item_id=active.item_id,
+                    expected_revision=active.tracking_revision,
                 )
             )
 
@@ -2720,6 +2934,7 @@ class VisionMonitor:
                     after_jpeg=current_crop,
                     confidence=0.96,
                     matched_item_id=active.item_id,
+                    expected_revision=active.tracking_revision,
                     scene_after_jpeg=self._encode_scene_context(
                         frame,
                         active.bbox,
@@ -3286,7 +3501,9 @@ class VisionMonitor:
         previous: list[_ActiveBox],
     ) -> list[_ActiveBox]:
         try:
-            values = self._active_items_getter() or []
+            values = self._active_items_getter()
+            if not isinstance(values, (list, tuple)):
+                raise TypeError("active_items_getter must return an item list")
             parsed: list[_ActiveBox] = []
             for item in values:
                 if isinstance(item, dict):
@@ -3294,6 +3511,7 @@ class VisionMonitor:
                     raw_bbox = item.get("bbox")
                     reference_jpeg = item.get("reference_jpeg")
                     background_jpeg = item.get("background_jpeg")
+                    tracking_revision = item.get("tracking_revision")
                     if raw_bbox is None:
                         raw_bbox = item
                 else:
@@ -3301,6 +3519,7 @@ class VisionMonitor:
                     raw_bbox = getattr(item, "bbox", None)
                     reference_jpeg = getattr(item, "reference_jpeg", None)
                     background_jpeg = getattr(item, "background_jpeg", None)
+                    tracking_revision = getattr(item, "tracking_revision", None)
                 if isinstance(reference_jpeg, memoryview):
                     reference_jpeg = reference_jpeg.tobytes()
                 if not isinstance(reference_jpeg, bytes):
@@ -3317,10 +3536,17 @@ class VisionMonitor:
                             bbox=bbox,
                             reference_jpeg=reference_jpeg,
                             background_jpeg=background_jpeg,
+                            tracking_revision=tracking_revision,
                         )
                     )
+            with self._lock:
+                self._status.inventory_connected = True
+                if str(self._status.last_error or "").startswith("Could not read active item boxes:"):
+                    self._status.last_error = None
             return parsed
         except Exception as exc:
+            with self._lock:
+                self._status.inventory_connected = False
             self._set_error(f"Could not read active item boxes: {exc}")
             return previous
 
@@ -3535,6 +3761,7 @@ class VisionMonitor:
             config.get("camera_width"),
             config.get("camera_height"),
             config.get("camera_fps"),
+            config.get("camera_mains_frequency_hz", 0),
         )
 
     def _open_capture(
@@ -3542,12 +3769,17 @@ class VisionMonitor:
     ) -> tuple[CameraCapture | None, str | None]:
         source: Any = config.get("camera_source", config.get("camera_index", 0))
         backend_name = str(config.get("camera_backend", "")).strip().lower()
+        options: dict[str, Any] = {}
+        mains_frequency = self._int_config(config, "camera_mains_frequency_hz", minimum=0, maximum=60)
+        if mains_frequency:
+            options["mains_frequency_hz"] = mains_frequency
         return open_camera_capture(
             source,
             backend_name,
             self._int_config(config, "camera_width", minimum=160, maximum=7680),
             self._int_config(config, "camera_height", minimum=120, maximum=4320),
             self._float_config(config, "camera_fps", minimum=1.0, maximum=120.0),
+            **options,
         )
 
     @staticmethod
@@ -3718,13 +3950,22 @@ class VisionMonitor:
         moving: bool,
         active_boxes: list[_ActiveBox],
         config: dict[str, Any],
+        *,
+        reference_to_preview: np.ndarray | None = None,
     ) -> np.ndarray:
-        output = frame.copy()
+        if frame.ndim == 2:
+            output = cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR)
+        elif frame.shape[2] == 4:
+            output = cv2.cvtColor(frame, cv2.COLOR_BGRA2BGR)
+        else:
+            output = frame.copy()
         height, width = output.shape[:2]
 
         if self._bool_config(config, "draw_active_boxes"):
             for active in active_boxes:
-                x, y, box_width, box_height = active.bbox
+                x, y, box_width, box_height = self._preview_bbox(
+                    active.bbox, reference_to_preview, width, height
+                )
                 cv2.rectangle(
                     output,
                     (x, y),
@@ -3750,7 +3991,9 @@ class VisionMonitor:
             recent = [entry for entry in self._recent_boxes if entry[2] > now]
             self._recent_boxes = recent
         for bbox, kind, _ in recent:
-            x, y, box_width, box_height = bbox
+            x, y, box_width, box_height = self._preview_bbox(
+                bbox, reference_to_preview, width, height
+            )
             color = (
                 (104, 211, 92)
                 if kind == "added"
@@ -3780,9 +4023,11 @@ class VisionMonitor:
             )
 
         panel_width = min(width - 24, 330)
-        overlay = output.copy()
-        cv2.rectangle(overlay, (12, 12), (12 + panel_width, 76), (15, 15, 18), -1)
-        output = cv2.addWeighted(overlay, 0.72, output, 0.28, 0)
+        # Blend just the status panel rather than copying/blending 720p pixels
+        # outside it on every preview frame.
+        panel = output[12:77, 12:13 + panel_width]
+        shade = np.full_like(panel, (15, 15, 18))
+        cv2.addWeighted(shade, 0.72, panel, 0.28, 0, dst=panel)
         phase_label = phase.replace("_", " ").upper()
         color = (82, 210, 104) if phase == "monitoring" else (81, 174, 255)
         if moving:
@@ -3821,6 +4066,79 @@ class VisionMonitor:
             cv2.LINE_AA,
         )
         return output
+
+    @classmethod
+    def _preview_bbox(
+        cls, bbox: BBox, reference_to_preview: np.ndarray | None, width: int, height: int
+    ) -> BBox:
+        if reference_to_preview is None:
+            return cls._clamp_bbox(bbox, width, height)
+        x, y, w, h = bbox
+        corners = np.array([[[x, y], [x + w, y], [x, y + h], [x + w, y + h]]], dtype=np.float32)
+        projected = cv2.transform(corners, reference_to_preview)[0]
+        left, top = np.floor(projected.min(axis=0)).astype(int)
+        right, bottom = np.ceil(projected.max(axis=0)).astype(int)
+        return cls._clamp_bbox((int(left), int(top), int(right - left), int(bottom - top)), width, height)
+
+    def _publish_live_preview(
+        self,
+        frame: np.ndarray,
+        phase: str,
+        moving: bool,
+        active_boxes: list[_ActiveBox],
+        config: dict[str, Any],
+        *,
+        current_to_reference: np.ndarray | None = None,
+    ) -> bool:
+        """Show camera geometry; analysis-only correction must not wobble video."""
+        fps = self._float_config(config, "preview_stream_fps", minimum=1.0, maximum=15.0)
+        if not self._preview_pacer.ready(time.monotonic(), fps):
+            return False
+        height, width = frame.shape[:2]
+        max_width = self._int_config(config, "preview_max_width", minimum=320, maximum=3840)
+        preview = frame
+        if width > max_width:
+            preview = cv2.resize(
+                frame, (max_width, max(1, round(height * max_width / width))),
+                interpolation=cv2.INTER_AREA,
+            )
+        # Bboxes stay in the full-resolution reference coordinate system for
+        # matching/storage. Project only their display copies into raw video.
+        projection = (
+            cv2.invertAffineTransform(current_to_reference)
+            if current_to_reference is not None
+            else np.array([[1, 0, 0], [0, 1, 0]], dtype=np.float32)
+        )
+        projection[0] *= preview.shape[1] / width
+        projection[1] *= preview.shape[0] / height
+        output = self._draw_overlay(
+            preview, phase, moving, active_boxes, config, reference_to_preview=projection
+        )
+        self._publish_frame(output, config, contains_camera_image=True)
+        with self._lock:
+            self._status.preview_width = int(preview.shape[1])
+            self._status.preview_height = int(preview.shape[0])
+        return True
+
+    def _update_camera_diagnostics(self, capture: CameraCapture) -> None:
+        getter = getattr(capture, "get_diagnostics", None)
+        if not callable(getter):
+            with self._lock:
+                self._status.camera_diagnostics = None
+            return
+        try:
+            diagnostics = getter()
+            if isinstance(diagnostics, dict):
+                with self._lock:
+                    self._status.camera_diagnostics = diagnostics
+        except Exception:
+            # Optional metadata must not interrupt camera processing.
+            with self._lock:
+                self._status.camera_diagnostics = None
+
+    def _mark_processing_time(self, started: float) -> None:
+        with self._lock:
+            self._status.processing_ms = round((time.perf_counter() - started) * 1000, 2)
 
     def _publish_frame(
         self,
@@ -3895,26 +4213,43 @@ class VisionMonitor:
         with self._lock:
             self._status.camera_connected = connected
             self._status.using_fallback = not connected
-            self._status.baseline_ready = False if not connected else self._status.baseline_ready
-            self._status.motion_detected = False if not connected else self._status.motion_detected
-            self._status.phase = "calibrating" if connected else "offline"
+            self._status.baseline_ready = False
+            self._status.camera_diagnostics = None
+            self._status.preview_width = 0
+            self._status.preview_height = 0
+            self._status.processing_ms = 0.0
+            self._status.motion_detected = False
+            self._status.phase = (
+                "privacy" if self._status.privacy_enabled
+                else "calibrating" if connected else "offline"
+            )
             self._status.last_error = error
 
     def _set_detection_status(
-        self, phase: str, moving: bool, baseline_ready: bool
+        self,
+        phase: str,
+        moving: bool,
+        baseline_ready: bool,
+        generation: int | None = None,
     ) -> None:
         with self._lock:
+            if generation is not None and not self._analysis_is_current(generation):
+                return
             self._status.phase = phase
             self._status.motion_detected = bool(moving or phase in ("settling", "stabilizing"))
             self._status.baseline_ready = baseline_ready
 
-    def _set_baseline_ready(self) -> None:
+    def _set_baseline_ready(self, generation: int | None = None) -> None:
         with self._lock:
+            if generation is not None and not self._analysis_is_current(generation):
+                return
             self._status.baseline_ready = True
             self._status.last_baseline_at = time.time()
 
-    def _mark_motion(self) -> None:
+    def _mark_motion(self, generation: int | None = None) -> None:
         with self._lock:
+            if generation is not None and not self._analysis_is_current(generation):
+                return
             self._status.motion_detected = True
             self._status.last_motion_at = time.time()
 
@@ -3934,9 +4269,86 @@ class VisionMonitor:
         with self._lock:
             self._status.last_error = str(message)
 
+    def _analysis_is_current(self, generation: int) -> bool:
+        with self._lock:
+            return (
+                generation == self._rebaseline_generation
+                and not self._status.privacy_enabled
+                and (self._stop_event is None or not self._stop_event.is_set())
+            )
+
+    def _queue_changes(
+        self,
+        events: list[ChangeEvent],
+        config: dict[str, Any],
+        callback_queue: queue.Queue[Any],
+        generation: int,
+        **details: Any,
+    ) -> _ChangeBatch | None:
+        # Admission is not persistence. The capture worker keeps the scene
+        # pair until the dispatcher acknowledges every local DB operation.
+        with self._lock:
+            if not self._analysis_is_current(generation):
+                return None
+            batch = _ChangeBatch(tuple(events), generation)
+            self._pending_batch = batch
+            self._status.pending_changes = len(events)
+            self._record_events(events, config)
+            self._try_queue_batch(callback_queue, batch)
+            for event in events:
+                self._emit_event(
+                    callback_queue,
+                    "change_detected",
+                    kind=event.kind,
+                    bbox=list(event.bbox),
+                    confidence=event.confidence,
+                    matched_item_id=event.matched_item_id,
+                    **details,
+                )
+            return batch
+
+    def _try_queue_batch(self, callback_queue: queue.Queue[Any], batch: _ChangeBatch) -> None:
+        if batch.queued or batch.done.is_set():
+            return
+        if batch.cancelled.is_set():
+            self._finish_batch(batch)
+            return
+        try:
+            callback_queue.put_nowait(("batch", batch))
+            batch.queued = True
+        except queue.Full:
+            self._set_error("Vision changes await callback capacity; baseline retained")
+
+    def _finish_batch(self, batch: _ChangeBatch) -> None:
+        with self._lock:
+            if batch.done.is_set():
+                return
+            remaining = len(batch.events) - batch.committed
+            self._status.pending_changes = 0
+            if remaining:
+                self._status.uncommitted_changes += remaining
+                self._status.last_error = (
+                    f"Vision delivery stopped with {remaining} uncommitted change(s); "
+                    "committed items were retained"
+                )
+                logger.warning(
+                    "Vision delivery ended with %d uncommitted event(s); committed=%d; event_ids=%s",
+                    remaining, batch.committed,
+                    [event.event_id for event in batch.events[batch.committed:]],
+                )
+            elif str(self._status.last_error or "").startswith((
+                "Vision commit will retry:", "Vision changes await callback capacity;"
+            )):
+                self._status.last_error = None
+            batch.done.set()
+
     def _privacy_enabled(self) -> bool:
         with self._lock:
             return self._status.privacy_enabled
+
+    def _inventory_ready(self) -> bool:
+        with self._lock:
+            return self._status.inventory_connected
 
     def _current_rebaseline_generation(self) -> int:
         with self._lock:
@@ -3944,7 +4356,10 @@ class VisionMonitor:
 
     def _should_reconcile_generation(self, generation: int) -> bool:
         with self._lock:
-            if self._manual_reconcile_generation != generation:
+            if (
+                self._manual_reconcile_generation is None
+                or generation < self._manual_reconcile_generation
+            ):
                 return False
             self._manual_reconcile_generation = None
             return True
@@ -3970,18 +4385,104 @@ class VisionMonitor:
             return
         if callback_type == "event" and not callable(self._event_callback):
             return
-        try:
-            callback_queue.put_nowait((callback_type, payload))
-        except queue.Full:
-            self._set_error("Vision callback queue is full; an event was dropped")
-
-    def _dispatch_callbacks(self, callback_queue: queue.Queue[Any]) -> None:
-        while True:
-            item = callback_queue.get()
+        with self._lock:
+            if (
+                callback_queue is self._callback_queue
+                and self._capture_done is not None
+                and self._capture_done.is_set()
+            ):
+                return
+            if (
+                callback_type == "event"
+                and callback_queue is self._callback_queue
+                and self._diagnostic_queue is not None
+            ):
+                callback_queue = self._diagnostic_queue
             try:
-                if item is _CALLBACK_STOP:
+                callback_queue.put_nowait((callback_type, payload))
+            except queue.Full:
+                self._set_error("Vision callback queue is full; an event was dropped")
+
+    def _dispatch_callbacks(
+        self,
+        callback_queue: queue.Queue[Any],
+        capture_done: threading.Event,
+        diagnostic_queue: queue.Queue[Any] | None = None,
+        stop_event: threading.Event | None = None,
+    ) -> None:
+        batch: _ChangeBatch | None = None
+        while True:
+            if batch is not None:
+                if batch.cancelled.is_set() or (
+                    (capture_done.is_set() or (stop_event is not None and stop_event.is_set()))
+                    and batch.retry_at > 0
+                ):
+                    self._finish_batch(batch)
+                    callback_queue.task_done()
+                    batch = None
+                    continue
+                if time.monotonic() >= batch.retry_at:
+                    try:
+                        # None remains success for existing standalone users.
+                        result = self._change_callback(batch.events[batch.committed])
+                        if result is False:
+                            raise RuntimeError("Local inventory commit was not acknowledged")
+                    except Exception as exc:
+                        with self._lock:
+                            self._status.callback_retry_count += 1
+                            self._status.last_error = f"Vision commit will retry: {exc}"
+                        batch.retry_at = time.monotonic() + batch.retry_delay
+                        batch.retry_delay = min(5.0, batch.retry_delay * 2)
+                    else:
+                        batch.committed += 1
+                        batch.retry_at = 0.0
+                        batch.retry_delay = 0.5
+                        with self._lock:
+                            self._status.pending_changes = len(batch.events) - batch.committed
+                        if batch.succeeded:
+                            self._finish_batch(batch)
+                            callback_queue.task_done()
+                            batch = None
+                        continue
+
+            # Diagnostics have their own capacity and cannot make an inventory
+            # event disappear. During retry backoff they can still be drained.
+            if diagnostic_queue is not None:
+                try:
+                    diagnostic = diagnostic_queue.get_nowait()
+                except queue.Empty:
+                    pass
+                else:
+                    try:
+                        if callable(self._event_callback):
+                            self._event_callback(diagnostic[1])
+                    except Exception as exc:
+                        self._set_error(f"Vision diagnostic callback failed: {exc}")
+                    finally:
+                        diagnostic_queue.task_done()
+            if batch is not None:
+                # Poll cancellation at most every 50ms without spinning or
+                # blocking camera capture while a database is unavailable.
+                batch.cancelled.wait(min(0.05, max(0.001, batch.retry_at - time.monotonic())))
+                continue
+            try:
+                item = callback_queue.get(
+                    timeout=0.0 if diagnostic_queue is not None and not diagnostic_queue.empty() else 0.1
+                )
+            except queue.Empty:
+                # Completion is separate from the bounded queue: stopping
+                # must never evict an accepted change to make room for a token.
+                if capture_done.is_set() and (diagnostic_queue is None or diagnostic_queue.empty()):
+                    with self._lock:
+                        if self._callback_queue is callback_queue:
+                            self._status.phase = "stopped"
                     return
+                continue
+            try:
                 callback_type, payload = item
+                if callback_type == "batch":
+                    batch = payload
+                    continue
                 if callback_type == "change" and callable(self._change_callback):
                     self._change_callback(payload)
                 elif callback_type == "event" and callable(self._event_callback):
@@ -3989,7 +4490,8 @@ class VisionMonitor:
             except Exception as exc:
                 self._set_error(f"Vision callback failed: {exc}")
             finally:
-                callback_queue.task_done()
+                if batch is None:
+                    callback_queue.task_done()
 
     def _camera_warmup_complete(
         self,

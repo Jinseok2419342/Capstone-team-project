@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="481.8897637795276" height="168" preserveAspectRatio="xMinYMin meet" viewBox="0 0 481 168" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="481.8897637795276" height="168"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-168)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="82" width="86" height="52" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="23.362890625000002" y="114.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 7.8px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,228) scale(1,-1)">calibrating</text>
+			<text x="22.12890625" y="102.0" style="font-family: Malgun Gothic; font-size: 7.8px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,204) scale(1,-1)">카메라 준비</text>
+			<rect x="99" y="82" width="86" height="52" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="121.205078125" y="114.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 7.8px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,228) scale(1,-1)">monitoring</text>
+			<text x="121.12890625" y="102.0" style="font-family: Malgun Gothic; font-size: 7.8px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,204) scale(1,-1)">움직임 감시</text>
+			<rect x="198" y="82" width="86" height="52" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="227.10244140625" y="114.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 7.8px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,228) scale(1,-1)">settling</text>
+			<text x="201.78671875" y="102.0" style="font-family: Malgun Gothic; font-size: 7.8px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,204) scale(1,-1)">마지막 움직임 후 대기</text>
+			<rect x="297" y="82" width="86" height="52" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="321.15888671875" y="114.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 7.8px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,228) scale(1,-1)">stabilizing</text>
+			<text x="313.8578125" y="102.0" style="font-family: Malgun Gothic; font-size: 7.8px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,204) scale(1,-1)">연속 안정 확인</text>
+			<rect x="396" y="82" width="86" height="52" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(14%,21%,27%); fill-rule: evenodd;"/>
+			<text x="421.463330078125" y="114.0" style="font-family: Malgun Gothic; font-weight: bold; font-size: 7.8px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,228) scale(1,-1)">analyzing</text>
+			<text x="412.8578125" y="102.0" style="font-family: Malgun Gothic; font-size: 7.8px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,204) scale(1,-1)">전후 장면 분석</text>
+			<path d="M 86,108 L 99,108 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="99 108, 95.48967 109.9177, 95.48967 106.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 185,108 L 198,108 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="198 108, 194.4897 109.9177, 194.4897 106.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 284,108 L 297,108 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="297 108, 293.4897 109.9177, 293.4897 106.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 383,108 L 396,108 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="396 108, 392.4897 109.9177, 392.4897 106.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<text x="173.96875" y="148" style="font-family: Malgun Gothic; font-size: 8px;fill: rgb(35%,40%,44%); stroke:none;" transform="translate(0,296) scale(1,-1)">일반 프레임 카메라의 처리 상태 전이</text>
+			<path d="M 439,82 L 439,30 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<path d="M 439,30 L 142,30 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<path d="M 142,30 L 142,82 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="142 82, 140.0823 78.48967, 143.9177 78.48967" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<text x="210.40625" y="15" style="font-family: Malgun Gothic; font-size: 8px;fill: rgb(35%,40%,44%); stroke:none;" transform="translate(0,30) scale(1,-1)">분석 후 기준 갱신 → 감시 복귀 → callback 전달</text>
+			<text x="224.96875" y="61" style="font-family: Malgun Gothic; font-size: 8px;fill: rgb(35%,40%,44%); stroke:none;" transform="translate(0,122) scale(1,-1)">움직임 재발 시 안정 확인을 초기화</text>
+		</g>
+	</g>
+</svg>

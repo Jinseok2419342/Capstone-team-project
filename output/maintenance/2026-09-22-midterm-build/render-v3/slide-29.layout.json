@@ -1,0 +1,988 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/i5o3q10v",
+    "id": "i5o3q10v",
+    "slide": 29,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/bq1o72tk",
+      "id": "8",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "보충자료 B. 화면 채우기",
+      "textPreview": "보충자료 B. 화면 채우기",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "보충자료 B. 화면 채우기"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "보충자료 B. 화면 채우기",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "보충자료 B. 화면 채우기",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/tk36hwby",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "발표용 캡처 준비 목록",
+      "textPreview": "발표용 캡처 준비 목록",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "발표용 캡처 준비 목록"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "발표용 캡처 준비 목록",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "발표용 캡처 준비 목록",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/8jup8rad",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vmlojmto",
+      "id": "4",
+      "bbox": [
+        64,
+        668,
+        1085,
+        28
+      ],
+      "geometry": "rect",
+      "text": "실제 Pi 화면 사용. 합성 테스트 화면을 쓰면 해당 사실을 표시",
+      "textPreview": "실제 Pi 화면 사용. 합성 테스트 화면을 쓰면 해당 사실을 표시",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "실제 Pi 화면 사용. 합성 테스트 화면을 쓰면 해당 사실을 표시"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "실제 Pi 화면 사용. 합성 테스트 화면을 쓰면 해당 사실을 표시",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 16,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "실제 Pi 화면 사용. 합성 테스트 화면을 쓰면 해당 사실을 표시",
+              "fontSize": 16,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ulc7a1s3",
+      "id": "5",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "29",
+      "textPreview": "29",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "29"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "29",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "29",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/juxk7ytw",
+      "id": "9",
+      "bbox": [
+        64,
+        181,
+        1152,
+        378
+      ],
+      "text": "자리 | 캡처 내용 | 반드시 보여줄 것\nS1  ·  11쪽 | 저장소의 개발 이력 | 날짜·작성자·기능별 주요 커밋\nS2  ·  14쪽 | 실물 하나를 등록한 뒤 상세 확인 | 물품 이름, ID, 사진과 상태\nS3  ·  14쪽 | 같은 물품을 옮긴 뒤 동일 기록 | 같은 ID, 바뀐 위치·사진, 중복 없음\nS4  ·  14쪽 | 물품을 제거한 뒤 같은 기록 | 회수 상태와 해당 활동 이력\nS5  ·  15쪽 | 실제 Pi 관리자 화면 | 전체 화면 구성 또는 핵심 관리 작업",
+      "textPreview": "자리 | 캡처 내용 | 반드시 보여줄 것 | S1  ·  11쪽 | 저장소의 개발 이력 | 날짜·작성자·기능별 주요 커밋 | S2  ·  14쪽 | 실물 하나를 등록한 뒤 상세 확인 | 물품 이름, ID, 사진과 상태 | S3  ·  14쪽 | ...",
+      "rows": 6,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            234,
+            63
+          ],
+          "text": "자리",
+          "textPreview": "자리",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "자리",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "자리",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            298,
+            181,
+            452,
+            63
+          ],
+          "text": "캡처 내용",
+          "textPreview": "캡처 내용",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "캡처 내용",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "캡처 내용",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            750,
+            181,
+            466,
+            63
+          ],
+          "text": "반드시 보여줄 것",
+          "textPreview": "반드시 보여줄 것",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "반드시 보여줄 것",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "반드시 보여줄 것",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            244,
+            234,
+            63
+          ],
+          "text": "S1  ·  11쪽",
+          "textPreview": "S1  ·  11쪽",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "S1  ·  11쪽",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "S1  ·  11쪽",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            298,
+            244,
+            452,
+            63
+          ],
+          "text": "저장소의 개발 이력",
+          "textPreview": "저장소의 개발 이력",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "저장소의 개발 이력",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "저장소의 개발 이력",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            750,
+            244,
+            466,
+            63
+          ],
+          "text": "날짜·작성자·기능별 주요 커밋",
+          "textPreview": "날짜·작성자·기능별 주요 커밋",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "날짜·작성자·기능별 주요 커밋",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "날짜·작성자·기능별 주요 커밋",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            307,
+            234,
+            63
+          ],
+          "text": "S2  ·  14쪽",
+          "textPreview": "S2  ·  14쪽",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "S2  ·  14쪽",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "S2  ·  14쪽",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            298,
+            307,
+            452,
+            63
+          ],
+          "text": "실물 하나를 등록한 뒤 상세 확인",
+          "textPreview": "실물 하나를 등록한 뒤 상세 확인",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "실물 하나를 등록한 뒤 상세 확인",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "실물 하나를 등록한 뒤 상세 확인",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            750,
+            307,
+            466,
+            63
+          ],
+          "text": "물품 이름, ID, 사진과 상태",
+          "textPreview": "물품 이름, ID, 사진과 상태",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "물품 이름, ID, 사진과 상태",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "물품 이름, ID, 사진과 상태",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            370,
+            234,
+            63
+          ],
+          "text": "S3  ·  14쪽",
+          "textPreview": "S3  ·  14쪽",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "S3  ·  14쪽",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "S3  ·  14쪽",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            298,
+            370,
+            452,
+            63
+          ],
+          "text": "같은 물품을 옮긴 뒤 동일 기록",
+          "textPreview": "같은 물품을 옮긴 뒤 동일 기록",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "같은 물품을 옮긴 뒤 동일 기록",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "같은 물품을 옮긴 뒤 동일 기록",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            750,
+            370,
+            466,
+            63
+          ],
+          "text": "같은 ID, 바뀐 위치·사진, 중복 없음",
+          "textPreview": "같은 ID, 바뀐 위치·사진, 중복 없음",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "같은 ID, 바뀐 위치·사진, 중복 없음",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "같은 ID, 바뀐 위치·사진, 중복 없음",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            433,
+            234,
+            63
+          ],
+          "text": "S4  ·  14쪽",
+          "textPreview": "S4  ·  14쪽",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "S4  ·  14쪽",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "S4  ·  14쪽",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            298,
+            433,
+            452,
+            63
+          ],
+          "text": "물품을 제거한 뒤 같은 기록",
+          "textPreview": "물품을 제거한 뒤 같은 기록",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "물품을 제거한 뒤 같은 기록",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "물품을 제거한 뒤 같은 기록",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            750,
+            433,
+            466,
+            63
+          ],
+          "text": "회수 상태와 해당 활동 이력",
+          "textPreview": "회수 상태와 해당 활동 이력",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "회수 상태와 해당 활동 이력",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "회수 상태와 해당 활동 이력",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            496,
+            234,
+            63
+          ],
+          "text": "S5  ·  15쪽",
+          "textPreview": "S5  ·  15쪽",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "S5  ·  15쪽",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "S5  ·  15쪽",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            298,
+            496,
+            452,
+            63
+          ],
+          "text": "실제 Pi 관리자 화면",
+          "textPreview": "실제 Pi 관리자 화면",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "실제 Pi 관리자 화면",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "실제 Pi 관리자 화면",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "row": 6,
+          "column": 3,
+          "bbox": [
+            750,
+            496,
+            466,
+            63
+          ],
+          "text": "전체 화면 구성 또는 핵심 관리 작업",
+          "textPreview": "전체 화면 구성 또는 핵심 관리 작업",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "전체 화면 구성 또는 핵심 관리 작업",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "전체 화면 구성 또는 핵심 관리 작업",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/g7upcra9",
+      "id": "7",
+      "bbox": [
+        64,
+        578,
+        1152,
+        64
+      ],
+      "geometry": "rect",
+      "text": "PNG 권장. 주소창·계정·키·개인 식별 정보는 제외한다.\n자세한 촬영 순서와 PPT 교체 방법은 함께 제공한 작성 가이드에 있다.",
+      "textPreview": "PNG 권장. 주소창·계정·키·개인 식별 정보는 제외한다. | 자세한 촬영 순서와 PPT 교체 방법은 함께 제공한 작성 가이드에 있다.",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 2,
+        "lines": [
+          {
+            "index": 1,
+            "text": "PNG 권장. 주소창·계정·키·개인 식별 정보는 제외한다."
+          },
+          {
+            "index": 2,
+            "text": "자세한 촬영 순서와 PPT 교체 방법은 함께 제공한 작성 가이드에 있다."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "PNG 권장. 주소창·계정·키·개인 식별 정보는 제외한다.",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "PNG 권장. 주소창·계정·키·개인 식별 정보는 제외한다.",
+              "fontSize": 23,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        },
+        {
+          "index": 2,
+          "text": "자세한 촬영 순서와 PPT 교체 방법은 함께 제공한 작성 가이드에 있다.",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "자세한 촬영 순서와 PPT 교체 방법은 함께 제공한 작성 가이드에 있다.",
+              "fontSize": 23,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

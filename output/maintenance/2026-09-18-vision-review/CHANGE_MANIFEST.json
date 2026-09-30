@@ -1,0 +1,102 @@
+{
+  "date": "2026-09-18",
+  "python_tests": 202,
+  "frontend_tests": 13,
+  "isolated_opencv_4_11_vision_camera_tests": 74,
+  "python_compileall": "passed",
+  "javascript_syntax": "passed",
+  "html_ids_and_aria": "passed",
+  "static_routes": "3 passed",
+  "real_browser": "unavailable; no connected browser",
+  "hardware": "not tested",
+  "operational_database": "not modified",
+  "benchmark_scope": "Windows synthetic CPU benchmark with virtual capture timing; not Raspberry Pi or field performance",
+  "final_vision_sha256": "80d02cb32b9f32a27b3c12932aa90d5f0ecb4bed6e7f5376b9cf77c267c33c1e",
+  "changes": [
+    {
+      "path": "AGENTS.md",
+      "status": "modified",
+      "sha256": "b6234e411f4beb4eb79ff0f9d0ce74aa7c7eb163561f0e5cdfe5767eab93d55c"
+    },
+    {
+      "path": "README.md",
+      "status": "modified",
+      "sha256": "e674e06c4282648ec852b856e9614d2f1bd4a3718c26ad48232b5b6196da9c5f"
+    },
+    {
+      "path": "app/camera_sources.py",
+      "status": "modified",
+      "sha256": "a82a753433502cedb990e1822eab5f155f4fe74e84c9914d032706f728cb327b"
+    },
+    {
+      "path": "app/config.py",
+      "status": "modified",
+      "sha256": "c6b933d37422a2aa3e9d973682558952bba2ce890b1eaf136f1ec03f819ffb88"
+    },
+    {
+      "path": "app/main.py",
+      "status": "modified",
+      "sha256": "6bc6090944ae3bf1180526585dd5a60e26d8b07f4d8f0c1e0a766daf432e88d4"
+    },
+    {
+      "path": "app/vision.py",
+      "status": "modified",
+      "sha256": "80d02cb32b9f32a27b3c12932aa90d5f0ecb4bed6e7f5376b9cf77c267c33c1e"
+    },
+    {
+      "path": "docs/VISION_REVIEW_2026-09-18.md",
+      "status": "added",
+      "sha256": "a2c0bac609db2cd61ee559934a4796721f8a7ecae455550121b63c9facb52bec"
+    },
+    {
+      "path": "scripts/benchmarks/vision_pipeline.py",
+      "status": "added",
+      "sha256": "176086a1ec874d7b67a3097eb133c5159b9b529f9bbf70d26002801a8b3ac735"
+    },
+    {
+      "path": "static/app.js",
+      "status": "modified",
+      "sha256": "7e1a4ed6d822c06ab0ef0eddba3b619e7aa69cb546c94cdcdad76c06642c6d60"
+    },
+    {
+      "path": "templates/index.html",
+      "status": "modified",
+      "sha256": "89944b1be94e598b7cade10fb0c3fe2ef92d5371068acce2b102d7029df90b9d"
+    },
+    {
+      "path": "tests/frontend/app.test.cjs",
+      "status": "modified",
+      "sha256": "76780cdd1d21d8fc5621d049a424bfc05d3a1860ff8bb499cf71a3b8711b3611"
+    },
+    {
+      "path": "tests/test_api.py",
+      "status": "modified",
+      "sha256": "fbf3f86c7ed1d4ae6de062b4af334d5d861103335a477bf8766ee8029877237f"
+    },
+    {
+      "path": "tests/test_camera_config.py",
+      "status": "added",
+      "sha256": "a32e494327570a4870897a070f6eeb93d69e941daea0c55a8fe04b9f078b8787"
+    },
+    {
+      "path": "tests/test_camera_sources.py",
+      "status": "modified",
+      "sha256": "35d8ffbc873d9c614a721c392fad30ac00b677f42dfaba34d3aa0f4925c0ceef"
+    },
+    {
+      "path": "tests/test_vision.py",
+      "status": "modified",
+      "sha256": "6f8cea45be3b2afc9aafdbbe68dbe9304557e7ff707f03789846b05d9d6bf242"
+    },
+    {
+      "path": "tests/test_vision_preview.py",
+      "status": "added",
+      "sha256": "0e91eb45b77ab98a787a66d62fe48a41006820c8506e0bc0cc54319c2c1e5032"
+    },
+    {
+      "path": "tests/test_vision_stability.py",
+      "status": "added",
+      "sha256": "8512f23d782333d3b5fe4bd0b7c7630a1f3707f872e2b489b84a60fd6bc9cc05"
+    }
+  ]
+}

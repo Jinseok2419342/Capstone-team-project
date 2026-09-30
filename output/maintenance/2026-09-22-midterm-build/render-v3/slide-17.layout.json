@@ -1,0 +1,726 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/14bup87q",
+    "id": "14bup87q",
+    "slide": 17,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/snedsvml",
+      "id": "7",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "5. AI 모델 및 데이터 개발 현황",
+      "textPreview": "5. AI 모델 및 데이터 개발 현황",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "5. AI 모델 및 데이터 개발 현황"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "5. AI 모델 및 데이터 개발 현황",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "5. AI 모델 및 데이터 개발 현황",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1c7e50ni",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "데이터 수집과 AI 입력 구성",
+      "textPreview": "데이터 수집과 AI 입력 구성",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "데이터 수집과 AI 입력 구성"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "데이터 수집과 AI 입력 구성",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "데이터 수집과 AI 입력 구성",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gbedwfmx",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rm5czq50",
+      "id": "4",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "17",
+      "textPreview": "17",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "17"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "17",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "17",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/mxcva1wj",
+      "id": "8",
+      "bbox": [
+        64,
+        181,
+        1152,
+        388
+      ],
+      "text": "단계 | 현재 처리\n원시 입력 | 고정 CSI 카메라의 연속 프레임\n로컬 전처리 | 움직임 종료·안정화, 기하 정합, 조명 보정, 변화 영역 산출\n전후 전체 장면 2장 | 변화 방향과 주변 문맥 확인 / JPEG 기본 품질 72\n전후 후보 crop 2장 | 물품의 세부 특징 확인 / JPEG 기본 품질 88\n저장·평가 데이터 | 물품·사진·이력 저장. 정답 라벨 평가 세트는 아직 미확보",
+      "textPreview": "단계 | 현재 처리 | 원시 입력 | 고정 CSI 카메라의 연속 프레임 | 로컬 전처리 | 움직임 종료·안정화, 기하 정합, 조명 보정, 변화 영역 산출 | 전후 전체 장면 2장 | 변화 방향과 주변 문맥 확인 / JPEG 기본 품질 72 | 전...",
+      "rows": 6,
+      "cols": 2,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            285,
+            64.67
+          ],
+          "text": "단계",
+          "textPreview": "단계",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "단계",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "단계",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            349,
+            181,
+            867,
+            64.67
+          ],
+          "text": "현재 처리",
+          "textPreview": "현재 처리",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "현재 처리",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "현재 처리",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            245.67,
+            285,
+            64.67
+          ],
+          "text": "원시 입력",
+          "textPreview": "원시 입력",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "원시 입력",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "원시 입력",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            349,
+            245.67,
+            867,
+            64.67
+          ],
+          "text": "고정 CSI 카메라의 연속 프레임",
+          "textPreview": "고정 CSI 카메라의 연속 프레임",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "고정 CSI 카메라의 연속 프레임",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "고정 CSI 카메라의 연속 프레임",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            310.33,
+            285,
+            64.67
+          ],
+          "text": "로컬 전처리",
+          "textPreview": "로컬 전처리",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "로컬 전처리",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "로컬 전처리",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            349,
+            310.33,
+            867,
+            64.67
+          ],
+          "text": "움직임 종료·안정화, 기하 정합, 조명 보정, 변화 영역 산출",
+          "textPreview": "움직임 종료·안정화, 기하 정합, 조명 보정, 변화 영역 산출",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "움직임 종료·안정화, 기하 정합, 조명 보정, 변화 영역 산출",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "움직임 종료·안정화, 기하 정합, 조명 보정, 변화 영역 산출",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            375,
+            285,
+            64.67
+          ],
+          "text": "전후 전체 장면 2장",
+          "textPreview": "전후 전체 장면 2장",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "전후 전체 장면 2장",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "전후 전체 장면 2장",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            349,
+            375,
+            867,
+            64.67
+          ],
+          "text": "변화 방향과 주변 문맥 확인 / JPEG 기본 품질 72",
+          "textPreview": "변화 방향과 주변 문맥 확인 / JPEG 기본 품질 72",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "변화 방향과 주변 문맥 확인 / JPEG 기본 품질 72",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "변화 방향과 주변 문맥 확인 / JPEG 기본 품질 72",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            439.67,
+            285,
+            64.67
+          ],
+          "text": "전후 후보 crop 2장",
+          "textPreview": "전후 후보 crop 2장",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "전후 후보 crop 2장",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "전후 후보 crop 2장",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            349,
+            439.67,
+            867,
+            64.67
+          ],
+          "text": "물품의 세부 특징 확인 / JPEG 기본 품질 88",
+          "textPreview": "물품의 세부 특징 확인 / JPEG 기본 품질 88",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "물품의 세부 특징 확인 / JPEG 기본 품질 88",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "물품의 세부 특징 확인 / JPEG 기본 품질 88",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            504.33,
+            285,
+            64.67
+          ],
+          "text": "저장·평가 데이터",
+          "textPreview": "저장·평가 데이터",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "저장·평가 데이터",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "저장·평가 데이터",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            349,
+            504.33,
+            867,
+            64.67
+          ],
+          "text": "물품·사진·이력 저장. 정답 라벨 평가 세트는 아직 미확보",
+          "textPreview": "물품·사진·이력 저장. 정답 라벨 평가 세트는 아직 미확보",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "물품·사진·이력 저장. 정답 라벨 평가 세트는 아직 미확보",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "물품·사진·이력 저장. 정답 라벨 평가 세트는 아직 미확보",
+                  "fontSize": 24,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t8ne10n6",
+      "id": "6",
+      "bbox": [
+        64,
+        595,
+        1152,
+        48
+      ],
+      "geometry": "rect",
+      "text": "외부 요청당 최대 4장. 별도 모델 학습·증강·파인튜닝은 수행하지 않았다.",
+      "textPreview": "외부 요청당 최대 4장. 별도 모델 학습·증강·파인튜닝은 수행하지 않았다.",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "외부 요청당 최대 4장. 별도 모델 학습·증강·파인튜닝은 수행하지 않았다."
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "외부 요청당 최대 4장. 별도 모델 학습·증강·파인튜닝은 수행하지 않았다.",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 25,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "외부 요청당 최대 4장. 별도 모델 학습·증강·파인튜닝은 수행하지 않았다.",
+              "fontSize": 25,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

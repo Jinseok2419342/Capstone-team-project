@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import math
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -38,13 +39,14 @@ def _bool(value: Any, default: bool = False) -> bool:
 def _int(value: Any, default: int) -> int:
     try:
         return int(value)
-    except (TypeError, ValueError):
+    except (TypeError, ValueError, OverflowError):
         return default
 
 
 def _float(value: Any, default: float) -> float:
     try:
-        return float(value)
+        result = float(value)
+        return result if math.isfinite(result) else default
     except (TypeError, ValueError):
         return default
 
@@ -112,6 +114,8 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "accumulated_check_fps": 4.0,
     "preview_stream_fps": 8.0,
     "preview_jpeg_quality": 84,
+    "preview_max_width": 1280,
+    "camera_mains_frequency_hz": 0,
     "jpeg_quality": 88,
     "stabilization_analysis_width": 480,
     "motion_threshold": 20,
@@ -150,6 +154,7 @@ if os.getenv("HARDWARE_PROFILE", "desktop").strip().lower() in {
             "accumulated_check_fps": 2.0,
             "preview_stream_fps": 5.0,
             "preview_jpeg_quality": 78,
+            "preview_max_width": 800,
             "stabilization_analysis_width": 360,
         }
     )
@@ -170,6 +175,8 @@ SETTING_TYPES: dict[str, type] = {
     "accumulated_check_fps": float,
     "preview_stream_fps": float,
     "preview_jpeg_quality": int,
+    "preview_max_width": int,
+    "camera_mains_frequency_hz": int,
     "jpeg_quality": int,
     "stabilization_analysis_width": int,
     "motion_threshold": int,
@@ -201,6 +208,35 @@ def coerce_setting(key: str, value: Any) -> Any:
     if target is float:
         return _float(value, float(DEFAULT_SETTINGS.get(key, 0.0)))
     return str(value)
+
+
+def validate_setting(key: str, value: Any) -> Any:
+    """Parse an administrator input without silently replacing bad values."""
+    target = SETTING_TYPES[key]
+    if target is bool:
+        if isinstance(value, bool):
+            return value
+        if isinstance(value, (str, int)) and str(value).strip().lower() in {
+            "1", "true", "yes", "on", "y", "0", "false", "no", "off", "n"
+        }:
+            return _bool(value)
+        raise ValueError(f"{key}: 켜짐/꺼짐 값을 확인해 주세요.")
+    if target in {int, float}:
+        if isinstance(value, bool) or not isinstance(value, (str, int, float)):
+            raise ValueError(f"{key}: 숫자를 입력해 주세요.")
+        try:
+            number = float(value)
+            if not math.isfinite(number) or (target is int and not number.is_integer()):
+                raise ValueError
+            return target(number)
+        except (TypeError, ValueError, OverflowError) as exc:
+            raise ValueError(f"{key}: 유효한 {'정수' if target is int else '숫자'}를 입력해 주세요.") from exc
+    if not isinstance(value, str) or len(value) > 300 or "\n" in value or "\r" in value:
+        raise ValueError(f"{key}: 300자 이내의 한 줄 문자열을 입력해 주세요.")
+    value = value.strip()
+    if key in {"site_name", "openai_model", "gemini_model"} and not value:
+        raise ValueError(f"{key}: 빈 값은 사용할 수 없습니다.")
+    return value
 
 
 def public_provider_state(config: AppConfig, settings: dict[str, Any]) -> dict[str, Any]:

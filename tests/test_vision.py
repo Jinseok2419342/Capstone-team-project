@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import unittest
-from unittest.mock import patch
+import itertools
+import queue
+import threading
+from unittest.mock import Mock, patch
 
 import cv2
 import numpy as np
 
-from app.vision import VisionMonitor, _ActiveBox
+from app.vision import ChangeEvent, VisionMonitor, _ActiveBox
 
 
 class VisionDetectionTests(unittest.TestCase):
@@ -1194,6 +1197,234 @@ class VisionDetectionTests(unittest.TestCase):
 
         encode.assert_called_once_with(frame, 67)
         self.assertEqual(self.monitor.get_jpeg(), b"preview")
+
+
+class VisionLifecycleTests(unittest.TestCase):
+    @staticmethod
+    def monitor(change_callback=None) -> VisionMonitor:
+        return VisionMonitor(
+            lambda: {
+                "camera_warmup_seconds": 0,
+                "stable_seconds": 0,
+                "settle_seconds": 0,
+                "stabilize_camera": False,
+                "camera_failures_before_retry": 2,
+                "camera_retry_seconds": 0.25,
+            },
+            change_callback or (lambda event: None),
+            lambda: [],
+        )
+
+    def test_timed_out_read_cannot_start_second_camera_worker(self) -> None:
+        monitor = self.monitor()
+        reading = threading.Event()
+        resume_read = threading.Event()
+        capture = Mock()
+
+        def read():
+            reading.set()
+            resume_read.wait(2)
+            return True, np.zeros((120, 160, 3), dtype=np.uint8)
+
+        capture.read.side_effect = read
+        with patch.object(monitor, "_open_capture", return_value=(capture, None)) as opener:
+            monitor.start()
+            first_worker = monitor._thread
+            try:
+                self.assertTrue(reading.wait(1))
+                self.assertFalse(monitor.stop(timeout=0.01))
+                self.assertEqual(monitor.get_status()["phase"], "stopping")
+                monitor.start()
+                self.assertIs(monitor._thread, first_worker)
+                opener.assert_called_once()
+                capture.release.assert_not_called()
+            finally:
+                resume_read.set()
+                self.assertTrue(monitor.stop(timeout=2))
+        # A read completed after shutdown must not reach analysis/preview.
+        self.assertEqual(monitor.get_status()["frame_sequence"], 0)
+        capture.release.assert_called_once()
+
+    def test_full_callback_queue_drains_every_accepted_change_on_stop(self) -> None:
+        accepted = []
+        callback_started = threading.Event()
+        resume_callback = threading.Event()
+
+        def callback(event):
+            if event == 0:
+                callback_started.set()
+                resume_callback.wait(3)
+            accepted.append(event)
+
+        monitor = self.monitor(callback)
+        capture = Mock()
+
+        def read():
+            monitor._stop_event.wait(2)
+            return False, None
+
+        capture.read.side_effect = read
+        with patch.object(monitor, "_open_capture", return_value=(capture, None)):
+            monitor.start()
+            callback_queue = monitor._callback_queue
+            self.assertIsNotNone(callback_queue)
+            try:
+                monitor._enqueue_callback(callback_queue, "change", 0)
+                self.assertTrue(callback_started.wait(1))
+                for index in range(1, 129):
+                    monitor._enqueue_callback(callback_queue, "change", index)
+                self.assertTrue(callback_queue.full())
+                self.assertFalse(monitor.stop(timeout=0.05))
+                self.assertEqual(callback_queue.qsize(), 128)
+                dispatcher = monitor._dispatcher_thread
+                monitor.start()
+                self.assertIs(monitor._dispatcher_thread, dispatcher)
+            finally:
+                resume_callback.set()
+                self.assertTrue(monitor.stop(timeout=2))
+        self.assertEqual(accepted, list(range(129)))
+        self.assertEqual(callback_queue.unfinished_tasks, 0)
+
+    def test_callback_can_request_stop_without_joining_itself(self) -> None:
+        stop_results = []
+        callback_finished = threading.Event()
+        monitor = self.monitor()
+
+        def callback(event):
+            try:
+                stop_results.append(monitor.stop(timeout=1))
+            finally:
+                callback_finished.set()
+
+        monitor._change_callback = callback
+        capture = Mock()
+        capture.read.side_effect = lambda: (
+            monitor._stop_event.wait(2) and False,
+            None,
+        )
+        with patch.object(monitor, "_open_capture", return_value=(capture, None)):
+            monitor.start()
+            try:
+                monitor._enqueue_callback(monitor._callback_queue, "change", "stop")
+                self.assertTrue(callback_finished.wait(2))
+                self.assertEqual(stop_results, [False])
+            finally:
+                self.assertTrue(monitor.stop(timeout=2))
+        self.assertIsNone(monitor.get_status()["last_error"])
+
+    def test_unexpected_monitor_exit_also_finishes_callback_worker(self) -> None:
+        monitor = self.monitor()
+        capture = Mock()
+        capture.read.return_value = True, np.zeros((120, 160, 3), dtype=np.uint8)
+        with (
+            patch.object(monitor, "_open_capture", return_value=(capture, None)),
+            patch.object(monitor, "_transform_frame", side_effect=RuntimeError("failure")),
+        ):
+            monitor.start()
+            try:
+                monitor._thread.join(2)
+                monitor._dispatcher_thread.join(2)
+                self.assertFalse(monitor._thread.is_alive())
+                self.assertFalse(monitor._dispatcher_thread.is_alive())
+                self.assertIn("failure", monitor.get_status()["last_error"])
+            finally:
+                self.assertTrue(monitor.stop(timeout=2))
+        capture.release.assert_called_once()
+
+    def test_read_exception_and_malformed_frame_reconnect_instead_of_killing_monitor(self) -> None:
+        monitor = self.monitor()
+        bad_capture = Mock()
+        bad_capture.read.side_effect = [
+            RuntimeError("device disconnected"),
+            (True, np.zeros((120, 160, 2), dtype=np.uint8)),
+        ]
+        good_capture = Mock()
+        good_capture.read.return_value = True, np.zeros((120, 160, 3), dtype=np.uint8)
+        published = threading.Event()
+        with (
+            patch.object(
+                monitor, "_open_capture", side_effect=[(bad_capture, None), (good_capture, None)]
+            ) as opener,
+            patch.object(monitor, "_publish_frame", side_effect=lambda *a, **k: published.set()),
+        ):
+            monitor.start()
+            try:
+                # Offline notice is also a publication; wait specifically for
+                # the first healthy frame, without opening any real device.
+                for _ in range(30):
+                    if monitor.get_status()["frame_sequence"]:
+                        break
+                    published.wait(0.05)
+                    published.clear()
+                self.assertGreater(monitor.get_status()["frame_sequence"], 0)
+                self.assertTrue(monitor.get_status()["running"])
+                self.assertEqual(opener.call_count, 2)
+                bad_capture.release.assert_called_once()
+            finally:
+                self.assertTrue(monitor.stop(timeout=2))
+        good_capture.release.assert_called_once()
+
+    def test_controls_during_detection_discard_uncommitted_changes(self) -> None:
+        for control in ("privacy", "rebaseline", "stop", "none"):
+            with self.subTest(control=control):
+                monitor = self.monitor()
+                stop_event = threading.Event()
+                capture_done = threading.Event()
+                callback_queue = queue.Queue()
+                monitor._stop_event = stop_event
+                capture = Mock()
+                reads = itertools.count()
+                event = ChangeEvent("added", (20, 20, 30, 30), None, None, None, 0.9)
+
+                def read():
+                    if next(reads) >= 3:
+                        stop_event.set()
+                    return True, np.zeros((120, 160, 3), dtype=np.uint8)
+
+                def detect(*args, **kwargs):
+                    if control == "privacy":
+                        monitor.set_privacy(True)
+                    elif control == "rebaseline":
+                        monitor.rebaseline()
+                    elif control == "stop":
+                        stop_event.set()
+                    return [event], False
+
+                capture.read.side_effect = read
+                with (
+                    patch.object(monitor, "_open_capture", return_value=(capture, None)),
+                    patch.object(monitor, "_has_motion", side_effect=[(True, None), (False, None)]),
+                    patch.object(monitor, "_detect_changes", side_effect=detect) as detector,
+                    patch("app.vision.time.monotonic", side_effect=itertools.count(1)),
+                ):
+                    monitor._run(stop_event, callback_queue, capture_done)
+
+                detector.assert_called_once()
+                if control == "none":
+                    callback_type, batch = callback_queue.get_nowait()
+                    self.assertEqual(callback_type, "batch")
+                    self.assertEqual(batch.events, (event,))
+                    callback_queue.task_done()
+                    self.assertEqual(monitor.get_status()["detected_changes"], 1)
+                else:
+                    self.assertEqual(monitor.get_status()["detected_changes"], 0)
+                self.assertTrue(callback_queue.empty())
+                self.assertTrue(capture_done.is_set())
+                capture.release.assert_called_once()
+
+    def test_privacy_still_drains_changes_accepted_before_it_was_enabled(self) -> None:
+        accepted = []
+        monitor = self.monitor(accepted.append)
+        callback_queue = queue.Queue()
+        capture_done = threading.Event()
+        monitor._enqueue_callback(callback_queue, "change", "accepted")
+        monitor.set_privacy(True)
+        capture_done.set()
+
+        monitor._dispatch_callbacks(callback_queue, capture_done)
+
+        self.assertEqual(accepted, ["accepted"])
+        self.assertEqual(callback_queue.unfinished_tasks, 0)
 
 
 if __name__ == "__main__":

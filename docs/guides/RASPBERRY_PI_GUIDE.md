@@ -2,6 +2,8 @@
 
 이 문서는 Raspberry Pi를 처음 사용하는 사람도 다음 구성을 처음부터 만들 수 있도록 한 단계씩 설명합니다.
 
+**새 microSD로 다시 시작한다면 [짧은 새 SD 설치 절차](FRESH_SD_START.md)를 먼저 따라가세요.** 이 문서는 카메라 연결·Tailscale·오프라인 핫스팟과 문제 해결을 자세히 찾을 때 사용하는 참고서입니다. 최초 앱 확인에는 SSH 터널만 있으면 되며 Tailscale과 자체 핫스팟은 이후 선택합니다.
+
 ```text
 Raspberry Pi 4 + Camera Module
         │
@@ -12,7 +14,7 @@ Raspberry Pi 4 + Camera Module
 
 기준 장비는 **Raspberry Pi 4 Model B 2GB**, Raspberry Pi Camera Module, Raspberry Pi OS Lite 64-bit입니다. 명령은 별도 표시가 없다면 Raspberry Pi의 터미널에서 실행합니다.
 
-> 이 가이드는 2026년 8월 25일 기준입니다. 현재 Raspberry Pi OS의 카메라 체계인 `rpicam`/Picamera2를 사용하며, 오래된 `raspistill` 또는 Legacy Camera 기능은 사용하지 않습니다.
+> 설치 절차를 2026년 9월 18일 코드·공식 문서와 대조했습니다. 일반 Raspberry Pi OS Lite 64-bit는 현재 Trixie 계열이며 `rpicam`/Picamera2를 사용합니다. 새 OS를 실제 Pi에 설치한 검증은 아직 하지 않았습니다. 오래된 `raspistill` 또는 Legacy Camera 기능은 사용하지 않습니다.
 
 ---
 
@@ -26,7 +28,7 @@ Raspberry Pi 4 + Camera Module
 | 2 | 휴대전화 핫스팟 | 같은 휴대전화 핫스팟 | **Tailscale 주소** | 가능 |
 | 3 | Pi가 만든 `ReFound-Demo` Wi-Fi | `ReFound-Demo`에 직접 연결 | `http://10.42.0.1:8000` | 인터넷이 없으면 불가능 |
 
-Tailscale은 두 장치가 서로 다른 Wi-Fi를 사용해도, 양쪽에 인터넷만 있으면 연결해 주는 사설망입니다. 노트북과 Pi가 **같은 tailnet**에 속하고 Tailscale 접근 정책(ACL)이 연결을 허용해야 합니다. 꼭 같은 로그인 계정일 필요는 없습니다.
+Tailscale은 두 장치가 서로 다른 Wi-Fi를 사용해도 인터넷을 통해 연결해 주는 사설망입니다. 노트북과 Pi가 **같은 tailnet**에 있거나 **노트북 사용자가 Pi 장치 공유를 수락**했고, Tailscale 접근 정책이 연결을 허용해야 합니다. 이번 시연 계획은 사용자 소유 Pi를 친구 계정에 공유하는 방식입니다. [친구 계정 공유 절차](SCHOOL_DEMO_GUIDE.md#1-5-친구의-tailscale-계정에-pi-공유)
 
 세 번째 방식은 인터넷이 완전히 끊긴 상황을 위한 **오프라인 비상 모드**입니다. 라이브뷰, 로컬 감지, 목록과 관리자 조작은 가능하지만 그 순간의 OpenAI/Gemini 분석은 성공하지 않습니다. 감지 증거와 물품은 로컬에 관리자 확인 상태로 남지만, 인터넷이 복구돼도 AI가 자동으로 다시 분류하지 않으므로 관리자가 이름과 분류를 직접 확인해야 합니다. 메일은 별도 재시도 상태를 가질 수 있지만 시연에서는 반드시 직접 확인합니다.
 
@@ -59,9 +61,9 @@ Tailscale은 두 장치가 서로 다른 Wi-Fi를 사용해도, 양쪽에 인터
 3. Tailscale 계정이 없다면 개인 계정을 하나 만듭니다.
 4. OpenAI 또는 Gemini API 키를 준비합니다.
 
-### API 키는 지금 재발급하세요
+### API 키 준비
 
-기존 `.env`의 키가 테스트 화면, 로그 또는 다른 사람에게 보인 적이 있다면 **기존 키를 폐기하고 새 키를 발급**하세요. 현재 PC의 `.env`를 Pi로 통째로 복사하지 않고, 설치 후 Pi에서 새 키만 직접 입력하는 방식으로 진행합니다.
+유효하고 노출되지 않은 키를 안전하게 보관 중이라면 다시 사용할 수 있습니다. SD 교체만으로 재발급할 필요는 없습니다. 키를 잃었거나 외부에 노출했다면 새 키를 발급하세요. PC의 `.env` 전체를 Pi로 복사하지 않고 설치 후 필요한 값만 직접 입력합니다.
 
 ---
 
@@ -144,6 +146,8 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])?
 
 ### `refound-pi.local`을 찾지 못할 때
 
+새 SD로 재설치한 뒤 `REMOTE HOST IDENTIFICATION HAS CHANGED`가 나온 경우에는 [새 SD 가이드의 SSH 키 확인](FRESH_SD_START.md#2-ssh-접속--재설치-경고-처리)을 따릅니다. 기존 키 검사를 끄거나 모든 접속 기록을 지우지 않습니다.
+
 다음 순서로 확인합니다.
 
 1. Pi와 노트북이 최초 설정용 Wi-Fi에 연결되어 있는지 확인합니다.
@@ -181,11 +185,11 @@ timedatectl status
 SSH 창은 열어 둡니다. **새 PowerShell 창**을 하나 더 열고 프로젝트 폴더로 이동합니다.
 
 ```powershell
-cd "C:\Users\pppp\Desktop\AI_based_Vision"
+cd "C:\Users\USER\Downloads\Capstone-team-project-main"
 Get-Location
 ```
 
-표시된 경로가 프로젝트 폴더인지 확인합니다. 먼저 Pi 전용 패키지를 만듭니다.
+표시된 경로가 프로젝트 폴더인지 확인합니다. 폴더를 다른 곳으로 옮겼다면 `cd` 경로를 바꿉니다. 먼저 Pi 전용 패키지를 만듭니다.
 
 ```powershell
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\scripts\raspberry-pi\package-for-pi.ps1
@@ -245,7 +249,7 @@ cd /opt/refound
 sudo bash scripts/raspberry-pi/install.sh
 ```
 
-스크립트는 필요한 시스템 패키지와 Python 환경을 설치하고 `refound.service`를 등록합니다. 질문이 표시되면 내용을 읽고 `y` 또는 `n`으로 답합니다. Pi 4와 microSD 속도에 따라 수 분 이상 걸릴 수 있습니다.
+스크립트는 필요한 시스템 패키지와 Python 환경을 설치하고 `refound.service`를 등록합니다. 재실행할 때 기존 접속 모드·주소·포트를 보존하고 서비스를 실제로 재시작하여 새 코드와 DB 스키마를 적용합니다. 질문이 표시되면 내용을 읽고 `y` 또는 `n`으로 답합니다. Pi 4와 microSD 속도에 따라 수 분 이상 걸릴 수 있습니다.
 
 설치가 끝나면 다음 세 명령을 차례로 확인합니다.
 
@@ -256,16 +260,16 @@ sudo journalctl -u refound.service -n 30 --no-pager
 ```
 
 - 서비스 상태에 `active (running)`이 보이면 정상입니다.
-- health 결과가 JSON으로 나오면 웹 서버가 정상입니다.
+- health의 `ok=true`, `database=connected`를 확인합니다. JSON이 나오는 것만으로 성공은 아니며 카메라 연결 상태는 별도로 확인합니다. 묶음 점검은 `bash /opt/refound/scripts/raspberry-pi/check-system.sh`로 실행합니다.
 - `q`를 눌러야 빠져나오는 화면이 나타나면 `q`를 누릅니다.
 
 서비스는 부팅 때 자동으로 시작됩니다. `uvicorn --workers 2`처럼 여러 프로세스를 별도로 실행하지 마세요. 카메라와 알림 처리에는 단일 앱 프로세스를 사용합니다.
 
 ---
 
-## 6. 새 API 키와 메일 비밀번호 입력하기
+## 6. API 키와 메일 비밀번호 입력하기
 
-먼저 기존 키를 제공자 대시보드에서 폐기하고 새 키를 발급합니다. 설치 스크립트는 비어 있는 `.env.example`로 Pi 전용 `.env`를 만들고 처음부터 권한을 `600`으로 제한합니다. 키를 PowerShell 명령줄에 넣으면 명령 기록에 남을 수 있으므로 Pi에서 편집기를 엽니다.
+유효하고 안전하게 보관한 키를 준비하거나 필요한 경우에만 재발급합니다. 설치 스크립트는 비어 있는 `.env.example`로 Pi 전용 `.env`를 만들고 처음부터 권한을 `600`으로 제한합니다. 키를 PowerShell 명령줄에 넣으면 명령 기록에 남을 수 있으므로 Pi에서 편집기를 엽니다.
 
 ```bash
 nano /opt/refound/.env
@@ -342,6 +346,8 @@ sudo shutdown -h now
 
 이 방식이 학교 시연의 기본 접속 방법입니다.
 
+먼저 [SSH 터널로 로컬 앱을 확인](FRESH_SD_START.md#5-가장-먼저-앱-열기--tailscale-없이-가능)하면 카메라·앱 문제와 원격 접속 문제를 구분하기 쉽습니다. 새 SD에서는 Tailscale을 새 장치로 다시 인증합니다. 이전 장치명과 중복되어 이름에 접미사가 붙을 수 있으므로 이전 카드의 북마크 대신 이번 `tailscale serve status`의 주소를 사용합니다.
+
 ### 8-0. 학교에서 쓸 휴대전화 핫스팟을 먼저 저장
 
 Imager에서 집 Wi-Fi를 입력했다면 Pi는 학교에서 본인 휴대전화 핫스팟을 모릅니다. 출발 전에 반드시 해당 접속 정보를 Pi에 저장하고 재부팅까지 시험합니다.
@@ -385,10 +391,10 @@ sudo reboot
 
 1. Windows용 Tailscale을 설치합니다.
 2. 작업 표시줄의 Tailscale 아이콘을 열어 로그인합니다.
-3. Pi가 들어갈 **같은 tailnet**이 선택됐고 접근 정책(ACL)이 노트북에서 Pi로의 연결을 허용하는지 확인합니다.
+3. 사용자 설치 PC는 Pi와 같은 tailnet을 사용합니다. 친구 시연 노트북은 친구 계정으로 로그인하고 Pi 공유 초대를 수락합니다. 접근 정책이 노트북에서 Pi로의 연결을 허용하는지 확인합니다.
 4. 학교에 가기 전에 설치와 로그인을 끝내 둡니다. 학교 노트북은 프로그램 설치 권한이 없을 수 있습니다.
 
-개인 tailnet에는 신뢰하는 장치만 두고, Pi 장치를 외부 사용자에게 공유하지 마세요. 앱 자체에는 별도 로그인 기능이 없으므로 가능하면 ACL에서 관리자 노트북 또는 관리자 계정만 Pi에 접근하도록 제한합니다.
+이번 시연에서는 신뢰하는 시연 담당 친구 한 명에게 Pi 장치만 공유합니다. 앱 자체에는 별도 로그인·읽기 전용 역할이 없으므로 친구도 편집과 초기화 등 관리 기능을 사용할 수 있습니다. 접근 정책은 허용할 사용자와 Pi의 HTTPS 포트를 기준으로 확인합니다. 친구에게 사용자 계정의 비밀번호를 전달할 필요는 없습니다.
 
 ### 8-2. Pi에서 설정 스크립트 실행
 
@@ -413,7 +419,7 @@ sudo bash scripts/raspberry-pi/setup-tailscale.sh
 
 1. 주소 전체를 복사합니다.
 2. Windows 브라우저에서 엽니다.
-3. 노트북이 속한 것과 같은 tailnet의 계정 또는 초대된 구성원으로 로그인합니다.
+3. Pi를 관리할 **사용자 본인의 계정**으로 로그인합니다. 집에서 설치하는 사용자 PC는 같은 tailnet을 사용하고, 친구 노트북은 이후 Pi 공유를 받습니다.
 4. Pi 연결을 승인합니다.
 5. Pi 터미널로 돌아와 스크립트가 끝나는지 확인합니다.
 
@@ -464,7 +470,7 @@ Windows에서 Tailscale이 연결된 상태로 이 주소를 브라우저에 입
 
 성공했다면 학교에서도 Pi와 노트북이 같은 Wi-Fi일 필요가 없습니다. 학교 Wi-Fi가 VPN을 막거나 로그인 페이지가 복잡하면 노트북도 휴대전화 핫스팟에 연결하면 됩니다.
 
-> Tailscale Serve는 같은 tailnet 구성원만 접속할 수 있습니다. 인터넷 전체에 공개하는 Funnel과 다릅니다. Funnel은 사용하지 마세요.
+> Tailscale Serve는 접근 정책이 허용한 같은 tailnet 구성원과 **장치 공유를 수락한 외부 사용자**가 접속할 수 있습니다. 공유받은 친구는 전체 `https://…ts.net` 주소를 사용합니다. 인터넷 전체에 공개하는 Funnel은 사용하지 않습니다. [공식 Serve 안내](https://tailscale.com/docs/features/tailscale-serve#identity-headers)
 
 ---
 
@@ -715,7 +721,7 @@ sudo tailscale serve status
 curl http://127.0.0.1:8000/api/health
 ```
 
-노트북에서도 Tailscale이 `Connected`이고 Pi와 같은 tailnet인지, ACL이 접근을 허용하는지 확인합니다. 장치 인증이 만료됐다면 Pi에서 다음을 실행해 다시 인증합니다.
+노트북에서도 Tailscale이 `Connected`이고 Pi와 같은 tailnet이거나 현재 로그인 계정이 Pi 공유를 수락했는지, 접근 정책이 연결을 허용하는지 확인합니다. 장치 인증이 만료됐다면 Pi에서 다음을 실행해 다시 인증합니다.
 
 ```bash
 sudo tailscale up --force-reauth
@@ -865,8 +871,9 @@ curl http://127.0.0.1:8000/api/health
 ```bash
 cd /opt/refound
 sudo bash scripts/raspberry-pi/install.sh
-sudo systemctl restart refound.service
 ```
+
+설치 스크립트가 기존 접속 설정을 보존하고 새 프로세스의 health까지 확인하므로 별도의 재시작 명령은 필요하지 않습니다. 카메라의 대기 표시와 AI 작업 완료는 다릅니다. 재설치 전에 새 감지를 멈추고 분석 중인 물품과 회수 재검증이 끝났는지 확인합니다. 기본 Pi 설정에서 진행 중인 작업의 종료를 기다리는 데 최대 5분이 걸릴 수 있습니다.
 
 ### 9단계: microSD 재작성은 마지막 수단
 
@@ -876,20 +883,20 @@ sudo systemctl restart refound.service
 
 ## 15. 설치 완료 판정표
 
-아래 항목을 모두 확인하면 발표용 준비가 끝난 것입니다.
+설치·접속은 아래에서 **실제로 사용할 구성의 항목**을 확인합니다. 전체 기능과 재부팅은 [실기 확인표](PI_ACCEPTANCE_CHECKLIST.md)로 별도 확인합니다. Tailscale과 오프라인 핫스팟은 선택 사항입니다.
 
 - [ ] Pi 전원과 냉각이 안정적이다.
 - [ ] 카메라가 `check-camera.sh` 검사를 통과한다.
 - [ ] `refound.service`가 `active (running)`이다.
 - [ ] `/api/health`가 정상 응답한다.
 - [ ] `.env` 권한이 `-rw-------`이다.
-- [ ] 기존 노출 가능성이 있는 API 키를 폐기하고 새 키를 넣었다.
+- [ ] 유효한 API 키를 Pi에서 입력했다. 잃었거나 노출된 키만 교체했다.
 - [ ] 학교용 휴대전화 핫스팟을 Pi에 저장하고 그 상태로 재부팅 접속을 시험했다.
-- [ ] 노트북과 Pi가 다른 네트워크에서도 Tailscale 주소로 연결된다.
-- [ ] 노트북과 Pi가 같은 tailnet에 있고 ACL이 관리자 접근만 허용한다.
-- [ ] Pi 장치를 외부 사용자에게 공유하지 않았다.
+- [ ] 사용할 SSH 터널 또는 Tailscale 주소로 접속된다.
+- [ ] Tailscale을 쓴다면 다른 네트워크에서도 연결되고 접근 정책이 관리자 또는 공유받은 친구의 접속을 허용한다.
+- [ ] 장치 공유는 시연 담당 친구에게만 제공했고 해당 노트북 계정으로 실제 접속을 확인했다.
 - [ ] Tailscale Funnel과 공유기 포트포워딩이 꺼져 있다.
-- [ ] `ReFound-Demo` 오프라인 접속과 해제를 한 번 시험했다.
+- [ ] `ReFound-Demo`를 쓸 경우에만 오프라인 접속과 해제를 한 번 시험했다.
 - [ ] 실제 물건 추가와 회수가 각각 3회 이상 성공했다.
 - [ ] 카메라 이동 후 기준 화면을 다시 설정하는 방법을 알고 있다.
 - [ ] 휴대전화 핫스팟, 충전기와 오프라인 주소를 준비했다.

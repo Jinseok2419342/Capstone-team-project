@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="481.8897637795276" height="204" preserveAspectRatio="xMinYMin meet" viewBox="0 0 481 204" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="481.8897637795276" height="204"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-204)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="131" width="105" height="49" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="30.602050781249996" y="161.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,323) scale(1,-1)">CSI 카메라</text>
+			<text x="20.997802734374996" y="149.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,299) scale(1,-1)">Picamera2 입력</text>
+			<rect x="140" y="131" width="166" height="49" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(14%,21%,27%); fill-rule: evenodd;"/>
+			<text x="178.630615234375" y="167.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,335) scale(1,-1)">Raspberry Pi 4 · 2GB</text>
+			<text x="171.89599609375" y="155.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,311) scale(1,-1)">움직임 감시 → 안정 장면</text>
+			<text x="177.12109375" y="143.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(100%,100%,100%); stroke:none;" transform="translate(0,287) scale(1,-1)">정합 · 보정 · 물품 대응</text>
+			<rect x="342" y="131" width="140" height="49" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="384.3583984375" y="167.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,335) scale(1,-1)">사건 callback</text>
+			<text x="380.212158203125" y="155.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,311) scale(1,-1)">added / moved</text>
+			<text x="358.26806640625" y="143.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,287) scale(1,-1)">removed / verify_removed</text>
+			<path d="M 105,155 L 140,155 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="140 155, 136.4897 156.9177, 136.4897 153.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 306,155 L 342,155 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="342 155, 338.4897 156.9177, 338.4897 153.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<rect x="342" y="28" width="140" height="55" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="366.338623046875" y="67.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,135) scale(1,-1)">FastAPI · SQLite WAL</text>
+			<text x="364.52587890625" y="55.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,111) scale(1,-1)">임시 등록 / 상태 / 이력</text>
+			<text x="381.8359375" y="43.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,87) scale(1,-1)">관리자 웹 화면</text>
+			<path d="M 412,131 L 412,83 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="412 83, 413.9177 86.51033, 410.0823 86.51033" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<rect x="140" y="28" width="166" height="55" rx="2" ry="2" style="stroke: rgb(68%,73%,76%); stroke-linecap: butt; stroke-width: 0.6; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="185.41796875" y="67.5" style="font-family: Malgun Gothic; font-weight: bold; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,135) scale(1,-1)">외부 시각언어모델</text>
+			<text x="166.8203125" y="55.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,111) scale(1,-1)">전체 장면 전후 + crop 전후</text>
+			<text x="172.708984375" y="43.5" style="font-family: Malgun Gothic; font-size: 9px;fill: rgb(14%,21%,27%); stroke:none;" transform="translate(0,87) scale(1,-1)">선택된 사건만 · 최대 4장</text>
+			<path d="M 342,63 L 306,63 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="306 63, 309.5103 61.0823, 309.5103 64.9177" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<path d="M 306,41 L 342,41 Z" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 0.85;"/>
+			<polygon points="342 41, 338.4897 42.9177, 338.4897 39.0823" style="stroke: rgb(35%,40%,44%); stroke-linecap: butt; stroke-width: 1; fill: rgb(35%,40%,44%); fill-rule: evenodd;"/>
+			<text x="158.7109375" y="9" style="font-family: Malgun Gothic; font-size: 8px;fill: rgb(35%,40%,44%); stroke:none;" transform="translate(0,18) scale(1,-1)">로컬 moved·removed는 외부 호출 없이 처리</text>
+		</g>
+	</g>
+</svg>

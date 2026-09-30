@@ -1,0 +1,965 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/x8f69ofe",
+    "id": "x8f69ofe",
+    "slide": 6,
+    "layoutId": "/ppt/slideLayouts/slideLayout1.xml",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#FFFFFF",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "fontScheme": {
+      "name": "Office",
+      "majorFont": {
+        "latinTypeface": "Calibri Light",
+        "eastAsianTypeface": "Calibri Light",
+        "complexScriptTypeface": "Calibri Light"
+      },
+      "minorFont": {
+        "latinTypeface": "Calibri",
+        "eastAsianTypeface": "Calibri",
+        "complexScriptTypeface": "Calibri"
+      }
+    },
+    "typefaces": [
+      "Calibri",
+      "Calibri Light",
+      "Malgun Gothic"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "/ppt/slideLayouts/slideLayout1.xml",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "/ppt/slideMasters/slideMaster1.xml",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "/ppt/slideMasters/slideMaster1.xml",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/oryp8fah",
+      "id": "8",
+      "bbox": [
+        64,
+        29,
+        1120,
+        25
+      ],
+      "geometry": "rect",
+      "text": "2. 시스템 설계 및 개발 구조",
+      "textPreview": "2. 시스템 설계 및 개발 구조",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "2. 시스템 설계 및 개발 구조"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "2. 시스템 설계 및 개발 구조",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "2. 시스템 설계 및 개발 구조",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/yhg7epsj",
+      "id": "2",
+      "bbox": [
+        64,
+        76,
+        1152,
+        77
+      ],
+      "geometry": "rect",
+      "text": "모듈별 역할과 기술 스택",
+      "textPreview": "모듈별 역할과 기술 스택",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "모듈별 역할과 기술 스택"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "모듈별 역할과 기술 스택",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 44,
+            "typeface": "Malgun Gothic",
+            "color": "#183442",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "모듈별 역할과 기술 스택",
+              "fontSize": 44,
+              "typeface": "Malgun Gothic",
+              "color": "#183442",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zi98nu94",
+      "id": "3",
+      "bbox": [
+        64,
+        650,
+        1152,
+        0
+      ],
+      "geometry": "line",
+      "lineColor": "#CFDBDE",
+      "lineWidth": 1
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/87ipkzal",
+      "id": "4",
+      "bbox": [
+        1160,
+        667,
+        56,
+        30
+      ],
+      "geometry": "rect",
+      "text": "06",
+      "textPreview": "06",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "06"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "06",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77",
+            "bold": true,
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "06",
+              "fontSize": 18,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "table",
+      "scope": "slide",
+      "aid": "tb/obu5sjut",
+      "id": "9",
+      "bbox": [
+        64,
+        181,
+        1152,
+        365
+      ],
+      "text": "모듈 | 담당 기능 | 구현 기술\n카메라·비전 | 프레임 입력, 안정화, 변화 감지 | Picamera2 / OpenCV\n사건·AI 처리 | 임시 저장, 추론 요청, 응답 검증 | Python / HTTPX\n서버·저장 | API, 상태 전이, 사진과 활동 이력 | FastAPI / SQLite WAL\n관리자 화면 | 실시간 영상, 목록, 편집, 설정 | Vanilla HTML / CSS / JS\n운영·배포 | 만료 알림, 서비스 자동 시작 | SMTP / systemd / Tailscale",
+      "textPreview": "모듈 | 담당 기능 | 구현 기술 | 카메라·비전 | 프레임 입력, 안정화, 변화 감지 | Picamera2 / OpenCV | 사건·AI 처리 | 임시 저장, 추론 요청, 응답 검증 | Python / HTTPX | 서버·저장 | API, 상태...",
+      "rows": 6,
+      "cols": 3,
+      "cells": [
+        {
+          "index": 1,
+          "row": 1,
+          "column": 1,
+          "bbox": [
+            64,
+            181,
+            245,
+            60.83
+          ],
+          "text": "모듈",
+          "textPreview": "모듈",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "모듈",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "모듈",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "row": 1,
+          "column": 2,
+          "bbox": [
+            309,
+            181,
+            465,
+            60.83
+          ],
+          "text": "담당 기능",
+          "textPreview": "담당 기능",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "담당 기능",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "담당 기능",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "row": 1,
+          "column": 3,
+          "bbox": [
+            774,
+            181,
+            442,
+            60.83
+          ],
+          "text": "구현 기술",
+          "textPreview": "구현 기술",
+          "fillColor": "#102D3C",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "구현 기술",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "구현 기술",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#FFFFFF",
+                  "bold": true
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "row": 2,
+          "column": 1,
+          "bbox": [
+            64,
+            241.83,
+            245,
+            60.83
+          ],
+          "text": "카메라·비전",
+          "textPreview": "카메라·비전",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "카메라·비전",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "카메라·비전",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "row": 2,
+          "column": 2,
+          "bbox": [
+            309,
+            241.83,
+            465,
+            60.83
+          ],
+          "text": "프레임 입력, 안정화, 변화 감지",
+          "textPreview": "프레임 입력, 안정화, 변화 감지",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "프레임 입력, 안정화, 변화 감지",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "프레임 입력, 안정화, 변화 감지",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "row": 2,
+          "column": 3,
+          "bbox": [
+            774,
+            241.83,
+            442,
+            60.83
+          ],
+          "text": "Picamera2 / OpenCV",
+          "textPreview": "Picamera2 / OpenCV",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Picamera2 / OpenCV",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Picamera2 / OpenCV",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "row": 3,
+          "column": 1,
+          "bbox": [
+            64,
+            302.67,
+            245,
+            60.83
+          ],
+          "text": "사건·AI 처리",
+          "textPreview": "사건·AI 처리",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "사건·AI 처리",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "사건·AI 처리",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "row": 3,
+          "column": 2,
+          "bbox": [
+            309,
+            302.67,
+            465,
+            60.83
+          ],
+          "text": "임시 저장, 추론 요청, 응답 검증",
+          "textPreview": "임시 저장, 추론 요청, 응답 검증",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "임시 저장, 추론 요청, 응답 검증",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "임시 저장, 추론 요청, 응답 검증",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "row": 3,
+          "column": 3,
+          "bbox": [
+            774,
+            302.67,
+            442,
+            60.83
+          ],
+          "text": "Python / HTTPX",
+          "textPreview": "Python / HTTPX",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Python / HTTPX",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Python / HTTPX",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 10,
+          "row": 4,
+          "column": 1,
+          "bbox": [
+            64,
+            363.5,
+            245,
+            60.83
+          ],
+          "text": "서버·저장",
+          "textPreview": "서버·저장",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "서버·저장",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "서버·저장",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 11,
+          "row": 4,
+          "column": 2,
+          "bbox": [
+            309,
+            363.5,
+            465,
+            60.83
+          ],
+          "text": "API, 상태 전이, 사진과 활동 이력",
+          "textPreview": "API, 상태 전이, 사진과 활동 이력",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "API, 상태 전이, 사진과 활동 이력",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "API, 상태 전이, 사진과 활동 이력",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 12,
+          "row": 4,
+          "column": 3,
+          "bbox": [
+            774,
+            363.5,
+            442,
+            60.83
+          ],
+          "text": "FastAPI / SQLite WAL",
+          "textPreview": "FastAPI / SQLite WAL",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "FastAPI / SQLite WAL",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "FastAPI / SQLite WAL",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 13,
+          "row": 5,
+          "column": 1,
+          "bbox": [
+            64,
+            424.33,
+            245,
+            60.83
+          ],
+          "text": "관리자 화면",
+          "textPreview": "관리자 화면",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "관리자 화면",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "관리자 화면",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 14,
+          "row": 5,
+          "column": 2,
+          "bbox": [
+            309,
+            424.33,
+            465,
+            60.83
+          ],
+          "text": "실시간 영상, 목록, 편집, 설정",
+          "textPreview": "실시간 영상, 목록, 편집, 설정",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "실시간 영상, 목록, 편집, 설정",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "실시간 영상, 목록, 편집, 설정",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 15,
+          "row": 5,
+          "column": 3,
+          "bbox": [
+            774,
+            424.33,
+            442,
+            60.83
+          ],
+          "text": "Vanilla HTML / CSS / JS",
+          "textPreview": "Vanilla HTML / CSS / JS",
+          "fillColor": "#F4F8F8",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "Vanilla HTML / CSS / JS",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "Vanilla HTML / CSS / JS",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 16,
+          "row": 6,
+          "column": 1,
+          "bbox": [
+            64,
+            485.17,
+            245,
+            60.83
+          ],
+          "text": "운영·배포",
+          "textPreview": "운영·배포",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "운영·배포",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "운영·배포",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 17,
+          "row": 6,
+          "column": 2,
+          "bbox": [
+            309,
+            485.17,
+            465,
+            60.83
+          ],
+          "text": "만료 알림, 서비스 자동 시작",
+          "textPreview": "만료 알림, 서비스 자동 시작",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "만료 알림, 서비스 자동 시작",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "만료 알림, 서비스 자동 시작",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "index": 18,
+          "row": 6,
+          "column": 3,
+          "bbox": [
+            774,
+            485.17,
+            442,
+            60.83
+          ],
+          "text": "SMTP / systemd / Tailscale",
+          "textPreview": "SMTP / systemd / Tailscale",
+          "fillColor": "#FFFFFF",
+          "paragraphs": [
+            {
+              "index": 1,
+              "text": "SMTP / systemd / Tailscale",
+              "runs": [
+                {
+                  "index": 1,
+                  "text": "SMTP / systemd / Tailscale",
+                  "fontSize": 23,
+                  "typeface": "Malgun Gothic",
+                  "color": "#183442"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ml07i9sv",
+      "id": "6",
+      "bbox": [
+        64,
+        571,
+        1152,
+        35
+      ],
+      "geometry": "rect",
+      "text": "실제 장치   Raspberry Pi 4 Model B 2GB + CSI 카메라(OV5647)",
+      "textPreview": "실제 장치   Raspberry Pi 4 Model B 2GB + CSI 카메라(OV5647)",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "실제 장치   Raspberry Pi 4 Model B 2GB + CSI 카메라(OV5647)"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "실제 장치   Raspberry Pi 4 Model B 2GB + CSI 카메라(OV5647)",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 25,
+            "typeface": "Malgun Gothic",
+            "color": "#067C80",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "실제 장치   Raspberry Pi 4 Model B 2GB + CSI 카메라(OV5647)",
+              "fontSize": 25,
+              "typeface": "Malgun Gothic",
+              "color": "#067C80",
+              "bold": true
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7m98ru9g",
+      "id": "7",
+      "bbox": [
+        64,
+        610,
+        1152,
+        30
+      ],
+      "geometry": "rect",
+      "text": "확인 환경   Debian 13 Trixie / Python 3.13.5 / OpenCV 4.10.0",
+      "textPreview": "확인 환경   Debian 13 Trixie / Python 3.13.5 / OpenCV 4.10.0",
+      "resolvedFontSize": 24,
+      "resolvedTextStyle": {
+        "fontSize": 24,
+        "typeface": "Calibri",
+        "color": "tx1",
+        "alignment": "left",
+        "wrap": "square",
+        "autoFit": "none",
+        "insets": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "확인 환경   Debian 13 Trixie / Python 3.13.5 / OpenCV 4.10.0"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "확인 환경   Debian 13 Trixie / Python 3.13.5 / OpenCV 4.10.0",
+          "lineSpacingPercent": 112000,
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "typeface": "Malgun Gothic",
+            "color": "#566B77"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "확인 환경   Debian 13 Trixie / Python 3.13.5 / OpenCV 4.10.0",
+              "fontSize": 22,
+              "typeface": "Malgun Gothic",
+              "color": "#566B77"
+            }
+          ],
+          "bulletCharacter": "",
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

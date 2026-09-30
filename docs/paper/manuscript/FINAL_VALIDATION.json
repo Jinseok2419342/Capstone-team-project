@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "placeholder_count": 297,
+  "reference_count": 17,
+  "front_paragraphs_synchronized": 22,
+  "slide_manuscript_paragraphs_verified_in_pptx": 10,
+  "native_table_cells_verified": 18,
+  "figures": 4,
+  "visual_qa": "All final PDF pages and six final slides inspected; see REVISION_STATUS.md for limits.",
+  "files": {
+    "REFOUND_FULL_MANUSCRIPT.pdf": {
+      "pages": 19,
+      "bytes": 309907,
+      "sha256": "0f0b84ab45260dfc392971df48ffbec88f02f6ac071b7a4f5916d716b36cba56"
+    },
+    "RESEARCH_FRONT_MATTER.pdf": {
+      "pages": 4,
+      "bytes": 146807,
+      "sha256": "ca0b4f502e84e7ea089ef5e02c148e4a0e7afe954c9531780c46715fd52c237f"
+    },
+    "REFOUND_EARLY_PAPER_FINAL.pptx": {
+      "slides": 6,
+      "bytes": 45211,
+      "sha256": "e6f2efa7cdfee1f30f2b5d824a703049dd40418c3d53bc7ee76fbf362b62b15e"
+    }
+  }
+}

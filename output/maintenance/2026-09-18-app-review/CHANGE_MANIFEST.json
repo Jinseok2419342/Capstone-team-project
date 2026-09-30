@@ -1,0 +1,105 @@
+{
+  "date": "2026-09-18",
+  "python_tests": 175,
+  "frontend_tests": 10,
+  "python_compileall": "passed",
+  "javascript_syntax": "passed",
+  "static_routes": "4 passed",
+  "html_ids_and_aria": "passed",
+  "real_browser": "unavailable; no connected browser",
+  "raspberry_pi_hardware": "not run",
+  "external_ai_and_smtp": "not invoked",
+  "operational_database": "not modified",
+  "changes": [
+    {
+      "path": "AGENTS.md",
+      "status": "modified",
+      "sha256": "9923e32721265ed8955733e98f9b4487fb206c616acef301eef69493c4a9200f"
+    },
+    {
+      "path": "README.md",
+      "status": "modified",
+      "sha256": "e85d16e5c51414aeea9ec5c51b70f105012bb0bf0f73def73e5ae7d72bcaff89"
+    },
+    {
+      "path": "app/ai.py",
+      "status": "modified",
+      "sha256": "7de0b4d0ec8b546547e400b21191661ee0e9e35f3ab45d761cfe4e74446df7c0"
+    },
+    {
+      "path": "app/config.py",
+      "status": "modified",
+      "sha256": "47a566268ac6fb3548fbd2de381653a36ad1b3c36b1997e2e40c31490b4f5f4c"
+    },
+    {
+      "path": "app/main.py",
+      "status": "modified",
+      "sha256": "bab03fb0f76e942768615509422cf66fe341fd58782d0669bd047bdb11e8cd23"
+    },
+    {
+      "path": "app/notifier.py",
+      "status": "modified",
+      "sha256": "6465a398215f3db495857fdfbdc278728f6e354df6c643515ccd3489af5de5d9"
+    },
+    {
+      "path": "app/store.py",
+      "status": "modified",
+      "sha256": "5e17f57f9ac3b39b9a1ef53aaa2269f28dc42a138d5dc9c73ddb0ce810a29ebc"
+    },
+    {
+      "path": "app/vision.py",
+      "status": "modified",
+      "sha256": "6bbff7a3f7642f72305ee9125e2b58fe11cbfad1eb9fabe9de94712090008829"
+    },
+    {
+      "path": "docs/APP_REVIEW_2026-09-18.md",
+      "status": "added",
+      "sha256": "08499a53436bca7d4ae9f7107d57bf19f8aa3336f4cdb039696aa3d5ac6d38d2"
+    },
+    {
+      "path": "static/app.js",
+      "status": "modified",
+      "sha256": "74dada92597ddc4ab6e17822ff7942c8051f079bd4d549548844d62c3cc1dc50"
+    },
+    {
+      "path": "static/styles.css",
+      "status": "modified",
+      "sha256": "341b50340219cb20518eff6c96dbb6dd11cbe2b2cc215f34eea1ca7cb2c01834"
+    },
+    {
+      "path": "templates/index.html",
+      "status": "modified",
+      "sha256": "ba1e87bd4505299051c9966df511b16476518e7c41ddbaf8dbf4c68f2911ecff"
+    },
+    {
+      "path": "tests/frontend/app.test.cjs",
+      "status": "added",
+      "sha256": "f156ea055f648f908402d4c6944db827e5a48af61691a5151c18e856f2e561cd"
+    },
+    {
+      "path": "tests/test_api.py",
+      "status": "modified",
+      "sha256": "ffc5678e50e50ad8cc395efa03198846fba240a986a4592881116af0ac128195"
+    },
+    {
+      "path": "tests/test_app_resilience.py",
+      "status": "added",
+      "sha256": "8e178a4f6f225ee5ac7c047bfaa9f6e54936f778d70c3b12e645991564647213"
+    },
+    {
+      "path": "tests/test_notifier.py",
+      "status": "added",
+      "sha256": "7ac6d00f2bd5af7458925bb27caaef3ff87666cc2905d81e08dbb981357c3af8"
+    },
+    {
+      "path": "tests/test_store.py",
+      "status": "modified",
+      "sha256": "bec1fab182581f35d76dc7e10232bf4517a0067422dce5e7aa785c59595d8ad4"
+    },
+    {
+      "path": "tests/test_vision.py",
+      "status": "modified",
+      "sha256": "714790381e2d1a748267693cc58322deebd3ebee7078a4bbc6526b783422570f"
+    }
+  ]
+}

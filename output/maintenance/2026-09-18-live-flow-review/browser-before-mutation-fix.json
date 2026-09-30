@@ -1,0 +1,1431 @@
+{
+  "kind": "real Chromium / synthetic camera, VLM, SMTP / isolated SQLite",
+  "started_at": "2026-09-18T11:29:54",
+  "checks": [
+    {
+      "name": "Desktop dashboard renders live synthetic preview and database counts",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Inventory pagination shows exact server count and reaches second page",
+      "passed": true,
+      "details": {
+        "total": 55
+      }
+    },
+    {
+      "name": "Changing a category resets pagination and filters the complete database",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "A camera observation appears pending and its open detail updates after a delayed AI result",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Late AI cannot overwrite a dirty form; revision conflict preserves the draft",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "Explicit reread then a normal edit saves through the real PATCH endpoint",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "screenshots": [
+    "browser-dashboard-desktop.png",
+    "browser-inventory-desktop.png",
+    "browser-pending-detail.png",
+    "browser-classified-detail.png",
+    "browser-edit-conflict.png",
+    "browser-failure.png"
+  ],
+  "fixture_initial": {
+    "synthetic": true,
+    "fixture_dir": "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-xjd4kq9s",
+    "db_path": "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-xjd4kq9s\\data\\fixture.sqlite3",
+    "capture_dir": "C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser-fixture-xjd4kq9s\\data\\captures",
+    "seed_ids": {
+      "all": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56
+      ],
+      "expired": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "needs_review": [
+        1,
+        5,
+        9,
+        13,
+        17
+      ],
+      "recovered": [
+        54
+      ],
+      "disposed": [
+        55
+      ],
+      "dismissed": [
+        56
+      ]
+    },
+    "item_count": 56,
+    "visible_count": 55,
+    "stats": {
+      "active": 49,
+      "due_soon": 5,
+      "expired": 4,
+      "recovered": 1,
+      "review_needed": 5
+    },
+    "pending_ids": [],
+    "mail_count": 0,
+    "mail_calls": [],
+    "classification_calls": [],
+    "items": [
+      {
+        "id": 56,
+        "name": "검증 물품 56",
+        "status": "stored",
+        "review_status": "dismissed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 55,
+        "name": "검증 물품 55",
+        "status": "disposed",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 54,
+        "name": "검증 물품 54",
+        "status": "recovered",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 53,
+        "name": "검증 물품 53",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 52,
+        "name": "검증 물품 52",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 51,
+        "name": "검증 물품 51",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 50,
+        "name": "검증 물품 50",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 49,
+        "name": "검증 물품 49",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 48,
+        "name": "검증 물품 48",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 47,
+        "name": "검증 물품 47",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 46,
+        "name": "검증 물품 46",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 45,
+        "name": "검증 물품 45",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 44,
+        "name": "검증 물품 44",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 43,
+        "name": "검증 물품 43",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 42,
+        "name": "검증 물품 42",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 41,
+        "name": "검증 물품 41",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 40,
+        "name": "검증 물품 40",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 39,
+        "name": "검증 물품 39",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 38,
+        "name": "검증 물품 38",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 37,
+        "name": "검증 물품 37",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 36,
+        "name": "검증 물품 36",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 35,
+        "name": "검증 물품 35",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 34,
+        "name": "검증 물품 34",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 33,
+        "name": "검증 물품 33",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 32,
+        "name": "검증 물품 32",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 31,
+        "name": "검증 물품 31",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 30,
+        "name": "검증 물품 30",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 29,
+        "name": "검증 물품 29",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 28,
+        "name": "검증 물품 28",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 27,
+        "name": "검증 물품 27",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 26,
+        "name": "검증 물품 26",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 25,
+        "name": "검증 물품 25",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 24,
+        "name": "검증 물품 24",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 23,
+        "name": "검증 물품 23",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 22,
+        "name": "검증 물품 22",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 21,
+        "name": "검증 물품 21",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 20,
+        "name": "검증 물품 20",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 19,
+        "name": "검증 물품 19",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 18,
+        "name": "검증 물품 18",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 17,
+        "name": "검증 물품 17",
+        "status": "stored",
+        "review_status": "needs_review",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 16,
+        "name": "검증 물품 16",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 15,
+        "name": "검증 물품 15",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 14,
+        "name": "검증 물품 14",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 13,
+        "name": "검증 물품 13",
+        "status": "stored",
+        "review_status": "needs_review",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 12,
+        "name": "검증 물품 12",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 11,
+        "name": "검증 물품 11",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 10,
+        "name": "검증 물품 10",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 9,
+        "name": "검증 물품 09",
+        "status": "stored",
+        "review_status": "needs_review",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 8,
+        "name": "검증 물품 08",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 7,
+        "name": "검증 물품 07",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 6,
+        "name": "검증 물품 06",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 5,
+        "name": "검증 물품 05",
+        "status": "stored",
+        "review_status": "needs_review",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 4,
+        "name": "오래된 만료 물품 04",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          195,
+          115,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 3,
+        "name": "오래된 만료 물품 03",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          170,
+          145,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 2,
+        "name": "오래된 만료 물품 02",
+        "status": "stored",
+        "review_status": "confirmed",
+        "tracking_revision": 0,
+        "bbox": [
+          145,
+          130,
+          130,
+          100
+        ]
+      },
+      {
+        "id": 1,
+        "name": "오래된 만료 물품 01",
+        "status": "stored",
+        "review_status": "needs_review",
+        "tracking_revision": 0,
+        "bbox": [
+          120,
+          115,
+          130,
+          100
+        ]
+      }
+    ]
+  },
+  "failure": {
+    "error": "Timed out waiting for: document.querySelector('#item-dialog-content .status-badge.expired') !== null",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser_ui_check.py\", line 221, in run\n    browser.wait(\"document.querySelector('#item-dialog-content .status-badge.expired') !== null\")\n    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\USER\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-18-live-flow-review\\browser_ui_check.py\", line 99, in wait\n    raise AssertionError(f\"Timed out waiting for: {expression}\")\nAssertionError: Timed out waiting for: document.querySelector('#item-dialog-content .status-badge.expired') !== null\n"
+  },
+  "visible_text_at_failure": "본문으로 바로가기\nRe:Found\nAI LOST & FOUND\n\n관리\n\n개요\n보관 물품\n51\n활동 기록\n카메라\n\n시스템\n\n설정\n서버 연결됨\n카메라와 AI 상태를 확인해 주세요\nCapstone · v1.0\n11:30 동기화\n14\n관\n\nINVENTORY\n\n보관 물품\n\nAI가 감지한 모든 물품과 보관 기한을 관리합니다.\n\n시연 물품 추가\n⌘ K\n상태\n운영 기록 전체\n보관 전체 (만료 포함)\n보관 중\n기한 임박·만료\n폐기 임박\n기한 만료\n회수 완료\n폐기 완료\n감지 제외\n검토 상태\n모든 검토 상태\n확인 필요\nAI 분석 중\n확인 완료\n분류\n모든 분류\n귀중품\n일반 물품\n음식물\n정렬\n최근 감지순\n폐기 임박순\n이름순\n\n검색 결과 57개\n\n11:30 업데이트\n감지된 분실물 목록\n물품\t분류\t감지 시각\t보관 기한\t상태\t\n더 보기\n\n\n브라우저 편집 확인\n\n브라우저 검증용 합성 AI 응답입니다. 실제 외부 모델 호출이 없습니다.\n\n\t일반 물품\t\n9월 18일\n11:30\t\n11월 17일\nD-60\t\n보관 중\n\t\n\n\n브라우저 자동 분석 물품\n\n브라우저 검증용 합성 AI 응답입니다. 실제 외부 모델 호출이 없습니다.\n\n\t일반 물품\t\n9월 18일\n11:29\t\n11월 17일\nD-60\t\n보관 중\n\t\n\n\n검증 물품 55\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 18일\n09:29\t\n10월 18일\nD-30\t\n폐기 완료\n\t\n\n\n검증 물품 54\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 18일\n08:29\t\n10월 18일\nD-30\t\n회수 완료\n\t\n\n\n검증 물품 53\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 18일\n07:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 52\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 18일\n06:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 51\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 18일\n05:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 50\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 18일\n04:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 49\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 18일\n03:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 48\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 18일\n02:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 47\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 18일\n01:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 46\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 18일\n00:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 45\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 17일\n23:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 44\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 17일\n22:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 43\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 17일\n21:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 42\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 17일\n20:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 41\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 17일\n19:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 40\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 17일\n18:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 39\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 17일\n17:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 38\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 17일\n16:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 37\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 17일\n15:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 36\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 17일\n14:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 35\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 17일\n13:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 34\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 17일\n12:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 33\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 17일\n11:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 32\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 17일\n10:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 31\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 17일\n09:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 30\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 17일\n08:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 29\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 17일\n07:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 28\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 17일\n06:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 27\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 17일\n05:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 26\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 17일\n04:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 25\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 17일\n03:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 24\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 17일\n02:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 23\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 17일\n01:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 22\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 17일\n00:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 21\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 16일\n23:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 20\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 16일\n22:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 19\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 16일\n21:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 18\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 16일\n20:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 17\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 16일\n19:29\t\n10월 18일\nD-30\t\n보관 중\n확인 필요\n\t\n\n\n검증 물품 16\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 16일\n18:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 15\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 16일\n17:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 14\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 16일\n16:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 13\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 16일\n15:29\t\n10월 18일\nD-30\t\n보관 중\n확인 필요\n\t\n\n\n검증 물품 12\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t음식물\t\n9월 16일\n14:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 11\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t일반 물품\t\n9월 16일\n13:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n\n\n검증 물품 10\n\n브라우저 회귀검증용 합성 자료입니다. 실제 카메라 관측이 아닙니다.\n\n\t귀중품\t\n9월 16일\n12:29\t\n10월 18일\nD-30\t\n보관 중\n\t\n1–48 / 전체 57개\n이전\n다음\n\n물품 상세\n\n브라우저 편집 확인\n일반 물품\n보관 중\n브라우저 편집 확인\n\n브라우저 검증용 합성 AI 응답입니다. 실제 외부 모델 호출이 없습니다.\n\n관리자가 확인을 완료한 물품입니다.\n\n감지 시각\n2026년 9월 18일 오전 11:30\n보관 만료일\n2026년 11월 17일 오전 11:30\n기본 보관 기간\n60일\n분석 제공자\n관리자 수정\n물품 정보 편집\n물품 이름\n분류\n귀중품 · 90일\n일반 물품 · 60일\n음식물 · 1일\n설명\n보관 만료일\n분류를 바꾸면 기본 보관 정책이 다시 적용됩니다.\n\n편집 중에는 자동 갱신이 멈춥니다. 최신 정보를 읽으면 입력 중인 내용이 취소됩니다.\n\n편집 취소·최신 정보\n정보 저장\n보관 상태 관리\n수동 회수 처리\n\n실제 물품이 보관 장소에서 나갔는지 확인한 뒤 처리해 주세요. 자동 사라짐 감지와 함께 회수 기록에 남습니다.\n\n회수 완료\n보관 기한 연장\n\n현재 만료일을 기준으로 선택한 일수만큼 연장합니다.\n\n연장\n폐기 완료 처리\n\n기한이 지난 물품을 보관 대상에서 제외하고 기록으로 남깁니다.\n\n폐기 완료\n물품이 아닌 감지 제외\n\n그림자나 배경 등 잘못 감지된 항목을 제외합니다. 사진과 활동 기록은 보존됩니다.\n\n감지 제외",
+  "passed": false,
+  "javascript_exceptions": [],
+  "browser_requests": [
+    {
+      "url": "http://127.0.0.1:8765/",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/styles.css",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/app.js",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/settings",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/camera/stream?t=1789698597314",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/1/image?v=2026-09-18T02:29:55.631385Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/2/image?v=2026-09-18T02:29:55.637597Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/3/image?v=2026-09-18T02:29:55.643665Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/4/image?v=2026-09-18T02:29:55.649671Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/17/image?v=2026-09-18T02:29:55.735346Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/13/image?v=2026-09-18T02:29:55.710493Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/9/image?v=2026-09-18T02:29:55.680724Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/5/image?v=2026-09-18T02:29:55.655591Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/static/favicon.svg",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/55/image?v=2026-09-18T02:29:55.974544Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/54/image?v=2026-09-18T02:29:55.968472Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/53/image?v=2026-09-18T02:29:55.961905Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/52/image?v=2026-09-18T02:29:55.955954Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/51/image?v=2026-09-18T02:29:55.950262Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/50/image?v=2026-09-18T02:29:55.944355Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/49/image?v=2026-09-18T02:29:55.938228Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/48/image?v=2026-09-18T02:29:55.931872Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/47/image?v=2026-09-18T02:29:55.925976Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/46/image?v=2026-09-18T02:29:55.920081Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/45/image?v=2026-09-18T02:29:55.913400Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/44/image?v=2026-09-18T02:29:55.907689Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/43/image?v=2026-09-18T02:29:55.901051Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/42/image?v=2026-09-18T02:29:55.895019Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/41/image?v=2026-09-18T02:29:55.888992Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/40/image?v=2026-09-18T02:29:55.882904Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/39/image?v=2026-09-18T02:29:55.874816Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/38/image?v=2026-09-18T02:29:55.867395Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/37/image?v=2026-09-18T02:29:55.861196Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/36/image?v=2026-09-18T02:29:55.854770Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/35/image?v=2026-09-18T02:29:55.848765Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/34/image?v=2026-09-18T02:29:55.842531Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/33/image?v=2026-09-18T02:29:55.836305Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/32/image?v=2026-09-18T02:29:55.830147Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/31/image?v=2026-09-18T02:29:55.823312Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/30/image?v=2026-09-18T02:29:55.816823Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/29/image?v=2026-09-18T02:29:55.810523Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/28/image?v=2026-09-18T02:29:55.804405Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/27/image?v=2026-09-18T02:29:55.797724Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/26/image?v=2026-09-18T02:29:55.790098Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/25/image?v=2026-09-18T02:29:55.783981Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/24/image?v=2026-09-18T02:29:55.778017Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/23/image?v=2026-09-18T02:29:55.772185Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/22/image?v=2026-09-18T02:29:55.766181Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/21/image?v=2026-09-18T02:29:55.760063Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/20/image?v=2026-09-18T02:29:55.754008Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/19/image?v=2026-09-18T02:29:55.747993Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/18/image?v=2026-09-18T02:29:55.741587Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/16/image?v=2026-09-18T02:29:55.728858Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/15/image?v=2026-09-18T02:29:55.723029Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/14/image?v=2026-09-18T02:29:55.717036Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/12/image?v=2026-09-18T02:29:55.702233Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/11/image?v=2026-09-18T02:29:55.694097Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/10/image?v=2026-09-18T02:29:55.687977Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/8/image?v=2026-09-18T02:29:55.674515Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=48",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/7/image?v=2026-09-18T02:29:55.668485Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/6/image?v=2026-09-18T02:29:55.662194Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?category=valuable&sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/55/image?v=2026-09-18T02:29:55.974544Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/52/image?v=2026-09-18T02:29:55.955954Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/49/image?v=2026-09-18T02:29:55.938228Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/46/image?v=2026-09-18T02:29:55.920081Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/43/image?v=2026-09-18T02:29:55.901051Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/40/image?v=2026-09-18T02:29:55.882904Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/37/image?v=2026-09-18T02:29:55.861196Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/34/image?v=2026-09-18T02:29:55.842531Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/31/image?v=2026-09-18T02:29:55.823312Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/28/image?v=2026-09-18T02:29:55.804405Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/25/image?v=2026-09-18T02:29:55.783981Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/22/image?v=2026-09-18T02:29:55.766181Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/19/image?v=2026-09-18T02:29:55.747993Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/16/image?v=2026-09-18T02:29:55.728858Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/10/image?v=2026-09-18T02:29:55.687977Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/57/image?v=2026-09-18T02:29:59.201130Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/54/image?v=2026-09-18T02:29:55.968472Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/53/image?v=2026-09-18T02:29:55.961905Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/51/image?v=2026-09-18T02:29:55.950262Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/50/image?v=2026-09-18T02:29:55.944355Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/48/image?v=2026-09-18T02:29:55.931872Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/47/image?v=2026-09-18T02:29:55.925976Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/45/image?v=2026-09-18T02:29:55.913400Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/44/image?v=2026-09-18T02:29:55.907689Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/42/image?v=2026-09-18T02:29:55.895019Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/41/image?v=2026-09-18T02:29:55.888992Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/39/image?v=2026-09-18T02:29:55.874816Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/38/image?v=2026-09-18T02:29:55.867395Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/36/image?v=2026-09-18T02:29:55.854770Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/35/image?v=2026-09-18T02:29:55.848765Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/33/image?v=2026-09-18T02:29:55.836305Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/32/image?v=2026-09-18T02:29:55.830147Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/30/image?v=2026-09-18T02:29:55.816823Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/29/image?v=2026-09-18T02:29:55.810523Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/27/image?v=2026-09-18T02:29:55.797724Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/26/image?v=2026-09-18T02:29:55.790098Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/24/image?v=2026-09-18T02:29:55.778017Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/23/image?v=2026-09-18T02:29:55.772185Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/21/image?v=2026-09-18T02:29:55.760063Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/20/image?v=2026-09-18T02:29:55.754008Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/18/image?v=2026-09-18T02:29:55.741587Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/15/image?v=2026-09-18T02:29:55.723029Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/14/image?v=2026-09-18T02:29:55.717036Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/12/image?v=2026-09-18T02:29:55.702233Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/11/image?v=2026-09-18T02:29:55.694097Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/57",
+      "method": "GET"
+    },
+    {
+      "url": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJXaW5kb3dUZXh0IiBkPSJNMjAgM2gtMVYxaC0ydjJIN1YxSDV2Mkg0Yy0xLjEgMC0yIC45LTIgMnYxNmMwIDEuMS45IDIgMiAyaDE2YzEuMSAwIDItLjkgMi0yVjVjMC0xLjEtLjktMi0yLTJ6bTAgMThINFY4aDE2djEzeiIvPjxwYXRoIGZpbGw9Im5vbmUiIGQ9Ik0wIDBoMjR2MjRIMHoiLz48L3N2Zz4=",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/57",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/57",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/57/image?v=2026-09-18T02:30:07.240264Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/58/image?v=2026-09-18T02:30:08.210342Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/58",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/58",
+      "method": "PATCH"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/58",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/58/image?v=2026-09-18T02:30:16.258569Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/58",
+      "method": "PATCH"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items/58/image?v=2026-09-18T02:30:20.521505Z",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/items?sort=newest&limit=48&offset=0",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    },
+    {
+      "url": "http://127.0.0.1:8765/api/dashboard",
+      "method": "GET"
+    }
+  ],
+  "blocked_external_requests": []
+}

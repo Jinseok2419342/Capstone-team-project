@@ -1,0 +1,14 @@
+{
+  "kind": "Chromium with isolated SQLite and synthetic camera/AI/SMTP",
+  "checks": [
+    "1440px layout and cancel preserve data",
+    "1024px layout and cancel preserve data",
+    "390px layout and cancel preserve data",
+    "320px layout and cancel preserve data",
+    "Confirmed quick reset deletes all fixture data without backup and preserves settings",
+    "Next simulated registration succeeds with a new item ID",
+    "Settings reset still requires typed confirmation and defaults to backup"
+  ],
+  "fixture_dir": "C:\\Users\\pppp\\Downloads\\Capstone-team-project-main\\output\\maintenance\\2026-09-22-quick-reset\\browser-fixture-2i5wdccj",
+  "status": "passed"
+}
