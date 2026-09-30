@@ -1,0 +1,45 @@
+✔ dashboard quick reset opens one confirmation and sends nothing until submitted (13.7453ms)
+✔ quick reset blocks duplicate submissions and refreshes the cleared dashboard (41.3097ms)
+✔ a failed quick reset preserves the current list and permits an explicit retry (6.5553ms)
+✔ opening the settings reset after quick reset restores typing and the backup default (5.218ms)
+✔ recover, dispose, restore and dismiss report success after the server commits (19.8626ms)
+✔ a newer search survives an older response and an older error (6.2452ms)
+✔ a refresh after mutation supersedes an in-flight identical query (4.9141ms)
+✔ older dashboard failure cannot take a newer successful connection offline (3.8257ms)
+✔ opening a second item cannot be overwritten by the first item's response (124.1373ms)
+✔ opening settings during startup awaits the shared request and populates safe values (5.1119ms)
+✔ model edits survive switching providers and automatic selection (2.8649ms)
+✔ hidden streams disconnect; returning to the view opens only its stream (3.967ms)
+✔ saving only the name preserves the full-precision expiry timestamp (9.5562ms)
+✔ upcoming expiry follows the configured alert period, including zero days (2.3098ms)
+✔ camera tuning preserves the server profile and sends only changed numeric settings (3.7639ms)
+✔ camera metrics show measured values with exposure conversion and a valid infinity lens position (3.5058ms)
+✔ missing or stale camera diagnostics stay unavailable without fabricated zero readings (5.9112ms)
+✔ inventory sends all filters to the server, keeps its order and uses complete totals (27.4623ms)
+✔ filter resets survive polling and the server can clamp the last page after a mutation (5.9862ms)
+✔ a stale page response cannot overwrite the current page, total or navigation (4.2593ms)
+✔ dashboard review shortcuts reset old filters and an in-flight page offset (10.6861ms)
+✔ explicit review state takes precedence over provider compatibility labels (3.578ms)
+✔ demo labels survive manual edits and camera sources are never inferred as demo (2.6317ms)
+✔ an open read-only detail receives AI results while dirty or focused edits are preserved (7.7107ms)
+✔ normal edits never confirm review and explicit confirmation can save without changing fields (13.4552ms)
+✔ edit conflict keeps the draft and original revision until an explicit reload (6.1237ms)
+✔ excluded evidence offers restoration and pending edits block lifecycle actions (8.1114ms)
+✔ dashboard review and expiry queues are independent of the recent-items preview (4.5353ms)
+✔ camera recording backpressure and inventory failures have separate operational messages (3.6956ms)
+✔ a failed MJPEG connection retries after backoff while ordinary dashboard polls stay healthy (3.6092ms)
+✔ failed item photos recover without changing item data or replacing the detail form (3.5223ms)
+✔ image retries wait for visible connected views and keep a bounded backoff (2.8027ms)
+✔ a failed inventory load stays visibly failed across clock updates until a fresh response (5.9ms)
+✔ provider configuration does not claim a successful remote connection (9.7291ms)
+✔ built-in examples are described as simulated management actions (16.5551ms)
+✔ a committed edit or action permits the next operation before dashboard refresh and keeps its newer lock (7.4444ms)
+✔ a late edit conflict for a closed item cannot dirty or alter another open item's form (8.046ms)
+ℹ tests 37
+ℹ suites 0
+ℹ pass 37
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 649.04

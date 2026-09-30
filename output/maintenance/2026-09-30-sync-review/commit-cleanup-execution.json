@@ -1,0 +1,42 @@
+﻿[
+    {
+        "path":  "output/maintenance/2026-09-22-quick-reset/browser-profile-1790066635655224500",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-22-quick-reset/browser-profile-1790066672484512100",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-22-quick-reset/browser-profile-1790066733549901400",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-22-quick-reset/test-runtime",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-30-sync-review/runtime",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-30-sync-review/isolated-data",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-30-sync-review/package-check.tar.gz",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-30-sync-review/package-check.tar.gz.sha256",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-30-sync-review/sync_docs.py",
+        "removed":  true
+    },
+    {
+        "path":  "output/maintenance/2026-09-30-sync-review/frontend-syntax.log",
+        "removed":  true
+    }
+]

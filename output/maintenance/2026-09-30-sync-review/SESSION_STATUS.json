@@ -1,0 +1,69 @@
+{
+  "updated_at_date": "2026-09-30",
+  "latest_field_record_date": "2026-09-29",
+  "latest_field_record": "REFOUND_WINDOWS_HOTSPOT_GUIDE.md",
+  "status": "documentation_synced_repository_reviewed_and_precommit_cleanup_complete",
+  "head_reviewed": "956b34665382787c3564e49fb3574ee075a9cc64",
+  "parent_reviewed": "258efc147df0eb1a3361d7ab210f6b7967657910",
+  "current_demo_route": "Windows ReFoundLaptop hotspot -> Pi; Windows SSH tunnel -> localhost:18000",
+  "field_log_confirmed": [
+    "ReFoundLaptop Wi-Fi search",
+    "wlan0 activation"
+  ],
+  "field_user_reported": [
+    "laptop web access through SSH tunnel",
+    "OpenAI API operation"
+  ],
+  "field_unverified": [
+    "final profile autoconnect and priority command result",
+    "shutdown and power-on under the new network",
+    "Ethernet-disconnected automatic Wi-Fi connection",
+    "video and AI recovery after new-network boot",
+    "friend Tailscale invitation acceptance and access",
+    "individual AI responses and current model",
+    "quantitative accuracy, latency and long-duration stability"
+  ],
+  "local_validation": {
+    "python_tests_passed": 272,
+    "node_tests_passed": 37,
+    "real_run_py_http_smoke_passed": true,
+    "git_fsck_passed": true,
+    "new_broken_document_links": 0,
+    "package_file_count": 48,
+    "source_matched_installed_archive_before_changes": true,
+    "protected_file_count": 9,
+    "protected_hashes_unchanged": true
+  },
+  "actual_pi_tested_this_session": false,
+  "live_ai_or_smtp_tested_this_session": false,
+  "browser_ui_tested_this_session": false,
+  "runtime_application_source_changed": false,
+  "production_dist_rebuilt": false,
+  "committed_or_pushed": false,
+  "existing_tracked_browser_profile_files": 715,
+  "existing_browser_profiles_removed_from_tracking": false,
+  "report": "REVIEW.md",
+  "next_demo_step": "Use hotspot guide section 8 for autoconnect and wireless-only power-cycle verification.",
+  "user_final_demo_procedure_reconfirmed": "2026-09-30",
+  "final_demo_procedure_steps": {
+    "start": 7,
+    "shutdown": 4,
+    "hostname_error": 5
+  },
+  "handoff_followup_check": "handoff-recheck.json",
+  "resume_policy": "Follow the user-selected task; default to existing v3 PPT if unspecified. Use the established procedure for demo operation; perform remaining field checks when demo verification is selected.",
+  "existing_browser_profiles_deleted_from_worktree": true,
+  "precommit_cleanup": {
+    "status": "complete",
+    "targets": 10,
+    "files": 6079,
+    "bytes": 249523037,
+    "protected_unchanged_immediately_after_deletion": 396,
+    "tracked_deletions_pending_commit": 715,
+    "verification": "commit-cleanup-verification.json",
+    "runtime_removed": true,
+    "documents_relocated": false,
+    "staged": false,
+    "committed": false
+  }
+}

@@ -27,3 +27,11 @@ data/
 Thumbs.db
 .idea/
 .vscode/
+
+# Disposable local verification environments; retain reports and source backups.
+node_modules/
+output/maintenance/**/browser-profile-*/
+output/maintenance/**/test-runtime/
+output/maintenance/**/runtime/
+output/maintenance/**/isolated-data/
+output/maintenance/**/package-check.tar.gz*

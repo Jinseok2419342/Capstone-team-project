@@ -1,0 +1,77 @@
+{
+  "date": "2026-09-30",
+  "new_missing_links": {},
+  "preexisting_missing_links": {},
+  "markdown_files_checked": 17,
+  "package_files": 48,
+  "package_has_latest_guide": true,
+  "package_shells_lf": true,
+  "package_forbidden": [],
+  "package_runtime_mismatch": [],
+  "git_fsck": 0,
+  "git_diff_check": 0,
+  "git_attributes": [
+    "scripts/raspberry-pi/install.sh: text: set",
+    "scripts/raspberry-pi/install.sh: eol: lf",
+    "scripts/raspberry-pi/refound.service: text: set",
+    "scripts/raspberry-pi/refound.service: eol: lf"
+  ],
+  "root_pc_venv_present": false,
+  "root_env_present": false,
+  "startup": {
+    "http_statuses": {
+      "/": 200,
+      "/static/app.js": 200,
+      "/static/styles.css": 200,
+      "/api/items": 200,
+      "/api/settings": 200
+    },
+    "health": {
+      "ok": true,
+      "version": "1.0.0",
+      "hardware_profile": "desktop",
+      "database": "connected",
+      "camera": {
+        "running": true,
+        "camera_connected": false,
+        "using_fallback": true,
+        "privacy_enabled": true,
+        "phase": "privacy",
+        "baseline_ready": false,
+        "motion_detected": false,
+        "frame_width": 1280,
+        "frame_height": 720,
+        "fps": 0.0,
+        "frame_sequence": 0,
+        "detected_changes": 0,
+        "last_frame_at": null,
+        "last_motion_at": null,
+        "last_change_at": null,
+        "last_baseline_at": null,
+        "last_error": "Picamera2 failed (Picamera2 is unavailable: No module named 'picamera2'); OpenCV failed (Unable to open camera source 0)",
+        "processing_ms": 0.0,
+        "preview_width": 0,
+        "preview_height": 0,
+        "camera_diagnostics": null,
+        "pending_changes": 0,
+        "callback_retry_count": 0,
+        "uncommitted_changes": 0,
+        "inventory_connected": false
+      },
+      "provider": {
+        "requested": "auto",
+        "active": "offline",
+        "openai_configured": false,
+        "gemini_configured": false,
+        "model": "로컬 폴백"
+      },
+      "time": "2026-09-30T13:36:11+00:00"
+    },
+    "privacy_enabled": true,
+    "live_ai_disabled": true,
+    "camera_open_attempted": true,
+    "captured_frames": 0
+  },
+  "protected_unchanged": true,
+  "protected_count": 9
+}

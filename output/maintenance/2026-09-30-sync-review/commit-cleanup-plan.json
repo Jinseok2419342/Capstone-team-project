@@ -1,0 +1,81 @@
+{
+  "date": "2026-09-30",
+  "workspace": "C:\\Users\\pppp\\Documents\\GitHub\\Capstone-team-project",
+  "authorization": "User requested unnecessary files/caches cleanup before their full commit.",
+  "process_check": "Read-only elevated Win32_Process query found no matching browser or verification runtime process.",
+  "targets": [
+    {
+      "path": "output/maintenance/2026-09-22-quick-reset/browser-profile-1790066635655224500",
+      "kind": "directory",
+      "files": 146,
+      "bytes": 5488977,
+      "tracked_files": 143
+    },
+    {
+      "path": "output/maintenance/2026-09-22-quick-reset/browser-profile-1790066672484512100",
+      "kind": "directory",
+      "files": 291,
+      "bytes": 5924156,
+      "tracked_files": 286
+    },
+    {
+      "path": "output/maintenance/2026-09-22-quick-reset/browser-profile-1790066733549901400",
+      "kind": "directory",
+      "files": 291,
+      "bytes": 5924181,
+      "tracked_files": 286
+    },
+    {
+      "path": "output/maintenance/2026-09-22-quick-reset/test-runtime",
+      "kind": "directory",
+      "files": 0,
+      "bytes": 0,
+      "tracked_files": 0
+    },
+    {
+      "path": "output/maintenance/2026-09-30-sync-review/runtime",
+      "kind": "directory",
+      "files": 5346,
+      "bytes": 231853479,
+      "tracked_files": 0
+    },
+    {
+      "path": "output/maintenance/2026-09-30-sync-review/isolated-data",
+      "kind": "directory",
+      "files": 1,
+      "bytes": 81920,
+      "tracked_files": 0
+    },
+    {
+      "path": "output/maintenance/2026-09-30-sync-review/package-check.tar.gz",
+      "kind": "file",
+      "files": 1,
+      "bytes": 219331,
+      "tracked_files": 0
+    },
+    {
+      "path": "output/maintenance/2026-09-30-sync-review/package-check.tar.gz.sha256",
+      "kind": "file",
+      "files": 1,
+      "bytes": 87,
+      "tracked_files": 0
+    },
+    {
+      "path": "output/maintenance/2026-09-30-sync-review/sync_docs.py",
+      "kind": "file",
+      "files": 1,
+      "bytes": 30906,
+      "tracked_files": 0
+    },
+    {
+      "path": "output/maintenance/2026-09-30-sync-review/frontend-syntax.log",
+      "kind": "file",
+      "files": 1,
+      "bytes": 0,
+      "tracked_files": 0
+    }
+  ],
+  "total_files": 6079,
+  "total_bytes": 249523037,
+  "tracked_deletions_expected": 715
+}

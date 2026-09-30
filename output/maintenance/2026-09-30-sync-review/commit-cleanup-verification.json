@@ -1,0 +1,11 @@
+{
+  "status": "deleted_and_verified",
+  "protected_files_unchanged": 396,
+  "removed_targets": 10,
+  "removed_files": 6079,
+  "removed_bytes": 249523037,
+  "git_deleted_files": 715,
+  "all_git_deletions_are_test_profiles": true,
+  "committed": false,
+  "staged": false
+}

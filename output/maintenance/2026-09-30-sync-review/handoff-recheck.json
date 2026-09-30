@@ -1,0 +1,20 @@
+{
+  "date": "2026-09-30",
+  "kind": "followup_final_demo_procedure_handoff_check",
+  "checked_documents": [
+    "START_HERE.md",
+    "AGENTS.md",
+    "REFOUND_WINDOWS_HOTSPOT_GUIDE.md",
+    "docs/SESSION_HANDOFF_2026-09-18.md"
+  ],
+  "guide_numbered_steps": {
+    "2": 7,
+    "3": 4,
+    "4": 5
+  },
+  "commands_consistent": true,
+  "broken_file_links": [],
+  "user_confirmed_procedure": true,
+  "new_power_cycle_success_reported": false,
+  "app_or_pi_tests_rerun": false
+}

@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "deleted_targets_absent": 10,
+  "protected_files_missing": [],
+  "protected_files_unchanged_after_final_document_updates": 389,
+  "intentional_post_cleanup_updates": [
+    ".gitignore",
+    "AGENTS.md",
+    "START_HERE.md",
+    "docs/SESSION_HANDOFF_2026-09-18.md",
+    "output/maintenance/2026-09-30-sync-review/REVIEW.md",
+    "output/maintenance/2026-09-30-sync-review/SESSION_STATUS.json",
+    "output/maintenance/2026-09-30-sync-review/verify_delivery.py"
+  ],
+  "new_broken_links": [],
+  "git_diff_check": 0,
+  "tracked_deleted_test_profiles": 715,
+  "helper_syntax_checked": [
+    "audit_repository.py",
+    "prepare_commit_cleanup.py",
+    "run_checks.py",
+    "verify_delivery.py"
+  ],
+  "isolated_package_check": {
+    "package_files": 48,
+    "package_has_latest_guide": true,
+    "package_shells_lf": true,
+    "package_forbidden": [],
+    "package_runtime_mismatch": []
+  },
+  "app_tests_rerun": false,
+  "staged": false,
+  "committed": false
+}

@@ -11,7 +11,7 @@
 | 실험 준비·수치 입력 | [측정 시작 안내](PERFORMANCE_MEASUREMENT_START.md) → [실험 설계](EXPERIMENT_GUIDE.md) → [결과 입력표](RESULTS_FILL_SHEET.md) |
 | 기존 논문 발표 열기 | [PDF 캡처 4장 PPTX](../../output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx) |
 
-**현재 원고·PDF는 9월 16일 실측 전 버전입니다.** 9월 18·22일 앱 개선을 아직 반영하지 않았습니다. 9월 22일 새 SD 설치·촬영·재부팅 진단을 통과했고 기본 실물 동작·본인 PC Tailscale 영상은 사용자 성공 보고가 있습니다. 친구 공유는 초대 링크 전송 후 수락·접속·핫스팟 시험 대기입니다. 이 진행은 논문용 정량 실험이 아닙니다. [현재 실기 기록](../guides/PI_ACCEPTANCE_CHECKLIST.md)
+**현재 원고·PDF는 9월 16일 실측 전 버전입니다.** 9월 18·22일 앱 개선을 아직 반영하지 않았습니다. 9월 22일 새 SD 설치·촬영·재부팅 진단을 통과했고 기본 실물 동작·본인 PC Tailscale 영상은 사용자 성공 보고가 있습니다. 9월 29일 Windows `ReFoundLaptop` 연결 로그와 노트북 SSH 웹·OpenAI 동작 성공 보고가 추가됐습니다. 새 구성의 전원 재인가·자동 연결·무선 단독 복귀와 친구 Tailscale 수락·접속은 미확인입니다. [최신 시연 원문](../../REFOUND_WINDOWS_HOTSPOT_GUIDE.md). 이 진행은 논문용 정량 실험이 아닙니다. [현재 실기 기록](../guides/PI_ACCEPTANCE_CHECKLIST.md)
 
 논문 작업을 선택하면 먼저 [개선점 요약](../IMPROVEMENTS.md)과 원고의 구현 설명을 대조합니다. 프로젝트 발표 PPT를 선택하면 [발표 준비](../IMPROVEMENTS.md)로 이동합니다. 아래 과거 인계·다른 AI 전달 문서도 최신 코드와 대조해야 합니다. 실제 측정 전에는 수치 placeholder를 채우지 않습니다.
 

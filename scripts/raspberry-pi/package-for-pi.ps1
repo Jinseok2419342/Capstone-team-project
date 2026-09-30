@@ -60,6 +60,7 @@ $Includes = @(
 )
 foreach ($OptionalFile in @(
     'requirements-pi.txt',
+    'REFOUND_WINDOWS_HOTSPOT_GUIDE.md',
     'docs/guides/FRESH_SD_START.md',
     'docs/guides/PI_ACCEPTANCE_CHECKLIST.md',
     'docs/guides/RASPBERRY_PI_GUIDE.md',

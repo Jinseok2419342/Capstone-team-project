@@ -1,0 +1,8 @@
+INFO:     Started server process [10756]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:50045 (Press CTRL+C to quit)
+[dshow @ 000001d7370c6b40] Could not enumerate video devices (or none found).
+[dshow @ 000001d7370c6b40] Could not enumerate audio only devices (or none found).
+[ WARN:0@0.055] global cap_ffmpeg_impl.hpp:1240 open VIDEOIO/FFMPEG: Failed list devices for backend dshow
+[ERROR:0@0.544] global obsensor_uvc_stream_channel.cpp:163 cv::obsensor::getStreamChannelGroup Camera index out of range

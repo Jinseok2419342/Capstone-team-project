@@ -42,7 +42,7 @@
 
 **microSD 고장 후 새로 설치한다면 [새 SD 시작 안내](docs/guides/FRESH_SD_START.md)부터 따라갑니다.** 기본 배포 파일은 `dist/refound-pi.tar.gz`이며, [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)로 재부팅까지 확인한 뒤 논문·발표 작업으로 이어갑니다.
 
-**2026-09-22 진행:** 새 SD 설치·카메라 촬영 검사·재부팅 후 진단과 본인 PC Tailscale 화면·영상 확인을 마쳤습니다. 초기화·실물 등록·이동·회수는 사용자 성공 보고가 있으며, 친구에게 Pi 공유 초대 링크를 보낸 상태입니다. 친구의 수락·노트북 접속·핫스팟 시험은 대기 중입니다. 세부 결과와 발표 재개 기준은 [작업 인계](docs/SESSION_HANDOFF_2026-09-18.md)에 기록했습니다.
+**2026-09-30 갱신:** 새 SD 설치·카메라·기본 실물 흐름·재부팅의 9월 22일 확인에 이어, 현재는 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**을 사용합니다. 9월 29일 Pi Wi-Fi 연결 활성화 로그와 노트북 웹 화면·OpenAI API 동작의 사용자 성공 보고가 있습니다. 새 구성의 자동 연결 설정 결과, 정상 종료 후 전원 재인가·무선 단독 부팅·화면/영상/AI 복귀는 아직 미확인입니다. 친구 Tailscale 수락·접속도 미확인이며 현재 SSH 방식의 선행 조건은 아닙니다. [매번 실행·종료하는 순서](REFOUND_WINDOWS_HOTSPOT_GUIDE.md)와 [작업 인계](docs/SESSION_HANDOFF_2026-09-18.md)를 따릅니다. Pi 화면만 여는 노트북에는 앱 설치가 필요 없습니다.
 
 | 구분 | 링크 |
 |---|---|
@@ -55,8 +55,8 @@
 | 과거 프로젝트 발표 원고 | [8월 16일 발표 초안 — 재검토 후 활용](docs/presentation/PRESENTATION.md) |
 | Raspberry Pi 설치·운영 | [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
 | 새 SD 재설치·첫 접속 | [짧은 설치 순서](docs/guides/FRESH_SD_START.md) |
-| 실기 확인·다음 세션 | [결과·확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) · [9월 22일 갱신 인계](docs/SESSION_HANDOFF_2026-09-18.md) |
-| 학교 시연 절차 | [Android 핫스팟 학교 시연 운영 가이드](docs/guides/SCHOOL_DEMO_GUIDE.md) |
+| 실기 확인·다음 세션 | [결과·확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) · [9월 30일 갱신 인계](docs/SESSION_HANDOFF_2026-09-18.md) |
+| 학교 시연 절차 | [현재 Windows 핫스팟·SSH 실행/종료](REFOUND_WINDOWS_HOTSPOT_GUIDE.md) · [Android/Tailscale 대안](docs/guides/SCHOOL_DEMO_GUIDE.md) |
 | 발표용 Mermaid 도식 | [도식 목록 및 다운로드 안내](docs/presentation/diagrams/README.md) |
 | Mermaid 원본 묶음 | [refound-mermaid-diagrams.zip](docs/presentation/refound-mermaid-diagrams.zip) |
 
@@ -204,14 +204,16 @@ sequenceDiagram
 
 앞선 9월 18일 운영 흐름 검사에서는 Python 264개·Node 33개와 별도 Chromium 데스크톱 12개·모바일 4개를 검증했습니다. 합성 카메라의 사건부터 API·DB 반영, 기한·알림·연장·폐기·복원, AI·메일 실패, 편집 충돌·연결 복구를 다뤘습니다. [운영 흐름 점검](docs/LIVE_FLOW_REVIEW_2026-09-18.md), [처리 구조 개선](docs/ARCHITECTURE_REVIEW_2026-09-18.md), [앱 개선](docs/APP_REVIEW_2026-09-18.md), [영상 개선](docs/VISION_REVIEW_2026-09-18.md)은 해당 시점 기록입니다.
 
-9월 22일 새 Pi의 실제 촬영·재부팅 진단 로그와 초기화·등록·이동·회수·본인 PC HTTPS 화면/영상 성공 보고는 [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)에 별도로 기록했습니다. 원격 AI의 세부 판정, 메일 수신과 현장 조건의 장시간 시험은 남아 있습니다. 현재 재개 지점은 **친구의 공유 수락·노트북·핫스팟 시험 또는 사용자 선택에 따른 발표 PPT 제작**입니다.
+9월 22일 새 Pi의 실제 촬영·재부팅 진단 로그와 초기화·등록·이동·회수·본인 PC HTTPS 화면/영상 성공 보고에 더해, 9월 29일 Windows 핫스팟 연결 로그·노트북 SSH 웹·OpenAI 동작 성공 보고를 [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)에 반영했습니다. 원격 AI의 세부 판정, 메일 수신과 현장 조건의 장시간 시험은 남아 있습니다. 현재 재개 지점은 **Windows 핫스팟의 자동 연결·무선 단독 전원 재인가 시험 또는 기존 발표 PPT 보완**입니다.
+
+9월 30일 Git 대량 반영 점검에서 기존 **Python 272개·Node 37개** 검사를 격리된 데이터로 재실행해 통과했습니다. 복사된 실행 소스는 9월 22일 설치 배포본과 일치했습니다. [저장소 점검 보고서](output/maintenance/2026-09-30-sync-review/REVIEW.md)에 검증 범위와 Git 관리상 남은 항목을 기록합니다. 실제 Pi·원격 AI·SMTP·브라우저 실기는 이번에 재실행하지 않았습니다.
 
 아래는 이후 선택할 장기 개선·연구 후보이며 자동으로 시작할 작업 목록은 아닙니다.
 
 1. 교실 조명, 가림, 겹침, 초점 변화가 포함된 실제 사건 데이터 수집과 정답 라벨링
 2. 동일 데이터에서 OpenAI와 Gemini의 정확도·지연시간·비용 비교
 3. Raspberry Pi 장시간 실행 시 메모리·CPU·온도와 카메라 안정성 측정
-4. 친구 안드로이드 핫스팟과 친구 계정의 시연 노트북, Tailscale을 사용하는 발표 당일 리허설
+4. Windows 노트북 핫스팟과 SSH 터널을 사용하는 발표 당일 리허설. Android/Tailscale은 별도 대안
 5. 실제 운영으로 확장할 경우 로그인·권한 관리, 촬영 고지, 얼굴·문서 마스킹과 보존 정책 추가
 
 ## 발표용 Mermaid 원본
