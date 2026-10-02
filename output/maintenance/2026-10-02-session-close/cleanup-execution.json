@@ -1,0 +1,80 @@
+﻿[
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-review/.chart-data-b4i5w2",
+        "files":  2,
+        "bytes":  401787,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-review/.chart-data-Gbbrsh",
+        "files":  2,
+        "bytes":  401762,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-v4",
+        "files":  32,
+        "bytes":  2315587,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-review/candidate-v4.pptx",
+        "files":  1,
+        "bytes":  398942,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-review/candidate-v4_reviewed.pptx",
+        "files":  1,
+        "bytes":  398967,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-review/review-first-pass.pptx",
+        "files":  1,
+        "bytes":  400690,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-content-review/.chart-data-aPFu0F",
+        "files":  2,
+        "bytes":  395268,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-content-review/.chart-data-tp7vmG",
+        "files":  2,
+        "bytes":  395220,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5",
+        "files":  32,
+        "bytes":  2543431,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-content-review/candidate-v5_content.pptx",
+        "files":  1,
+        "bytes":  392445,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-content-review/candidate-v5_improved.pptx",
+        "files":  1,
+        "bytes":  392397,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-content-review/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_content.pptx",
+        "files":  1,
+        "bytes":  394196,
+        "status":  "removed"
+    },
+    {
+        "path":  "output/maintenance/2026-10-02-midterm-content-review/update_handoff.py",
+        "files":  1,
+        "bytes":  9503,
+        "status":  "removed"
+    }
+]

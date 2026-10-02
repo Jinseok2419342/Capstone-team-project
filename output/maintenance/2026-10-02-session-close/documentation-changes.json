@@ -1,0 +1,27 @@
+[
+  {
+    "path": "START_HERE.md",
+    "before_sha256": "b0739a30b102ceae3e62c2cb6e4373ed02da1adacb697cec1d10290f4429aef6",
+    "after_sha256": "f4e803ac59d9ed35e2418445aaf2431783a0142fe078b65cb20d63a7991be5a0"
+  },
+  {
+    "path": "AGENTS.md",
+    "before_sha256": "7f3ac695ff94b3eb6f77602724af6db55928055a8df9e9c605496c05729e0c71",
+    "after_sha256": "61ced2f357f2e5107f3b26b5fb27ca044dea9a29b0263f75ac70ce0c14de0b06"
+  },
+  {
+    "path": "docs/SESSION_HANDOFF_2026-09-18.md",
+    "before_sha256": "5875fd883e3460c240df2cb08a85aa2cddea7e0c9bdfcc91057ab33a83767f9a",
+    "after_sha256": "4ee72a07ea1c096ba8bb6d67118b9d59962aa87e2fb7e1dee158e055595c0f84"
+  },
+  {
+    "path": "docs/IMPROVEMENTS.md",
+    "before_sha256": "450e626d4261b5e70b74e8dac0353317ef3674769abf5777362b5a7007f9ea7a",
+    "after_sha256": "00a4a1675ff917e6b3cf0bce8de116668a4cc71c317f4da677486f140ea76d31"
+  },
+  {
+    "path": "output/presentation/REFOUND_MIDTERM_FILL_GUIDE.md",
+    "before_sha256": "c84578e0728a261c84a5705f90033b1668d932f21126cc17353c398c6a3dd7a0",
+    "after_sha256": "5f794cc87c4380e6350f25265499370ec5d6b1c7db9cc33aefd000f50043431a"
+  }
+]

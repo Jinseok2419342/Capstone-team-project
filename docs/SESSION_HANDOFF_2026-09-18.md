@@ -1,6 +1,14 @@
 # 다음 세션 인계 — 중간보고 PPT 보완과 Pi 시연 준비
 
-**최종 갱신: 2026-09-30.** 기존 링크를 유지하기 위해 파일명은 9월 18일 그대로 사용한다. 아래 상태가 과거 인계보다 우선한다. 사용자 시작점은 [START_HERE.md](../START_HERE.md), 실제 관찰 원장은 [실기 확인표](guides/PI_ACCEPTANCE_CHECKLIST.md)다.
+**2026-10-02 종료·재개 확정:** 사용자는 다음 세션에 **최신 v5 PPT를 이어서 완성**하기로 했다. 먼저 v5와 [작성·캡처 가이드](../output/presentation/REFOUND_MIDTERM_FILL_GUIDE.md)를 검토하고 설명·발표 흐름을 보완한다. 실물 자료가 생기면 14·15쪽 실제 Pi 화면, 9쪽 팀 기준 진행률, 19쪽 정량 AI 결과를 반영한다. 세부 역할·일정과 리허설 3회·파일럿 40건은 제안이다. 마지막에 전체 렌더와 한글 단어 중간 줄바꿈을 다시 확인한다. 기존 v3·v4·v5와 수동 편집본은 덮어쓰지 않는다. 새 설치·친구 응답·남은 실기를 발표의 선행 조건으로 강제하지 않는다.
+
+불필요한 제작 중간 파일 13개 대상·79개 파일, 약 8.43MiB를 삭제했다. 삭제 직후 보존 파일 495개의 해시가 일치했다. 최종 PPT·렌더·제작 스크립트·화면 소스·검사 로그·기존 소스와 데이터는 보존했다. 정리 결과는 `output/maintenance/2026-10-02-session-close/SESSION_STATUS.json`을 따른다. 첫 검토용 렌더는 정리했으므로 과거 `check_final.py`의 해당 비교는 삭제 전 해시와 종료 검사 원장으로 대체한다. 이번에는 앱·Pi·AI 실험, 커밋·push를 하지 않았다.
+
+**2026-10-02 내용 개선 후속:** 최신본은 [v5 내용 개선본](../output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx)이다. 우산 사용 시나리오·설계 이유·관리자 업무·구체적인 오류 검사와 최종보고의 필수 과제를 보강했다. 3회 리허설·40건 파일럿은 제안 목표이고 정량 결과가 아니다. 전체 PowerPoint 검토 근거는 `output/maintenance/2026-10-02-midterm-content-review/FINAL_CHECKS.json`, 생성 원본은 `docs/presentation/midterm/build_midterm_v5.mjs`다. 실제 Pi 캡처·정량 결과·공식 진행률은 추가 근거가 필요하다. v3·v4와 기존 실기 기록을 보존했다. 아래 v4 작업은 이전 경과다.
+
+**2026-10-02 발표 후속 갱신:** 최신 발표본은 [v4 개선본](../output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v4_reviewed.pptx)이다. 사용자 요청의 7개 대항목·34개 세부 항목을 유지하고 최신 Git·시연·개발 검사 기록과 현재 일정으로 보완했다. 14·15쪽에는 출처를 명시한 기존 개발 검사 화면을 넣었으며 실제 Pi 캡처는 미확보다. 진행률·정량 성능은 근거가 없어 미확정·미측정으로 표시한다. 실제 PowerPoint의 전체 렌더와 한글 줄바꿈 검토는 `output/maintenance/2026-10-02-midterm-review/`에 기록한다. 새 생성 원본은 `docs/presentation/midterm/build_midterm_v4.mjs`이며 기존 v3·앱·배포·논문은 보존했다. 아래 v3 기본 재개·미커밋 정리 설명은 과거 기록이다. 이번 작업 시작 HEAD는 `69eb6ff`였고 기존 정리는 커밋 완료 상태였다. 다음 작업은 개선본 검토와 실제 캡처 보완이며 새 Pi·AI 시험을 수행한 것이 아니다.
+
+**이전 동기화 기록: 2026-09-30.** 기존 링크를 유지하기 위해 파일명은 9월 18일 그대로 사용한다. 현재 우선순위는 위 10월 2일 종료·재개 기록을 따른다. 사용자 시작점은 [START_HERE.md](../START_HERE.md), 실제 관찰 원장은 [실기 확인표](guides/PI_ACCEPTANCE_CHECKLIST.md)다.
 
 ## 0. 최신 인계 — 9월 29일 Windows 핫스팟 성공 보고
 

@@ -1,0 +1,344 @@
+{
+  "slides": [
+    {
+      "slide": 1,
+      "title": "Re:Found 프로젝트 개발 중간보고",
+      "section": "표지",
+      "sources": [
+        "README.md",
+        "사용자 제공 수업 일정"
+      ]
+    },
+    {
+      "slide": 2,
+      "title": "발표 구성",
+      "section": "중간보고",
+      "sources": [
+        "첨부: 프로젝트개발중간보고 목차구성.md",
+        "사용자 제공 수업 일정"
+      ]
+    },
+    {
+      "slide": 3,
+      "title": "보관대의 물품과 관리 기록을 연결",
+      "section": "1. 프로젝트 개요 및 개발 목표",
+      "sources": [
+        "README.md"
+      ]
+    },
+    {
+      "slide": 4,
+      "title": "로컬 감지와 AI 해석의 역할 분담",
+      "section": "1. 프로젝트 개요 및 개발 목표",
+      "sources": [
+        "README.md",
+        "app/main.py",
+        "app/ai.py"
+      ]
+    },
+    {
+      "slide": 5,
+      "title": "전체 시스템 구성과 데이터 흐름",
+      "section": "2. 시스템 설계 및 개발 구조",
+      "sources": [
+        "README.md",
+        "app/main.py",
+        "app/vision.py",
+        "app/store.py",
+        "app/ai.py"
+      ]
+    },
+    {
+      "slide": 6,
+      "title": "모듈별 역할과 기술 스택",
+      "section": "2. 시스템 설계 및 개발 구조",
+      "sources": [
+        "README.md",
+        "output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json",
+        "app/camera_sources.py",
+        "app/notifier.py"
+      ]
+    },
+    {
+      "slide": 7,
+      "title": "팀 역할과 협업 방식",
+      "section": "2. 시스템 설계 및 개발 구조",
+      "sources": [
+        "README.md"
+      ]
+    },
+    {
+      "slide": 8,
+      "title": "개발 경과와 현재 단계",
+      "section": "3. 프로젝트 개발 진행 현황",
+      "sources": [
+        "docs/VISION_REVIEW_2026-09-18.md",
+        "output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md",
+        "output/maintenance/2026-09-30-sync-review/REVIEW.md",
+        "사용자 제공 수업 일정"
+      ]
+    },
+    {
+      "slide": 9,
+      "title": "개발 목표 대비 현재 도달 수준",
+      "section": "3. 프로젝트 개발 진행 현황",
+      "sources": [
+        "README.md",
+        "docs/guides/PI_ACCEPTANCE_CHECKLIST.md",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md",
+        "output/maintenance/2026-09-30-sync-review/REVIEW.md"
+      ]
+    },
+    {
+      "slide": 10,
+      "title": "기능별 구현과 실기 확인 상태",
+      "section": "3. 프로젝트 개발 진행 현황",
+      "sources": [
+        "README.md",
+        "docs/guides/PI_ACCEPTANCE_CHECKLIST.md",
+        "output/maintenance/2026-09-22-quick-reset/VALIDATION.json",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 11,
+      "title": "팀 수행 내용과 Git 개발 이력",
+      "section": "3. 프로젝트 개발 진행 현황",
+      "sources": [
+        "README.md",
+        "git log at 69eb6ff (2026-10-02 inspection)"
+      ]
+    },
+    {
+      "slide": 12,
+      "title": "실행 가능한 핵심 사건 처리",
+      "section": "4. 핵심 기능 구현 결과",
+      "sources": [
+        "app/vision.py",
+        "app/main.py:534",
+        "app/main.py:432"
+      ]
+    },
+    {
+      "slide": 13,
+      "title": "AI 응답을 기다리는 동안에도 기록 보존",
+      "section": "4. 핵심 기능 구현 결과",
+      "sources": [
+        "app/main.py",
+        "app/classification.py",
+        "tests/test_app_resilience.py",
+        "docs/ARCHITECTURE_REVIEW_2026-09-18.md"
+      ]
+    },
+    {
+      "slide": 14,
+      "title": "물품 상세 화면과 처리 흐름",
+      "section": "4. 핵심 기능 구현 결과",
+      "sources": [
+        "docs/guides/PI_ACCEPTANCE_CHECKLIST.md",
+        "docs/LIVE_FLOW_REVIEW_2026-09-18.md",
+        "output/maintenance/2026-09-18-live-flow-review/browser-classified-detail.png"
+      ]
+    },
+    {
+      "slide": 15,
+      "title": "관리자는 확인이 필요한 물품부터 처리",
+      "section": "4. 핵심 기능 구현 결과",
+      "sources": [
+        "templates/index.html",
+        "static/app.js",
+        "tests/test_live_management.py",
+        "output/maintenance/2026-09-22-quick-reset/VALIDATION.json"
+      ]
+    },
+    {
+      "slide": 16,
+      "title": "통합 기능의 현재 범위와 남은 일",
+      "section": "4. 핵심 기능 구현 결과",
+      "sources": [
+        "docs/LIVE_FLOW_REVIEW_2026-09-18.md",
+        "docs/guides/PI_ACCEPTANCE_CHECKLIST.md",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md",
+        "experiments/pair_runner.py"
+      ]
+    },
+    {
+      "slide": 17,
+      "title": "전후 장면과 물품 영역을 함께 전달",
+      "section": "5. AI 모델 및 데이터 개발 현황",
+      "sources": [
+        "app/vision.py",
+        "app/ai.py",
+        "tests/test_services.py"
+      ]
+    },
+    {
+      "slide": 18,
+      "title": "외부 VLM 선택 이유와 추론 방식",
+      "section": "5. AI 모델 및 데이터 개발 현황",
+      "sources": [
+        "app/ai.py",
+        "README.md",
+        "output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 19,
+      "title": "AI 동작 확인과 정량 평가의 구분",
+      "section": "5. AI 모델 및 데이터 개발 현황",
+      "sources": [
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md",
+        "tests/test_services.py",
+        "docs/paper/EXPERIMENT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 20,
+      "title": "Baseline 비교와 AI 개선 방향",
+      "section": "5. AI 모델 및 데이터 개발 현황",
+      "sources": [
+        "AGENTS.md:필수 비교군",
+        "experiments/ablation.py",
+        "experiments/pair_runner.py",
+        "docs/paper/EXPERIMENT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 21,
+      "title": "오류 조건을 포함한 자동화 검사",
+      "section": "6. 테스트 결과 및 문제점 분석",
+      "sources": [
+        "output/maintenance/2026-09-30-sync-review/REVIEW.md",
+        "output/maintenance/2026-09-22-quick-reset/VALIDATION.json",
+        "tests/test_app_resilience.py",
+        "tests/test_reset.py",
+        "tests/test_services.py"
+      ]
+    },
+    {
+      "slide": 22,
+      "title": "실제 Pi 시연에서 확인한 결과",
+      "section": "6. 테스트 결과 및 문제점 분석",
+      "sources": [
+        "output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json",
+        "docs/guides/PI_ACCEPTANCE_CHECKLIST.md",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 23,
+      "title": "주요 문제의 원인과 해결",
+      "section": "6. 테스트 결과 및 문제점 분석",
+      "sources": [
+        "docs/VISION_REVIEW_2026-09-18.md",
+        "docs/ARCHITECTURE_REVIEW_2026-09-18.md",
+        "docs/LIVE_FLOW_REVIEW_2026-09-18.md",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 24,
+      "title": "개발 환경에서의 정지 장면 연산 비교",
+      "section": "6. 테스트 결과 및 문제점 분석",
+      "sources": [
+        "docs/VISION_REVIEW_2026-09-18.md",
+        "output/maintenance/2026-09-18-vision-review/benchmark-comparison.json"
+      ]
+    },
+    {
+      "slide": 25,
+      "title": "최종보고의 필수 과제와 추가 실험",
+      "section": "7. 향후 개발 및 완성 계획",
+      "sources": [
+        "docs/guides/PI_ACCEPTANCE_CHECKLIST.md",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md",
+        "docs/paper/EXPERIMENT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 26,
+      "title": "최종보고까지의 주차별 완료 목표",
+      "section": "7. 향후 개발 및 완성 계획",
+      "sources": [
+        "사용자 제공 수업 일정",
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 27,
+      "title": "최종보고에서 제시할 결과물",
+      "section": "7. 향후 개발 및 완성 계획",
+      "sources": [
+        "README.md",
+        "docs/guides/PI_ACCEPTANCE_CHECKLIST.md",
+        "docs/paper/EXPERIMENT_GUIDE.md"
+      ]
+    },
+    {
+      "slide": 28,
+      "title": "늦은 AI 응답을 적용하기 전 상태 확인",
+      "section": "보충자료 A. 핵심 코드",
+      "sources": [
+        "app/classification.py:70",
+        "app/main.py:432",
+        "app/item_policy.py"
+      ]
+    },
+    {
+      "slide": 29,
+      "title": "시연 실행과 데이터 초기화 구분",
+      "section": "보충자료 B. 시연 운영",
+      "sources": [
+        "REFOUND_WINDOWS_HOTSPOT_GUIDE.md",
+        "output/maintenance/2026-09-22-quick-reset/VALIDATION.json"
+      ]
+    },
+    {
+      "slide": 30,
+      "title": "AI 개선을 위한 파일럿과 재평가",
+      "section": "보충자료 C. 평가 방법",
+      "sources": [
+        "docs/paper/EXPERIMENT_GUIDE.md",
+        "AGENTS.md"
+      ]
+    }
+  ],
+  "tableOwners": [
+    3,
+    6,
+    8,
+    9,
+    10,
+    11,
+    12,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    25,
+    26
+  ],
+  "chartOwners": [
+    24
+  ],
+  "asOf": "2026-10-02",
+  "presentationDate": "2026-10-13",
+  "finalReportDate": "2026-11-03",
+  "fontPolicy": {
+    "basis": "design",
+    "families": [
+      "Malgun Gothic",
+      "Consolas"
+    ]
+  },
+  "screenshots": [
+    "development detail: 2026-09-18",
+    "development dashboard: 2026-09-22"
+  ]
+}

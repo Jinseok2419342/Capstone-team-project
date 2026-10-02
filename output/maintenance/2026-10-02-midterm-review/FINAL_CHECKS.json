@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "date": "2026-10-02",
+  "final": "output\\presentation\\REFOUND_PROJECT_MIDTERM_2026-10-02_v4_reviewed.pptx",
+  "sha256": "aff59e8440b89bd8f4b9d21c00b1e790b4df69ea2a997188db6815dbbdce721c",
+  "slide_count": 30,
+  "outline_topics": 34,
+  "editable_tables": 13,
+  "editable_charts": 1,
+  "chart_source_ms": [
+    27.756,
+    13.212
+  ],
+  "native_powerpoint_opened": true,
+  "native_rendered_slides": 30,
+  "native_text_areas": 478,
+  "text_overflow_findings": 0,
+  "checked_line_boundaries": 63,
+  "unexpected_line_breaks": 0,
+  "korean_paragraph_protection_count": 541,
+  "visual_review": "All 30 first-pass native PowerPoint renders individually inspected; 5 changed final slides re-inspected; the other 25 final renders were byte-identical.",
+  "protected_originals": {
+    "output/presentation/REFOUND_PROJECT_MIDTERM_2026-09-22_v3.pptx": "e12cc5b710723e9ffba427a911f7b75408cc9061d542cf7adae1470e2960dd16",
+    "docs/presentation/midterm/build_midterm.mjs": "afe302912d3ff847e8062e53f2b8244c39b1b813d42c538df4797b1e932d7381"
+  },
+  "app_or_pi_tests_rerun": false,
+  "limitations": [
+    "Official project/function percentages need agreed completion criteria.",
+    "Quantitative AI results, individual evidence and actual Pi screenshots remain uncollected.",
+    "Slides 14–15 use disclosed synthetic development screenshots."
+  ]
+}

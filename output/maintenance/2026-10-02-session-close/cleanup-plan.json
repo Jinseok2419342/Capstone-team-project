@@ -1,0 +1,545 @@
+{
+  "date": "2026-10-02",
+  "authorization": "User explicitly requested session handoff updates and removal of unnecessary caches/dummy data.",
+  "root": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project",
+  "targets": [
+    {
+      "path": "output/maintenance/2026-10-02-midterm-review/.chart-data-b4i5w2",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-review\\.chart-data-b4i5w2",
+      "kind": "directory",
+      "reason": "Temporary chart export",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/.chart-data-b4i5w2/candidate.pptx",
+          "bytes": 400715,
+          "sha256": "aff59e8440b89bd8f4b9d21c00b1e790b4df69ea2a997188db6815dbbdce721c"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/.chart-data-b4i5w2/chart-data-snapshot.json",
+          "bytes": 1072,
+          "sha256": "df3881b1e533c21ec0f84b5903b29817b7ac473a563867919ec91dfa78bbda62"
+        }
+      ],
+      "count": 2,
+      "bytes": 401787
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-review/.chart-data-Gbbrsh",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-review\\.chart-data-Gbbrsh",
+      "kind": "directory",
+      "reason": "Temporary chart export",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/.chart-data-Gbbrsh/candidate.pptx",
+          "bytes": 400690,
+          "sha256": "423fc6a96c64a044903fe8fe8a387fa58eee65b12d091dbaa49d09c056fd6b7a"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/.chart-data-Gbbrsh/chart-data-snapshot.json",
+          "bytes": 1072,
+          "sha256": "eb2e6a940cdf61b51137991a9a82de5f4ae67e2ec2c6f716a97ced51a1343b0f"
+        }
+      ],
+      "count": 2,
+      "bytes": 401762
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-review\\powerpoint-v4",
+      "kind": "directory",
+      "reason": "Superseded first-pass rendering",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-01.png",
+          "bytes": 22069,
+          "sha256": "834c1fad477ed569e02cf7c20d7c887216b17a71d2fc31e1fbe214b816f6026f"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-02.png",
+          "bytes": 25393,
+          "sha256": "2b461ea48c3bf0c24fadbe79faf059e7683cf4ce297f128fe167712e8c84f7df"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-03.png",
+          "bytes": 36607,
+          "sha256": "95ce1d616e8ba657c81b636b304b4f29a0b0446ee4f741cc891e211fb202d9d6"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-04.png",
+          "bytes": 39984,
+          "sha256": "02ebf2086d40bebdfe288ddb04ff749588ff060a3eb5443939a654090c66285f"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-05.png",
+          "bytes": 42113,
+          "sha256": "d55ca2e325ecc0b40c5174c81181b8fc2915fb43b15f2981fa1815ccdebfc55a"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-06.png",
+          "bytes": 59147,
+          "sha256": "846a8ed9cb04e038cd600720ebcc5e609dc98180705be5c0c21e2ba56f3af603"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-07.png",
+          "bytes": 39735,
+          "sha256": "d8660800cf0574ae4276553ec33d4e7298f910248efcf0360ad838868c7923b3"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-08.png",
+          "bytes": 97586,
+          "sha256": "4c09ec8417d9484f6aa3db9b3ba05bc3155127b2aa7e4acf847fe20e3dc779d1"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-09.png",
+          "bytes": 57107,
+          "sha256": "fe581270767afe7e542568f0a669161a014caf5853ce7ba411e2e3f95751f9ba"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-10.png",
+          "bytes": 58830,
+          "sha256": "ea5719fe3dbba954999f7adbce72e7af57be1ab5e0f6b753ec1e3e5cc1d18838"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-11.png",
+          "bytes": 66515,
+          "sha256": "35dac24aa58d591133340b341e3afc9c74b2d0469d196efebf9a512572675a14"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-12.png",
+          "bytes": 67350,
+          "sha256": "d60193e16b219c2a0a86261a644cea7c1b1a2f76b3ebd8c04bfd517986419ae0"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-13.png",
+          "bytes": 40675,
+          "sha256": "efee036f33c0d37ada2a7b730d5fedf40640663cbbb3ac0339fa4f5331ca0686"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-14.png",
+          "bytes": 117757,
+          "sha256": "6f89b118c8a7e1d5eadcba1462ace1752569f5a716743e0d2ae01600ade6ebff"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-15.png",
+          "bytes": 172344,
+          "sha256": "1b76f0e5aa635fe8e0ef9010ab86f6660ce99cc1838140698802415185a34453"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-16.png",
+          "bytes": 45676,
+          "sha256": "57356320690a82e5062a5368d24bc29898b178fd18d30ac559deb99ba7ee2eea"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-17.png",
+          "bytes": 68928,
+          "sha256": "aef10a0f242d47cef7b7d74a2e749e3a22d57bb60cb5881ad0499c816db76ebf"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-18.png",
+          "bytes": 48296,
+          "sha256": "fdc892a1cf05750a33101df1c02dbaf9b5024e9ffde6b7452dc659530dd37e57"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-19.png",
+          "bytes": 71896,
+          "sha256": "cf86d713cd3b49152b57af11783ba03366b1ad57cf50e6bba9c248b8a1ff3b2a"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-20.png",
+          "bytes": 77609,
+          "sha256": "5bc3d25ca2dc1989e333a2776bc68dac87d244f88adf92e474f31f2ac85dafde"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-21.png",
+          "bytes": 58852,
+          "sha256": "d16ad90f4219c4be357c2ff9e734aec95f74b0e8d8825d575f8cbf2a4d9debbe"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-22.png",
+          "bytes": 100940,
+          "sha256": "eb83a500d52b53da72c50f069ba792ccf1a65891f437498fd7e6cb52a8cc47a4"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-23.png",
+          "bytes": 91343,
+          "sha256": "d01258313bcec7f1b9702cbfee3808d4be408a44eeead7acd7daa6b9de2f5d21"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-24.png",
+          "bytes": 40638,
+          "sha256": "17275dcb9c150bc824952acb9f301d14c269e12512e6e3c0cd756df0a9296d47"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-25.png",
+          "bytes": 51904,
+          "sha256": "5093e34322999329c6e3c76f40b15aa45320d9123b6855d9ec017c1e465166a0"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-26.png",
+          "bytes": 59050,
+          "sha256": "1d0458e96a4953d3439e290a599ffa2faebc01e8c3de7e0654ee6e04ad09492b"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-27.png",
+          "bytes": 40302,
+          "sha256": "f5ff20634f2e3210a69721ffa3de8c74086a2798279237e0bf80e6f0cc2b0f90"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-28.png",
+          "bytes": 41156,
+          "sha256": "12058240c66c50433e898e54d0026bfe4ac4dbd32cb2e3a8f0637002d50e5e9e"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-29.png",
+          "bytes": 39292,
+          "sha256": "a1dc5d3aff99cb99a125836b5b33d2f58d7a9dc3511b21ac45aac7325abee34d"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/slide-30.png",
+          "bytes": 46502,
+          "sha256": "8add9ebf7196ca40ab6b893f4cf1c900b3e293f2da1a95c0bdc5cdfaef1cc7d6"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/summary.json",
+          "bytes": 4213,
+          "sha256": "4fbc2c872e40653e6bf94b4968b34cc60aab74e6e775b418141cd76b834a3adc"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/powerpoint-v4/text-layout.json",
+          "bytes": 485778,
+          "sha256": "1b05659fab0d314ae87025cff66cc448183dbab2a40abcb2b1caf57d1da8899b"
+        }
+      ],
+      "count": 32,
+      "bytes": 2315587
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-review/candidate-v4.pptx",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-review\\candidate-v4.pptx",
+      "kind": "file",
+      "reason": "Superseded draft presentation",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/candidate-v4.pptx",
+          "bytes": 398942,
+          "sha256": "e7207e91221ac469f11b975f248bea09497c95f52a9a35c395e2faccf2d8a362"
+        }
+      ],
+      "count": 1,
+      "bytes": 398942
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-review/candidate-v4_reviewed.pptx",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-review\\candidate-v4_reviewed.pptx",
+      "kind": "file",
+      "reason": "Superseded draft presentation",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/candidate-v4_reviewed.pptx",
+          "bytes": 398967,
+          "sha256": "405d4e3e71aee20c7d1d4c42546a13b1e3a404aeeb436240c1c3b93ba6708a4b"
+        }
+      ],
+      "count": 1,
+      "bytes": 398967
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-review/review-first-pass.pptx",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-review\\review-first-pass.pptx",
+      "kind": "file",
+      "reason": "Superseded draft presentation",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-review/review-first-pass.pptx",
+          "bytes": 400690,
+          "sha256": "423fc6a96c64a044903fe8fe8a387fa58eee65b12d091dbaa49d09c056fd6b7a"
+        }
+      ],
+      "count": 1,
+      "bytes": 400690
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-content-review/.chart-data-aPFu0F",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-content-review\\.chart-data-aPFu0F",
+      "kind": "directory",
+      "reason": "Temporary chart export",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/.chart-data-aPFu0F/candidate.pptx",
+          "bytes": 394196,
+          "sha256": "9f0abb6bc5aed2d30329ea6a9ec023ab824c5781d4aa20104fe3884481b5c109"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/.chart-data-aPFu0F/chart-data-snapshot.json",
+          "bytes": 1072,
+          "sha256": "8d3a69622b88d4d5b908919507a1ed5bf865c755f13f0aec3a5c3f8b6d2c3012"
+        }
+      ],
+      "count": 2,
+      "bytes": 395268
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-content-review/.chart-data-tp7vmG",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-content-review\\.chart-data-tp7vmG",
+      "kind": "directory",
+      "reason": "Temporary chart export",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/.chart-data-tp7vmG/candidate.pptx",
+          "bytes": 394148,
+          "sha256": "d0ca0d989993f7367839e23e23dd3542ab426bdd90bcdddc9aea76388bb9c52f"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/.chart-data-tp7vmG/chart-data-snapshot.json",
+          "bytes": 1072,
+          "sha256": "eda6e733300fff91ede95c2ab05b08190f287ded06d49f43ceba936b6ba04fe1"
+        }
+      ],
+      "count": 2,
+      "bytes": 395220
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-content-review\\powerpoint-v5",
+      "kind": "directory",
+      "reason": "Superseded first-pass rendering",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-01.png",
+          "bytes": 22069,
+          "sha256": "834c1fad477ed569e02cf7c20d7c887216b17a71d2fc31e1fbe214b816f6026f"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-02.png",
+          "bytes": 25393,
+          "sha256": "2b461ea48c3bf0c24fadbe79faf059e7683cf4ce297f128fe167712e8c84f7df"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-03.png",
+          "bytes": 65659,
+          "sha256": "7b7af42a07747f82a0c2ef956ebc2c2ba82f05d9fe2fa2d100d37b665a43fcb5"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-04.png",
+          "bytes": 44103,
+          "sha256": "5570effe7679112706a768ec67b55a20b4b4c5a5206f7f22a9c71805988064f0"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-05.png",
+          "bytes": 50943,
+          "sha256": "c0b16b4d57b7872cad7eb646e55bf86674c769c23a71443bb8edeb3c0bda0962"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-06.png",
+          "bytes": 59147,
+          "sha256": "846a8ed9cb04e038cd600720ebcc5e609dc98180705be5c0c21e2ba56f3af603"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-07.png",
+          "bytes": 39735,
+          "sha256": "d8660800cf0574ae4276553ec33d4e7298f910248efcf0360ad838868c7923b3"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-08.png",
+          "bytes": 97586,
+          "sha256": "4c09ec8417d9484f6aa3db9b3ba05bc3155127b2aa7e4acf847fe20e3dc779d1"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-09.png",
+          "bytes": 72613,
+          "sha256": "b44fa1422e1806041f22c9f962da60d40cd138377d81811e9bd845f9277e963c"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-10.png",
+          "bytes": 58830,
+          "sha256": "ea5719fe3dbba954999f7adbce72e7af57be1ab5e0f6b753ec1e3e5cc1d18838"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-11.png",
+          "bytes": 66891,
+          "sha256": "9389d7878466133de8065bfd82fbab99eb0e8801f3f8d2c44009204c22a3ca6c"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-12.png",
+          "bytes": 67350,
+          "sha256": "d60193e16b219c2a0a86261a644cea7c1b1a2f76b3ebd8c04bfd517986419ae0"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-13.png",
+          "bytes": 51164,
+          "sha256": "96a8900b1499677c30f4d0b40621d1c0a54275660bda3b2148543fc8345adda3"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-14.png",
+          "bytes": 117757,
+          "sha256": "6f89b118c8a7e1d5eadcba1462ace1752569f5a716743e0d2ae01600ade6ebff"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-15.png",
+          "bytes": 177647,
+          "sha256": "202f497b4b4b95db7eac2da484e6a2ca134e68e7ffec4075e78171560a2d3290"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-16.png",
+          "bytes": 95344,
+          "sha256": "2d3a832a7d8ace20c62135f0398b4d61d1226c12cc63d39c37f92952c0568351"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-17.png",
+          "bytes": 67290,
+          "sha256": "8a22abdc3e3d59d1ab1b003afdcff37da495a02b0e9196498c09ddfea2fc0ea2"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-18.png",
+          "bytes": 77057,
+          "sha256": "b7b5f7c009cf39c7b3fe33bc962b9c4449d348338a40cc5557986f8fbcf7d2b7"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-19.png",
+          "bytes": 75203,
+          "sha256": "36e81c6d6c6d732afb16cfd076071f2b84555d84215d5e158b02c97f61ebba8e"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-20.png",
+          "bytes": 77609,
+          "sha256": "5bc3d25ca2dc1989e333a2776bc68dac87d244f88adf92e474f31f2ac85dafde"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-21.png",
+          "bytes": 58479,
+          "sha256": "99cefaf53520e9a55cd23267ef671a13a2b7d7140e227f1bf38399cdfc7354de"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-22.png",
+          "bytes": 100940,
+          "sha256": "eb83a500d52b53da72c50f069ba792ccf1a65891f437498fd7e6cb52a8cc47a4"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-23.png",
+          "bytes": 90754,
+          "sha256": "5c101da5987ae218acd39e8535c007d7c9723bb1b35d4885327bc612f241433a"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-24.png",
+          "bytes": 40717,
+          "sha256": "78de382076e65ff296e66b3c8019e0a769d70d86154a7aa5a492de103f674eef"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-25.png",
+          "bytes": 70241,
+          "sha256": "527a3a77bb0f0357a0d73fd60f2107048440727950c03207058ffd8b7152230b"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-26.png",
+          "bytes": 63573,
+          "sha256": "e584937bd19275782788c984a82bdcd5b1af1bd4b613e91e89b998e8403f18aa"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-27.png",
+          "bytes": 44989,
+          "sha256": "4e4641e9f43cda0e87229984d960bd04ee21ecfd882c93525a749f85b9d6b715"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-28.png",
+          "bytes": 40739,
+          "sha256": "d8b834048660b09f2fb082ffe8c22923a44a18c090575403f9050da7a580de2a"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-29.png",
+          "bytes": 46557,
+          "sha256": "41ea4a6f0c0117cbe6d6fe700b34a67da9cde787597f19ccd098aec94cd2987b"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/slide-30.png",
+          "bytes": 48158,
+          "sha256": "daf79c11fa07d9cf5ca8280f586d616991b4ff647af458a361333d813f6ec60b"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/summary.json",
+          "bytes": 3013,
+          "sha256": "3c0c46d39fffbf48478777f0dd611189530f7120f2f509f46eef036f0b3a9106"
+        },
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/powerpoint-v5/text-layout.json",
+          "bytes": 525881,
+          "sha256": "5cb09b098dda097ee6676bd6a6c410827fad6a627c97322066513271041cb5e2"
+        }
+      ],
+      "count": 32,
+      "bytes": 2543431
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-content-review/candidate-v5_content.pptx",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-content-review\\candidate-v5_content.pptx",
+      "kind": "file",
+      "reason": "Superseded draft presentation",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/candidate-v5_content.pptx",
+          "bytes": 392445,
+          "sha256": "ec7ddc0997e8420af91dd147fc4cad732a90f5d386c4d2ef451976a1a7b01b98"
+        }
+      ],
+      "count": 1,
+      "bytes": 392445
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-content-review/candidate-v5_improved.pptx",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-content-review\\candidate-v5_improved.pptx",
+      "kind": "file",
+      "reason": "Superseded draft presentation",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/candidate-v5_improved.pptx",
+          "bytes": 392397,
+          "sha256": "04545e52a705ee4f7a6f2cb4a358e0befdf9d7c25c021fd3b1a03ee48f0510fa"
+        }
+      ],
+      "count": 1,
+      "bytes": 392397
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-content-review/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_content.pptx",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-content-review\\REFOUND_PROJECT_MIDTERM_2026-10-02_v5_content.pptx",
+      "kind": "file",
+      "reason": "Superseded draft presentation",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_content.pptx",
+          "bytes": 394196,
+          "sha256": "9f0abb6bc5aed2d30329ea6a9ec023ab824c5781d4aa20104fe3884481b5c109"
+        }
+      ],
+      "count": 1,
+      "bytes": 394196
+    },
+    {
+      "path": "output/maintenance/2026-10-02-midterm-content-review/update_handoff.py",
+      "absolute": "C:\\Users\\USER\\Documents\\GitHub\\Capstone-team-project\\output\\maintenance\\2026-10-02-midterm-content-review\\update_handoff.py",
+      "kind": "file",
+      "reason": "One-time documentation updater",
+      "files": [
+        {
+          "path": "output/maintenance/2026-10-02-midterm-content-review/update_handoff.py",
+          "bytes": 9503,
+          "sha256": "a4f974fdebfd40ff8eb6fe99d5284752eef63daa39c18902b3979015fdb30472"
+        }
+      ],
+      "count": 1,
+      "bytes": 9503
+    }
+  ],
+  "target_count": 13,
+  "file_count": 79,
+  "bytes": 8840195,
+  "excluded": [
+    ".git",
+    "all final PPTX/PDF",
+    "final PowerPoint renders",
+    "app/source/tests",
+    "actual data and deployments",
+    "original screenshots and builder dependencies",
+    "historical validation logs"
+  ],
+  "process_check": "Get-Process python*,node,POWERPNT returned no matching processes. CIM command-line query was denied; no process-dependent runtime/profile paths are deletion targets."
+}

@@ -1,0 +1,10 @@
+{
+  "status": "complete",
+  "removed_targets": 13,
+  "removed_files": 79,
+  "removed_bytes": 8840195,
+  "removed_MiB": 8.43,
+  "protected_files_verified_unchanged": 495,
+  "all_targets_absent": true,
+  "app_or_pi_tests_rerun": false
+}

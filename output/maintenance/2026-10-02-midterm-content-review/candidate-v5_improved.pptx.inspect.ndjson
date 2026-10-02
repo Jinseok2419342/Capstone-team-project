@@ -1,0 +1,373 @@
+{"kind":"deck","id":"pr/dnivhx","name":"Deck"}
+{"kind":"layout","layoutId":"c25dec0a-8299-44fa-81dc-1e4de8214033","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"4cd2695e-8a7e-456d-8eea-31f56e290ee8","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/l0gmg0","slide":1,"title":"Re:Found","textShapes":5}
+{"kind":"textbox","id":"sh/vy94zidc","slide":1,"text":"Re:Found","textPreview":"Re:Found","textChars":8,"textLines":1,"bbox":[70,129,1110,112]}
+{"kind":"textbox","id":"sh/wzil8neh","slide":1,"text":"분실물 자동 추론 및 시각화 관리 시스템","textPreview":"분실물 자동 추론 및 시각화 관리 시스템","textChars":22,"textLines":1,"bbox":[76,269,1100,76]}
+{"kind":"textbox","id":"sh/h0rm1sv2","slide":1,"text":"프로젝트 개발 중간보고서","textPreview":"프로젝트 개발 중간보고서","textChars":13,"textLines":1,"bbox":[76,374,1100,61]}
+{"kind":"textbox","id":"sh/mtg32dwf","slide":1,"text":"동양미래대학교 인공지능소프트웨어학과\n상부상조(2조) 장진석 · 권기원","textPreview":"동양미래대학교 인공지능소프트웨어학과 | 상부상조(2조) 장진석 · 권기원","textChars":38,"textLines":2,"bbox":[76,536,1100,75]}
+{"kind":"textbox","id":"sh/7up4vid0","slide":1,"text":"발표 2026.10.13 / 자료 정리 2026.10.02","textPreview":"발표 2026.10.13 / 자료 정리 2026.10.02","textChars":32,"textLines":1,"bbox":[76,650,1110,30]}
+{"kind":"notes","id":"nt/l0gmg0","slide":1,"text":"출처: README.md의 프로젝트명·소속·팀원. 발표일은 사용자가 제공한 수업 일정. 실기 근거는 9월 29일 사용자 보고, 개발 검사는 9월 30일 기록까지 반영. 10월 2일에는 슬라이드를 검토·수정했으며 새 앱·Pi 실험은 수행하지 않음."}
+{"kind":"slide","id":"sl/rog8vo","slide":2,"title":"중간보고","textShapes":18}
+{"kind":"textbox","id":"sh/3mdkzyp4","slide":2,"text":"중간보고","textPreview":"중간보고","textChars":4,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/476l83qp","slide":2,"text":"발표 구성","textPreview":"발표 구성","textChars":5,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/p8fm187a","slide":2,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/uh432t8n","slide":2,"text":"개발 진행상태 및 중간점검","textPreview":"개발 진행상태 및 중간점검","textChars":14,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/fidkvyp8","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/gjml4jqt","slide":2,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[74,186,64,38]}
+{"kind":"textbox","id":"sh/hkv2xo7e","slide":2,"text":"프로젝트 개요 및 개발 목표","textPreview":"프로젝트 개요 및 개발 목표","textChars":15,"textLines":1,"bbox":[160,186,900,44]}
+{"kind":"textbox","id":"sh/edo3ed8r","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[74,243,64,38]}
+{"kind":"textbox","id":"sh/zex47ipc","slide":2,"text":"시스템 설계 및 개발 구조","textPreview":"시스템 설계 및 개발 구조","textChars":14,"textLines":1,"bbox":[160,243,900,44]}
+{"kind":"textbox","id":"sh/b25wzi1k","slide":2,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[74,300,64,38]}
+{"kind":"textbox","id":"sh/qhwvqxkz","slide":2,"text":"프로젝트 개발 진행 현황","textPreview":"프로젝트 개발 진행 현황","textChars":13,"textLines":1,"bbox":[160,300,900,44]}
+{"kind":"textbox","id":"sh/d4ne1sja","slide":2,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[74,357,64,38]}
+{"kind":"textbox","id":"sh/c3edsn2p","slide":2,"text":"핵심 기능 구현 결과","textPreview":"핵심 기능 구현 결과","textChars":11,"textLines":1,"bbox":[160,357,900,44]}
+{"kind":"textbox","id":"sh/z6pw321g","slide":2,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[74,414,64,38]}
+{"kind":"textbox","id":"sh/y5gvuxkv","slide":2,"text":"AI 모델 및 데이터 개발 현황","textPreview":"AI 모델 및 데이터 개발 현황","textChars":17,"textLines":1,"bbox":[160,414,900,44]}
+{"kind":"textbox","id":"sh/l87e5cjm","slide":2,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[74,471,64,38]}
+{"kind":"textbox","id":"sh/07ydw721","slide":2,"text":"테스트 결과 및 문제점 분석","textPreview":"테스트 결과 및 문제점 분석","textChars":15,"textLines":1,"bbox":[160,471,900,44]}
+{"kind":"textbox","id":"sh/napw721c","slide":2,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[74,528,64,38]}
+{"kind":"textbox","id":"sh/m9gvyhk7","slide":2,"text":"향후 개발 및 완성 계획","textPreview":"향후 개발 및 완성 계획","textChars":13,"textLines":1,"bbox":[160,528,900,44]}
+{"kind":"notes","id":"nt/rog8vo","slide":2,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- 첨부: 프로젝트개발중간보고 목차구성.md\n- 사용자 제공 수업 일정"}
+{"kind":"slide","id":"sl/vjfhs8","slide":3,"title":"1. 프로젝트 개요 및 개발 목표","textShapes":7}
+{"kind":"textbox","id":"sh/9oni507i","slide":3,"text":"1. 프로젝트 개요 및 개발 목표","textPreview":"1. 프로젝트 개요 및 개발 목표","textChars":18,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/mlcjal8r","slide":3,"text":"보관대의 물품과 관리 기록을 연결","textPreview":"보관대의 물품과 관리 기록을 연결","textChars":18,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/7m503qpc","slide":3,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/wbe1gfqt","slide":3,"text":"아래 우산 사례는 기능을 설명하기 위한 사용 시나리오이며 실제 측정 결과가 아님","textPreview":"아래 우산 사례는 기능을 설명하기 위한 사용 시나리오이며 실제 측정 결과가 아님","textChars":44,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/hcn2907e","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/u9wje583","slide":3,"text":"담당자가 사진·분류·기한을 따로 관리하면 기록이 빠지거나 중복될 수 있다.","textPreview":"담당자가 사진·분류·기한을 따로 관리하면 기록이 빠지거나 중복될 수 있다.","textChars":41,"textLines":1,"bbox":[64,177,1152,85]}
+{"kind":"textbox","id":"sh/4fy1kfq5","slide":3,"text":"주요 사용자 학교 행정실·도서관·공용공간의 분실물 관리자","textPreview":"주요 사용자 학교 행정실·도서관·공용공간의 분실물 관리자","textChars":31,"textLines":1,"bbox":[64,573,1152,35]}
+{"kind":"textbox","id":"sh/5g72dk7q","slide":3,"text":"적용 범위 카메라를 고정할 수 있는 실내 보관대","textPreview":"적용 범위 카메라를 고정할 수 있는 실내 보관대","textChars":26,"textLines":1,"bbox":[64,615,1152,30]}
+{"kind":"table","id":"tb/2l8n6t8v","slide":3,"name":"","rows":4,"cols":3,"preview":"보관대에서 생기는 일 | 관리자가 확인할 내용 | 시스템의 처리 목표","bbox":[64,285,1152,258]}
+{"kind":"notes","id":"nt/vjfhs8","slide":3,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md\n수기·별도 파일 관리의 누락과 중복 가능성은 문제 정의이며 실제 기관의 업무 실태를 조사한 정량 결과가 아니다. 회수 상태는 화면에서 사라짐을 기록하며 소유자에게 반환됐다는 뜻은 아니다."}
+{"kind":"slide","id":"sl/qydjfi","slide":4,"title":"1. 프로젝트 개요 및 개발 목표","textShapes":11}
+{"kind":"textbox","id":"sh/d4bmlczm","slide":4,"text":"1. 프로젝트 개요 및 개발 목표","textPreview":"1. 프로젝트 개요 및 개발 목표","textChars":18,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/q1k3ax0v","slide":4,"text":"로컬 감지와 AI 해석의 역할 분담","textPreview":"로컬 감지와 AI 해석의 역할 분담","textChars":19,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/r2t4j2hg","slide":4,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/07mlg7yx","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/1svmpczi","slide":4,"text":"로컬에서 판단","textPreview":"로컬에서 판단","textChars":7,"textLines":1,"bbox":[64,185,236,45]}
+{"kind":"textbox","id":"sh/e5k3ehg7","slide":4,"text":"움직임이 끝난 뒤 장면을 비교하고 기존 물품과 대응\n명확한 이동·제거는 로컬에서 처리","textPreview":"움직임이 끝난 뒤 장면을 비교하고 기존 물품과 대응 | 명확한 이동·제거는 로컬에서 처리","textChars":47,"textLines":2,"bbox":[328,185,888,101]}
+{"kind":"shape","id":"sh/z6d4n2hs","slide":4,"bbox":[64,278,1152,0]}
+{"kind":"textbox","id":"sh/ovmlkry9","slide":4,"text":"AI가 보완","textPreview":"AI가 보완","textChars":6,"textLines":1,"bbox":[64,295,236,45]}
+{"kind":"textbox","id":"sh/9wvmtwzu","slide":4,"text":"새 물품의 이름·분류와 모호한 제거를 해석\n사건별 증거를 보내고 결과를 관리 기록에 반영","textPreview":"새 물품의 이름·분류와 모호한 제거를 해석 | 사건별 증거를 보내고 결과를 관리 기록에 반영","textChars":49,"textLines":2,"bbox":[328,295,888,101]}
+{"kind":"shape","id":"sh/1kra90v2","slide":4,"bbox":[64,388,1152,0]}
+{"kind":"textbox","id":"sh/0ji9gfeh","slide":4,"text":"관리자가 결정","textPreview":"관리자가 결정","textChars":7,"textLines":1,"bbox":[64,405,236,45]}
+{"kind":"textbox","id":"sh/zips7adw","slide":4,"text":"확인 필요 항목을 검토하고 이름·기한을 수정\n보관·회수·폐기·복원 이력을 같은 물품에 연결","textPreview":"확인 필요 항목을 검토하고 이름·기한을 수정 | 보관·회수·폐기·복원 이력을 같은 물품에 연결","textChars":50,"textLines":2,"bbox":[328,405,888,101]}
+{"kind":"shape","id":"sh/ehgre5wb","slide":4,"bbox":[64,498,1152,0]}
+{"kind":"textbox","id":"sh/98radkvy","slide":4,"text":"최종 결과물","textPreview":"최종 결과물","textChars":6,"textLines":1,"bbox":[64,515,236,45]}
+{"kind":"textbox","id":"sh/o7i9kfud","slide":4,"text":"Pi 카메라 장치, FastAPI 서버, 관리자 웹\n설치 패키지·사용 안내와 검증 기록","textPreview":"Pi 카메라 장치, FastAPI 서버, 관리자 웹 | 설치 패키지·사용 안내와 검증 기록","textChars":48,"textLines":2,"bbox":[328,515,888,101]}
+{"kind":"notes","id":"nt/qydjfi","slide":4,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md\n- app/main.py\n- app/ai.py\n차별화 의도는 모든 프레임에 AI를 호출하지 않고 사건을 선별하며, AI 실패 때도 관찰 기록을 보존하는 데 있다. 호출량·비용·정확도 개선율은 아직 측정하지 않았다. 자체 학습 모델이 최종 산출물인 프로젝트는 아니다."}
+{"kind":"slide","id":"sl/tdybzu","slide":5,"title":"2. 시스템 설계 및 개발 구조","textShapes":17}
+{"kind":"textbox","id":"sh/kfap8bqh","slide":5,"text":"2. 시스템 설계 및 개발 구조","textPreview":"2. 시스템 설계 및 개발 구조","textChars":17,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/ze1oz69w","slide":5,"text":"전체 시스템 구성과 데이터 흐름","textPreview":"전체 시스템 구성과 데이터 흐름","textChars":17,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/ydsn6l8b","slide":5,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/xcj6xgrq","slide":5,"text":"양방향 화살표는 요청·응답 또는 조회·저장의 관계를 표시","textPreview":"양방향 화살표는 요청·응답 또는 조회·저장의 관계를 표시","textChars":31,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/cra54bq5","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/bq1ov690","slide":5,"text":"CSI 카메라\nPicamera2","textPreview":"CSI 카메라 | Picamera2","textChars":17,"textLines":2,"bbox":[64,225,219,110]}
+{"kind":"textbox","id":"sh/ap8n218f","slide":5,"text":"로컬 사건 감지\nOpenCV","textPreview":"로컬 사건 감지 | OpenCV","textChars":15,"textLines":2,"bbox":[328,225,239,110]}
+{"kind":"textbox","id":"sh/poz6twru","slide":5,"text":"사건 처리 · API\nFastAPI","textPreview":"사건 처리 · API | FastAPI","textChars":19,"textLines":2,"bbox":[620,225,272,110]}
+{"kind":"textbox","id":"sh/onq50rq9","slide":5,"text":"관리자 · 웹\nHTML / CSS / JS","textPreview":"관리자 · 웹 | HTML / CSS / JS","textChars":23,"textLines":2,"bbox":[965,225,251,110]}
+{"kind":"shape","id":"sh/21kritc3","slide":5,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/32tsbyto","slide":5,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/o32tkju9","slide":5,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/p4badobu","slide":5,"text":"프레임","textPreview":"프레임","textChars":3,"textLines":1,"bbox":[285,185,135,29]}
+{"kind":"textbox","id":"sh/ex0re9c7","slide":5,"text":"후보·증거","textPreview":"후보·증거","textChars":5,"textLines":1,"bbox":[567,185,135,29]}
+{"kind":"textbox","id":"sh/fyts7ets","slide":5,"text":"조회·편집 / 화면 갱신","textPreview":"조회·편집 / 화면 갱신","textChars":13,"textLines":1,"bbox":[931,185,285,29]}
+{"kind":"textbox","id":"sh/gz29gjud","slide":5,"text":"SQLite WAL\n물품·활동·알림·설정","textPreview":"SQLite WAL | 물품·활동·알림·설정","textChars":22,"textLines":2,"bbox":[601,477,310,123]}
+{"kind":"textbox","id":"sh/10ba9oby","slide":5,"text":"외부 VLM API\nOpenAI / Gemini","textPreview":"외부 VLM API | OpenAI / Gemini","textChars":26,"textLines":2,"bbox":[956,477,260,123]}
+{"kind":"shape","id":"sh/690ra9cb","slide":5,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/ra9s3etg","slide":5,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/vepoba98","slide":5,"text":"관찰 저장\n상태 조회","textPreview":"관찰 저장 | 상태 조회","textChars":11,"textLines":2,"bbox":[611,378,130,67]}
+{"kind":"textbox","id":"sh/udw7i5s3","slide":5,"text":"증거 요청·판정 응답","textPreview":"증거 요청·판정 응답","textChars":11,"textLines":1,"bbox":[925,364,278,32]}
+{"kind":"textbox","id":"sh/hg7qd0re","slide":5,"text":"사건 처리 순서","textPreview":"사건 처리 순서","textChars":8,"textLines":1,"bbox":[64,420,452,39]}
+{"kind":"textbox","id":"sh/wfypkfat","slide":5,"text":"관찰을 먼저 DB에 저장\nAI 응답 검증 후 기록 갱신\n웹에서 조회·검토·편집","textPreview":"관찰을 먼저 DB에 저장 | AI 응답 검증 후 기록 갱신 | 웹에서 조회·검토·편집","textChars":43,"textLines":3,"bbox":[64,476,483,131]}
+{"kind":"notes","id":"nt/tdybzu","slide":5,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md\n- app/main.py\n- app/vision.py\n- app/store.py\n- app/ai.py\n관리자의 조회·편집 요청과 서버 응답, 외부 AI의 응답 복귀를 양방향 연결로 표시했다. SQLite는 Pi 로컬 DB이고 사진은 로컬 파일로 보존한다. added/verify_removed가 외부 AI 대상이며 명확한 moved/removed는 로컬 흐름에서 처리한다."}
+{"kind":"slide","id":"sl/0ori7g","slide":6,"title":"2. 시스템 설계 및 개발 구조","textShapes":5}
+{"kind":"textbox","id":"sh/8jqp4nyp","slide":6,"text":"2. 시스템 설계 및 개발 구조","textPreview":"2. 시스템 설계 및 개발 구조","textChars":17,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/7ih8vihk","slide":6,"text":"모듈별 역할과 기술 스택","textPreview":"모듈별 역할과 기술 스택","textChars":13,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/6h872xgz","slide":6,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/lgzqtsze","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/juh8rih8","slide":6,"text":"실제 장치 Raspberry Pi 4 Model B 2GB + CSI 카메라(OV5647)","textPreview":"실제 장치 Raspberry Pi 4 Model B 2GB + CSI 카메라(OV5647)","textChars":50,"textLines":1,"bbox":[64,571,1152,35]}
+{"kind":"textbox","id":"sh/yt87ydgn","slide":6,"text":"확인 환경 Debian 13 Trixie / Python 3.13.5 / OpenCV 4.10.0","textPreview":"확인 환경 Debian 13 Trixie / Python 3.13.5 / OpenCV 4.10.0","textChars":54,"textLines":1,"bbox":[64,610,1152,30]}
+{"kind":"table","id":"tb/x87md0b2","slide":6,"name":"","rows":6,"cols":3,"preview":"모듈 | 담당 기능 | 구현 기술","bbox":[64,181,1152,365]}
+{"kind":"notes","id":"nt/0ori7g","slide":6,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md\n- output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json\n- app/camera_sources.py\n- app/notifier.py"}
+{"kind":"slide","id":"sl/wdb6to","slide":7,"title":"2. 시스템 설계 및 개발 구조","textShapes":10}
+{"kind":"textbox","id":"sh/kvulgbad","slide":7,"text":"2. 시스템 설계 및 개발 구조","textPreview":"2. 시스템 설계 및 개발 구조","textChars":17,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/zulkn69s","slide":7,"text":"팀 역할과 협업 방식","textPreview":"팀 역할과 협업 방식","textChars":11,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/ytc3e1s7","slide":7,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/xsj2lwrm","slide":7,"text":"역할은 현재 README 기준. 커밋별 기여도는 별도 확인 필요","textPreview":"역할은 현재 README 기준. 커밋별 기여도는 별도 확인 필요","textChars":35,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/cralcra1","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/b61kjm9g","slide":7,"text":"장진석 · 팀장 / 시스템 통합","textPreview":"장진석 · 팀장 / 시스템 통합","textChars":17,"textLines":1,"bbox":[64,197,548,40]}
+{"kind":"textbox","id":"sh/a5s3a1sv","slide":7,"text":"기획·아키텍처와 로컬 비전 구현\n멀티모달 AI, FastAPI, 관리자 웹 연결\nPi 배포와 테스트·문서화","textPreview":"기획·아키텍처와 로컬 비전 구현 | 멀티모달 AI, FastAPI, 관리자 웹 연결 | Pi 배포와 테스트·문서화","textChars":59,"textLines":3,"bbox":[64,251,548,139]}
+{"kind":"textbox","id":"sh/p4j2hwrq","slide":7,"text":"권기원 · 개발 / 시연 지원","textPreview":"권기원 · 개발 / 시연 지원","textChars":16,"textLines":1,"bbox":[682,197,534,40]}
+{"kind":"textbox","id":"sh/o3al8ra5","slide":7,"text":"구현과 발표 자료 검토\n자료 교정\n시연 준비와 운영 지원","textPreview":"구현과 발표 자료 검토 | 자료 교정 | 시연 준비와 운영 지원","textChars":31,"textLines":3,"bbox":[682,251,534,139]}
+{"kind":"textbox","id":"sh/ah83m9wf","slide":7,"text":"연계 업무","textPreview":"연계 업무","textChars":5,"textLines":1,"bbox":[64,450,240,42]}
+{"kind":"textbox","id":"sh/bihkfed0","slide":7,"text":"구현·검사 결과를 공유하고 자료 검토와 실제 시연을 진행\n발견한 오류와 미확인 항목을 다음 수정·검증에 반영","textPreview":"구현·검사 결과를 공유하고 자료 검토와 실제 시연을 진행 | 발견한 오류와 미확인 항목을 다음 수정·검증에 반영","textChars":60,"textLines":2,"bbox":[64,511,1152,96]}
+{"kind":"notes","id":"nt/wdb6to","slide":7,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md"}
+{"kind":"slide","id":"sl/7oeik5","slide":8,"title":"3. 프로젝트 개발 진행 현황","textShapes":4}
+{"kind":"textbox","id":"sh/6p4b6ds7","slide":8,"text":"3. 프로젝트 개발 진행 현황","textPreview":"3. 프로젝트 개발 진행 현황","textChars":16,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/tsvu1sbi","slide":8,"text":"개발 경과와 현재 단계","textPreview":"개발 경과와 현재 단계","textChars":12,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/8rmt8nax","slide":8,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/jmtcvitg","slide":8,"text":"10월 2일 현재 중간보고 준비 단계 / 중간보고 10월 13일, 최종보고 11월 3일","textPreview":"10월 2일 현재 중간보고 준비 단계 / 중간보고 10월 13일, 최종보고 11월 3일","textChars":48,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/ylkb2dsv","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"table","id":"tb/4fepcje9","slide":8,"name":"","rows":7,"cols":3,"preview":"시점 | 진행 단계 | 완료 내용 또는 예정 산출물","bbox":[64,181,1152,427]}
+{"kind":"notes","id":"nt/7oeik5","slide":8,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- docs/VISION_REVIEW_2026-09-18.md\n- output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n- output/maintenance/2026-09-30-sync-review/REVIEW.md\n- 사용자 제공 수업 일정"}
+{"kind":"slide","id":"sl/d5nfvh","slide":9,"title":"3. 프로젝트 개발 진행 현황","textShapes":5}
+{"kind":"textbox","id":"sh/pwfeloja","slide":9,"text":"3. 프로젝트 개발 진행 현황","textPreview":"3. 프로젝트 개발 진행 현황","textChars":16,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/2tofa90z","slide":9,"text":"개발 목표 대비 현재 도달 수준","textPreview":"개발 목표 대비 현재 도달 수준","textChars":17,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/3uxwje14","slide":9,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/czqxgji1","slide":9,"text":"최초 작업별 마감일이 없어 일정 지연을 단정하지 않음 / 공식 진행률은 산정 기준 미확정","textPreview":"최초 작업별 마감일이 없어 일정 지연을 단정하지 않음 / 공식 진행률은 산정 기준 미확정","textChars":49,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/dkzypojm","slide":9,"text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/ryhwne1g","slide":9,"text":"현재 단계: 핵심 기능 구현 이후의 현장 검증·평가 준비","textPreview":"현재 단계: 핵심 기능 구현 이후의 현장 검증·평가 준비","textChars":31,"textLines":1,"bbox":[64,590,1152,45]}
+{"kind":"table","id":"tb/bm5wfu1k","slide":9,"name":"","rows":6,"cols":3,"preview":"개발 목표 | 현재 도달 수준 | 남은 작업과 이유","bbox":[64,181,1152,385]}
+{"kind":"notes","id":"nt/d5nfvh","slide":9,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md\n- docs/guides/PI_ACCEPTANCE_CHECKLIST.md\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n- output/maintenance/2026-09-30-sync-review/REVIEW.md\n초기 계획 대비 보유 Pi 4·CSI, OpenCV+외부 VLM, SQLite, Vanilla JS+FastAPI로 구성을 단순화했다. 최초 계획의 확정 마감일·공수·가중치 자료가 없어 빠름/지연 및 프로젝트 전체 백분율을 만들지 않았다. 코드 구현 완료와 실제 환경 검증 완료를 구분한다. 공식 진행률 산식과 남은 근거는 작성 가이드에 보존한다."}
+{"kind":"slide","id":"sl/yxbw9y","slide":10,"title":"3. 프로젝트 개발 진행 현황","textShapes":4}
+{"kind":"textbox","id":"sh/i9g3mxsb","slide":10,"text":"3. 프로젝트 개발 진행 현황","textPreview":"3. 프로젝트 개발 진행 현황","textChars":16,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/5w7mxcr2","slide":10,"text":"기능별 구현과 실기 확인 상태","textPreview":"기능별 구현과 실기 확인 상태","textChars":16,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/4vy5o7ah","slide":10,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/ry94z29s","slide":10,"text":"기능별 상태는 구현·검증 근거로 표시 / 구현률(%)의 합의된 기준은 미확정","textPreview":"기능별 상태는 구현·검증 근거로 표시 / 구현률(%)의 합의된 기준은 미확정","textChars":42,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/6x0nqxsn","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"table","id":"tb/8761oz21","slide":10,"name":"","rows":8,"cols":3,"preview":"기능 | 구현 상태 | 확인 결과와 남은 검증","bbox":[64,181,1152,434]}
+{"kind":"notes","id":"nt/yxbw9y","slide":10,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md\n- docs/guides/PI_ACCEPTANCE_CHECKLIST.md\n- output/maintenance/2026-09-22-quick-reset/VALIDATION.json\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md"}
+{"kind":"slide","id":"sl/b4p0yr","slide":11,"title":"3. 프로젝트 개발 진행 현황","textShapes":8}
+{"kind":"textbox","id":"sh/dk3uhkzq","slide":11,"text":"3. 프로젝트 개발 진행 현황","textPreview":"3. 프로젝트 개발 진행 현황","textChars":16,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/qhcb65gf","slide":11,"text":"팀 수행 내용과 Git 개발 이력","textPreview":"팀 수행 내용과 Git 개발 이력","textChars":18,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/rilcfahk","slide":11,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/0nutcfyh","slide":11,"text":"커밋 반영일과 기능 개발일은 다름 / 커밋 수로 팀 기여율을 산정하지 않음","textPreview":"커밋 반영일과 기능 개발일은 다름 / 커밋 수로 팀 기여율을 산정하지 않음","textChars":41,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/18nulkz2","slide":11,"text":"11","textPreview":"11","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/elcba5gb","slide":11,"text":"장진석: 구현·통합·배포·검사","textPreview":"장진석: 구현·통합·배포·검사","textChars":16,"textLines":1,"bbox":[64,176,575,52]}
+{"kind":"textbox","id":"sh/fmlcjahw","slide":11,"text":"권기원: 검토·교정·시연 지원","textPreview":"권기원: 검토·교정·시연 지원","textChars":16,"textLines":1,"bbox":[675,176,541,52]}
+{"kind":"textbox","id":"sh/pcnup4zy","slide":11,"text":"GitHub Jinseok2419342 / Capstone-team-project","textPreview":"GitHub Jinseok2419342 / Capstone-team-project","textChars":45,"textLines":1,"bbox":[64,550,1152,43]}
+{"kind":"textbox","id":"sh/90nupkf6","slide":11,"text":"표의 커밋 작성자: Jinseok2419342. 역할별 산출물은 README·검사 기록과 대조.","textPreview":"표의 커밋 작성자: Jinseok2419342. 역할별 산출물은 README·검사 기록과 대조.","textChars":53,"textLines":1,"bbox":[64,606,1152,32]}
+{"kind":"table","id":"tb/tgjy50nu","slide":11,"name":"","rows":4,"cols":3,"preview":"반영일 | 커밋 | 확인한 변경 내용","bbox":[64,249,1152,268]}
+{"kind":"notes","id":"nt/b4p0yr","slide":11,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md\n- git log at 69eb6ff (2026-10-02 inspection)\n로컬 git log에서 날짜·해시·작성자·메시지를 확인했다. 저장소: https://github.com/Jinseok2419342/Capstone-team-project . 표는 실제 이력을 옮긴 편집 가능한 표이며 화면 캡처를 합성하지 않았다. 팀의 담당 역할은 README의 정의로, 개별 팀원이 언제 어떤 검토를 수행했는지에 관한 추가 기록은 수집하지 않았다."}
+{"kind":"slide","id":"sl/qi9nl4","slide":12,"title":"4. 핵심 기능 구현 결과","textShapes":5}
+{"kind":"textbox","id":"sh/18b6pgva","slide":12,"text":"4. 핵심 기능 구현 결과","textPreview":"4. 핵심 기능 구현 결과","textChars":14,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/elkne1cj","slide":12,"text":"실행 가능한 핵심 사건 처리","textPreview":"실행 가능한 핵심 사건 처리","textChars":15,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/zmton6d4","slide":12,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/sji5cbud","slide":12,"text":"자동 회수는 화면상 사라짐을 기록한 상태이며 실제 소유자 반환의 증거는 아님","textPreview":"자동 회수는 화면상 사라짐을 기록한 상태이며 실제 소유자 반환의 증거는 아님","textChars":42,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/dkr6lgvy","slide":12,"text":"12","textPreview":"12","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/ri9oj6ds","slide":12,"text":"움직임이 끝나고 장면이 안정된 뒤 사건 후보를 처리한다.","textPreview":"움직임이 끝나고 장면이 안정된 뒤 사건 후보를 처리한다.","textChars":31,"textLines":1,"bbox":[64,596,1152,39]}
+{"kind":"table","id":"tb/byts7al0","slide":12,"name":"","rows":5,"cols":3,"preview":"입력 사건 | 주요 처리 | 출력","bbox":[64,181,1152,377]}
+{"kind":"notes","id":"nt/qi9nl4","slide":12,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- app/vision.py\n- app/main.py:534\n- app/main.py:432"}
+{"kind":"slide","id":"sl/1av87m","slide":13,"title":"4. 핵심 기능 구현 결과","textShapes":14}
+{"kind":"textbox","id":"sh/idonu5c3","slide":13,"text":"4. 핵심 기능 구현 결과","textPreview":"4. 핵심 기능 구현 결과","textChars":14,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/50fmpkvu","slide":13,"text":"AI 응답을 기다리는 동안에도 기록 보존","textPreview":"AI 응답을 기다리는 동안에도 기록 보존","textChars":22,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/4z65wfu9","slide":13,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/r2horudk","slide":13,"text":"13","textPreview":"13","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/618nypcf","slide":13,"text":"물품 감지","textPreview":"물품 감지","textChars":5,"textLines":1,"bbox":[64,191,244,97]}
+{"kind":"textbox","id":"sh/t4z6t4vq","slide":13,"text":"임시 기록 저장","textPreview":"임시 기록 저장","textChars":8,"textLines":1,"bbox":[360,191,270,97]}
+{"kind":"textbox","id":"sh/s3q50zu5","slide":13,"text":"AI 비동기 요청","textPreview":"AI 비동기 요청","textChars":9,"textLines":1,"bbox":[681,191,275,97]}
+{"kind":"textbox","id":"sh/f6hovudw","slide":13,"text":"검토·확정","textPreview":"검토·확정","textChars":5,"textLines":1,"bbox":[1007,191,209,97]}
+{"kind":"shape","id":"sh/e58n29cb","slide":13,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/4vutgzix","slide":13,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/pw3u94zi","slide":13,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/29cbep0r","slide":13,"text":"AI 정상 응답","textPreview":"AI 정상 응답","textChars":8,"textLines":1,"bbox":[64,335,261,45]}
+{"kind":"textbox","id":"sh/3alc7u1c","slide":13,"text":"응답 형식과 판정을 확인한 뒤 이름·분류를 반영\n관찰한 물품의 사진·시각과 AI 결과를 연결","textPreview":"응답 형식과 판정을 확인한 뒤 이름·분류를 반영 | 관찰한 물품의 사진·시각과 AI 결과를 연결","textChars":51,"textLines":2,"bbox":[353,335,863,87]}
+{"kind":"shape","id":"sh/czetkjit","slide":13,"bbox":[64,414,1152,0]}
+{"kind":"textbox","id":"sh/d0nudoze","slide":13,"text":"실패·불확실 응답","textPreview":"실패·불확실 응답","textChars":9,"textLines":1,"bbox":[64,431,261,45]}
+{"kind":"textbox","id":"sh/qxcbi903","slide":13,"text":"관찰 기록을 유지하고 확인 필요 상태로 표시\n관리자가 사진을 보고 이름·분류를 확정","textPreview":"관찰 기록을 유지하고 확인 필요 상태로 표시 | 관리자가 사진을 보고 이름·분류를 확정","textChars":46,"textLines":2,"bbox":[353,431,863,87]}
+{"kind":"shape","id":"sh/rylcbeh8","slide":13,"bbox":[64,510,1152,0]}
+{"kind":"textbox","id":"sh/03edoji5","slide":13,"text":"추론 중 관리자 작업","textPreview":"추론 중 관리자 작업","textChars":11,"textLines":1,"bbox":[64,527,261,45]}
+{"kind":"textbox","id":"sh/14nuhozq","slide":13,"text":"기한 연장과 명시적인 검토 완료를 보호\n늦은 응답을 적용하기 전에 현재 상태 확인","textPreview":"기한 연장과 명시적인 검토 완료를 보호 | 늦은 응답을 적용하기 전에 현재 상태 확인","textChars":45,"textLines":2,"bbox":[353,527,863,87]}
+{"kind":"textbox","id":"sh/9kju1oru","slide":13,"text":"설계 이유: 외부 API 장애가 곧 물품 기록의 누락으로 이어지지 않도록 구성","textPreview":"설계 이유: 외부 API 장애가 곧 물품 기록의 누락으로 이어지지 않도록 구성","textChars":43,"textLines":1,"bbox":[64,615,1152,31]}
+{"kind":"notes","id":"nt/1av87m","slide":13,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- app/main.py\n- app/classification.py\n- tests/test_app_resilience.py\n- docs/ARCHITECTURE_REVIEW_2026-09-18.md\n임시 저장 성공 뒤 비동기 추론한다. DB 저장 자체의 실패까지 보존을 보장한다는 뜻은 아니다. 기한 연장은 test_late_classification_preserves_manual_extension으로 확인하고, 명시적 검토 완료 뒤의 응답 보호 코드는 보충자료 A에 제시했다."}
+{"kind":"slide","id":"sl/bl3hq7","slide":14,"title":"4. 핵심 기능 구현 결과","textShapes":11}
+{"kind":"textbox","id":"sh/90b6p4jm","slide":14,"text":"4. 핵심 기능 구현 결과","textPreview":"4. 핵심 기능 구현 결과","textChars":14,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/2xknu90v","slide":14,"text":"물품 상세 화면과 처리 흐름","textPreview":"물품 상세 화면과 처리 흐름","textChars":15,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/nytone1g","slide":14,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/0vi5szip","slide":14,"text":"9/18 개발 검사 화면 / 합성 물품·모의 AI 사용. 화면의 97%는 실제 모델 정확도가 아님","textPreview":"9/18 개발 검사 화면 / 합성 물품·모의 AI 사용. 화면의 97%는 실제 모델 정확도가 아님","textChars":54,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/1wr6l4ja","slide":14,"text":"14","textPreview":"14","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/fu9oju14","slide":14,"text":"등록","textPreview":"등록","textChars":2,"textLines":1,"bbox":[515,195,95,45]}
+{"kind":"textbox","id":"sh/sri5ozit","slide":14,"text":"물품을 놓고 손을 뺀 뒤 임시 기록 생성\nAI 분석 후 이름·분류를 확정하거나 검토 대기","textPreview":"물품을 놓고 손을 뺀 뒤 임시 기록 생성 | AI 분석 후 이름·분류를 확정하거나 검토 대기","textChars":49,"textLines":2,"bbox":[638,195,578,116]}
+{"kind":"shape","id":"sh/dsr6hkje","slide":14,"bbox":[515,303,701,0]}
+{"kind":"textbox","id":"sh/x8behkfi","slide":14,"text":"이동","textPreview":"이동","textChars":2,"textLines":1,"bbox":[515,320,95,45]}
+{"kind":"textbox","id":"sh/w72xofyx","slide":14,"text":"같은 물품의 위치·사진 갱신\n새 기록을 만들지 않고 기존 ID 유지","textPreview":"같은 물품의 위치·사진 갱신 | 새 기록을 만들지 않고 기존 ID 유지","textChars":37,"textLines":2,"bbox":[638,320,578,116]}
+{"kind":"shape","id":"sh/v6twfaxs","slide":14,"bbox":[515,428,701,0]}
+{"kind":"textbox","id":"sh/a50vm5g7","slide":14,"text":"회수","textPreview":"회수","textChars":2,"textLines":1,"bbox":[515,445,95,45]}
+{"kind":"textbox","id":"sh/94redkzm","slide":14,"text":"화면에서 사라지면 같은 기록의 상태 전환\n활동 이력에 처리 결과 저장","textPreview":"화면에서 사라지면 같은 기록의 상태 전환 | 활동 이력에 처리 결과 저장","textChars":38,"textLines":2,"bbox":[638,445,578,116]}
+{"kind":"textbox","id":"sh/8jidkfy1","slide":14,"text":"실물 흐름은 9/22 성공 보고. 동일 ID의 실제 Pi 캡처는 미확보.","textPreview":"실물 흐름은 9/22 성공 보고. 동일 ID의 실제 Pi 캡처는 미확보.","textChars":40,"textLines":1,"bbox":[515,595,701,49]}
+{"kind":"image","id":"im/zm5kful8","slide":14,"name":"","alt":"합성 데이터 개발 검사에서 저장된 물품 상세 화면","bbox":[64,171,399,466]}
+{"kind":"notes","id":"nt/bl3hq7","slide":14,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- docs/guides/PI_ACCEPTANCE_CHECKLIST.md\n- docs/LIVE_FLOW_REVIEW_2026-09-18.md\n- output/maintenance/2026-09-18-live-flow-review/browser-classified-detail.png\n왼쪽은 기존 개발 검사 PNG의 상세 창 영역만 비율을 유지해 잘랐다. 실제 카메라·원격 모델 결과로 해석하지 않는다. 오른쪽은 구현 흐름이다. 사용자 보고에서는 실물 등록·이동 시 중복 방지·제거 후 회수 확인에 성공했다고 했으나 개별 ID·사진은 수집하지 않았다."}
+{"kind":"slide","id":"sl/cyx1dw","slide":15,"title":"4. 핵심 기능 구현 결과","textShapes":9}
+{"kind":"textbox","id":"sh/4f2pcfyl","slide":15,"text":"4. 핵심 기능 구현 결과","textPreview":"4. 핵심 기능 구현 결과","textChars":14,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/3et8jah0","slide":15,"text":"관리자는 확인이 필요한 물품부터 처리","textPreview":"관리자는 확인이 필요한 물품부터 처리","textChars":20,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/id07a5gf","slide":15,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/dkbqpkz2","slide":15,"text":"9/22 개발 검사 화면 / 물품 수·사진·영상은 합성 테스트 데이터","textPreview":"9/22 개발 검사 화면 / 물품 수·사진·영상은 합성 테스트 데이터","textChars":38,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/sj2pgfyh","slide":15,"text":"15","textPreview":"15","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/qhk7e5gr","slide":15,"text":"확인 필요 물품","textPreview":"확인 필요 물품","textChars":8,"textLines":1,"bbox":[850,182,366,40]}
+{"kind":"textbox","id":"sh/18vqtkze","slide":15,"text":"사진과 AI 결과를 검토\n이름·분류 수정 후 검토 완료","textPreview":"사진과 AI 결과를 검토 | 이름·분류 수정 후 검토 완료","textChars":30,"textLines":2,"bbox":[850,239,366,91]}
+{"kind":"textbox","id":"sh/0nmpkzyt","slide":15,"text":"기한과 처리 이력","textPreview":"기한과 처리 이력","textChars":9,"textLines":1,"bbox":[850,372,366,40]}
+{"kind":"textbox","id":"sh/m14zut0v","slide":15,"text":"기한 도래 항목 확인·연장\n회수·폐기·복원 처리\n활동 이력에서 결과 확인","textPreview":"기한 도래 항목 확인·연장 | 회수·폐기·복원 처리 | 활동 이력에서 결과 확인","textChars":40,"textLines":3,"bbox":[850,429,366,126]}
+{"kind":"textbox","id":"sh/72d0nyhg","slide":15,"text":"관리 흐름은 자동 검사 통과\nPi 상세 실기는 추가 확인 예정","textPreview":"관리 흐름은 자동 검사 통과 | Pi 상세 실기는 추가 확인 예정","textChars":34,"textLines":2,"bbox":[850,580,366,63]}
+{"kind":"image","id":"im/exsvihon","slide":15,"name":"","alt":"합성 카메라·임시 DB를 사용한 관리자 대시보드","bbox":[64,178,740,455]}
+{"kind":"notes","id":"nt/cyx1dw","slide":15,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- templates/index.html\n- static/app.js\n- tests/test_live_management.py\n- output/maintenance/2026-09-22-quick-reset/VALIDATION.json\n단순 편집과 명시적인 검토 완료는 구분한다. test_review_expiry_renewal_notification_and_final_lifecycle에서 검토·만료·연장·알림·최종 처리를, test_dismiss_restore_and_lifecycle_keep_search_pages_and_stats_consistent에서 상태와 목록·통계의 일관성을 검사했다. 실제 SMTP 수신은 미확인이다."}
+{"kind":"slide","id":"sl/8q3gl3","slide":16,"title":"4. 핵심 기능 구현 결과","textShapes":4}
+{"kind":"textbox","id":"sh/6twny58b","slide":16,"text":"4. 핵심 기능 구현 결과","textPreview":"4. 핵심 기능 구현 결과","textChars":14,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/tgn6tk72","slide":16,"text":"통합 기능의 현재 범위와 남은 일","textPreview":"통합 기능의 현재 범위와 남은 일","textChars":18,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/sfep0fqh","slide":16,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/fipovap8","slide":16,"text":"16","textPreview":"16","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/1k76xk7y","slide":16,"text":"남은 핵심 작업은 현장 증거 확보와 측정 기록 연결이다.","textPreview":"남은 핵심 작업은 현장 증거 확보와 측정 기록 연결이다.","textChars":31,"textLines":1,"bbox":[64,607,1152,37]}
+{"kind":"table","id":"tb/n6xcve18","slide":16,"name":"","rows":5,"cols":3,"preview":"범위 | 현재 결과 | 다음 완료 조건","bbox":[64,181,1152,407]}
+{"kind":"notes","id":"nt/8q3gl3","slide":16,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- docs/LIVE_FLOW_REVIEW_2026-09-18.md\n- docs/guides/PI_ACCEPTANCE_CHECKLIST.md\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n- experiments/pair_runner.py\n통합 연결의 개발 검사와 실제 환경의 모든 시나리오 확인은 별개다. 기존 pair runner는 안정 이미지 쌍의 _detect_changes 코어 평가이며 전체 상태기계·DB·VLM의 종단간 평가기가 아니다."}
+{"kind":"slide","id":"sl/102jyy","slide":17,"title":"5. AI 모델 및 데이터 개발 현황","textShapes":6}
+{"kind":"textbox","id":"sh/zy9onqdk","slide":17,"text":"5. AI 모델 및 데이터 개발 현황","textPreview":"5. AI 모델 및 데이터 개발 현황","textChars":20,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/kzipwve5","slide":17,"text":"전후 장면과 물품 영역을 함께 전달","textPreview":"전후 장면과 물품 영역을 함께 전달","textChars":19,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/l0r6p0vq","slide":17,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/a9gnqlw3","slide":17,"text":"운영 사진 수량은 미집계 / 정답 라벨이 있는 평가 세트는 미확보","textPreview":"운영 사진 수량은 미집계 / 정답 라벨이 있는 평가 세트는 미확보","textChars":36,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/bu9oj6do","slide":17,"text":"17","textPreview":"17","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/cvipsbet","slide":17,"text":"고정 카메라 영상에서 움직임 종료·안정화 후 사건별 증거를 만든다.","textPreview":"고정 카메라 영상에서 움직임 종료·안정화 후 사건별 증거를 만든다.","textChars":37,"textLines":1,"bbox":[64,178,1152,76]}
+{"kind":"textbox","id":"sh/25gnm1wr","slide":17,"text":"요청당 최대 4장 / 자체 학습·RAG·파인튜닝·데이터 증강 미적용","textPreview":"요청당 최대 4장 / 자체 학습·RAG·파인튜닝·데이터 증강 미적용","textChars":37,"textLines":1,"bbox":[64,607,1152,37]}
+{"kind":"table","id":"tb/s7yxkr69","slide":17,"name":"","rows":5,"cols":3,"preview":"입력·처리 | 필요한 이유 | 현재 구현","bbox":[64,252,1152,305]}
+{"kind":"notes","id":"nt/102jyy","slide":17,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- app/vision.py\n- app/ai.py\n- tests/test_services.py\ntests/test_services.py test_ai_hybrid_evidence_is_labeled_and_cost_bounded가 입력 4장과 before/after 라벨, 전체 low·crop high detail을 확인한다. 실제 처리에서 전체 장면 JPEG 품질은 72, crop은 88이다. 이미지 기반 전처리이며 통계형 결측치 대치나 학습 정규화를 수행한 것으로 쓰지 않는다."}
+{"kind":"slide","id":"sl/fxv2xr","slide":18,"title":"5. AI 모델 및 데이터 개발 현황","textShapes":8}
+{"kind":"textbox","id":"sh/ipw3y14v","slide":18,"text":"5. AI 모델 및 데이터 개발 현황","textPreview":"5. AI 모델 및 데이터 개발 현황","textChars":20,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/5s7mtw36","slide":18,"text":"외부 VLM 선택 이유와 추론 방식","textPreview":"외부 VLM 선택 이유와 추론 방식","textChars":19,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/4ryl0rml","slide":18,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/rep4v6lc","slide":18,"text":"선정 근거는 설계상 판단 / 모델 간 정확도·비용 우열을 측정한 결과는 없음","textPreview":"선정 근거는 설계상 판단 / 모델 간 정확도·비용 우열을 측정한 결과는 없음","textChars":42,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/6tgn214r","slide":18,"text":"18","textPreview":"18","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/sfy54bmx","slide":18,"text":"추론 요청","textPreview":"추론 요청","textChars":5,"textLines":1,"bbox":[64,469,215,38]}
+{"kind":"textbox","id":"sh/7il4jml8","slide":18,"text":"전후 증거 + 판단 지침 + JSON schema\n응답 완료·형식을 검사해 결과 반영 또는 확인 필요로 전환","textPreview":"전후 증거 + 판단 지침 + JSON schema | 응답 완료·형식을 검사해 결과 반영 또는 확인 필요로 전환","textChars":60,"textLines":2,"bbox":[303,469,913,83]}
+{"kind":"textbox","id":"sh/mxc3qh4n","slide":18,"text":"모델 확인","textPreview":"모델 확인","textChars":5,"textLines":1,"bbox":[64,569,215,37]}
+{"kind":"textbox","id":"sh/wz2t07mh","slide":18,"text":"9/22 설정: gpt-5.6-luna\n9/29 OpenAI 동작 성공 보고, 당일 모델명은 미수집","textPreview":"9/22 설정: gpt-5.6-luna | 9/29 OpenAI 동작 성공 보고, 당일 모델명은 미수집","textChars":55,"textLines":2,"bbox":[303,569,913,75]}
+{"kind":"table","id":"tb/sz2pkfa9","slide":18,"name":"","rows":4,"cols":2,"preview":"검토 방식 | 적합한 역할과 제약","bbox":[64,181,1152,255]}
+{"kind":"notes","id":"nt/fxv2xr","slide":18,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- app/ai.py\n- README.md\n- output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\nOpenAI를 사용하는 설정이 확인됐고 Gemini 연동도 구현했다. Pi 4 2GB에서 감지와 웹 운영을 맡기고 외부 VLM에 의미 해석을 맡긴 설계다. 고정 클래스 검출·분류 방식은 프로젝트의 초기 YOLO/CNN 검토 맥락이며 모든 현대 검출 모델의 기능을 일반화한 비교는 아니다. 추론 설정은 기본 모델 reasoning low·출력 최대 2048토큰이며 학습 하이퍼파라미터가 아니다."}
+{"kind":"slide","id":"sl/0swhwj","slide":19,"title":"5. AI 모델 및 데이터 개발 현황","textShapes":7}
+{"kind":"textbox","id":"sh/b2xcbilk","slide":19,"text":"5. AI 모델 및 데이터 개발 현황","textPreview":"5. AI 모델 및 데이터 개발 현황","textChars":20,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/c36t43m5","slide":19,"text":"AI 동작 확인과 정량 평가의 구분","textPreview":"AI 동작 확인과 정량 평가의 구분","textChars":19,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/d4fud83q","slide":19,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/2x4byt43","slide":19,"text":"현재 정량 성능은 미측정 / 아래 지표는 수집·계산할 항목","textPreview":"현재 정량 성능은 미측정 / 아래 지표는 수집·계산할 항목","textChars":32,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/3ydc7ylo","slide":19,"text":"19","textPreview":"19","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/4z6t03m9","slide":19,"text":"확인한 결과 9/29 OpenAI 동작 성공 보고","textPreview":"확인한 결과 9/29 OpenAI 동작 성공 보고","textChars":27,"textLines":1,"bbox":[64,178,1152,42]}
+{"kind":"textbox","id":"sh/p0fu983u","slide":19,"text":"아직 필요한 근거 같은 사건의 정답·원본 사진·실제 AI 응답·처리 시각","textPreview":"아직 필요한 근거 같은 사건의 정답·원본 사진·실제 AI 응답·처리 시각","textChars":40,"textLines":1,"bbox":[64,237,1152,58]}
+{"kind":"textbox","id":"sh/nuhcj2ls","slide":19,"text":"모의 응답 처리 검사는 통과했으며, 실제 모델의 판정 품질은 별도 평가한다.","textPreview":"모의 응답 처리 검사는 통과했으며, 실제 모델의 판정 품질은 별도 평가한다.","textChars":42,"textLines":1,"bbox":[64,617,1152,29]}
+{"kind":"table","id":"tb/7mtcfu5o","slide":19,"name":"","rows":5,"cols":2,"preview":"평가 지표 | 평가에 필요한 기록","bbox":[64,320,1152,280]}
+{"kind":"notes","id":"nt/0swhwj","slide":19,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n- tests/test_services.py\n- docs/paper/EXPERIMENT_GUIDE.md\n9/29는 동작 성공의 사용자 보고로 개별 사건의 원본·정답·모델 응답은 수집하지 않았다. 자동 검사에서 JSON 정규화, 유효하지 않은 분류·확신도의 uncertain 처리 등을 확인했다. 이것은 실제 AI의 성공·실패 사례 비교 결과가 아니다. 분류 정확도의 분모에는 평가 대상의 불확실·실패를 포함하고 별도 응답 성공 조건의 정확도가 필요하면 구분해 보고한다."}
+{"kind":"slide","id":"sl/piwk88","slide":20,"title":"5. AI 모델 및 데이터 개발 현황","textShapes":5}
+{"kind":"textbox","id":"sh/14vy947u","slide":20,"text":"5. AI 모델 및 데이터 개발 현황","textPreview":"5. AI 모델 및 데이터 개발 현황","textChars":20,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/e14fy983","slide":20,"text":"Baseline 비교와 AI 개선 방향","textPreview":"Baseline 비교와 AI 개선 방향","textChars":21,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/f2dg7upo","slide":20,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/o7mx4j65","slide":20,"text":"20","textPreview":"20","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/254f29oz","slide":20,"text":"개선 방향","textPreview":"개선 방향","textChars":5,"textLines":1,"bbox":[64,548,242,40]}
+{"kind":"textbox","id":"sh/36dgbepk","slide":20,"text":"그림자·손 가림·저대비·다중 물품 사례를 확보하고\n같은 데이터에서 입력 구성과 판정 기준을 비교한다.","textPreview":"그림자·손 가림·저대비·다중 물품 사례를 확보하고 | 같은 데이터에서 입력 구성과 판정 기준을 비교한다.","textChars":56,"textLines":2,"bbox":[309,548,907,87]}
+{"kind":"table","id":"tb/or6hgnat","slide":20,"name":"","rows":5,"cols":3,"preview":"비교군 | 목적 | 현재 상태","bbox":[64,181,1152,335]}
+{"kind":"notes","id":"nt/piwk88","slide":20,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- AGENTS.md:필수 비교군\n- experiments/ablation.py\n- experiments/pair_runner.py\n- docs/paper/EXPERIMENT_GUIDE.md\n기존 stable image pair runner는 _detect_changes 코어 평가용이다. 캡처·상태기계·callback·DB·VLM을 포함하지 않는다. 기존 plain profile은 순수 grayscale baseline이 아니므로 B0로 표시하지 않는다. 초기 baseline 성능 비교값은 아직 없다."}
+{"kind":"slide","id":"sl/0axp6g","slide":21,"title":"6. 테스트 결과 및 문제점 분석","textShapes":8}
+{"kind":"textbox","id":"sh/ipsb2hgv","slide":21,"text":"6. 테스트 결과 및 문제점 분석","textPreview":"6. 테스트 결과 및 문제점 분석","textChars":18,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/5sjuxwz6","slide":21,"text":"오류 조건을 포함한 자동화 검사","textPreview":"오류 조건을 포함한 자동화 검사","textChars":17,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/4rat4ryl","slide":21,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/ru1cz6hc","slide":21,"text":"임시 DB·합성 카메라·모의 AI·SMTP의 개발 검사 / 실제 모델 성능 시험과 구분","textPreview":"임시 DB·합성 카메라·모의 AI·SMTP의 개발 검사 / 실제 모델 성능 시험과 구분","textChars":48,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/6tsb61gr","slide":21,"text":"21","textPreview":"21","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/twju1wzi","slide":21,"text":"Python 272개 · Node 37개","textPreview":"Python 272개 · Node 37개","textChars":22,"textLines":1,"bbox":[64,169,733,53]}
+{"kind":"textbox","id":"sh/svat8ryx","slide":21,"text":"9/30 재실행 통과","textPreview":"9/30 재실행 통과","textChars":11,"textLines":1,"bbox":[64,230,733,33]}
+{"kind":"textbox","id":"sh/fylc36h8","slide":21,"text":"Chromium 7개","textPreview":"Chromium 7개","textChars":11,"textLines":1,"bbox":[850,172,366,45]}
+{"kind":"textbox","id":"sh/excba1g3","slide":21,"text":"9/22 검사 통과","textPreview":"9/22 검사 통과","textChars":10,"textLines":1,"bbox":[850,230,366,33]}
+{"kind":"table","id":"tb/bq18by10","slide":21,"name":"","rows":5,"cols":3,"preview":"재현한 조건 | 예상 결과 | 확인 결과","bbox":[64,300,1152,322]}
+{"kind":"notes","id":"nt/0axp6g","slide":21,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- output/maintenance/2026-09-30-sync-review/REVIEW.md\n- output/maintenance/2026-09-22-quick-reset/VALIDATION.json\n- tests/test_app_resilience.py\n- tests/test_reset.py\n- tests/test_services.py\n모든 Python 사례는 9/30 272개 통과 기록과 현재 test 소스를 대조했다. test_executor_rejection_preserves_item_and_releases_slot, test_late_classification_preserves_manual_extension, test_quick_reset_skips_backup_and_preserves_settings_and_existing_backups, test_scheduler_lock_prevents_concurrent_duplicate_email. 시연 초기화의 키 보존 검사는 임시 테스트 키로 수행했고 실제 키 값을 발표 자료에 옮기지 않았다. 10/2에는 앱 테스트를 재실행하지 않았다. 9/30에는 별도 격리 run.py의 화면·정적 파일·API HTTP 200도 확인했다."}
+{"kind":"slide","id":"sl/dy3yp1","slide":22,"title":"6. 테스트 결과 및 문제점 분석","textShapes":4}
+{"kind":"textbox","id":"sh/a5sjat4r","slide":22,"text":"6. 테스트 결과 및 문제점 분석","textPreview":"6. 테스트 결과 및 문제점 분석","textChars":18,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/xs32l8ni","slide":22,"text":"실제 Pi 시연에서 확인한 결과","textPreview":"실제 Pi 시연에서 확인한 결과","textChars":17,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/cra1c3mx","slide":22,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/n210fy5g","slide":22,"text":"로그 확인과 사용자 성공 보고를 구분 / 새 네트워크의 전원 재인가 시험은 아직 미확인","textPreview":"로그 확인과 사용자 성공 보고를 구분 / 새 네트워크의 전원 재인가 시험은 아직 미확인","textChars":48,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/21sj6tov","slide":22,"text":"22","textPreview":"22","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"table","id":"tb/svy5wned","slide":22,"name":"","rows":7,"cols":3,"preview":"확인일·항목 | 근거 | 결과","bbox":[64,181,1152,429]}
+{"kind":"notes","id":"nt/dy3yp1","slide":22,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json\n- docs/guides/PI_ACCEPTANCE_CHECKLIST.md\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n9월 22일 본인 PC의 Tailscale 화면·영상도 성공 보고가 있다. 현재 주 시연 경로는 Windows 핫스팟과 SSH 터널이다. 친구 Tailscale 수락·접속은 별도 미확인으로 남으며 현재 시연의 선행 조건이 아니다."}
+{"kind":"slide","id":"sl/ca7o5o","slide":23,"title":"6. 테스트 결과 및 문제점 분석","textShapes":4}
+{"kind":"textbox","id":"sh/szedcfi1","slide":23,"text":"6. 테스트 결과 및 문제점 분석","textPreview":"6. 테스트 결과 및 문제점 분석","textChars":18,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/re5wja1g","slide":23,"text":"주요 문제의 원인과 해결","textPreview":"주요 문제의 원인과 해결","textChars":13,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/6dcvap0v","slide":23,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/5c3ehkja","slide":23,"text":"데이터 보존과 시연 연결을 우선 점검 / 해결 후 확인 범위는 해당 검사·보고 기준","textPreview":"데이터 보존과 시연 연결을 우선 점검 / 해결 후 확인 범위는 해당 검사·보고 기준","textChars":46,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/4bud8fip","slide":23,"text":"23","textPreview":"23","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"table","id":"tb/u1gritsr","slide":23,"name":"","rows":6,"cols":3,"preview":"문제 | 확인한 원인 | 수정과 확인","bbox":[64,181,1152,432]}
+{"kind":"notes","id":"nt/ca7o5o","slide":23,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- docs/VISION_REVIEW_2026-09-18.md\n- docs/ARCHITECTURE_REVIEW_2026-09-18.md\n- docs/LIVE_FLOW_REVIEW_2026-09-18.md\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n정지 영상 문제는 합성 장면에서 소프트웨어 원인을 재현했다. 센서 노출이나 물리 흔들림까지 해결됐다고 주장하지 않는다. 새 SD 설치 복구는 설치기·체크섬·카메라 및 시스템 진단 로그로 확인했다. SSH 오류 원인은 이번 9/29 터널 위치 오류에 한정한다. 다른 끊김이나 프로필 오류의 원인을 추측하지 않는다."}
+{"kind":"slide","id":"sl/8ayqik","slide":24,"title":"6. 테스트 결과 및 문제점 분석","textShapes":8}
+{"kind":"textbox","id":"sh/tkzeps7q","slide":24,"text":"6. 테스트 결과 및 문제점 분석","textPreview":"6. 테스트 결과 및 문제점 분석","textChars":18,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/6h8fed8z","slide":24,"text":"개발 환경에서의 정지 장면 연산 비교","textPreview":"개발 환경에서의 정지 장면 연산 비교","textChars":20,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/7ihwnipk","slide":24,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/gnaxknq1","slide":24,"text":"PC 합성 입력의 개발 검사 / Pi 성능·AI 정확도·종단간 지연 결과가 아님","textPreview":"PC 합성 입력의 개발 검사 / Pi 성능·AI 정확도·종단간 지연 결과가 아님","textChars":44,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/hojyts7m","slide":24,"text":"24","textPreview":"24","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/ulsfix8v","slide":24,"text":"분석 프레임당 처리 시간 (ms)","textPreview":"분석 프레임당 처리 시간 (ms)","textChars":18,"textLines":1,"bbox":[64,179,722,45]}
+{"kind":"textbox","id":"sh/wr6x83qx","slide":24,"text":"수정 내용","textPreview":"수정 내용","textChars":5,"textLines":1,"bbox":[823,181,393,40]}
+{"kind":"textbox","id":"sh/xsfeh87i","slide":24,"text":"기준 grayscale 캐시\n무변화 프레임의 조기 종료\n중복 정합 제거\n미리보기 해상도 축소","textPreview":"기준 grayscale 캐시 | 무변화 프레임의 조기 종료 | 중복 정합 제거 | 미리보기 해상도 축소","textChars":51,"textLines":4,"bbox":[823,240,393,216]}
+{"kind":"textbox","id":"sh/58vadwrq","slide":24,"text":"9/18 Windows 합성 입력\nOpenCV 1 thread, 160 입력 프레임\n호스트 부하·설정 변화 포함\n실제 Pi 개선율은 별도 측정","textPreview":"9/18 Windows 합성 입력 | OpenCV 1 thread, 160 입력 프레임 | 호스트 부하·설정 변화 포함 | 실제 Pi 개선율은 별도 측정","textChars":79,"textLines":4,"bbox":[823,470,393,156]}
+{"kind":"chart","id":"ch/redgfmhc","slide":24,"name":"","chartType":"bar","bbox":[64,235,697,348]}
+{"kind":"notes","id":"nt/8ayqik","slide":24,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- docs/VISION_REVIEW_2026-09-18.md\n- output/maintenance/2026-09-18-vision-review/benchmark-comparison.json\n원천 값은 before_ms=27.756, after_ms=13.212. 이전/이후의 전체 최적화 조합을 비교한 개발 표본이며 단일 수정의 인과 효과로 해석하지 않는다. 변경 전후 처리 프레임 수 80/112, 미리보기 크기 1280×720/800×450. 호스트 스케줄링·부하·온도는 통제하지 않았으며 다른 실행의 변동 기록도 보존했다."}
+{"kind":"slide","id":"sl/4267ff","slide":25,"title":"7. 향후 개발 및 완성 계획","textShapes":5}
+{"kind":"textbox","id":"sh/h0z2xs7e","slide":25,"text":"7. 향후 개발 및 완성 계획","textPreview":"7. 향후 개발 및 완성 계획","textChars":16,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/ux8j2x8n","slide":25,"text":"최종보고의 필수 과제와 추가 실험","textPreview":"최종보고의 필수 과제와 추가 실험","textChars":18,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/vyhkv298","slide":25,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/8vq10nqh","slide":25,"text":"제안 계획 / 아래 횟수는 앞으로 수행할 점검 목표이며 기존 성공 횟수가 아님","textPreview":"제안 계획 / 아래 횟수는 앞으로 수행할 점검 목표이며 기존 성공 횟수가 아님","textChars":43,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/9wz2tsr2","slide":25,"text":"25","textPreview":"25","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/7ux0ri9c","slide":25,"text":"일정이 부족하면 추가 비교 범위를 줄이고 필수 시연·평가 증거를 먼저 확보","textPreview":"일정이 부족하면 추가 비교 범위를 줄이고 필수 시연·평가 증거를 먼저 확보","textChars":41,"textLines":1,"bbox":[64,615,1152,31]}
+{"kind":"table","id":"tb/fu1cb65k","slide":25,"name":"","rows":5,"cols":3,"preview":"우선순위 | 11월 3일까지의 과제 | 완료 증거","bbox":[64,181,1152,420]}
+{"kind":"notes","id":"nt/4267ff","slide":25,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- docs/guides/PI_ACCEPTANCE_CHECKLIST.md\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n- docs/paper/EXPERIMENT_GUIDE.md\n연속 3회는 새로 제안한 시연 리허설 기준이다. AI 성능 목표 수치는 파일럿과 허용 오차를 확인한 뒤 확정한다. 비교 연구를 생략 완료로 처리하는 것이 아니라 중간보고 이후 추가 개발 대상으로 우선순위를 정한 것이다."}
+{"kind":"slide","id":"sl/i5fw9w","slide":26,"title":"7. 향후 개발 및 완성 계획","textShapes":4}
+{"kind":"textbox","id":"sh/5k3mloz6","slide":26,"text":"7. 향후 개발 및 완성 계획","textPreview":"7. 향후 개발 및 완성 계획","textChars":16,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/ihc3a90v","slide":26,"text":"최종보고까지의 주차별 완료 목표","textPreview":"최종보고까지의 주차별 완료 목표","textChars":17,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/3il4jeh0","slide":26,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/snelgjix","slide":26,"text":"발표일은 수업 확정 일정 / 작업 배분과 세부 완료일은 제안 계획","textPreview":"발표일은 수업 확정 일정 / 작업 배분과 세부 완료일은 제안 계획","textChars":36,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/donmpozi","slide":26,"text":"26","textPreview":"26","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"table","id":"tb/r65cj2p4","slide":26,"name":"","rows":7,"cols":3,"preview":"기간 | 먼저 완료할 작업 | 산출물","bbox":[64,181,1152,414]}
+{"kind":"notes","id":"nt/i5fw9w","slide":26,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- 사용자 제공 수업 일정\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n10/20 중간고사 일정을 고려해 파일럿·기록 연결 범위부터 진행한다. 구현·측정은 장진석 주도, 자료 검토·시연 준비는 권기원 지원이라는 README 역할을 기준으로 제안하며 실제 세부 담당과 날짜는 팀이 확정한다. 공통 baseline 실행기는 필수 현장 검증을 막지 않는 추가 과제로 둔다."}
+{"kind":"slide","id":"sl/d5w048","slide":27,"title":"7. 향후 개발 및 완성 계획","textShapes":11}
+{"kind":"textbox","id":"sh/a5szmxkn","slide":27,"text":"7. 향후 개발 및 완성 계획","textPreview":"7. 향후 개발 및 완성 계획","textChars":16,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/x8jixsje","slide":27,"text":"최종보고에서 제시할 결과물","textPreview":"최종보고에서 제시할 결과물","textChars":14,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/c7ahon2t","slide":27,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/za10z214","slide":27,"text":"27","textPreview":"27","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/y9sjqxkj","slide":27,"text":"현재: 통합 프로토타입 구현과 기본 실물 흐름 확인","textPreview":"현재: 통합 프로토타입 구현과 기본 실물 흐름 확인","textChars":28,"textLines":1,"bbox":[64,178,1152,62]}
+{"kind":"textbox","id":"sh/lw3i1cja","slide":27,"text":"실행 가능한 시스템","textPreview":"실행 가능한 시스템","textChars":10,"textLines":1,"bbox":[64,287,274,45]}
+{"kind":"textbox","id":"sh/kbu1s72p","slide":27,"text":"발표 장비에서 재시작 후 등록·이동·회수\n동일 ID와 관리자 처리 이력으로 확인","textPreview":"발표 장비에서 재시작 후 등록·이동·회수 | 동일 ID와 관리자 처리 이력으로 확인","textChars":44,"textLines":2,"bbox":[366,287,850,95]}
+{"kind":"shape","id":"sh/feh0ny10","slide":27,"bbox":[64,374,1152,0]}
+{"kind":"textbox","id":"sh/ed8zedkf","slide":27,"text":"AI 평가 자료","textPreview":"AI 평가 자료","textChars":8,"textLines":1,"bbox":[64,391,274,45]}
+{"kind":"textbox","id":"sh/s7ax8rqh","slide":27,"text":"정답·원본·응답을 묶어 지표와 사례 제시\n불확실·실패도 포함하고 평가 표본 수 명시","textPreview":"정답·원본·응답을 묶어 지표와 사례 제시 | 불확실·실패도 포함하고 평가 표본 수 명시","textChars":46,"textLines":2,"bbox":[366,391,850,95]}
+{"kind":"shape","id":"sh/d8jehwr2","slide":27,"bbox":[64,478,1152,0]}
+{"kind":"textbox","id":"sh/qlsf6h8r","slide":27,"text":"재현 가능한 배포본","textPreview":"재현 가능한 배포본","textChars":10,"textLines":1,"bbox":[64,495,274,45]}
+{"kind":"textbox","id":"sh/r61wfm9w","slide":27,"text":"고정한 코드·설정·패키지와 실행 안내\n점검표·원시 기록·남은 제한 사항을 함께 전달","textPreview":"고정한 코드·설정·패키지와 실행 안내 | 점검표·원시 기록·남은 제한 사항을 함께 전달","textChars":46,"textLines":2,"bbox":[366,495,850,95]}
+{"kind":"textbox","id":"sh/0baxcrqt","slide":27,"text":"다음 단계의 초점: 새 기능 확대보다 실제 환경의 검증 근거 확보","textPreview":"다음 단계의 초점: 새 기능 확대보다 실제 환경의 검증 근거 확보","textChars":36,"textLines":1,"bbox":[64,618,1152,28]}
+{"kind":"notes","id":"nt/d5w048","slide":27,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- README.md\n- docs/guides/PI_ACCEPTANCE_CHECKLIST.md\n- docs/paper/EXPERIMENT_GUIDE.md\n마무리에서 기능 구현 완료와 정량 성능 미측정을 동시에 설명한다. 제시한 산출물은 최종보고의 제안 완료 기준이며 이미 완성한 결과물 목록으로 읽지 않는다."}
+{"kind":"slide","id":"sl/7tdad2","slide":28,"title":"보충자료 A. 핵심 코드","textShapes":7}
+{"kind":"textbox","id":"sh/ojatczm1","slide":28,"text":"보충자료 A. 핵심 코드","textPreview":"보충자료 A. 핵심 코드","textChars":13,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/ni1sjulg","slide":28,"text":"늦은 AI 응답을 적용하기 전 상태 확인","textPreview":"늦은 AI 응답을 적용하기 전 상태 확인","textChars":22,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/2hsbap4v","slide":28,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/x83up43i","slide":28,"text":"28","textPreview":"28","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/c7utgjmx","slide":28,"text":"app/classification.py · process()의 실제 발췌","textPreview":"app/classification.py · process()의 실제 발췌","textChars":40,"textLines":1,"bbox":[64,180,1152,36]}
+{"kind":"textbox","id":"sh/b6lcnels","slide":28,"text":"with self.mutation_lock:\n    current = self.store.get_item(item_id)\n    if not current or review_status(current) != \"pending\":\n        return","textPreview":"with self.mutation_lock: |     current = self.store.get_item(item_id) |     if not current or review_status(current) != \"pending\": |     ...","textChars":141,"textLines":4,"bbox":[64,248,1152,174]}
+{"kind":"textbox","id":"sh/alcbe947","slide":28,"text":"관리자가 검토를 완료한 기록에는 뒤늦은 분류를 적용하지 않는다.","textPreview":"관리자가 검토를 완료한 기록에는 뒤늦은 분류를 적용하지 않는다.","textChars":35,"textLines":1,"bbox":[64,444,1152,58]}
+{"kind":"textbox","id":"sh/lcnuto3u","slide":28,"text":"모호한 제거 검증은 별도로 물리 추적 signature를 검사한다.\n이미 이동하거나 처리한 물품에 이전 제거 판정을 적용하지 않는다.","textPreview":"모호한 제거 검증은 별도로 물리 추적 signature를 검사한다. | 이미 이동하거나 처리한 물품에 이전 제거 판정을 적용하지 않는다.","textChars":74,"textLines":2,"bbox":[64,529,1152,99]}
+{"kind":"notes","id":"nt/7tdad2","slide":28,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- app/classification.py:70\n- app/main.py:432\n- app/item_policy.py\napp/classification.py의 current 조회와 pending 검사 4줄을 그대로 발췌했다. signature와 revision은 이름·분류·기한의 단순 편집과 물리 추적 변경을 구분한다."}
+{"kind":"slide","id":"sl/auy53v","slide":29,"title":"보충자료 B. 시연 운영","textShapes":12}
+{"kind":"textbox","id":"sh/5c7qxoj6","slide":29,"text":"보충자료 B. 시연 운영","textPreview":"보충자료 B. 시연 운영","textChars":13,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/i9wrmt0f","slide":29,"text":"시연 실행과 데이터 초기화 구분","textPreview":"시연 실행과 데이터 초기화 구분","textChars":17,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/ja58vy10","slide":29,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/w7e9kji9","slide":29,"text":"앱·카메라는 Pi에서 실행 / 상세 단계는 저장소의 Windows 핫스팟 가이드","textPreview":"앱·카메라는 Pi에서 실행 / 상세 단계는 저장소의 Windows 핫스팟 가이드","textChars":44,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/x8nqtoju","slide":29,"text":"29","textPreview":"29","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/alwri90j","slide":29,"text":"시작","textPreview":"시작","textChars":2,"textLines":1,"bbox":[64,183,263,45]}
+{"kind":"textbox","id":"sh/v658re14","slide":29,"text":"노트북 Wi-Fi·핫스팟 실행 후 Pi 전원 연결\n2~3분 뒤 Windows에서 SSH 터널, 같은 노트북 웹 접속","textPreview":"노트북 Wi-Fi·핫스팟 실행 후 Pi 전원 연결 | 2~3분 뒤 Windows에서 SSH 터널, 같은 노트북 웹 접속","textChars":64,"textLines":2,"bbox":[355,183,861,102]}
+{"kind":"shape","id":"sh/8jupgzid","slide":29,"bbox":[64,277,1152,0]}
+{"kind":"textbox","id":"sh/9knqp4jy","slide":29,"text":"정상 종료","textPreview":"정상 종료","textChars":5,"textLines":1,"bbox":[64,294,263,45]}
+{"kind":"textbox","id":"sh/hofmlsfq","slide":29,"text":"Pi 정상 종료 명령 후 종료 점멸이 끝날 때까지 대기\nPi 전원 분리 후 핫스팟 종료","textPreview":"Pi 정상 종료 명령 후 종료 점멸이 끝날 때까지 대기 | Pi 전원 분리 후 핫스팟 종료","textChars":48,"textLines":2,"bbox":[355,294,861,102]}
+{"kind":"shape","id":"sh/wn65sny5","slide":29,"bbox":[64,388,1152,0]}
+{"kind":"textbox","id":"sh/vmd4jix0","slide":29,"text":"시연 초기화","textPreview":"시연 초기화","textChars":6,"textLines":1,"bbox":[64,405,263,45]}
+{"kind":"textbox","id":"sh/ul4nqdgf","slide":29,"text":"확인 후 모든 물품·활동·알림·사진을 백업 없이 삭제\n설정·API 키·기존 백업은 유지","textPreview":"확인 후 모든 물품·활동·알림·사진을 백업 없이 삭제 | 설정·API 키·기존 백업은 유지","textChars":48,"textLines":2,"bbox":[355,405,861,102]}
+{"kind":"shape","id":"sh/9kvmh8fu","slide":29,"bbox":[64,499,1152,0]}
+{"kind":"textbox","id":"sh/8jmlo3y9","slide":29,"text":"설정의 일반 초기화","textPreview":"설정의 일반 초기화","textChars":10,"textLines":1,"bbox":[64,516,263,45]}
+{"kind":"textbox","id":"sh/7id4fyxo","slide":29,"text":"자동 백업과 확인 문구 입력을 거쳐 실행\n시연 초기화와 보존 방식이 다름","textPreview":"자동 백업과 확인 문구 입력을 거쳐 실행 | 시연 초기화와 보존 방식이 다름","textChars":40,"textLines":2,"bbox":[355,516,861,102]}
+{"kind":"notes","id":"nt/auy53v","slide":29,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- REFOUND_WINDOWS_HOTSPOT_GUIDE.md\n- output/maintenance/2026-09-22-quick-reset/VALIDATION.json\n시연을 다시 시작할 때마다 초기화할 필요는 없다. 필요한 기록이 있으면 보존하고, 초기화 전 물품을 카메라 범위에서 치운다. 실행 7단계·종료 4단계·이름 오류 5단계는 REFOUND_WINDOWS_HOTSPOT_GUIDE.md를 따른다. 현재 시연 연결 성공 보고와 새 구성 전원 재인가 성공은 별개다. 내부 접속 주소·키는 발표자료에 적지 않았다."}
+{"kind":"slide","id":"sl/cs94n5","slide":30,"title":"보충자료 C. 평가 방법","textShapes":12}
+{"kind":"textbox","id":"sh/w32p8jax","slide":30,"text":"보충자료 C. 평가 방법","textPreview":"보충자료 C. 평가 방법","textChars":13,"textLines":1,"bbox":[64,29,1120,25]}
+{"kind":"textbox","id":"sh/v2t8ze9s","slide":30,"text":"AI 개선을 위한 파일럿과 재평가","textPreview":"AI 개선을 위한 파일럿과 재평가","textChars":18,"textLines":1,"bbox":[64,76,1152,77]}
+{"kind":"shape","id":"sh/u1k769s7","slide":30,"bbox":[64,650,1152,0]}
+{"kind":"textbox","id":"sh/58vq5oru","slide":30,"text":"아래는 제안 실험 설계 / 확보한 사건 수나 수행 결과가 아님","textPreview":"아래는 제안 실험 설계 / 확보한 사건 수나 수행 결과가 아님","textChars":34,"textLines":1,"bbox":[64,668,1085,28]}
+{"kind":"textbox","id":"sh/47mpcjq9","slide":30,"text":"30","textPreview":"30","textChars":2,"textLines":1,"bbox":[1160,667,56,30]}
+{"kind":"textbox","id":"sh/j6d83e9o","slide":30,"text":"1 기록 절차 점검","textPreview":"1 기록 절차 점검","textChars":10,"textLines":1,"bbox":[64,184,266,45]}
+{"kind":"textbox","id":"sh/i5k7at83","slide":30,"text":"추가·이동·제거·변화 없음 각 10건, 약 40건 파일럿\n사건 ID로 원본·정답·응답·시각을 연결","textPreview":"추가·이동·제거·변화 없음 각 10건, 약 40건 파일럿 | 사건 ID로 원본·정답·응답·시각을 연결","textChars":54,"textLines":2,"bbox":[358,184,858,102]}
+{"kind":"shape","id":"sh/twvq98rq","slide":30,"bbox":[64,278,1152,0]}
+{"kind":"textbox","id":"sh/svmpg3q5","slide":30,"text":"2 오류 유형 분류","textPreview":"2 오류 유형 분류","textChars":10,"textLines":1,"bbox":[64,295,266,45]}
+{"kind":"textbox","id":"sh/id8v2h87","slide":30,"text":"그림자·가림·저대비·다중 물품의 실패 조건 확인\n감지 실패, AI 오분류, 불확실·통신 실패를 구분","textPreview":"그림자·가림·저대비·다중 물품의 실패 조건 확인 | 감지 실패, AI 오분류, 불확실·통신 실패를 구분","textChars":55,"textLines":2,"bbox":[358,295,858,102]}
+{"kind":"shape","id":"sh/jehcvmps","slide":30,"bbox":[64,389,1152,0]}
+{"kind":"textbox","id":"sh/4fqd4rqd","slide":30,"text":"3 기준 보완·고정","textPreview":"3 기준 보완·고정","textChars":10,"textLines":1,"bbox":[64,406,266,45]}
+{"kind":"textbox","id":"sh/5gzuxw7y","slide":30,"text":"입력 증거·프롬프트·판정 기준을 개발 자료에서 보완\n평가 전 코드·모델·설정을 고정","textPreview":"입력 증거·프롬프트·판정 기준을 개발 자료에서 보완 | 평가 전 코드·모델·설정을 고정","textChars":46,"textLines":2,"bbox":[358,406,858,102]}
+{"kind":"shape","id":"sh/6h8v6h8j","slide":30,"bbox":[64,500,1152,0]}
+{"kind":"textbox","id":"sh/rihwzmp4","slide":30,"text":"4 별도 자료 평가","textPreview":"4 별도 자료 평가","textChars":10,"textLines":1,"bbox":[64,517,266,45]}
+{"kind":"textbox","id":"sh/sjad8rqp","slide":30,"text":"새 평가 자료에서 지표·표본 수·실패 사례 보고\n연속 영상 Baseline 비교는 추가 실험으로 수행","textPreview":"새 평가 자료에서 지표·표본 수·실패 사례 보고 | 연속 영상 Baseline 비교는 추가 실험으로 수행","textChars":56,"textLines":2,"bbox":[358,517,858,102]}
+{"kind":"notes","id":"nt/cs94n5","slide":30,"text":"자료 정리일: 2026-10-02. 실기 보고: 2026-09-29까지. 개발 검사: 2026-09-30까지. 발표 예정일: 2026-10-13.\n근거:\n- docs/paper/EXPERIMENT_GUIDE.md\n- AGENTS.md\n파일럿 약 40건은 기록 절차·오류 유형 확인용 제안이며 최종 성능의 대표 표본이라고 주장하지 않는다. 개선에 사용한 자료와 최종 평가 자료를 분리한다. B0/B1/B2/P1 비교는 같은 영상·FPS·정답·워밍업으로 수행하고, 기존 pair runner로 시간당 오탐이나 종단간 지연을 주장하지 않는다. Accuracy의 분모에는 불확실·실패 처리를 명시하고 사건 Precision/Recall/F1과 분류 정확도를 구분한다."}

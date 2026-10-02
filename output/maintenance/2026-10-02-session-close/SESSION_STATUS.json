@@ -1,0 +1,47 @@
+{
+  "status": "complete",
+  "date": "2026-10-02",
+  "next_session_task": "Continue completing the existing v5 midterm PPT; review content, fill supported evidence and check all slides for Korean wrapping.",
+  "latest_ppt": "output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx",
+  "latest_ppt_sha256": "d0ca0d989993f7367839e23e23dd3542ab426bdd90bcdddc9aea76388bb9c52f",
+  "slides": 30,
+  "outline_topics": 34,
+  "source": "docs/presentation/midterm/build_midterm_v5.mjs",
+  "cleanup": {
+    "status": "complete",
+    "removed_targets": 13,
+    "removed_files": 79,
+    "removed_bytes": 8840195,
+    "removed_MiB": 8.43,
+    "protected_files_verified_unchanged": 495,
+    "all_targets_absent": true,
+    "app_or_pi_tests_rerun": false
+  },
+  "handoff_documents_updated": [
+    "START_HERE.md",
+    "AGENTS.md",
+    "docs/SESSION_HANDOFF_2026-09-18.md",
+    "docs/IMPROVEMENTS.md",
+    "output/presentation/REFOUND_MIDTERM_FILL_GUIDE.md"
+  ],
+  "protected_non_document_files_unchanged": 490,
+  "updated_document_hashes_verified": 5,
+  "final_render_slides_preserved": {
+    "v4": 30,
+    "v5": 30
+  },
+  "original_build_reports_preserved": true,
+  "post_cleanup_validation": "Package integrity, final hash, protected file hashes, builder assets, latest document pointers, Git whitespace and unchanged app paths verified. Historical check_final.py first-pass comparisons reference intentionally deleted intermediate renders.",
+  "app_pi_ai_smtp_tests_rerun": false,
+  "committed_or_pushed": false,
+  "remaining": [
+    "Actual Pi screenshots for slides 14–15",
+    "Agreed progress criteria and percentage for slide 9",
+    "Actual labeled AI responses and latency evidence for slide 19",
+    "Team confirmation of proposed detailed schedule and roles"
+  ],
+  "proposed_not_completed": [
+    "Three consecutive demonstration rehearsals",
+    "Approximately forty pilot cases"
+  ]
+}
