@@ -1,5 +1,19 @@
 # Re:Found 작업 인계 및 재개 지침
 
+## 최신 작업 선택·정리 — 2026-10-07
+
+- **다음 작업은 사용자가 선택한다.** 브로셔·PPT·논문·Pi 시연/API 변경을 옵션으로 둔다. 지정한 작업은 바로 이어가고, “계속 진행”처럼 대상이 없으면 선택지를 짧게 제시한다. 아래 10월 2일의 ‘PPT 기본 재개’보다 이 지침이 우선한다.
+- 읽기 순서: `START_HERE.md` → 이 절 → `docs/SESSION_HANDOFF_2026-09-18.md` 상단 → 선택한 분야 가이드. 이미 정한 PPT 목적·분량·목차·수업 일정과 Pi 설치를 반복 확인하지 않는다.
+- **브로셔:** `output/brochure/[붙임 1] 2026학년도 졸업작품집 브로셔_인공지능소프트웨어학과_반미입력_상부상조_초안.hwp`가 편집본이다. 같은 폴더에 `REFOUND_BROCHURE_PREVIEW.pdf`, `REFOUND_BROCHURE_TEXT.md`, `REFOUND_BROCHURE_GUIDE.md`가 있다. 학교 샘플의 2쪽·4개 항목·구성도 3개를 작성하고 전체 렌더를 확인했다. 원본 학교 HWP 샘플은 루트에 보존한다.
+- 팀명 상부상조·팀원 장진석/권기원·지도교수 강환수는 사용자 확인. 학과는 README 기준 인공지능소프트웨어학과. **반은 미확인**이다. 사용자는 실제 사진을 직접 첨부하겠다고 했다. **팀원 사진 2장·실제 Pi 대시보드 1장**의 칸을 유지하고 생성 사진·합성 개발 화면으로 대체하지 않는다. 수동 수정 HWP가 있으면 먼저 확인한다. HWP와 Markdown은 자동 동기화되지 않는다.
+- **PPT:** `output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx` 30장과 `docs/presentation/midterm/build_midterm_v5.mjs`를 사용한다. 실제 캡처·공식 진행률·AI 정량 결과는 추가 근거가 필요하다. 논문 전반부의 `REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장은 별도 목적의 최신 발표다.
+- **논문:** `docs/paper/README.md`부터 시작한다. 9월 16일 실측 전 원고이며 최신 구현과 대조한다. **Pi/API:** 기존 핫스팟 가이드와 `docs/guides/PI_API_KEY_CHANGE.md`를 따른다. API 문서는 키 수정·재시작·웹 제공자 선택 안내이며 새 키의 실제 Pi 호출 성공 기록이 아니다.
+- **정리 위임:** 사용자가 이전 버전과 파일 열람·수정용 일회성 도구·캐시 삭제를 명시적으로 요청했다. 중간보고 v3/v4·옛 생성 원본·옛 렌더 PNG, 이전 6장 논문 PPT·생성기, 개정 전 원고 사본, 브로셔 중복 HWP·`work/`, 일회성 점검·수정·정리 스크립트를 정리했다. 최신 생성 원본·의존 이미지·최신 한글 조판 도구·검사 JSON과 로그는 보존한다. 아래 과거 ‘이전 버전 보존’ 지침은 이번 삭제 대상에 적용하지 않는다.
+- 브로셔 최종 검사와 최종 2쪽 렌더는 `output/maintenance/2026-10-07-brochure/`에 보존했다. 삭제한 브로셔 변환 스크립트를 재실행하려 하지 말고 현재 HWP/원고에서 이어간다. 일회성 도구는 필요할 때 다시 준비한다.
+- 상세 삭제·보존 결과는 `output/maintenance/2026-10-07-session-close/`의 `cleanup-plan.json`, `cleanup-execution.json`, `POST_CLEANUP_CHECKS.json`, `SESSION_STATUS.json`을 따른다. 제작 당시 검사 JSON은 수정하지 않는다. 앱·Pi·AI·SMTP 검사를 재실행하거나 commit/push하지 않았다. 이번 시작 Git HEAD는 `9f5a89d`다.
+
+## 아래는 이전 작업 기록 — 재개 선택과 파일 보존 여부는 위 최신 절 우선
+
 ## 최신 종료·다음 세션 — 2026-10-02
 
 - **사용자 지정 다음 작업은 PPT 추가 완성이다.** 최신 `output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx`에서 이어간다. 기존 목적·분량 위임·목차·수업 일정을 처음부터 다시 묻거나 새 PPT를 처음부터 만들지 않는다. 이번 종료 요청으로 새 PPT·앱 기능·Pi 시험을 시작하지 않았다.

@@ -1,0 +1,15 @@
+{
+  "template": "[붙임 1] 2026학년도 졸업작품집 브로셔_학과명_반_팀명(샘플).hwp",
+  "template_sha256": "c7e6d4d13b73fbe0f452990c88cf044bdb3abe7333bafbe90631f5ed5094b454",
+  "source_date": "2026-10-07",
+  "class": "미입력",
+  "photos": "사용자 삽입 예정",
+  "images": [
+    "01_system.png",
+    "02_local_flow.png",
+    "03_ai_flow.png",
+    "04_dashboard_placeholder.png",
+    "05_portrait_placeholder.png",
+    "06_portrait_placeholder.png"
+  ]
+}

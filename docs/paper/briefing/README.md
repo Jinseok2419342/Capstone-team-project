@@ -6,7 +6,7 @@
 
 - [원고 PDF](../../../output/pdf/RESEARCH_FRONT_MATTER.pdf): 화면 공유와 인쇄에 사용할 4쪽 원고.
 - [최신 발표 PowerPoint](../../../output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx): PDF 1–4쪽을 그대로 캡처한 이미지와 짧은 설명. 원문 이미지는 200 dpi로 삽입했으며 오른쪽 설명은 편집할 수 있다. 세로 원고를 크게 보여주도록 4:3 화면으로 구성했다.
-- [이전 재조판 시안](../../../output/presentation/REFOUND_EARLY_PAPER_FINAL.pptx): 문단을 다시 배치한 6장 버전. 최신 사용자 선호는 PDF 캡처 방식이다.
+- 이전 6장 재조판 시안과 생성기는 2026-10-07 정리했다. 현재는 위 PDF 캡처 4장만 사용한다.
 - `build_pdf_capture_slides.mjs`: `pdf_pages/page-1.png`–`page-4.png`에서 최신 PPTX 생성. PDF가 바뀌면 페이지 이미지를 다시 렌더링한 뒤 새 출력 경로로 생성한다.
 - [원고와 옆 설명 보기](RESEARCH_FRONT_MATTER_VIEW.html): 원고 PDF를 크게 표시하고 오른쪽에 이해를 돕는 설명을 붙인 로컬 HTML. 같은 저장소의 PDF를 참조하므로 HTML만 따로 옮기지 않는다.
 - [편집용 원문](RESEARCH_FRONT_MATTER.md): 이후 문장 수정의 기준. 페이지 구분 주석을 포함한다.

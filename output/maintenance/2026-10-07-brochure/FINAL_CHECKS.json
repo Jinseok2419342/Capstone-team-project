@@ -1,0 +1,30 @@
+{
+  "template": "[붙임 1] 2026학년도 졸업작품집 브로셔_학과명_반_팀명(샘플).hwp",
+  "template_sha256": "c7e6d4d13b73fbe0f452990c88cf044bdb3abe7333bafbe90631f5ed5094b454",
+  "source_date": "2026-10-07",
+  "class": "미입력",
+  "photos": "사용자 삽입 예정",
+  "images": [
+    "01_system.png",
+    "02_local_flow.png",
+    "03_ai_flow.png",
+    "04_dashboard_placeholder.png",
+    "05_portrait_placeholder.png",
+    "06_portrait_placeholder.png"
+  ],
+  "page_count": 2,
+  "original_preserved": true,
+  "template_sample_text_removed": true,
+  "required_sections_present": true,
+  "text_outside_page": [],
+  "hwp": "[붙임 1] 2026학년도 졸업작품집 브로셔_인공지능소프트웨어학과_반미입력_상부상조_초안.hwp",
+  "pdf": "REFOUND_BROCHURE_PREVIEW.pdf",
+  "pdf_images": "Original PNGs restored after Hancom 96dpi export; identical placement and content",
+  "pending": [
+    "실제 반",
+    "장진석 사진",
+    "권기원 사진",
+    "실제 Pi 관리자 화면"
+  ],
+  "hwp_sha256": "7cfc8ade62d8abc489850b90c40a1ebf0c14fd4a62f368a007dfd5df3cf59303"
+}

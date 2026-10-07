@@ -1,0 +1,59 @@
+﻿{
+    "status":  "running",
+    "targets":  [
+                    {
+                        "path":  "docs/paper/archive/2026-09-16-before-full-revision",
+                        "file_count":  3,
+                        "bytes":  113670,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "docs/paper/briefing/build_slides.mjs",
+                        "file_count":  1,
+                        "bytes":  10020,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "docs/paper/manuscript/revise_manuscript.py",
+                        "file_count":  1,
+                        "bytes":  24637,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "docs/paper/manuscript/validate_artifacts.py",
+                        "file_count":  1,
+                        "bytes":  3684,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "docs/presentation/midterm/build_midterm.mjs",
+                        "file_count":  1,
+                        "bytes":  38341,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "docs/presentation/midterm/build_midterm_v4.mjs",
+                        "file_count":  1,
+                        "bytes":  42966,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/brochure/REFOUND_BROCHURE_DRAFT.hwp",
+                        "file_count":  1,
+                        "bytes":  247296,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/brochure/work",
+                        "file_count":  59,
+                        "bytes":  8842796,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-18-fresh-sd/cleanup-temporary-files.ps1",
+                        "file_count":  1,
+                        "bytes":  3161,
+                        "absent":  true
+                    }
+                ]
+}

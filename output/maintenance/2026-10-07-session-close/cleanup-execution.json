@@ -1,0 +1,635 @@
+﻿{
+    "status":  "complete",
+    "target_count":  103,
+    "file_count":  163,
+    "bytes":  13841423,
+    "targets":  [
+                    {
+                        "path":  "docs/paper/archive/2026-09-16-before-full-revision",
+                        "file_count":  3,
+                        "bytes":  113670,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "docs/paper/briefing/build_slides.mjs",
+                        "file_count":  1,
+                        "bytes":  10020,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "docs/paper/manuscript/revise_manuscript.py",
+                        "file_count":  1,
+                        "bytes":  24637,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "docs/paper/manuscript/validate_artifacts.py",
+                        "file_count":  1,
+                        "bytes":  3684,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "docs/presentation/midterm/build_midterm.mjs",
+                        "file_count":  1,
+                        "bytes":  38341,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "docs/presentation/midterm/build_midterm_v4.mjs",
+                        "file_count":  1,
+                        "bytes":  42966,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "output/brochure/REFOUND_BROCHURE_DRAFT.hwp",
+                        "file_count":  1,
+                        "bytes":  247296,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "output/brochure/work",
+                        "file_count":  59,
+                        "bytes":  8842796,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-18-fresh-sd/cleanup-temporary-files.ps1",
+                        "file_count":  1,
+                        "bytes":  3161,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-18-live-flow-review/browser_fixture_server.py",
+                        "file_count":  1,
+                        "bytes":  15109,
+                        "absent":  true,
+                        "completed_in_prior_attempt":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-18-live-flow-review/browser_mobile_check.py",
+                        "file_count":  1,
+                        "bytes":  6544,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-18-live-flow-review/browser_ui_check.py",
+                        "file_count":  1,
+                        "bytes":  19708,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-18-vision-review/alignment_probe.py",
+                        "file_count":  1,
+                        "bytes":  5053,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-18-vision-review/motion_probe.py",
+                        "file_count":  1,
+                        "bytes":  3510,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/check_delivery.py",
+                        "file_count":  1,
+                        "bytes":  5826,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-01.png",
+                        "file_count":  1,
+                        "bytes":  35217,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-02.png",
+                        "file_count":  1,
+                        "bytes":  42311,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-03.png",
+                        "file_count":  1,
+                        "bytes":  55995,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-04.png",
+                        "file_count":  1,
+                        "bytes":  59717,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-05.png",
+                        "file_count":  1,
+                        "bytes":  58503,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-06.png",
+                        "file_count":  1,
+                        "bytes":  72091,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-07.png",
+                        "file_count":  1,
+                        "bytes":  58709,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-08.png",
+                        "file_count":  1,
+                        "bytes":  70857,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-09.png",
+                        "file_count":  1,
+                        "bytes":  68721,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-10.png",
+                        "file_count":  1,
+                        "bytes":  67197,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-11.png",
+                        "file_count":  1,
+                        "bytes":  56426,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-12.png",
+                        "file_count":  1,
+                        "bytes":  66141,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-13.png",
+                        "file_count":  1,
+                        "bytes":  63144,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-14.png",
+                        "file_count":  1,
+                        "bytes":  49198,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-15.png",
+                        "file_count":  1,
+                        "bytes":  44728,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-16.png",
+                        "file_count":  1,
+                        "bytes":  64696,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-17.png",
+                        "file_count":  1,
+                        "bytes":  63044,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-18.png",
+                        "file_count":  1,
+                        "bytes":  75532,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-19.png",
+                        "file_count":  1,
+                        "bytes":  74057,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-20.png",
+                        "file_count":  1,
+                        "bytes":  70702,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-21.png",
+                        "file_count":  1,
+                        "bytes":  57154,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-22.png",
+                        "file_count":  1,
+                        "bytes":  71258,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-23.png",
+                        "file_count":  1,
+                        "bytes":  66592,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-24.png",
+                        "file_count":  1,
+                        "bytes":  64651,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-25.png",
+                        "file_count":  1,
+                        "bytes":  81426,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-26.png",
+                        "file_count":  1,
+                        "bytes":  74845,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-27.png",
+                        "file_count":  1,
+                        "bytes":  62791,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-28.png",
+                        "file_count":  1,
+                        "bytes":  66666,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-29.png",
+                        "file_count":  1,
+                        "bytes":  70628,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-midterm-build/render-v3/slide-30.png",
+                        "file_count":  1,
+                        "bytes":  71745,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-quick-reset/browser_check.py",
+                        "file_count":  1,
+                        "bytes":  6742,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-session-close/cleanup.ps1",
+                        "file_count":  1,
+                        "bytes":  2562,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-session-close/finish_session.py",
+                        "file_count":  1,
+                        "bytes":  4461,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-22-session-close/prepare_cleanup.py",
+                        "file_count":  1,
+                        "bytes":  3722,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-30-sync-review/audit_repository.py",
+                        "file_count":  1,
+                        "bytes":  3584,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-30-sync-review/prepare_commit_cleanup.py",
+                        "file_count":  1,
+                        "bytes":  3022,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-30-sync-review/run_checks.py",
+                        "file_count":  1,
+                        "bytes":  2262,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-09-30-sync-review/verify_delivery.py",
+                        "file_count":  1,
+                        "bytes":  6837,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-content-review/check_final.py",
+                        "file_count":  1,
+                        "bytes":  7137,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-content-review/inspect_powerpoint.ps1",
+                        "file_count":  1,
+                        "bytes":  3504,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-content-review/revise_content.py",
+                        "file_count":  1,
+                        "bytes":  24060,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/check_final.py",
+                        "file_count":  1,
+                        "bytes":  5345,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/inspect_powerpoint.ps1",
+                        "file_count":  1,
+                        "bytes":  3504,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/korean_typography.py",
+                        "file_count":  1,
+                        "bytes":  1431,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-01.png",
+                        "file_count":  1,
+                        "bytes":  22069,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-02.png",
+                        "file_count":  1,
+                        "bytes":  25393,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-03.png",
+                        "file_count":  1,
+                        "bytes":  36607,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-04.png",
+                        "file_count":  1,
+                        "bytes":  39984,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-05.png",
+                        "file_count":  1,
+                        "bytes":  42113,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-06.png",
+                        "file_count":  1,
+                        "bytes":  59147,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-07.png",
+                        "file_count":  1,
+                        "bytes":  39735,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-08.png",
+                        "file_count":  1,
+                        "bytes":  97586,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-09.png",
+                        "file_count":  1,
+                        "bytes":  56546,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-10.png",
+                        "file_count":  1,
+                        "bytes":  58830,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-11.png",
+                        "file_count":  1,
+                        "bytes":  66891,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-12.png",
+                        "file_count":  1,
+                        "bytes":  67350,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-13.png",
+                        "file_count":  1,
+                        "bytes":  40675,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-14.png",
+                        "file_count":  1,
+                        "bytes":  117757,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-15.png",
+                        "file_count":  1,
+                        "bytes":  172344,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-16.png",
+                        "file_count":  1,
+                        "bytes":  45676,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-17.png",
+                        "file_count":  1,
+                        "bytes":  68928,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-18.png",
+                        "file_count":  1,
+                        "bytes":  48296,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-19.png",
+                        "file_count":  1,
+                        "bytes":  71896,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-20.png",
+                        "file_count":  1,
+                        "bytes":  77609,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-21.png",
+                        "file_count":  1,
+                        "bytes":  58852,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-22.png",
+                        "file_count":  1,
+                        "bytes":  100940,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-23.png",
+                        "file_count":  1,
+                        "bytes":  90754,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-24.png",
+                        "file_count":  1,
+                        "bytes":  40638,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-25.png",
+                        "file_count":  1,
+                        "bytes":  51904,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-26.png",
+                        "file_count":  1,
+                        "bytes":  59050,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-27.png",
+                        "file_count":  1,
+                        "bytes":  40302,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-28.png",
+                        "file_count":  1,
+                        "bytes":  40739,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-29.png",
+                        "file_count":  1,
+                        "bytes":  39292,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/powerpoint-final/slide-30.png",
+                        "file_count":  1,
+                        "bytes":  46502,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-midterm-review/revise_source.py",
+                        "file_count":  1,
+                        "bytes":  25673,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-session-close/execute_cleanup.ps1",
+                        "file_count":  1,
+                        "bytes":  3650,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-session-close/finalize_session.py",
+                        "file_count":  1,
+                        "bytes":  3753,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-session-close/prepare_cleanup.py",
+                        "file_count":  1,
+                        "bytes":  3240,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-session-close/refresh_document_hashes.py",
+                        "file_count":  1,
+                        "bytes":  635,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-session-close/update_session_docs.py",
+                        "file_count":  1,
+                        "bytes":  9981,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-02-session-close/verify_cleanup.py",
+                        "file_count":  1,
+                        "bytes":  1090,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-07-session-close/execute_cleanup.ps1",
+                        "file_count":  1,
+                        "bytes":  3927,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-07-session-close/prepare_cleanup.py",
+                        "file_count":  1,
+                        "bytes":  5950,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-07-session-close/update_docs.py",
+                        "file_count":  1,
+                        "bytes":  17623,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/maintenance/2026-10-07-session-close/verify_cleanup.py",
+                        "file_count":  1,
+                        "bytes":  2861,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/presentation/REFOUND_EARLY_PAPER_FINAL.pptx",
+                        "file_count":  1,
+                        "bytes":  45211,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/presentation/REFOUND_PROJECT_MIDTERM_2026-09-22_v3.pptx",
+                        "file_count":  1,
+                        "bytes":  127473,
+                        "absent":  true
+                    },
+                    {
+                        "path":  "output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v4_reviewed.pptx",
+                        "file_count":  1,
+                        "bytes":  400715,
+                        "absent":  true
+                    }
+                ]
+}

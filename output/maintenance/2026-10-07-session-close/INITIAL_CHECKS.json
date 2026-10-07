@@ -1,0 +1,20 @@
+{
+  "status": "failed",
+  "protected_file_count": 424,
+  "protected_hash_mismatches": [],
+  "remaining_deletion_targets": [],
+  "current_guide_local_links_checked": 86,
+  "broken_current_guide_links": [
+    [
+      "START_HERE.md",
+      "output/maintenance/2026-10-07-session-close/SESSION_STATUS.json"
+    ]
+  ],
+  "presentations": {
+    "REFOUND_PDF_CAPTURE_BRIEFING.pptx": 4,
+    "REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx": 30
+  },
+  "brochure_pages": 2,
+  "app_tests_rerun": false,
+  "pi_ai_smtp_tested": false
+}
