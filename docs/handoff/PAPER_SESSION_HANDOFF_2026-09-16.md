@@ -25,10 +25,10 @@
 | 목적 | 파일 |
 |---|---|
 | 전체 논문 수정 원본 | `docs/paper/PAPER_DRAFT_JDCS.md` |
-| 전체 논문 읽기용 PDF | `output/paper/REFOUND_FULL_MANUSCRIPT.pdf` — 19쪽 |
+| 전체 논문 읽기용 PDF | `docs/paper/REFOUND_FULL_MANUSCRIPT.pdf` — 19쪽 |
 | 발표 전반부 원본 | `docs/paper/briefing/RESEARCH_FRONT_MATTER.md` |
-| 발표 전반부 PDF | `output/paper/RESEARCH_FRONT_MATTER.pdf` — 4쪽 |
-| **최신 발표 슬라이드** | `output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx` — 4장, 4:3 |
+| 발표 전반부 PDF | `docs/paper/briefing/RESEARCH_FRONT_MATTER.pdf` — 4쪽 |
+| **최신 발표 슬라이드** | `docs/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx` — 4장, 4:3 |
 | 이전 재조판 발표 시안 | `output/presentation/REFOUND_EARLY_PAPER_FINAL.pptx` — 6장, 현재 선호 아님 |
 | 실측 입력 항목 | `docs/paper/RESULTS_FILL_SHEET.md` |
 | 쉬운 성능 측정 안내 | `docs/paper/PERFORMANCE_MEASUREMENT_START.md` |

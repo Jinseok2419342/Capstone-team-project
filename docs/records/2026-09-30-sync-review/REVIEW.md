@@ -13,7 +13,7 @@
 
 ## 최신 시연 기록 반영
 
-원본은 [WINDOWS_HOTSPOT_GUIDE.md](../../../docs/guides/WINDOWS_HOTSPOT_GUIDE.md), 작성일은 2026-09-29다. 9월 30일 반영 날짜와 실기 날짜를 구분한다.
+원본은 [WINDOWS_HOTSPOT_GUIDE.md](../../guides/WINDOWS_HOTSPOT_GUIDE.md), 작성일은 2026-09-29다. 9월 30일 반영 날짜와 실기 날짜를 구분한다.
 
 | 구분 | 반영한 상태 |
 |---|---|

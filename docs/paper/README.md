@@ -8,7 +8,7 @@
 
 | 할 일 | 파일 |
 |---|---|
-| 원고 읽기 | [2단 근사 조판 PDF — 현재 7쪽(사진·결과 전)](../../output/paper/REFOUND_FULL_MANUSCRIPT.pdf) |
+| 원고 읽기 | [2단 근사 조판 PDF — 현재 7쪽(사진·결과 전)](REFOUND_FULL_MANUSCRIPT.pdf) |
 | 원고 수정 | [편집 원고](PAPER_DRAFT_JDCS.md) |
 | **실험하기** | [실험 진행 안내](EXPERIMENT_GUIDE.md) → `python scripts\experiments\run_experiment.py` |
 | 결과 넣기 | [실측값 입력표 — 32종](RESULTS_FILL_SHEET.md) |

@@ -12,8 +12,8 @@
 
 | 지금 할 일 | 먼저 열 파일 | 남은 작업 |
 |---|---|---|
-| **중간보고 PPT 보완** | [최신 v5 PPT](output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx) · [작성 가이드](docs/presentation/midterm/FILL_GUIDE.md) | 내용·흐름 검토, 실제 Pi 캡처·진행률·AI 정량 결과 보완 |
-| **논문 실험·결과 반영** | [논문 안내](docs/paper/README.md) · [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md) · [2단 PDF](output/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 10월 11일 JDCS 분량으로 축소 개정. 하루 약 2시간 반 실험(실물 100회 + 무인 1시간) → 자동 집계 → 원고 반영 → HWP 이식 |
+| **중간보고 PPT 보완** | [최신 v5 PPT](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx) · [작성 가이드](docs/presentation/midterm/FILL_GUIDE.md) | 내용·흐름 검토, 실제 Pi 캡처·진행률·AI 정량 결과 보완 |
+| **논문 실험·결과 반영** | [논문 안내](docs/paper/README.md) · [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md) · [2단 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 10월 11일 JDCS 분량으로 축소 개정. 하루 약 2시간 반 실험(실물 100회 + 무인 1시간) → 자동 집계 → 원고 반영 → HWP 이식 |
 | **Pi 시연·실기 확인** | [핫스팟 실행·종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 새 구성의 전원 재인가·자동 연결 등 확인 |
 | **Pi API 키 교체·Gemini 전환** | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
 | **PC 자체에서 앱 실행** | 아래 ‘PC 실행 환경 다시 준비하기’ | 필요할 때 `setup.ps1` → `start.ps1` |
@@ -83,7 +83,7 @@ ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@192.168.137.243
 
 메인 화면의 **시연 초기화**는 물건을 치운 뒤 확인 한 번으로 모든 물품·기록·사진을 **백업 없이 삭제**합니다. 설정과 API 키는 유지합니다. 복구용 백업이 필요하면 설정의 기존 초기화를 사용하세요.
 
-기존 논문 발표 파일은 [PDF 캡처 방식의 4장 PPTX](output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx)입니다. 9월 16일 원고 전반부용이며 이번 개발 중간보고와 구분해 보존합니다. 기존 v3의 사실 기준은 9월 22일입니다. 10월 2일 개선본에는 9월 29일 시연 보고와 9월 30일 개발 검사를 추가 반영했고 이후 개발 일정은 계획입니다. 이번 발표 작업에서 앱·배포·기존 논문은 변경하거나 실험하지 않았습니다.
+기존 논문 발표 파일은 [PDF 캡처 방식의 4장 PPTX](docs/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx)입니다. 9월 16일 원고 전반부용이며 이번 개발 중간보고와 구분해 보존합니다. 기존 v3의 사실 기준은 9월 22일입니다. 10월 2일 개선본에는 9월 29일 시연 보고와 9월 30일 개발 검사를 추가 반영했고 이후 개발 일정은 계획입니다. 이번 발표 작업에서 앱·배포·기존 논문은 변경하거나 실험하지 않았습니다.
 
 ## 파일 정리 기준 — 2026-10-07
 
@@ -96,14 +96,14 @@ ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@192.168.137.243
 | 위치 | 용도 |
 |---|---|
 | `dist/refound-pi.tar.gz` | 새 Pi에 복사할 배포 파일. `.sha256`도 함께 사용. **Git에 포함되지 않아** PC에만 있으며, 없으면 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만듦 |
-| `docs/` | **읽고 고치는 문서와 생성 원본.** 전체 지도는 [문서 인덱스](docs/README.md) |
+| `docs/` | **모든 문서와 완성본.** 주제별 폴더 바로 아래에 완성본(PDF·PPTX·HWP), 하위 폴더에 원본·작업 자료. 전체 지도는 [문서 인덱스](docs/README.md) |
 | `docs/guides/` | 설치·시연·네트워크 안내. 매번 쓰는 핫스팟 실행·종료 안내도 여기 있음 |
-| `docs/paper/` | 논문 원고·실험 진행 안내·결과 입력표·참고문헌·PDF 생성기 |
-| `docs/presentation/` | 발표 준비 근거, 중간보고 PPT 생성 원본·작성 가이드, 도식, 8월 발표 초안 |
+| `docs/paper/` | 논문 PDF·원고·실험 진행 안내·결과 입력표·참고문헌·PDF 생성기 |
+| `docs/presentation/` | 발표 PPTX, 발표 준비 근거, 중간보고 생성 원본·작성 가이드, 도식, 8월 발표 초안 |
+| `docs/brochure/` | 졸업작품집 브로셔 최종본(HWP·PDF). 완료된 작업 |
 | `docs/development/`, `docs/handoff/` | 9월 개발 개선 기록, 다음 AI 세션용 인계 |
+| `docs/records/` | 날짜별 검증 요약·벤치마크 원장·중간보고 최종 렌더. 평소에는 열 필요 없음 |
 | `docs/project-history/` | 1학기 아이디어·기획·회의록·보고서와 9월 현황보고. 팀 활동 보관 자료이며 현재 설치 설명이 아님 |
-| `output/paper/`, `output/presentation/`, `output/brochure/` | **완성본**(논문 PDF, 발표 PPTX, 브로셔). 현재 사용할 파일은 위 링크 기준 |
-| `output/records/` | 날짜별 검증 요약·벤치마크 원장·중간보고 최종 렌더. 평소에는 열 필요 없음 |
 | `data/` | 실제 DB·사진. **Git에 포함되지 않음**(PC·Pi에만 있음). 정리 대상으로 지우지 않음 |
 | `AGENTS.md` | 다음 AI 세션이 읽는 지침. 사용자용 설명서는 이 문서 |
 

@@ -60,7 +60,7 @@ DB 시작 시 기존 행과 사진 경로·ID를 유지하면서 컬럼과 인�
 
 ## 검증과 남은 경계
 
-검증 요약과 최종 파일 해시는 `output/records/2026-09-18-architecture-review/FINAL_VALIDATION.json`에 보관한다(세부 로그는 커밋 `0279a75`까지의 Git 이력). 임시 SQLite, 가짜 카메라, 실제 capture/dispatcher 스레드 및 모의 원격 응답을 사용한다. 부분 성공 후 재시도, 느린 DB 반영 사이 제거, 재연결, privacy/재기준화, DB 조회 실패, 오래된 revision, 데이터 이관, 500건 초과 검색, 원자적 rollback, 편집 충돌 및 시연 격리를 검증한다. 프런트는 Node controller 테스트와 HTML ID·ARIA 검사를 사용한다.
+검증 요약과 최종 파일 해시는 `docs/records/2026-09-18-architecture-review/FINAL_VALIDATION.json`에 보관한다(세부 로그는 커밋 `0279a75`까지의 Git 이력). 임시 SQLite, 가짜 카메라, 실제 capture/dispatcher 스레드 및 모의 원격 응답을 사용한다. 부분 성공 후 재시도, 느린 DB 반영 사이 제거, 재연결, privacy/재기준화, DB 조회 실패, 오래된 revision, 데이터 이관, 500건 초과 검색, 원자적 rollback, 편집 충돌 및 시연 격리를 검증한다. 프런트는 Node controller 테스트와 HTML ID·ARIA 검사를 사용한다.
 
 최종 Python 테스트 240개, Node 테스트 25개, Python compileall과 JS 문법 검사를 통과했다. 의도적으로 바뀐 계약(AI 거절 보존, 명시적 확인, 묶음 전달, 사건 UUID, 시연 bbox 제거)에 맞게 기존 테스트를 수정하고 별도 회귀 검증을 추가했다.
 
