@@ -93,13 +93,13 @@ ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@192.168.137.243
 
 | 위치 | 용도 |
 |---|---|
-| `dist/refound-pi.tar.gz` | 새 Pi에 복사할 최신 배포 파일. `.sha256`도 함께 사용 |
+| `dist/refound-pi.tar.gz` | 새 Pi에 복사할 배포 파일. `.sha256`도 함께 사용. **Git에 포함되지 않아** PC에만 있으며, 없으면 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만듦 |
 | `docs/guides/` | 설치·네트워크에 문제가 생겼을 때 찾는 상세 안내 |
 | `docs/paper/` | 논문 원고·실험 설계·참고문헌 |
 | `output/pdf/`, `output/presentation/` | 완성된 읽기·발표 파일. 현재 사용할 파일은 위 링크 기준 |
 | `output/maintenance/` | 코드 변경 전 백업·검증 로그·화면. 평소에는 열 필요 없음 |
 | `docs/Meeting_Minutes/`, `docs/Original_Ideas/`와 과거 보고서 | 팀 활동 보관 자료. 현재 설치 설명이 아님 |
-| `data/` | 실제 DB·사진. 정리 대상으로 지우지 않음 |
+| `data/` | 실제 DB·사진. **Git에 포함되지 않음**(PC·Pi에만 있음). 정리 대상으로 지우지 않음 |
 | `AGENTS.md` | 다음 AI 세션이 읽는 지침. 사용자용 설명서는 이 문서 |
 
 분야별 안내는 [문서 인덱스](docs/README.md), 다음 AI의 누적 기록은 [작업 인계](docs/SESSION_HANDOFF_2026-09-18.md)에 있습니다. 다음 작업이 정해졌다면 “PPT 검토”, “논문 수정”, “Pi 시연”처럼 작업 이름을 함께 말하면 됩니다.

@@ -4,7 +4,9 @@
 
 - **다음 작업은 사용자가 선택한다.** PPT·논문·Pi 시연/API 변경을 옵션으로 둔다. 지정한 작업은 바로 이어가고, “계속 진행”처럼 대상이 없으면 선택지를 짧게 제시한다. 아래 10월 2일의 ‘PPT 기본 재개’보다 이 지침이 우선한다.
 - 읽기 순서: `START_HERE.md` → 이 절 → `docs/SESSION_HANDOFF_2026-09-18.md` 상단 → 선택한 분야 가이드. 이미 정한 PPT 목적·분량·목차·수업 일정과 Pi 설치를 반복 확인하지 않는다.
-- **브로셔:** 최종본은 `output/brochure/`에 있다(`README.md` 참고). 진행할 작업이 아니다.
+- **브로셔:** 최종본은 `output/brochure/`에 있다(`output/brochure/README.md` 참고). 진행할 작업이 아니다.
+- **Git 밖의 로컬 전용 파일:** `.env`, `.venv/`, `data/`, `dist/`는 `.gitignore` 대상이라 새 clone·클라우드 세션에는 없다. 문서에 나오는 `dist/refound-pi.tar.gz`나 실제 DB·사진이 보이지 않아도 삭제된 것이 아니다. 배포 파일이 필요하면 Windows에서 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만든다.
+- **커밋·푸시 규칙(2026-10-11 사용자 지정):** 커밋 작성자·커미터는 사용자 `Jinseok2419342 <fjwkrtua@dongyang.ac.kr>`로 하고 Claude 공동 작성자(`Co-Authored-By`) 줄을 넣지 않는다. 원격 push, PR 생성·머지는 사용자가 요청할 때만 한다. `main`은 PR을 rebase 방식으로 머지해 사용자 커밋만 남긴다.
 - **PPT:** `output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx` 30장과 `docs/presentation/midterm/build_midterm_v5.mjs`를 사용한다. 실제 캡처·공식 진행률·AI 정량 결과는 추가 근거가 필요하다. 논문 전반부의 `REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장은 별도 목적의 최신 발표다.
 - **논문:** `docs/paper/README.md`부터 시작한다. 9월 16일 실측 전 원고이며 최신 구현과 대조한다. **Pi/API:** 기존 핫스팟 가이드와 `docs/guides/PI_API_KEY_CHANGE.md`를 따른다. API 문서는 키 수정·재시작·웹 제공자 선택 안내이며 새 키의 실제 Pi 호출 성공 기록이 아니다.
 - **정리 위임:** 사용자가 이전 버전과 파일 열람·수정용 일회성 도구·캐시 삭제를 명시적으로 요청했다. 중간보고 v3/v4·옛 생성 원본·옛 렌더 PNG, 이전 6장 논문 PPT·생성기, 개정 전 원고 사본, 브로셔 중복 HWP·`work/`, 일회성 점검·수정·정리 스크립트를 정리했다. 최신 생성 원본·의존 이미지·최신 한글 조판 도구·검사 JSON과 로그는 보존한다. 아래 과거 ‘이전 버전 보존’ 지침은 이번 삭제 대상에 적용하지 않는다.
