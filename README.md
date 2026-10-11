@@ -42,24 +42,24 @@
 
 **microSD 고장 후 새로 설치한다면 [새 SD 시작 안내](docs/guides/FRESH_SD_START.md)부터 따라갑니다.** 기본 배포 파일은 `dist/refound-pi.tar.gz`이며, [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)로 재부팅까지 확인한 뒤 논문·발표 작업으로 이어갑니다.
 
-**2026-09-30 갱신:** 새 SD 설치·카메라·기본 실물 흐름·재부팅의 9월 22일 확인에 이어, 현재는 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**을 사용합니다. 9월 29일 Pi Wi-Fi 연결 활성화 로그와 노트북 웹 화면·OpenAI API 동작의 사용자 성공 보고가 있습니다. 새 구성의 자동 연결 설정 결과, 정상 종료 후 전원 재인가·무선 단독 부팅·화면/영상/AI 복귀는 아직 미확인입니다. 친구 Tailscale 수락·접속도 미확인이며 현재 SSH 방식의 선행 조건은 아닙니다. [매번 실행·종료하는 순서](REFOUND_WINDOWS_HOTSPOT_GUIDE.md)와 [작업 인계](docs/SESSION_HANDOFF_2026-09-18.md)를 따릅니다. Pi 화면만 여는 노트북에는 앱 설치가 필요 없습니다.
+**2026-09-30 갱신:** 새 SD 설치·카메라·기본 실물 흐름·재부팅의 9월 22일 확인에 이어, 현재는 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**을 사용합니다. 9월 29일 Pi Wi-Fi 연결 활성화 로그와 노트북 웹 화면·OpenAI API 동작의 사용자 성공 보고가 있습니다. 새 구성의 자동 연결 설정 결과, 정상 종료 후 전원 재인가·무선 단독 부팅·화면/영상/AI 복귀는 아직 미확인입니다. 친구 Tailscale 수락·접속도 미확인이며 현재 SSH 방식의 선행 조건은 아닙니다. [매번 실행·종료하는 순서](docs/guides/WINDOWS_HOTSPOT_GUIDE.md)와 [작업 인계](docs/handoff/SESSION_HANDOFF.md)를 따릅니다. Pi 화면만 여는 노트북에는 앱 설치가 필요 없습니다.
 
 | 구분 | 링크 |
 |---|---|
-| 전체 문서 인덱스 | [docs/README.md](docs/README.md) |
-| 팀 프로젝트 기획서 | [docs/팀 프로젝트기획서.pdf](<docs/팀 프로젝트기획서.pdf>) |
-| 핵심 개념 증명 | [docs/01 캡스톤 개념 증명.pdf](<docs/01 캡스톤 개념 증명.pdf>) |
-| API 토큰·비용 예측 자료 | [docs/02 캡스톤 API 토큰 및 가격 예측.pdf](<docs/02 캡스톤 API 토큰 및 가격 예측.pdf>) |
-| 회의록 | [docs/Meeting_Minutes](docs/Meeting_Minutes) |
-| 현재 발표 준비 | [발표 방향·개선점·검증 근거](docs/IMPROVEMENTS.md) |
-| 졸업작품집 브로셔 (최종) | [PDF 2쪽](<output/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP 편집본](<output/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
-| 과거 프로젝트 발표 원고 | [8월 16일 발표 초안 — 재검토 후 활용](docs/presentation/PRESENTATION.md) |
-| Raspberry Pi 설치·운영 | [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
+| 전체 문서 지도 | [docs/README.md](docs/README.md) — `docs/`는 읽고 고치는 문서·원본, `output/`은 완성본 |
+| 학교 시연 절차 | [현재 Windows 핫스팟·SSH 실행/종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [Android/Tailscale 대안](docs/guides/SCHOOL_DEMO_GUIDE.md) |
 | 새 SD 재설치·첫 접속 | [짧은 설치 순서](docs/guides/FRESH_SD_START.md) |
-| 실기 확인·다음 세션 | [결과·확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) · [9월 30일 갱신 인계](docs/SESSION_HANDOFF_2026-09-18.md) |
-| 학교 시연 절차 | [현재 Windows 핫스팟·SSH 실행/종료](REFOUND_WINDOWS_HOTSPOT_GUIDE.md) · [Android/Tailscale 대안](docs/guides/SCHOOL_DEMO_GUIDE.md) |
-| 발표용 Mermaid 도식 | [도식 목록 및 다운로드 안내](docs/presentation/diagrams/README.md) |
-| Mermaid 원본 묶음 | [refound-mermaid-diagrams.zip](docs/presentation/refound-mermaid-diagrams.zip) |
+| Raspberry Pi 설치·운영 | [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
+| 실기 확인·다음 세션 | [결과·확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) · [작업 인계](docs/handoff/SESSION_HANDOFF.md) |
+| 논문 | [논문 작업 안내](docs/paper/README.md) · [JDCS 2단 근사 PDF](output/paper/REFOUND_FULL_MANUSCRIPT.pdf) |
+| 현재 발표 준비 | [발표 방향·개선점·검증 근거](docs/presentation/IMPROVEMENTS.md) · [중간보고 v5 PPTX](output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx) |
+| 발표용 Mermaid 도식 | [도식 목록 및 사용 안내](docs/presentation/diagrams/README.md) |
+| 졸업작품집 브로셔 (최종) | [PDF 2쪽](<output/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP 편집본](<output/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
+| 팀 프로젝트 기획서 | [5월 12일 기획서 PDF](<docs/project-history/planning/팀 프로젝트기획서.pdf>) |
+| 핵심 개념 증명 | [01 캡스톤 개념 증명.pdf](<docs/project-history/planning/01 캡스톤 개념 증명.pdf>) |
+| API 토큰·비용 예측 자료 | [02 캡스톤 API 토큰 및 가격 예측.pdf](<docs/project-history/planning/02 캡스톤 API 토큰 및 가격 예측.pdf>) |
+| 회의록·과거 보고서 | [회의록](docs/project-history/meeting-minutes) · [과거 팀 자료 전체](docs/project-history) |
+| 과거 프로젝트 발표 원고 | [8월 16일 발표 초안 — 재검토 후 활용](docs/presentation/2026-08-draft/PRESENTATION.md) |
 
 ## 시스템 구성도
 
@@ -201,13 +201,13 @@ sequenceDiagram
 
 ## 검증 현황과 다음 과제
 
-2026-09-22 시연 초기화 변경 후 **Python 272개, 프런트엔드 Node 37개, Chromium 7개**가 통과했습니다. 이후 네트워크 안내·배포 변경에서는 배포 검사 6개와 패키지 47개 파일 대조를 완료했습니다. [앱 검사 요약](output/maintenance/2026-09-22-quick-reset/VALIDATION.json), [배포 당시 요약](output/maintenance/2026-09-22-network-plan/VALIDATION.json)을 보존했습니다. 이는 소프트웨어 회귀·배포 검증이며 실제 AI 정확도나 현장 감지율을 의미하지 않습니다.
+2026-09-22 시연 초기화 변경 후 **Python 272개, 프런트엔드 Node 37개, Chromium 7개**가 통과했습니다. 이후 네트워크 안내·배포 변경에서는 배포 검사 6개와 패키지 47개 파일 대조를 완료했습니다. [앱 검사 요약](output/records/2026-09-22-quick-reset/VALIDATION.json), [배포 당시 요약](output/records/2026-09-22-network-plan/VALIDATION.json)을 보존했습니다. 이는 소프트웨어 회귀·배포 검증이며 실제 AI 정확도나 현장 감지율을 의미하지 않습니다.
 
-앞선 9월 18일 운영 흐름 검사에서는 Python 264개·Node 33개와 별도 Chromium 데스크톱 12개·모바일 4개를 검증했습니다. 합성 카메라의 사건부터 API·DB 반영, 기한·알림·연장·폐기·복원, AI·메일 실패, 편집 충돌·연결 복구를 다뤘습니다. [운영 흐름 점검](docs/LIVE_FLOW_REVIEW_2026-09-18.md), [처리 구조 개선](docs/ARCHITECTURE_REVIEW_2026-09-18.md), [앱 개선](docs/APP_REVIEW_2026-09-18.md), [영상 개선](docs/VISION_REVIEW_2026-09-18.md)은 해당 시점 기록입니다.
+앞선 9월 18일 운영 흐름 검사에서는 Python 264개·Node 33개와 별도 Chromium 데스크톱 12개·모바일 4개를 검증했습니다. 합성 카메라의 사건부터 API·DB 반영, 기한·알림·연장·폐기·복원, AI·메일 실패, 편집 충돌·연결 복구를 다뤘습니다. [운영 흐름 점검](docs/development/LIVE_FLOW_REVIEW_2026-09-18.md), [처리 구조 개선](docs/development/ARCHITECTURE_REVIEW_2026-09-18.md), [앱 개선](docs/development/APP_REVIEW_2026-09-18.md), [영상 개선](docs/development/VISION_REVIEW_2026-09-18.md)은 해당 시점 기록입니다.
 
 9월 22일 새 Pi의 실제 촬영·재부팅 진단 로그와 초기화·등록·이동·회수·본인 PC HTTPS 화면/영상 성공 보고에 더해, 9월 29일 Windows 핫스팟 연결 로그·노트북 SSH 웹·OpenAI 동작 성공 보고를 [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)에 반영했습니다. 원격 AI의 세부 판정, 메일 수신과 현장 조건의 장시간 시험은 남아 있습니다. 현재 재개 지점은 **Windows 핫스팟의 자동 연결·무선 단독 전원 재인가 시험 또는 기존 발표 PPT 보완**입니다.
 
-9월 30일 Git 대량 반영 점검에서 기존 **Python 272개·Node 37개** 검사를 격리된 데이터로 재실행해 통과했습니다. 복사된 실행 소스는 9월 22일 설치 배포본과 일치했습니다. [저장소 점검 보고서](output/maintenance/2026-09-30-sync-review/REVIEW.md)에 검증 범위와 Git 관리상 남은 항목을 기록합니다. 실제 Pi·원격 AI·SMTP·브라우저 실기는 이번에 재실행하지 않았습니다.
+9월 30일 Git 대량 반영 점검에서 기존 **Python 272개·Node 37개** 검사를 격리된 데이터로 재실행해 통과했습니다. 복사된 실행 소스는 9월 22일 설치 배포본과 일치했습니다. [저장소 점검 보고서](output/records/2026-09-30-sync-review/REVIEW.md)에 검증 범위와 Git 관리상 남은 항목을 기록합니다. 실제 Pi·원격 AI·SMTP·브라우저 실기는 이번에 재실행하지 않았습니다.
 
 아래는 이후 선택할 장기 개선·연구 후보이며 자동으로 시작할 작업 목록은 아닙니다.
 
@@ -351,9 +351,11 @@ tests/                  API·저장소·서비스·영상 처리 자동 테스�
 scripts/raspberry-pi/   Pi 설치, 서비스, 네트워크, 배포 스크립트
 scripts/experiments/    Raspberry Pi 자원 계측 스크립트
 experiments/            논문 실험 스키마, ablation, 사건 매칭과 지표 CLI
-docs/                   설치·시연 가이드, 발표·캡스톤 문서
+docs/                   읽고 고치는 문서: 설치·시연 안내, 논문·발표 원본, 개발 기록, 과거 팀 자료
+output/                 완성본: 논문 PDF, 발표 PPTX, 졸업작품집 브로셔, 검증 기록
 data/                   SQLite DB와 감지 이미지(실행 중 생성, Git 제외)
 dist/                   Pi 배포 압축 파일(생성 산출물, Git 제외)
+build/                  PPT·벤치마크 생성 중간 파일(Git 제외)
 run.py                  애플리케이션 진입점
 ```
 
@@ -383,7 +385,7 @@ node --test tests/frontend/app.test.cjs
 카메라·DB·외부 AI를 사용하지 않는 합성 영상 개발 벤치마크:
 
 ```powershell
-python scripts/benchmarks/vision_pipeline.py --threads 1 --output output/vision-benchmark.json
+python scripts/benchmarks/vision_pipeline.py --threads 1 --output build/vision-benchmark.json
 ```
 
 실행한 컴퓨터의 연산 시간을 측정합니다. 실제 촬영 FPS나 현장 인식 정확도 측정은 아닙니다.

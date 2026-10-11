@@ -30,8 +30,8 @@ Thumbs.db
 
 # Disposable local verification environments; retain reports and source backups.
 node_modules/
-output/maintenance/**/browser-profile-*/
-output/maintenance/**/test-runtime/
-output/maintenance/**/runtime/
-output/maintenance/**/isolated-data/
-output/maintenance/**/package-check.tar.gz*
+output/**/browser-profile-*/
+output/**/test-runtime/
+output/**/runtime/
+output/**/isolated-data/
+output/**/package-check.tar.gz*

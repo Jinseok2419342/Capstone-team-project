@@ -10,7 +10,7 @@
 ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@refound-pi.local
 ```
 
-Pi 로그인 비밀번호를 입력합니다. 이름 오류가 나면 `@` 뒤를 핫스팟 연결 장치 목록의 **현재 Pi IP**로 바꿉니다. [연결 안내](../../REFOUND_WINDOWS_HOTSPOT_GUIDE.md)
+Pi 로그인 비밀번호를 입력합니다. 이름 오류가 나면 `@` 뒤를 핫스팟 연결 장치 목록의 **현재 Pi IP**로 바꿉니다. [연결 안내](WINDOWS_HOTSPOT_GUIDE.md)
 
 ## 2. 키 수정
 

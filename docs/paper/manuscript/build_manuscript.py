@@ -29,7 +29,7 @@ from pypdf import PdfReader
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 SOURCE = HERE.parent / 'PAPER_DRAFT_JDCS.md'
-OUT = ROOT / 'output/pdf/REFOUND_FULL_MANUSCRIPT.pdf'
+OUT = ROOT / 'output/paper/REFOUND_FULL_MANUSCRIPT.pdf'
 FIG = HERE / 'figures'
 FIG.mkdir(parents=True, exist_ok=True)
 

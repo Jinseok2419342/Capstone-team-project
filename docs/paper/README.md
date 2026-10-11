@@ -8,7 +8,7 @@
 
 | 할 일 | 파일 |
 |---|---|
-| 원고 읽기 | [2단 근사 조판 PDF — 현재 7쪽(사진·결과 전)](../../output/pdf/REFOUND_FULL_MANUSCRIPT.pdf) |
+| 원고 읽기 | [2단 근사 조판 PDF — 현재 7쪽(사진·결과 전)](../../output/paper/REFOUND_FULL_MANUSCRIPT.pdf) |
 | 원고 수정 | [편집 원고](PAPER_DRAFT_JDCS.md) |
 | **실험하기** | [실험 진행 안내](EXPERIMENT_GUIDE.md) → `python scripts\experiments\run_experiment.py` |
 | 결과 넣기 | [실측값 입력표 — 32종](RESULTS_FILL_SHEET.md) |
@@ -37,7 +37,7 @@
 | `manuscript/build_manuscript.py` | 2단 근사 PDF와 도식 SVG 생성 |
 | `REFERENCES.bib` | 참고문헌 후보 모음(원고는 18편 사용) |
 | `VENUE_AND_RELATED_WORK_STRATEGY.md` | 투고처 비교·비용·심사 절차(9월 15일 조사) |
-| `PAPER_AI_HANDOFF.md`, `SESSION_HANDOFF_2026-09-16.md` | 9월 원고 당시 기록. 실험 설계 부분은 이번 축소판으로 대체됨 |
+| [`PAPER_AI_HANDOFF.md`](../handoff/PAPER_AI_HANDOFF.md), [`PAPER_SESSION_HANDOFF_2026-09-16.md`](../handoff/PAPER_SESSION_HANDOFF_2026-09-16.md) | 9월 원고 당시 AI 인계 기록(`docs/handoff/`). 실험 설계 부분은 이번 축소판으로 대체됨 |
 
 실험 도구: `scripts/experiments/run_experiment.py`(진행 도우미: 결과 자동 판정, 처리 속도 기록, Pi 자원 기록 시작·회수, AI 이름 확인, 표 5–8 생성, `--resume`으로 이어하기). 손 기록 대안용으로 `poll_health.py`, `make_paper_tables.py`가 있다. 모두 노트북의 표준 Python만으로 실행된다(자원 기록은 기존 Pi 설치본의 `monitor_pi_resources.py`를 SSH로 실행).
 
@@ -47,7 +47,7 @@
 python docs\paper\manuscript\build_manuscript.py
 ```
 
-`reportlab`, `pypdf`가 필요하다. Windows에서는 바탕·맑은 고딕, Linux에서는 WenQuanYi 글꼴을 쓴다. 그림 2·5·6은 `manuscript/figures/figure-2.png`, `figure-5.png`, `figure-6.png`를 넣으면 자동으로 들어가고, 없으면 ‘사진 입력 예정’ 상자가 표시된다. `manuscript/FINAL_VALIDATION.json`, `SOURCE_CHECK.json`은 9월 16일 원고의 검사 기록이다.
+`reportlab`, `pypdf`가 필요하다. Windows에서는 바탕·맑은 고딕, Linux에서는 WenQuanYi 글꼴을 쓴다. 그림 2·5·6은 `manuscript/figures/figure-2.png`, `figure-5.png`, `figure-6.png`를 넣으면 자동으로 들어가고, 없으면 ‘사진 입력 예정’ 상자가 표시된다.
 
 ## 아직 쓰면 안 되는 주장
 
