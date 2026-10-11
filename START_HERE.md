@@ -11,7 +11,7 @@
 | 지금 할 일 | 먼저 열 파일 | 남은 작업 |
 |---|---|---|
 | **중간보고 PPT 보완** | [최신 v5 PPT](output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx) · [작성 가이드](output/presentation/REFOUND_MIDTERM_FILL_GUIDE.md) | 내용·흐름 검토, 실제 Pi 캡처·진행률·AI 정량 결과 보완 |
-| **논문 수정·실험 준비** | [논문 안내](docs/paper/README.md) · [편집 원고](docs/paper/PAPER_DRAFT_JDCS.md) · [전체 PDF](output/pdf/REFOUND_FULL_MANUSCRIPT.pdf) | 최신 구현과 원고 대조, 실제 측정·결과 반영. 현재 실측 전 원고 |
+| **논문 실험·결과 반영** | [논문 안내](docs/paper/README.md) · [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md) · [2단 PDF](output/pdf/REFOUND_FULL_MANUSCRIPT.pdf) | 10월 11일 JDCS 분량으로 축소 개정. 하루 약 2시간 반 실험(실물 100회 + 무인 1시간) → 자동 집계 → 원고 반영 → HWP 이식 |
 | **Pi 시연·실기 확인** | [핫스팟 실행·종료](REFOUND_WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 새 구성의 전원 재인가·자동 연결 등 확인 |
 | **Pi API 키 교체·Gemini 전환** | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
 | **PC 자체에서 앱 실행** | 아래 ‘PC 실행 환경 다시 준비하기’ | 필요할 때 `setup.ps1` → `start.ps1` |
