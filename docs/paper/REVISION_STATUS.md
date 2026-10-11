@@ -16,20 +16,21 @@
 | 입력 항목 | 297종 | 32종(대부분 자동 집계) |
 | 실험 | D_pair·D_stream·D_vlm·D_fault, B0–B2 비교, V1–V4 | 실물 100회 + 무인 1시간, 하루 약 2시간 반 |
 | 통계 | session bootstrap, McNemar+Holm, Poisson | 혼동행렬, 정밀도·재현율·F1, Wilson 95% 구간 |
-| 사용자 기록 | bbox·action_end 라벨, 라벨러 2명 | 화면 결과 1칸 + 등록 때 AI 이름·분류 O/X |
+| 사용자 기록 | bbox·action_end 라벨, 라벨러 2명 | 행동 후 Enter + 끝에 AI 이름 O/X 확인(결과 판정은 자동) |
 
 원고 내용은 9월 18·22일 코드와 대조해 갱신했다. 사건 반영 확인 후 기준 갱신, 외부 모델 실패·거절 시 기록 보존(확인 필요), JSON 스키마 응답, 미리보기 분리, 추정 가격 10만 원 이상 귀중품 분류를 반영했다. 표 4의 OS·카메라·소프트웨어 버전은 9월 22일 Pi 진단 출력 값이다.
 
 ## 새로 만든 도구
 
 - `scripts/experiments/poll_health.py` — 노트북에서 `/api/health`를 1초마다 읽어 분석 프레임률·처리 시간을 CSV로 저장.
-- `experiments/trial_report.py`, `scripts/experiments/make_paper_tables.py` — 기록지·DB 사본·두 CSV로 표 5–8과 본문 숫자를 생성. 무인 감시 구간의 오탐도 시각으로 자동 집계.
-- `tests/test_experiment_trial_report.py` — 집계 규칙 검사 4개.
+- `experiments/live_session.py`, `scripts/experiments/run_experiment.py` — 실험 진행 도우미. 시도마다 안내 → Enter 후 활동 기록으로 시스템 결과를 자동 판정·기록, 처리 속도 기록, SSH로 Pi 자원 기록 시작·회수, AI 이름 확인(분류는 자동 채점), 무인 감시 시각 기록, 끝나면 표 5–8 생성. 중단 시 `--resume`.
+- `experiments/trial_report.py`, `scripts/experiments/make_paper_tables.py` — 기록지(또는 도우미의 trials.csv)·활동 기록(DB 사본 또는 activities.json)·두 CSV로 표 5–8과 본문 숫자를 생성.
+- `tests/test_experiment_trial_report.py`, `tests/test_experiment_live_session.py` — 집계 규칙과 도우미의 판정·이어하기 검사 9개.
 - `manuscript/build_manuscript.py` — JDCS 2단 근사 조판(A4, 위·아래 25mm, 좌·우 20mm, 단 간격 8mm, 9.1pt)으로 재작성. 도식 3개를 단 너비로 다시 그림.
 
 ## 남은 일
 
-1. 사용자: [실험 진행 안내](EXPERIMENT_GUIDE.md)대로 실험 1회 수행, 사진·캡처 3장 준비.
+1. 사용자: [실험 진행 안내](EXPERIMENT_GUIDE.md)대로 도우미를 실행해 실험 1회 수행, 사진·캡처 2–3장 준비. 같은 결과와 캡처를 최종보고 PPT 14·15·19쪽에도 쓴다.
 2. 결과 반영: `paper_tables.md` 값으로 원고 채우기 → 요약·6장·결론을 결과에 맞게 수정 → PDF 재생성으로 쪽수 확인.
 3. HWP 이식: 학회 공식 HWP 양식에 옮기고 저자 정보를 뺀 심사용 원고 작성. 투고 당일 최신 규정 재확인.
 
