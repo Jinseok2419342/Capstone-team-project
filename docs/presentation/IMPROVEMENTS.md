@@ -2,7 +2,7 @@
 
 [시작 안내로 돌아가기](../../START_HERE.md)
 
-이 문서는 **프로젝트·앱 개선점 발표의 코드 근거**입니다. 최신 자료는 [10월 2일 중간보고 개선본 30장](../../output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx)입니다. 9월 22일 구현·실기, 9월 29일 Windows 시연 보고, 9월 30일 개발 검사와 실제 Git 이력을 구분해 반영했습니다. [캡처·결과 보완 가이드](midterm/FILL_GUIDE.md)에 실제 캡처 교체 방법과 목차 대응표가 있습니다. 기존 v3도 보존했습니다.
+이 문서는 **프로젝트·앱 개선점 발표의 코드 근거**입니다. 최신 자료는 [10월 2일 중간보고 개선본 30장](REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx)입니다. 9월 22일 구현·실기, 9월 29일 Windows 시연 보고, 9월 30일 개발 검사와 실제 Git 이력을 구분해 반영했습니다. [캡처·결과 보완 가이드](midterm/FILL_GUIDE.md)에 실제 캡처 교체 방법과 목차 대응표가 있습니다. 기존 v3도 보존했습니다.
 
 **내용 개선:** 우산 사용 시나리오, 관리자·AI 응답을 포함한 구성도, 기록 보존과 AI 선정 이유, 오류 조건별 검사 결과, 필수 시연·평가와 추가 비교 실험을 보강했습니다. 제안한 3회 리허설·40건 파일럿은 앞으로의 목표입니다.
 
@@ -26,7 +26,7 @@
 | 화면 연결·연속 편집·모바일 | 영상·사진 재연결, 연속 저장 잠금과 늦은 충돌 응답 수정, 모바일 가로 넘침 해결 | [운영 흐름 검토](../development/LIVE_FLOW_REVIEW_2026-09-18.md) |
 | AI 오류·운영 장애 | 응답 스키마·완료 여부 검사, DB 장애 health 반영, Pi 재설치 설정 보존 | [운영 흐름 검토](../development/LIVE_FLOW_REVIEW_2026-09-18.md) |
 | 새 SD 재설치의 복잡함 | SSH 터널로 첫 확인, 설치 중 import 검사, 읽기 전용 종합 진단, 실제 기능 확인표 | [새 SD 안내](../guides/FRESH_SD_START.md), [실기 확인표](../guides/PI_ACCEPTANCE_CHECKLIST.md) |
-| 시연 도중 처음부터 다시 시작하기 어려움 | 대시보드 **시연 초기화 → 백업 없이 초기화**. 모든 물품·기록·사진 삭제 후 기준 장면 재설정, 설정·키·기존 백업 보존. 기존 설정 초기화는 백업 방식 유지 | [현재 API 구현](../../app/main.py), [화면 동작](../../static/app.js), [9월 22일 검증](../../output/records/2026-09-22-quick-reset/VALIDATION.json) |
+| 시연 도중 처음부터 다시 시작하기 어려움 | 대시보드 **시연 초기화 → 백업 없이 초기화**. 모든 물품·기록·사진 삭제 후 기준 장면 재설정, 설정·키·기존 백업 보존. 기존 설정 초기화는 백업 방식 유지 | [현재 API 구현](../../app/main.py), [화면 동작](../../static/app.js), [9월 22일 검증](../records/2026-09-22-quick-reset/VALIDATION.json) |
 | 발표 장소·발표자 네트워크 변경 | Windows `ReFoundLaptop` 핫스팟·노트북 SSH 터널로 연결. 터널을 Pi 내부에서 시작한 문제를 Windows 실행으로 바로잡음 | [최신 핫스팟 기록](../guides/WINDOWS_HOTSPOT_GUIDE.md), [진행 상태](../handoff/SESSION_HANDOFF.md) |
 
 ## 발표를 만들 때
@@ -40,13 +40,13 @@
 - **9월 29일 추가:** `ReFoundLaptop` 연결 활성화 로그와 노트북 SSH 웹·OpenAI 동작 사용자 성공 보고가 있습니다. 새 네트워크의 자동 연결 설정·전원 재인가·무선 단독 영상/AI 복귀와 친구 Tailscale은 미확인입니다. 개별 AI 응답·현재 모델·판정 정확도, 메일 수신, 여러 물품, privacy 켠 상태의 재부팅, 장시간 안정성도 별도 미확인입니다.
 - 순간 온도·메모리·FPS 출력으로 평균 성능이나 안정성을 주장하지 않습니다. 현재 실제 Pi 화면의 발표용 캡처는 확보하지 않았습니다. 개발용 합성 화면을 쓰면 그 사실을 명시합니다.
 
-필요할 때만 검증 원본을 엽니다. [9월 22일 앱 검사 요약](../../output/records/2026-09-22-quick-reset/VALIDATION.json), [9월 22일 배포 시점 요약](../../output/records/2026-09-22-network-plan/VALIDATION.json), [9월 22일 당시 세션 상태](../../output/records/2026-09-22-network-plan/SESSION_STATUS.json) · [최신 시연 원문](../guides/WINDOWS_HOTSPOT_GUIDE.md), [이전 브라우저 검사 요약](../../output/records/2026-09-18-live-flow-review/browser-validation-summary.json)을 보존했습니다. 과거 JSON의 실기 미실시 플래그는 작성 당시 상태이며 현재 실기 결과를 취소하지 않습니다. 9월 30일에는 Git 반영 무결성 점검으로 Python 272개·Node 37개 회귀 검사를 다시 통과했으며 [별도 보고서](../../output/records/2026-09-30-sync-review/REVIEW.md)에 기록했습니다. 현장·원격 AI·SMTP·브라우저 실기는 재실행하지 않았습니다.
+필요할 때만 검증 원본을 엽니다. [9월 22일 앱 검사 요약](../records/2026-09-22-quick-reset/VALIDATION.json), [9월 22일 배포 시점 요약](../records/2026-09-22-network-plan/VALIDATION.json), [9월 22일 당시 세션 상태](../records/2026-09-22-network-plan/SESSION_STATUS.json) · [최신 시연 원문](../guides/WINDOWS_HOTSPOT_GUIDE.md), [이전 브라우저 검사 요약](../records/2026-09-18-live-flow-review/browser-validation-summary.json)을 보존했습니다. 과거 JSON의 실기 미실시 플래그는 작성 당시 상태이며 현재 실기 결과를 취소하지 않습니다. 9월 30일에는 Git 반영 무결성 점검으로 Python 272개·Node 37개 회귀 검사를 다시 통과했으며 [별도 보고서](../records/2026-09-30-sync-review/REVIEW.md)에 기록했습니다. 현장·원격 AI·SMTP·브라우저 실기는 재실행하지 않았습니다.
 
 ## 기존 발표·논문 자료를 사용할 때
 
 | 자료 | 현재 용도 |
 |---|---|
-| [PDF 캡처 4장 PPTX](../../output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx) | 9월 16일 논문 전반부 발표. 새 구현·시연 결과 발표와 구분 |
+| [PDF 캡처 4장 PPTX](REFOUND_PDF_CAPTURE_BRIEFING.pptx) | 9월 16일 논문 전반부 발표. 새 구현·시연 결과 발표와 구분 |
 | 이전 6장 재조판 시안 | 2026-10-07 정리에서 삭제. 최신 논문 전반부 발표는 PDF 캡처 4장 |
 | [8월 프로젝트 발표 원고](2026-08-draft/PRESENTATION.md) | 구성 참고. 73개 검사 등 숫자·기능 설명은 현재 코드와 재대조 |
 | [현재 README](../../README.md) | 현재 시스템 개요와 구성. 코드가 우선 |

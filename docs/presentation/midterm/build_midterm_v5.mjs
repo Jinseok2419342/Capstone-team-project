@@ -11,14 +11,14 @@ const {Presentation,PresentationFile,FileBlob}=await import(pathToFileURL(path.j
 const {finalizePresentation,applyPresentationChartFont}=await import(pathToFileURL(path.join(SKILL,'container_tools/artifact_tool_utils.mjs')).href);
 const BUILD=path.join(ROOT,'build/midterm');
 const revision=process.env.DECK_REVISION||'v5_improved';
-const FINAL=path.join(ROOT,'output/presentation',`REFOUND_PROJECT_MIDTERM_2026-10-02${revision==='v1'?'':'_'+revision}.pptx`);
+const FINAL=path.join(ROOT,'docs/presentation',`REFOUND_PROJECT_MIDTERM_2026-10-02${revision==='v1'?'':'_'+revision}.pptx`);
 if(await fs.stat(FINAL).then(()=>true,()=>false))throw new Error('Output exists. Set DECK_REVISION to a new revision name; preserve any manually edited PPTX.');
 const p=Presentation.create({slideSize:{width:1280,height:720}});
 const C={navy:'#102D3C',ink:'#183442',teal:'#067C80',muted:'#566B77',line:'#CFDBDE',pale:'#EEF6F5',white:'#FFFFFF',amber:'#9B5A10'};
 const FONT='Malgun Gothic';
 const typography=[];
 const meta=[]; const tableOwners=[]; const chartOwners=[]; const noteText=new WeakMap();
-const src={hotspot:'docs/guides/WINDOWS_HOTSPOT_GUIDE.md',sync:'output/records/2026-09-30-sync-review/REVIEW.md',git:'git log at 69eb6ff (2026-10-02 inspection)',readme:'README.md',accept:'docs/guides/PI_ACCEPTANCE_CHECKLIST.md',state:'output/records/2026-09-22-network-plan/SESSION_STATUS.json',check:'output/records/2026-09-22-quick-reset/VALIDATION.json',vision:'docs/development/VISION_REVIEW_2026-09-18.md',arch:'docs/development/ARCHITECTURE_REVIEW_2026-09-18.md',live:'docs/development/LIVE_FLOW_REVIEW_2026-09-18.md'};
+const src={hotspot:'docs/guides/WINDOWS_HOTSPOT_GUIDE.md',sync:'docs/records/2026-09-30-sync-review/REVIEW.md',git:'git log at 69eb6ff (2026-10-02 inspection)',readme:'README.md',accept:'docs/guides/PI_ACCEPTANCE_CHECKLIST.md',state:'docs/records/2026-09-22-network-plan/SESSION_STATUS.json',check:'docs/records/2026-09-22-quick-reset/VALIDATION.json',vision:'docs/development/VISION_REVIEW_2026-09-18.md',arch:'docs/development/ARCHITECTURE_REVIEW_2026-09-18.md',live:'docs/development/LIVE_FLOW_REVIEW_2026-09-18.md'};
 
 const {createCanvas,GlobalFonts}=await import(pathToFileURL(path.join(process.env.RUNTIME_NODE_MODULES,'@napi-rs/canvas/index.js')).href);
 GlobalFonts.registerFromPath('C:/Windows/Fonts/malgun.ttf','Malgun Gothic');
@@ -298,7 +298,7 @@ const s=slide('오류 조건을 포함한 자동화 검사','6. 테스트 결과
 }
 // 24
 {
- const s=slide('개발 환경에서의 정지 장면 연산 비교','6. 테스트 결과 및 문제점 분석',[src.vision,'output/records/2026-09-18-vision-review/benchmark-comparison.json'],'PC 합성 입력의 개발 검사 / Pi 성능·AI 정확도·종단간 지연 결과가 아님');
+ const s=slide('개발 환경에서의 정지 장면 연산 비교','6. 테스트 결과 및 문제점 분석',[src.vision,'docs/records/2026-09-18-vision-review/benchmark-comparison.json'],'PC 합성 입력의 개발 검사 / Pi 성능·AI 정확도·종단간 지연 결과가 아님');
  tx(s,'분석 프레임당 처리 시간 (ms)',64,179,722,45,27,true,C.teal);
  const chart=s.charts.add('bar',{position:{left:64,top:235,width:697,height:348},categories:['변경 전','변경 후'],series:[{name:'처리 시간 (ms)',values:[27.756,13.212],fill:C.teal,dataLabelOverrides:[{idx:0,text:'27.76',showValue:false,textStyle:{typeface:FONT,fontSize:24,bold:true,fill:C.ink}},{idx:1,text:'13.21',showValue:false,textStyle:{typeface:FONT,fontSize:24,bold:true,fill:C.ink}}]}],barOptions:{direction:'column',grouping:'clustered',gapWidth:125},hasLegend:false,xAxis:{textStyle:{typeface:FONT,fontSize:25,fill:C.ink},majorGridlines:null},yAxis:{min:0,max:35,majorUnit:10,numberFormatCode:'0',textStyle:{typeface:FONT,fontSize:21,fill:C.muted},majorGridlines:{fill:C.line,width:1}},dataLabels:{showValue:true,position:'outEnd',textStyle:{typeface:FONT,fontSize:24,bold:true,fill:C.ink}},chartFill:C.white,chartLine:{fill:'none',width:0},plotAreaFill:C.white});
  applyPresentationChartFont(chart,{fontFamily:FONT});chartOwners.push(p.slides.items.length);

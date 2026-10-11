@@ -24,7 +24,7 @@
 
 ## 개발 벤치마크
 
-측정 원장은 `output/records/2026-09-18-vision-review/benchmark-before.json`, `benchmark-current.json`, `benchmark-comparison.json`이다. 원장에 실행 환경·소스 SHA256·프로파일과 수치를 보존했다.
+측정 원장은 `docs/records/2026-09-18-vision-review/benchmark-before.json`, `benchmark-current.json`, `benchmark-comparison.json`이다. 원장에 실행 환경·소스 SHA256·프로파일과 수치를 보존했다.
 
 Windows x64, OpenCV 1스레드, OpenCL 비활성, 1280×720 합성 입력을 사용한다. 실제 `_run` 루프에 가상 촬영 시계를 주입해 **연산 시간**과 프레임 선택을 확인한다. 카메라 대기·DB·콜백 소비·브라우저·외부 AI·열·전력은 포함하지 않는다. 추적 중인 물품은 0개다. 전후 검사는 별도 프로세스에서 순차 실행했다.
 
@@ -36,7 +36,7 @@ Windows x64, OpenCV 1스레드, OpenCL 비활성, 1280×720 합성 입력을 사
 
 ```powershell
 python scripts/benchmarks/vision_pipeline.py --threads 1 --frames 160 --output build/vision-current.json
-python scripts/benchmarks/vision_pipeline.py --threads 1 --frames 160 --source-zip output/records/2026-09-18-vision-review/source-before.zip --output build/vision-before.json
+python scripts/benchmarks/vision_pipeline.py --threads 1 --frames 160 --source-zip docs/records/2026-09-18-vision-review/source-before.zip --output build/vision-before.json
 ```
 
 시간을 비교할 때 두 명령을 순차 실행하고 다른 벤치마크·테스트와 동시에 실행하지 않는다.

@@ -3,7 +3,7 @@
 ## 논문 축소 개정 — 2026-10-11 (논문 작업은 이 절이 최우선)
 
 - 사용자가 9월 원고·실험 계획이 학회 양식에 비해 길고 과하며 실험 부담이 크다고 보고 판단을 요청했다. 검토 결과 동의했고, 사용자가 **“심사 통과 수준은 넘되 사용자 부담을 최대한 줄이는 방향”**으로 개선을 위임했다. 심사 원고 양식은 **JDCS 공식 HWP 양식**(학회 홈페이지에서 내려받음)이라고 사용자가 확인했다.
-- 원고 `docs/paper/PAPER_DRAFT_JDCS.md`를 JDCS 2단 기준으로 다시 썼다: 표 8, 그림 6(도식 3·사진/캡처 3), 수식 2, 알고리즘 1, 참고문헌 18, 입력 항목 32종. `output/paper/REFOUND_FULL_MANUSCRIPT.pdf`는 2단 근사 조판 7쪽(사진·결과 전)이다. 9월 18·22일 코드 변경을 반영했다.
+- 원고 `docs/paper/PAPER_DRAFT_JDCS.md`를 JDCS 2단 기준으로 다시 썼다: 표 8, 그림 6(도식 3·사진/캡처 3), 수식 2, 알고리즘 1, 참고문헌 18, 입력 항목 32종. `docs/paper/REFOUND_FULL_MANUSCRIPT.pdf`는 2단 근사 조판 7쪽(사진·결과 전)이다. 9월 18·22일 코드 변경을 반영했다.
 - 실험은 `docs/paper/EXPERIMENT_GUIDE.md` 하나로 축소했다: 실물 100회(등록·이동·제거 각 20, 손·조명·그림자 무변화 40) + 무인 1시간, 하루 약 2시간 반. 후속 요청으로 사용자 부담을 더 줄여 **진행 도우미 `scripts/experiments/run_experiment.py`(`experiments/live_session.py`)**를 추가했다: 시도 안내 → 사용자 Enter → `/api/dashboard` 활동 기록으로 결과 자동 판정, `/api/health` 처리 속도 기록, SSH로 Pi `monitor_pi_resources.py` 시작·회수, AI 이름 확인(분류 자동 채점), 무인 감시 시각 기록, 끝나면 `paper-results/paper_tables.md` 생성, `--resume` 이어하기. 손 기록지(`TRIAL_SHEET_TEMPLATE.csv`)+`make_paper_tables.py`는 대안이다. 같은 결과·캡처를 최종보고 PPT 14·15·19쪽에도 쓰도록 안내했다.
 - **폐기한 이전 계획:** D_pair/D_stream/D_vlm/D_fault, B0–B2 baseline, V1–V4, bootstrap·McNemar, 297개 입력 항목, 장애 주입·8시간·전력. 아래 과거 절과 `docs/handoff/PAPER_AI_HANDOFF.md`의 해당 지시를 따르지 않는다. 심사위원 요청이 있을 때만 추가를 검토한다. 이전 원고는 커밋 `55d59a9`에 있다. `PERFORMANCE_MEASUREMENT_START.md`와 두 CSV 템플릿은 삭제했다.
 - **다음 논문 작업:** 사용자의 실험 결과(`paper-run-…` 폴더, 사진, 장비 메모)를 받아 원고를 채우고 요약·6장·결론을 결과에 맞게 고친 뒤 PDF 재생성 → HWP 이식 안내. 결과를 지어내지 않는다. 앱 코드·Pi 배포는 바꾸지 않았다(새 스크립트는 노트북에서 실행하거나 기존 Pi 설치본을 사용).
@@ -15,11 +15,11 @@
 ## 최신 작업 선택·정리 — 2026-10-07
 
 - **다음 작업은 사용자가 선택한다.** PPT·논문·Pi 시연/API 변경을 옵션으로 둔다. 지정한 작업은 바로 이어가고, “계속 진행”처럼 대상이 없으면 선택지를 짧게 제시한다. 아래 10월 2일의 ‘PPT 기본 재개’보다 이 지침이 우선한다.
-- 읽기 순서: `START_HERE.md` → 이 절 → `docs/handoff/SESSION_HANDOFF.md` 상단 → 선택한 분야 가이드. 이미 정한 PPT 목적·분량·목차·수업 일정과 Pi 설치를 반복 확인하지 않는다.
-- **브로셔:** 최종본은 `output/brochure/`에 있다(`output/brochure/README.md` 참고). 진행할 작업이 아니다.
+- 읽기 순서: `START_HERE.md` → 이 절 → `docs/handoff/SESSION_HANDOFF.md` 상단 → 선택한 분야 가이드. 이미 정한 PPT 목적·분량·목차·수업 일정과 Pi 설치를 반복 확인하지 않는다. 파일 위치는 `docs/README.md`(문서 지도)를 따른다. 문서와 완성본(PDF·PPTX·HWP)은 모두 `docs/` 아래 주제별 폴더에 있고, 완성본은 각 주제 폴더 바로 아래에 있다. 아래 과거 절에 나오는 경로 중 지금 없는 파일은 정리된 이전 버전이며 Git 이력에만 있다.
+- **브로셔:** 최종본은 `docs/brochure/`에 있다(`docs/brochure/README.md` 참고). 진행할 작업이 아니다.
 - **Git 밖의 로컬 전용 파일:** `.env`, `.venv/`, `data/`, `dist/`는 `.gitignore` 대상이라 새 clone·클라우드 세션에는 없다. 문서에 나오는 `dist/refound-pi.tar.gz`나 실제 DB·사진이 보이지 않아도 삭제된 것이 아니다. 배포 파일이 필요하면 Windows에서 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만든다.
 - **커밋·푸시 규칙(2026-10-11 사용자 지정):** 커밋 작성자·커미터는 사용자 `Jinseok2419342 <fjwkrtua@dongyang.ac.kr>`로 하고 Claude 공동 작성자(`Co-Authored-By`) 줄을 넣지 않는다. 원격 push, PR 생성·머지는 사용자가 요청할 때만 한다. `main`은 PR을 rebase 방식으로 머지해 사용자 커밋만 남긴다.
-- **PPT:** `output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx` 30장과 `docs/presentation/midterm/build_midterm_v5.mjs`를 사용한다. 실제 캡처·공식 진행률·AI 정량 결과는 추가 근거가 필요하다. 논문 전반부의 `REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장은 별도 목적의 최신 발표다.
+- **PPT:** `docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx` 30장과 `docs/presentation/midterm/build_midterm_v5.mjs`를 사용한다. 실제 캡처·공식 진행률·AI 정량 결과는 추가 근거가 필요하다. 논문 전반부의 `REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장은 별도 목적의 최신 발표다.
 - **논문:** 맨 위 10월 11일 절을 따른다(축소 개정 원고, 실험 진행 도우미). **Pi/API:** 기존 핫스팟 가이드와 `docs/guides/PI_API_KEY_CHANGE.md`를 따른다. API 문서는 키 수정·재시작·웹 제공자 선택 안내이며 새 키의 실제 Pi 호출 성공 기록이 아니다.
 - **정리 위임:** 사용자가 이전 버전과 파일 열람·수정용 일회성 도구·캐시 삭제를 명시적으로 요청했다. 중간보고 v3/v4·옛 생성 원본·옛 렌더 PNG, 이전 6장 논문 PPT·생성기, 개정 전 원고 사본, 브로셔 중복 HWP·`work/`, 일회성 점검·수정·정리 스크립트를 정리했다. 최신 생성 원본·의존 이미지·최신 한글 조판 도구·검사 JSON과 로그는 보존한다. 아래 과거 ‘이전 버전 보존’ 지침은 이번 삭제 대상에 적용하지 않는다.
 - 상세 삭제·보존 결과는 커밋 `0279a75`까지의 Git 이력의 `output/maintenance/2026-10-07-session-close/`의 `cleanup-plan.json`, `cleanup-execution.json`, `POST_CLEANUP_CHECKS.json`, `SESSION_STATUS.json`을 따른다. 제작 당시 검사 JSON은 수정하지 않는다. 앱·Pi·AI·SMTP 검사를 재실행하거나 commit/push하지 않았다. 이번 시작 Git HEAD는 `9f5a89d`다.
@@ -28,7 +28,7 @@
 
 ## 최신 종료·다음 세션 — 2026-10-02
 
-- **사용자 지정 다음 작업은 PPT 추가 완성이다.** 최신 `output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx`에서 이어간다. 기존 목적·분량 위임·목차·수업 일정을 처음부터 다시 묻거나 새 PPT를 처음부터 만들지 않는다. 이번 종료 요청으로 새 PPT·앱 기능·Pi 시험을 시작하지 않았다.
+- **사용자 지정 다음 작업은 PPT 추가 완성이다.** 최신 `docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx`에서 이어간다. 기존 목적·분량 위임·목차·수업 일정을 처음부터 다시 묻거나 새 PPT를 처음부터 만들지 않는다. 이번 종료 요청으로 새 PPT·앱 기능·Pi 시험을 시작하지 않았다.
 - 읽기 순서는 `START_HERE.md` → 이 최신 절 → `docs/handoff/SESSION_HANDOFF.md` 상단 → `docs/presentation/midterm/FILL_GUIDE.md`다. 실제 연결을 할 때 핫스팟 가이드를 추가로 읽는다. 미확인 실기를 발표 작업의 선행 조건으로 강제하지 않는다.
 - **재개 순서:** 최신 v5의 내용·발표 흐름 검토 → 확보 가능한 근거 보완 → 실제 자료가 생기면 14·15쪽 Pi 캡처, 9쪽 공식 진행률, 19쪽 AI 정량 결과 교체 → 전체 렌더와 한글 단어 중간 줄바꿈·잘림·넘침 최종 확인. 25·26쪽 세부 일정·역할은 제안이며 3회 리허설·40건 파일럿을 완료 실적으로 쓰지 않는다.
 - v5는 30장(본문 27·보충 3), 원본은 `docs/presentation/midterm/build_midterm_v5.mjs`다. 수동 편집본이 있으면 먼저 확인해 새 이름으로 보존한다. 생성 원본의 이미지 의존성(`docs/presentation/midterm/assets/`의 개발 검사 PNG)과 한글 조판 보조 `docs/presentation/midterm/korean_typography.py`를 보존했다.
@@ -38,11 +38,11 @@
 
 ## 내용 개선 — 2026-10-02 후속
 
-- 사용자가 내용 개선과 가능한 부분의 최대한 보완을 위임했다. 최신본은 `output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx`, 생성 원본은 `docs/presentation/midterm/build_midterm_v5.mjs`다. 기존 v3·v4를 보존했고 아래 v4 설명보다 이 절이 우선한다.
+- 사용자가 내용 개선과 가능한 부분의 최대한 보완을 위임했다. 최신본은 `docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx`, 생성 원본은 `docs/presentation/midterm/build_midterm_v5.mjs`다. 기존 v3·v4를 보존했고 아래 v4 설명보다 이 절이 우선한다.
 - 3·4쪽은 우산의 등록·이동·제거 **설명용 시나리오**, 5쪽은 관리자·AI 요청과 응답을 포함한 구성도다. 9쪽은 목표별 현재 단계, 13·17·18쪽은 기록 우선 저장·전후 증거·외부 VLM 선정 이유, 15쪽은 검토·기한·이력 업무로 보완했다.
 - 21쪽의 오류 조건·예상·확인 결과는 현재 테스트 소스와 9/30 전체 검사 로그를 대조했다. 새 앱 검사를 수행한 것이 아니다. 25–27쪽은 필수 시연·관리·평가와 추가 비교 연구를 구분하고 산출물·완료 기준을 적었다. **연속 3회 리허설·약 40건 파일럿은 새 제안 목표**이며 과거 성공 횟수나 확보 데이터가 아니다.
 - 실제 Pi 캡처, 정답·원본·실제 AI 응답·시각, 합의된 진행률은 미확보·미측정 상태를 유지한다. 화면은 개발 검사 자료임을 명시한다. 목차 대응 34개는 주제 반영 확인이며 백분율·실측 요구까지 충족했다는 뜻은 아니다.
-- 전체 30장 PowerPoint 렌더·한글 줄바꿈·넘침·패키지 검사와 원본 보존 근거는 `output/records/2026-10-02-midterm-content-review/FINAL_CHECKS.json`에 있다. 앱·Pi·배포·실데이터·논문은 변경하지 않았다. 작성 가이드와 시작 안내도 최신본으로 연결했다.
+- 전체 30장 PowerPoint 렌더·한글 줄바꿈·넘침·패키지 검사와 원본 보존 근거는 `docs/records/2026-10-02-midterm-content-review/FINAL_CHECKS.json`에 있다. 앱·Pi·배포·실데이터·논문은 변경하지 않았다. 작성 가이드와 시작 안내도 최신본으로 연결했다.
 - 다음 작업은 최신 v5 검토 또는 실제 캡처·측정 결과 보완이다. 사용자에게 이미 위임받은 목적·분량·청중을 처음부터 다시 묻지 않는다. 추가 실기를 발표 작업의 선행 조건으로 강제하지 않는다.
 
 ## 이전 발표 작업 — 2026-10-02 v4
@@ -69,9 +69,9 @@
 - **시연 재점검을 선택할 때의 남은 확인:** 최종 프로필의 자동 연결·우선순위와 서비스 enabled 확인 → 정상 종료 → 랜선 분리·전원 재인가 → 핫스팟 자동 연결·터널 재실행·영상/AI 복귀. 새 구성에서의 이 확인은 아직 미확인이다. 매번 사용 순서에 설정 변경 명령을 추가하지 않는다. 예전 `s24+`는 시험 중 끈다. 자동 연결 수정 명령은 안내됐지만 실행 결과를 받지 않았다.
 - 친구 Tailscale 수락·접속은 별도 미확인이다. 현재 SSH 시연을 친구 초대 응답 때문에 중단하지 않는다. 기존 Tailscale 설정을 삭제하거나 다시 설치하지 않는다. 종료는 Pi에서 `sudo shutdown -h now`, ACT 종료 점멸이 끝난 뒤 전원 분리, 마지막에 핫스팟을 끈다.
 - 이번 요청은 관련 안내 전반의 동기화와 Git 대량 반영의 실행 무결성 점검이다. 기존 원고/PDF/PPTX·Pi·운영 데이터는 보존한다. 기존 v3 PPT의 사실 기준은 9월 22일이며 후속 사용자 보고는 작성 가이드에 보완 사항으로 기록한다.
-- 저장소는 현재 Git checkout이며 점검 시작 HEAD는 `956b346`(Until-2026-09-30), 부모는 `258efc1`이다. 핫스팟 원문은 시작 시 미추적이었다. 소스/검증 근거·실행 점검 결과와 남은 Git 관리 문제는 `output/records/2026-09-30-sync-review/REVIEW.md`를 따른다. 과거 `.git` 부재와 검사 횟수는 당시 기록이다. 이전 JSON 원장은 덮어쓰지 않는다.
+- 저장소는 현재 Git checkout이며 점검 시작 HEAD는 `956b346`(Until-2026-09-30), 부모는 `258efc1`이다. 핫스팟 원문은 시작 시 미추적이었다. 소스/검증 근거·실행 점검 결과와 남은 Git 관리 문제는 `docs/records/2026-09-30-sync-review/REVIEW.md`를 따른다. 과거 `.git` 부재와 검사 횟수는 당시 기록이다. 이전 JSON 원장은 덮어쓰지 않는다.
 - **점검 완료:** 복사된 실행 소스는 9월 22일 설치 배포본과 동일하며 Python **272개**, Node **37개** 재실행 통과. 격리 DB의 실제 `run.py` 시작과 화면·정적 파일·API HTTP 200 확인. `.gitattributes`에 Pi 셸/서비스 LF 보호, `.gitignore`에 새 임시 환경 제외, 패키징에 핫스팟 원문 포함을 추가했다. 원문·수정·점검 파일은 아직 커밋하지 않았다. Pi·실제 AI/SMTP·브라우저 실기는 재실행하지 않았고 새 네트워크 재부팅 성공으로 해석하지 않는다.
-- **커밋 전 정리 완료:** 사용자가 불필요한 파일 삭제를 요청해 활성 프로세스가 없는 테스트 브라우저 프로필 3개, 이번 임시 runtime·합성 데이터, 이전 빈 test-runtime, 검사용 패키지·일회성 문서 수정 스크립트·빈 로그를 삭제했다. **10개 대상, 6,079개 파일, 237.96MiB**. 삭제 직후 보존 파일 **396개 해시 일치**. Git 삭제 **715개는 모두 테스트 프로필**이며 다음 전체 커밋에 삭제를 포함한다(아직 미스테이징·미커밋, 과거 이력은 유지). 최종 로그·소스 백업·PPT/PDF·render-v3·실제 data·dist는 보존했다. 문서는 기존 경로를 유지했다. `output/records/2026-09-30-sync-review/commit-cleanup-*.json`을 따른다. 검사 재실행 시 의존성 환경을 다시 준비하며, 정리 때문에 앱 검사를 반복 실행하지 않았다.
+- **커밋 전 정리 완료:** 사용자가 불필요한 파일 삭제를 요청해 활성 프로세스가 없는 테스트 브라우저 프로필 3개, 이번 임시 runtime·합성 데이터, 이전 빈 test-runtime, 검사용 패키지·일회성 문서 수정 스크립트·빈 로그를 삭제했다. **10개 대상, 6,079개 파일, 237.96MiB**. 삭제 직후 보존 파일 **396개 해시 일치**. Git 삭제 **715개는 모두 테스트 프로필**이며 다음 전체 커밋에 삭제를 포함한다(아직 미스테이징·미커밋, 과거 이력은 유지). 최종 로그·소스 백업·PPT/PDF·render-v3·실제 data·dist는 보존했다. 문서는 기존 경로를 유지했다. `docs/records/2026-09-30-sync-review/commit-cleanup-*.json`을 따른다. 검사 재실행 시 의존성 환경을 다시 준비하며, 정리 때문에 앱 검사를 반복 실행하지 않았다.
 
 ## 이전 종료 기록 — 2026-09-22 다음 세션 준비·정리 완료
 
@@ -95,7 +95,7 @@
 
 - **최신 사용자 요청은 진행 상태 정리와 다음 세션 준비다.** 프로젝트 코드·시작 안내·실기 기록·논문/발표 자료의 역할을 대조하고 기존 문서를 갱신했다. 다음 요청은 **친구 공유·핫스팟 등 시연 준비 계속** 또는 **발표 PPT 제작**일 수 있다. 발표를 명시적으로 선택하면 친구 응답·남은 실기 확인을 선행 조건으로 강제하지 말고, 확인 범위를 정확히 표시한 자료를 준비한다. 새 발표의 목적·시간·청중·형식은 미정이다. 이번 기록 요청만으로 PPT·원고·계측 개발을 시작하지 않는다.
 - 사용자 진입점은 `START_HERE.md`, 상세 인계는 **`docs/handoff/SESSION_HANDOFF.md`(9월 22일 내용으로 갱신)**다. `docs/guides/PI_ACCEPTANCE_CHECKLIST.md`는 이제 빈 양식이 아니라 로그·사용자 보고·부분 확인·미확인을 구분한 누적 기록이다. 발표 시작점 `docs/presentation/IMPROVEMENTS.md`에는 최신 코드/검사 근거와 기존 PPTX의 용도를 연결했다. 과거 `docs/presentation/2026-08-draft/PRESENTATION.md`는 8월 16일 자료임을 명시했다.
-- 이번 인계 정리는 문서와 상태 기록만 바꿨다. 앱·배포·기존 원고/PDF/PPTX는 보존하고 앱 테스트도 다시 실행하지 않는다. 배포 안의 안내 문서는 PC의 최신 인계보다 오래될 수 있다. 두 기존 9월 22일 `VALIDATION.json`의 미설치/실기 미실시 플래그는 당시 스냅샷이며, 최신 진행은 `output/records/2026-09-22-network-plan/SESSION_STATUS.json`을 따른다.
+- 이번 인계 정리는 문서와 상태 기록만 바꿨다. 앱·배포·기존 원고/PDF/PPTX는 보존하고 앱 테스트도 다시 실행하지 않는다. 배포 안의 안내 문서는 PC의 최신 인계보다 오래될 수 있다. 두 기존 9월 22일 `VALIDATION.json`의 미설치/실기 미실시 플래그는 당시 스냅샷이며, 최신 진행은 `docs/records/2026-09-22-network-plan/SESSION_STATUS.json`을 따른다.
 - **현재 재개 지점: 친구에게 Pi 공유 초대 링크 전송 완료, 응답 대기로 중단.** 사용자가 초대 링크를 친구에게 보냈고 친구가 응답하면 나머지를 진행하겠다고 했다. `Reusable link`를 꺼도 친구의 첫 수락 이후 공유 관계는 유지된다고 설명했다. 실제 수락·친구 노트북 접속·핫스팟 연결은 아직 미확인이다. Pi의 `sudo shutdown -h now` 정상 종료를 안내했으며 실제 종료·전원 분리 완료는 아직 보고받지 않았다. 다음 세션은 **Pi 전원 켜기 → 친구가 시연 노트북 Tailscale과 같은 계정으로 초대 수락 → 친구 노트북에서 전체 HTTPS 주소 확인 → 친구 핫스팟으로 랜선 없는 부팅 시험**으로 이어간다. 설치·초대 링크 전송을 처음부터 반복시키지 않는다. 인증·공유 초대 링크는 기록하지 않는다.
 - **확인된 원격 접속:** Tailscale **1.102.4** 설치·인증·Serve 백그라운드 실행과 `Tailscale access is ready`를 사용자 로그로 확인했다. PC에서 HTTPS 화면·영상 확인에 사용자가 “나와”라고 보고했다. 새 Pi 주소는 **`https://refound-pi-1.tail7a1a61.ts.net/`**이며 `-1`을 생략하지 않는다. 앱은 loopback을 유지하고 출력은 `tailnet only`이며 Funnel 비활성 검사도 통과했다.
 - 재부팅·재접속 안내 뒤 사용자가 2026-09-22 18:57 KST의 `check-system.sh` 출력을 전달했다. 서비스 `active`, DB·카메라·inventory 연결, `phase=monitoring`, privacy 꺼짐, OpenAI 설정과 `Local checks passed`를 확인했다. 온도 62.3°C, `throttled=0x0`은 해당 시점 상태다.
@@ -106,11 +106,11 @@
 - **최신 네트워크 계획:** 집 공유기 LAN 포트에 Pi를 랜선으로 연결하고 사용자 PC로 설치한다. Imager에는 친구의 **안드로이드 핫스팟**을 미리 저장한다. Pi는 사용자 본인 Tailscale 소유로 두고 실제 시연 노트북에 로그인된 **친구 계정에 Pi 한 대만 공유**한다. 친구가 같은 계정으로 공유를 수락하면 전체 Serve HTTPS 주소로 접속한다. 친구도 앱의 편집·초기화 등 관리 권한을 갖는다. 기존 문서의 ‘외부 장치 공유 금지/같은 tailnet만 가능’은 이 계획과 공식 지원 범위에 맞게 수정했다. 안내는 `docs/guides/SCHOOL_DEMO_GUIDE.md` 1-5절이다.
 - 사용자는 시연 시간에만 **비밀번호 없는 핫스팟**을 쓰는 방안도 제안했고 친구 폰이 안드로이드임을 확인했다. 해당 폰에서 보안 없음/None을 지원하면 Imager의 공개 네트워크와 정확한 SSID로 설정 가능하다. 비밀번호 사용을 권장했지만 실제 SSID·보안 방식은 아직 확정하지 않았다. 비밀번호는 채팅에 요청하지 않는다. **랜선을 뺀 Pi 부팅과 친구 노트북 접속은 아직 미검증**이다.
 - **최신 설치 진행: 앱 설치·카메라 검사·기본 실물 흐름과 재부팅 후 진단 확인.** 사용자가 새 SD 부팅·SSH 접속·Pi 측 패키지 SHA-256 `OK`에 이어 `install.sh`의 **`Installation complete` 및 새 서비스 PID 7147의 `http://127.0.0.1:8000` 응답 성공** 출력을 전달했다. 자동 시작 서비스가 등록됐고 후속 카메라·종합 진단도 통과했다. 초기화·실물 등록·이동·회수와 재부팅 후 진단은 위 사용자 보고를 따른다. 세부 편집·기한·메일·친구 핫스팟 연결은 아직 확인하지 않았다. 앱은 loopback을 유지하며 Tailscale Serve로 PC 접속을 확인했고 친구에게 장치 공유 초대 링크를 전송했다. 친구 수락은 대기 중이다.
-- **새 Pi에서 사용자 출력으로 확인한 환경:** Debian GNU/Linux 13 Trixie / `DEBIAN_VERSION_FULL=13.7`, `aarch64`, 커널 `6.18.50+rpt-rpi-v8`, 시각 `2026-09-22 18:25:40 KST`. 서비스 가상환경 Python **3.13.5**, NumPy **2.2.4**, OpenCV **4.10.0**, Picamera2 **0.3.37**, FastAPI **0.141.1**, Pydantic **2.13.5**, Uvicorn **0.53.0**, HTTPX **0.28.1** import 통과. 이는 실제 촬영·AI 성공을 의미하지 않는다. 배포 SHA-256은 `92007237f6cf4ee5fdeb2e099961153893012e8f9c0ad8f1be7596c2127cf4ae`. 관련 패키지 검사는 `output/records/2026-09-22-network-plan/`이다. 재설치 SSH 키 경고는 해당 주소의 이전 기록만 갱신해 해결했다.
+- **새 Pi에서 사용자 출력으로 확인한 환경:** Debian GNU/Linux 13 Trixie / `DEBIAN_VERSION_FULL=13.7`, `aarch64`, 커널 `6.18.50+rpt-rpi-v8`, 시각 `2026-09-22 18:25:40 KST`. 서비스 가상환경 Python **3.13.5**, NumPy **2.2.4**, OpenCV **4.10.0**, Picamera2 **0.3.37**, FastAPI **0.141.1**, Pydantic **2.13.5**, Uvicorn **0.53.0**, HTTPX **0.28.1** import 통과. 이는 실제 촬영·AI 성공을 의미하지 않는다. 배포 SHA-256은 `92007237f6cf4ee5fdeb2e099961153893012e8f9c0ad8f1be7596c2127cf4ae`. 관련 패키지 검사는 `docs/records/2026-09-22-network-plan/`이다. 재설치 SSH 키 경고는 해당 주소의 이전 기록만 갱신해 해결했다.
 - 사용자는 차근차근 진행하기를 원한다. 기존 Pi 4 2GB·CSI 카메라 등 나머지 장비는 이전 성공 때와 같다고 설명했다. 초기의 ‘새 카드만 준비, OS 미기록’ 상태는 위 사용자 완료 보고로 갱신됐으므로 OS 기록을 다시 시키지 않는다.
 - 대시보드 상단에 **시연 초기화** 버튼을 추가했다. 버튼 → 확인창의 **백업 없이 초기화** 한 번으로 실행하며 문구 입력은 없다. 먼저 물건을 치워야 한다. 실제 카메라 등록까지 포함한 **모든** 물품·활동·알림·캡처를 삭제하고 기준 화면을 다시 잡는다. 설정·API 키·기존 백업은 보존한다. 삭제한 시연 기록은 되돌릴 수 없다.
 - 기존 설정 → 시스템 초기화는 자동 백업·확인 문구 입력 방식을 유지한다. API `/api/maintenance/reset`는 기본 `mode=backup`, 명시적 `mode=quick`일 때 확인값 `시연 초기화`를 요구한다. 두 경로는 같은 작업 종료·잠금·경로 검사·감시 재개 절차를 사용한다. 느린 worker 때문에 취소된 삭제는 자동 재시도하지 않는다.
-- 검증 요약은 `output/records/2026-09-22-quick-reset/VALIDATION.json`, 변경 전 소스와 세부 기록은 커밋 `0279a75`까지의 Git 이력의 `output/maintenance/2026-09-22-quick-reset/`에 있다. 테스트는 임시 DB·합성 카메라·AI·SMTP를 사용한다. 기존 알림 검사에 실시간 시계 의존성이 있어 해당 검사에서만 시계를 고정했다. 운영 알림 코드는 변경하지 않았다.
+- 검증 요약은 `docs/records/2026-09-22-quick-reset/VALIDATION.json`, 변경 전 소스와 세부 기록은 커밋 `0279a75`까지의 Git 이력의 `output/maintenance/2026-09-22-quick-reset/`에 있다. 테스트는 임시 DB·합성 카메라·AI·SMTP를 사용한다. 기존 알림 검사에 실시간 시계 의존성이 있어 해당 검사에서만 시계를 고정했다. 운영 알림 코드는 변경하지 않았다.
 - 최종 검증: Python **272개**, Node **37개**, 실제 Chromium **7개** 통과. 1440/1024/390/320px에서 버튼·확인·취소, 실제 임시 DB 삭제·설정 보존·다음 등록과 기존 백업 초기화 진입을 확인했다. 컴파일·JS 문법·배포 내용 검사도 통과했다. 이전 실패 로그는 경과 기록이며 최종 요약은 같은 폴더 `VALIDATION.json`이다. 실제 Pi·원격 AI·SMTP 수신 검증은 아니다.
 - `dist/refound-pi.tar.gz`와 `.sha256`를 이번 버튼이 포함된 최신 기본 배포 파일로 갱신했다. PC의 실제 `.env`·DB·사진은 포함하지 않는다. 사용자용 시작점과 설치 안내·실기 확인표도 갱신했다. 논문·발표 파일은 변경하지 않았다.
 
@@ -131,11 +131,11 @@
 - 다음 세션은 **설치 진행 위치 확인 → 실물 기능·재부팅 시험 → 실패 수정 → 안정되면 논문 또는 개선점 발표 자료** 순서다. 사용자 선택 전 계측 개발이나 원고·슬라이드 작성을 자동으로 시작하지 않는다.
 - 상세 인계는 `docs/handoff/SESSION_HANDOFF.md`를 먼저 읽는다. 이전 논문·PPTX를 보존했고, 현재 코드와 원고가 다시 동기화됐다고 주장하지 않는다.
 - 설치기는 서비스 사용자 환경에서 라이브러리를 import 검사한다. `bash /opt/refound/scripts/raspberry-pi/check-system.sh`는 읽기 전용 종합 진단이다. 진단 통과는 실제 AI 분류나 메일 수신 성공을 뜻하지 않는다.
-- 이번 배포·진단 검사 10개와 이를 포함한 전체 Python **268개**가 통과했다. 기록은 `output/records/2026-09-18-fresh-sd/VALIDATION.json`이다. Node33/브라우저16은 앞선 앱 개선 시점의 검사이며 이번에 재실행하지 않았다. 실제 Pi 검사는 아직 수행하지 않았다.
+- 이번 배포·진단 검사 10개와 이를 포함한 전체 Python **268개**가 통과했다. 기록은 `docs/records/2026-09-18-fresh-sd/VALIDATION.json`이다. Node33/브라우저16은 앞선 앱 개선 시점의 검사이며 이번에 재실행하지 않았다. 실제 Pi 검사는 아직 수행하지 않았다.
 
 ## 최신 코드 개선 — 2026-09-18
 
-- **최신 사용자 요구: 내장 시연 버튼이 아니라 실제 카메라·관리 기능 전체를 매끄럽게 사용.** `docs/development/LIVE_FLOW_REVIEW_2026-09-18.md`에 후속 점검을 기록했다. 영상·사진 연결 자동 복구, 목록 오류 상태 보존, AI 요청 스키마·응답 완료 검사, DB health, Pi 재설치 설정 보존·실제 재시작을 보완했다. 검사 요약은 `output/records/2026-09-18-live-flow-review/`, 소스 백업과 세부 로그는 커밋 `0279a75`까지의 Git 이력의 `output/maintenance/2026-09-18-live-flow-review/`다.
+- **최신 사용자 요구: 내장 시연 버튼이 아니라 실제 카메라·관리 기능 전체를 매끄럽게 사용.** `docs/development/LIVE_FLOW_REVIEW_2026-09-18.md`에 후속 점검을 기록했다. 영상·사진 연결 자동 복구, 목록 오류 상태 보존, AI 요청 스키마·응답 완료 검사, DB health, Pi 재설치 설정 보존·실제 재시작을 보완했다. 검사 요약은 `docs/records/2026-09-18-live-flow-review/`, 소스 백업과 세부 로그는 커밋 `0279a75`까지의 Git 이력의 `output/maintenance/2026-09-18-live-flow-review/`다.
 - 앞선 앱 개선 시점 전체 검사: Python **264개**, Node **33개** 통과. 합성 연속 영상의 실제 capture/dispatcher·SQLite·executor·API 연결 3개, 편집·만료·알림·연장·폐기·복원 연속 검사 3개가 포함된다. 실제 Pi·원격 AI·SMTP 수신 검증이나 논문 실측을 수행한 것은 아니다.
 - 실제 Chromium에서도 데스크톱 **12개**, 모바일 **4개** 흐름을 임시 데이터로 검사했다. 저장 성공 후 배경 갱신 중 다음 조작을 무시하던 잠금과 다른 물품의 늦은409 오염을 수정했다. 모바일 숨김 필터 라벨의 위치 기준을 고쳐 390px 화면이423px로 늘어나던 문제도 해결했다. 최종 요약은 같은 백업 폴더의 `browser-validation-summary.json`이며 이전 실패 원장도 보존한다.
 - Pi 배포 파일 `dist/refound-pi-2026-09-18-live-flow.tar.gz`와 SHA-256 파일을 생성했다. 실제 운영 데이터·키는 포함하지 않으며 Pi에 설치한 것은 아니다.
@@ -153,7 +153,7 @@
 - **추가 요청: 정지 영상 울렁거림과 Pi 4 2GB 성능 개선.** 사용자는 Pi CSI와 PC USB 양쪽에서 영상 자체의 미세한 움직임·밝기 변화를 본 것 같다고 설명했다. 감지용 정합 영상을 그대로 미리보기에 쓰면서 생기는 인위적 움직임을 합성 정지 장면에서 재현하고, 원본 영상 표시와 박스 좌표 투영을 분리했다.
 - 프레임 선택을 deadline 기반으로 바꿔 10fps 입력·7fps 분석이 기존 방식에서 5fps로 낮아지던 문제를 수정했다. 기준 grayscale 캐시, 무변화 조기 종료, 중복 정합 제거와 Lab 차분 연산을 개선했다. Pi 기본 미리보기는 800px/5fps이며 촬영·분석과 증거 품질은 기존 설정을 사용한다.
 - `camera_mains_frequency_hz=0/50/60`을 추가했다. 기본 0은 드라이버 설정 유지, 50/60은 지원되는 CSI 카메라에서만 적용한다. 자동 초점·노출·화이트밸런스를 강제로 잠그지 않는다. 센서 정보와 실제 처리 FPS/시간은 카메라 화면에서 확인한다.
-- 앞선 영상 개선 시점 검증: Python **202개**, Node **13개** 통과. 데스크톱 합성 벤치마크·재현 조건·하드웨어 미확인 범위는 `docs/development/VISION_REVIEW_2026-09-18.md`를 따른다. 합성 벤치마크는 논문 실측값이 아니다. 해당 변경 전 백업은 `output/records/2026-09-18-vision-review/source-before.zip`이다.
+- 앞선 영상 개선 시점 검증: Python **202개**, Node **13개** 통과. 데스크톱 합성 벤치마크·재현 조건·하드웨어 미확인 범위는 `docs/development/VISION_REVIEW_2026-09-18.md`를 따른다. 합성 벤치마크는 논문 실측값이 아니다. 해당 변경 전 백업은 `docs/records/2026-09-18-vision-review/source-before.zip`이다.
 
 - 사용자가 논문 실험 전에 앱 코드를 전체 검토하고 적극적으로 개선하도록 요청했다. 이번 우선순위는 앱 안정성·데이터 보존·관리 화면 오류 수정이다.
 - 카메라 종료·재연결, 개인정보 보호 설정 복원, AI 지연 응답과 관리자 수정 충돌, 재시작 후 분석 대기 복구, 전체 활성 물품 조회, 알림 발송 동시성, 화면 갱신·설정 입력을 개선했다. 상세 내용과 검증 범위는 `docs/development/APP_REVIEW_2026-09-18.md`를 따른다.
@@ -166,12 +166,12 @@
 ## 0. 최신 원고·발표 작업 상태 — 2026-09-16
 
 - **9월 16일 당시 마지막 요청은 대화 백업과 임시 파일 정리였다.** 당시 결정과 원고·발표 상태는 [대화 인계 요약](docs/handoff/PAPER_SESSION_HANDOFF_2026-09-16.md)을 읽는다. 현재 재개 순서는 위의 새 SD 지침을 따른다.
-- 최신 사용자 수정 요청: 슬라이드 본문 재조판을 원하지 않는다. **PDF 각 페이지를 그대로 캡처해 왼쪽에 넣고, 오른쪽에 간단 설명 몇 개를 배치**하는 방식으로 변경했다. 최신 발표본은 `output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장(4:3)이다. 아래 6장 버전은 이전 시안이다.
+- 최신 사용자 수정 요청: 슬라이드 본문 재조판을 원하지 않는다. **PDF 각 페이지를 그대로 캡처해 왼쪽에 넣고, 오른쪽에 간단 설명 몇 개를 배치**하는 방식으로 변경했다. 최신 발표본은 `docs/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장(4:3)이다. 아래 6장 버전은 이전 시안이다.
 - 성능 수치를 채우는 쉬운 절차와 역할 분담은 `docs/paper/PERFORMANCE_MEASUREMENT_START.md`에 추가했다. 이번 수정에서도 실제 성능값이나 새 계측 코드를 만들지는 않았다.
 
 - 사용자가 전체 논문 개정과 초반 발표 슬라이드 작성을 요청하여 실측 전 초안과 발표 자료를 작성했다. 대본은 원하지 않는다. 발표는 제목·요약·서론·이론적 배경과 관련 연구까지 2–4쪽, 약 5분을 기준으로 한다.
 - 전체 원고 `docs/paper/PAPER_DRAFT_JDCS.md`와 발표 전반부를 동기화했다. 참고문헌 17개, 고유 입력 항목 297종, 표 13개, 수식 6개, SVG 구조도 4개다. 기존 26문헌·321항목 초안은 `docs/paper/archive/2026-09-16-before-full-revision/`에 보존했다.
-- 읽기용 전체 PDF: `output/paper/REFOUND_FULL_MANUSCRIPT.pdf` 19쪽. 발표용 PDF: `output/paper/RESEARCH_FRONT_MATTER.pdf` 4쪽. 최신 발표 PPTX: `output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장. `REFOUND_EARLY_PAPER_FINAL.pptx` 6장은 이전 시안으로만 보존한다.
+- 읽기용 전체 PDF: `docs/paper/REFOUND_FULL_MANUSCRIPT.pdf` 19쪽. 발표용 PDF: `docs/paper/briefing/RESEARCH_FRONT_MATTER.pdf` 4쪽. 최신 발표 PPTX: `docs/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장. `REFOUND_EARLY_PAPER_FINAL.pptx` 6장은 이전 시안으로만 보존한다.
 - 전체 논문은 실측 전 원고이며 결과 장은 입력 틀이다. 실제 성능 수치 또는 현장 실험 결과는 생성하지 않았다. 자세한 완료·대기·검증 범위는 `docs/paper/REVISION_STATUS.md`를 따른다.
 - 2026-09-16 작업은 문서·그림·발표 작성이며 애플리케이션 코드를 바꾸지 않았다. 아래 136개 테스트 통과는 과거 인계 기록이며 이번 재실행 결과가 아니다.
 - `manuscript/revise_manuscript.py`는 보관본에서 이번 개정을 재현한다. 이후 수동 수정 또는 실측 입력 후 실행하면 새 편집을 덮어쓰므로 실행하지 않는다. 현재 원고에서 PDF만 재생성할 때는 `manuscript/build_manuscript.py`를 쓴다.

@@ -17,8 +17,7 @@ from pypdf import PdfReader
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
-OUT = ROOT / 'output' / 'paper'
-OUT.mkdir(parents=True, exist_ok=True)
+OUT = HERE
 SOURCE = HERE / 'RESEARCH_FRONT_MATTER.md'
 DEST = OUT / 'RESEARCH_FRONT_MATTER.pdf'
 text = SOURCE.read_text(encoding='utf-8')
@@ -173,9 +172,9 @@ header strong{font-size:17px}nav{display:flex;gap:7px}button,a{font:inherit}butt
 button[aria-pressed="true"]{background:#253950;color:white;border-color:#253950}a{color:#284d79}main{display:grid;grid-template-columns:minmax(560px,1fr) 310px;gap:22px;padding:20px 24px;height:calc(100vh - 78px)}
 iframe{width:100%;height:100%;background:white;border:1px solid #d5d7da}aside{background:white;padding:24px;overflow:auto}aside h1{font-size:20px;line-height:1.5;margin:0 0 16px}aside p{font-size:14px;line-height:1.9;margin:0 0 22px}aside h2{font-size:14px;margin:24px 0 6px}small{display:block;color:#616775;line-height:1.8;font-size:12px;margin-top:30px}.links{margin-left:auto;font-size:13px;display:flex;gap:15px}
 @media(max-width:950px){main{grid-template-columns:1fr;height:auto}iframe{height:80vh}aside{min-height:300px}}@media print{header,aside{display:none}main{display:block;padding:0}}
-</style><header><strong>Re:Found 논문 원고</strong><nav aria-label="원고 페이지">NAV</nav><div class="links"><a href="../../../output/paper/RESEARCH_FRONT_MATTER.pdf" target="_blank">PDF 열기</a><a href="RESEARCH_FRONT_MATTER.md">편집용 원문</a></div></header>
-<main><iframe id="paper" title="논문 원고 PDF" src="../../../output/paper/RESEARCH_FRONT_MATTER.pdf#page=1&view=FitH"></iframe><aside id="note"></aside></main>
-<script>const notes=NOTES;function show(i){const n=notes[i];document.getElementById('paper').src='../../../output/paper/RESEARCH_FRONT_MATTER.pdf#page='+(i+1)+'&view=FitH';const aside=document.getElementById('note');aside.replaceChildren();function add(tag,txt){const e=document.createElement(tag);e.textContent=txt;aside.appendChild(e)}add('h1',n[0]);add('p',n[1]);n[2].forEach(x=>{add('h2',x[0]);add('p',x[1])});add('small','오른쪽은 이해를 돕는 설명입니다. 제출·공유용 원고는 왼쪽의 4쪽 PDF를 사용하세요.');document.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',i===j?'true':'false'))}document.querySelectorAll('button').forEach((b,i)=>b.addEventListener('click',()=>show(i)));show(0)</script></html>'''
+</style><header><strong>Re:Found 논문 원고</strong><nav aria-label="원고 페이지">NAV</nav><div class="links"><a href="RESEARCH_FRONT_MATTER.pdf" target="_blank">PDF 열기</a><a href="RESEARCH_FRONT_MATTER.md">편집용 원문</a></div></header>
+<main><iframe id="paper" title="논문 원고 PDF" src="RESEARCH_FRONT_MATTER.pdf#page=1&view=FitH"></iframe><aside id="note"></aside></main>
+<script>const notes=NOTES;function show(i){const n=notes[i];document.getElementById('paper').src='RESEARCH_FRONT_MATTER.pdf#page='+(i+1)+'&view=FitH';const aside=document.getElementById('note');aside.replaceChildren();function add(tag,txt){const e=document.createElement(tag);e.textContent=txt;aside.appendChild(e)}add('h1',n[0]);add('p',n[1]);n[2].forEach(x=>{add('h2',x[0]);add('p',x[1])});add('small','오른쪽은 이해를 돕는 설명입니다. 제출·공유용 원고는 왼쪽의 4쪽 PDF를 사용하세요.');document.querySelectorAll('button').forEach((b,j)=>b.setAttribute('aria-pressed',i===j?'true':'false'))}document.querySelectorAll('button').forEach((b,i)=>b.addEventListener('click',()=>show(i)));show(0)</script></html>'''
 viewer = viewer.replace('NAV',''.join(f'<button aria-pressed="false">{i+1}쪽 {label}</button>' for i,label in enumerate(['요약','서론','배경','관련 연구'])))
 viewer = viewer.replace('NOTES',notes_json)
 (HERE/'RESEARCH_FRONT_MATTER_VIEW.html').write_text(viewer,encoding='utf-8')

@@ -3,7 +3,7 @@
 Examples (from the repository root)::
 
     python scripts/benchmarks/vision_pipeline.py --threads 1 --output build/vision-current.json
-    python scripts/benchmarks/vision_pipeline.py --source-zip output/records/2026-09-18-vision-review/source-before.zip
+    python scripts/benchmarks/vision_pipeline.py --source-zip docs/records/2026-09-18-vision-review/source-before.zip
 
 The loop cases run the actual VisionMonitor._run with a generated camera and a
 virtual camera clock. Real CPU work is timed; capture blocking, DB, HTTP, remote

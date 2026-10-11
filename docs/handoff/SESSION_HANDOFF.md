@@ -24,7 +24,7 @@
 
 불필요한 제작 중간 파일 13개 대상·79개 파일, 약 8.43MiB를 삭제했다. 삭제 직후 보존 파일 495개의 해시가 일치했다. 최종 PPT·렌더·제작 스크립트·화면 소스·검사 로그·기존 소스와 데이터는 보존했다. 정리 결과는 커밋 `0279a75`까지의 Git 이력의 `output/maintenance/2026-10-02-session-close/SESSION_STATUS.json`을 따른다. 첫 검토용 렌더는 정리했으므로 과거 `check_final.py`의 해당 비교는 삭제 전 해시와 종료 검사 원장으로 대체한다. 이번에는 앱·Pi·AI 실험, 커밋·push를 하지 않았다.
 
-**2026-10-02 내용 개선 후속:** 최신본은 [v5 내용 개선본](../../output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx)이다. 우산 사용 시나리오·설계 이유·관리자 업무·구체적인 오류 검사와 최종보고의 필수 과제를 보강했다. 3회 리허설·40건 파일럿은 제안 목표이고 정량 결과가 아니다. 전체 PowerPoint 검토 근거는 `output/records/2026-10-02-midterm-content-review/FINAL_CHECKS.json`, 생성 원본은 `docs/presentation/midterm/build_midterm_v5.mjs`다. 실제 Pi 캡처·정량 결과·공식 진행률은 추가 근거가 필요하다. v3·v4와 기존 실기 기록을 보존했다. 아래 v4 작업은 이전 경과다.
+**2026-10-02 내용 개선 후속:** 최신본은 [v5 내용 개선본](../presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx)이다. 우산 사용 시나리오·설계 이유·관리자 업무·구체적인 오류 검사와 최종보고의 필수 과제를 보강했다. 3회 리허설·40건 파일럿은 제안 목표이고 정량 결과가 아니다. 전체 PowerPoint 검토 근거는 `docs/records/2026-10-02-midterm-content-review/FINAL_CHECKS.json`, 생성 원본은 `docs/presentation/midterm/build_midterm_v5.mjs`다. 실제 Pi 캡처·정량 결과·공식 진행률은 추가 근거가 필요하다. v3·v4와 기존 실기 기록을 보존했다. 아래 v4 작업은 이전 경과다.
 
 **2026-10-02 발표 후속 갱신:** 최신 발표본은 v4 개선본 (이전 파일, 2026-10-07 정리)이다. 사용자 요청의 7개 대항목·34개 세부 항목을 유지하고 최신 Git·시연·개발 검사 기록과 현재 일정으로 보완했다. 14·15쪽에는 출처를 명시한 기존 개발 검사 화면을 넣었으며 실제 Pi 캡처는 미확보다. 진행률·정량 성능은 근거가 없어 미확정·미측정으로 표시한다. 실제 PowerPoint의 전체 렌더와 한글 줄바꿈 검토는 커밋 `0279a75`까지의 Git 이력의 `output/maintenance/2026-10-02-midterm-review/`에 기록한다. 새 생성 원본은 `docs/presentation/midterm/build_midterm_v4.mjs`이며 기존 v3·앱·배포·논문은 보존했다. 아래 v3 기본 재개·미커밋 정리 설명은 과거 기록이다. 이번 작업 시작 HEAD는 `69eb6ff`였고 기존 정리는 커밋 완료 상태였다. 다음 작업은 개선본 검토와 실제 캡처 보완이며 새 Pi·AI 시험을 수행한 것이 아니다.
 
@@ -36,7 +36,7 @@
 
 최신 원문은 [WINDOWS_HOTSPOT_GUIDE.md](../guides/WINDOWS_HOTSPOT_GUIDE.md)다. 현재 구성은 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**이다. 9월 29일 `wlan0` 활성화 로그, Windows에서 터널 실행 위치를 고친 뒤 웹 화면·OpenAI 동작 성공 보고가 추가됐다. 자동 연결 우선순위 명령 결과·새 구성의 정상 종료/전원 재인가·랜선 없는 자동 연결·영상/AI 복귀는 아직 없다. 친구 Tailscale 공유는 별도 미확인이며 SSH 방식의 선행 조건이 아니다. 실행·종료·오류 대응은 원문 2–5절, 경과는 6–7절, 남은 시험은 8절을 따른다.
 
-9월 30일에는 이 내용을 관련 안내에 동기화하고 Git 대량 반영을 점검했다. 복사된 실행 소스의 설치 배포본 일치, Python 272개·Node 37개 통과, 격리된 실제 서버 시작·HTTP 응답을 확인했다. 검사 결과와 남은 Git 관리 항목은 [저장소 점검 보고서](../../output/records/2026-09-30-sync-review/REVIEW.md)에 둔다. 과거 검사 JSON·PPTX·논문 원고는 그대로 보존했다. 아래 9월 22일 절의 환경·정리 기록은 당시 사실이며 현재 시연 재개는 위 내용과 4절이 우선한다.
+9월 30일에는 이 내용을 관련 안내에 동기화하고 Git 대량 반영을 점검했다. 복사된 실행 소스의 설치 배포본 일치, Python 272개·Node 37개 통과, 격리된 실제 서버 시작·HTTP 응답을 확인했다. 검사 결과와 남은 Git 관리 항목은 [저장소 점검 보고서](../records/2026-09-30-sync-review/REVIEW.md)에 둔다. 과거 검사 JSON·PPTX·논문 원고는 그대로 보존했다. 아래 9월 22일 절의 환경·정리 기록은 당시 사실이며 현재 시연 재개는 위 내용과 4절이 우선한다.
 
 **커밋 전 정리 후속:** 사용자 요청에 따라 테스트 프로필 3개·이번 검사 runtime/합성 데이터·이전 빈 test-runtime·중간 파일을 삭제했다. 6,079개 파일, 약 237.96MiB이며 삭제 직후 보존 396개 파일의 해시가 일치했다. Git 삭제 715개는 모두 브라우저 테스트 프로필이다. 문서 위치·최종 검증 로그·소스 백업·PPT/PDF·최종 렌더·실제 data·dist는 유지했다. 아직 커밋하지 않았다. 아래 과거 ‘프로필·test-runtime 보존’은 9월 22일 당시 기록이며 현재는 삭제 완료다.
 
@@ -130,13 +130,13 @@
 
 | 검사 시점 | 보존된 결과 | 해석 |
 |---|---|---|
-| 9월 22일 시연 초기화 | Python **272**, Node **37**, Chromium **7** 통과 | 임시 DB·합성 입력을 쓴 개발 검사. [검증 요약](../../output/records/2026-09-22-quick-reset/VALIDATION.json) |
-| 같은 날 네트워크 안내·배포 | 배포 검사 **6**, 패키지 47개 파일 대조 | [배포 당시 요약](../../output/records/2026-09-22-network-plan/VALIDATION.json) |
+| 9월 22일 시연 초기화 | Python **272**, Node **37**, Chromium **7** 통과 | 임시 DB·합성 입력을 쓴 개발 검사. [검증 요약](../records/2026-09-22-quick-reset/VALIDATION.json) |
+| 같은 날 네트워크 안내·배포 | 배포 검사 **6**, 패키지 47개 파일 대조 | [배포 당시 요약](../records/2026-09-22-network-plan/VALIDATION.json) |
 | 같은 날 사용자 Pi 실행 | 위 로그·성공 보고 | [실기 기록](../guides/PI_ACCEPTANCE_CHECKLIST.md). 논문 정량 결과 아님 |
-| 9월 22일 인계 정리 | [문서·링크·해시 검증](../../output/records/2026-09-22-network-plan/handoff-doc-validation.json) | 당시 앱 테스트 재실행 아님 |
-| 9월 30일 Git 반영 점검 | Python **272**, Node **37** 재실행 통과 | [점검 보고서](../../output/records/2026-09-30-sync-review/REVIEW.md). 격리된 DB·합성 입력, 실제 Pi/AI/SMTP·브라우저 실기 재실행 아님 |
+| 9월 22일 인계 정리 | [문서·링크·해시 검증](../records/2026-09-22-network-plan/handoff-doc-validation.json) | 당시 앱 테스트 재실행 아님 |
+| 9월 30일 Git 반영 점검 | Python **272**, Node **37** 재실행 통과 | [점검 보고서](../records/2026-09-30-sync-review/REVIEW.md). 격리된 DB·합성 입력, 실제 Pi/AI/SMTP·브라우저 실기 재실행 아님 |
 
-두 기존 `VALIDATION.json`의 SD 미설치/실기 미실시 플래그와 앞선 패키지 해시는 **당시 스냅샷**이다. 9월 22일 설치 경과는 [당시 세션 상태](../../output/records/2026-09-22-network-plan/SESSION_STATUS.json)에 보존하며, 후속 진행은 이 문서·실기 확인표·핫스팟 백업(`docs/guides/WINDOWS_HOTSPOT_GUIDE.md`)을 따른다. 9월 30일에도 기존 `dist/refound-pi.tar.gz`는 보존했다. 패키징 스크립트에는 최신 핫스팟 문서를 포함하도록 추가하고 maintenance 폴더에 별도 검사용 패키지를 만들었다. 설치된 패키지 안의 안내 문서는 현재 저장소 안내보다 오래될 수 있다.
+두 기존 `VALIDATION.json`의 SD 미설치/실기 미실시 플래그와 앞선 패키지 해시는 **당시 스냅샷**이다. 9월 22일 설치 경과는 [당시 세션 상태](../records/2026-09-22-network-plan/SESSION_STATUS.json)에 보존하며, 후속 진행은 이 문서·실기 확인표·핫스팟 백업(`docs/guides/WINDOWS_HOTSPOT_GUIDE.md`)을 따른다. 9월 30일에도 기존 `dist/refound-pi.tar.gz`는 보존했다. 패키징 스크립트에는 최신 핫스팟 문서를 포함하도록 추가하고 maintenance 폴더에 별도 검사용 패키지를 만들었다. 설치된 패키지 안의 안내 문서는 현재 저장소 안내보다 오래될 수 있다.
 
 ## 6. 다음 발표 작업의 구체적인 시작점
 
@@ -146,7 +146,7 @@
 - **캡처:** 11쪽 S1 Git 이력, 14쪽 S2–S4 동일 물품 등록·이동·회수, 15쪽 S5 실제 Pi 관리자 화면. 현재 폴더는 Git checkout이며 점검 시작 커밋은 `956b346`이다. 대량 파일 반영 시점과 각 기능의 실제 개발일을 구분하고 커밋 수로 팀 기여율을 추정하지 않는다. UI에 ID가 보이지 않으므로 가이드의 읽기 전용 API 조회 후 이미지 아래 실제 ID를 적는다.
 - **빈 수치:** 9쪽 공식 진행률, 19쪽 정량 성능·표본 수·성공/오류 사례. 산정 기준과 원시 근거 없이 숫자로 채우지 않는다. PPT의 24쪽 수치는 별도 PC 합성 개발 검사다.
 - **추가 확인 결과:** 새 실기를 하면 10·22쪽 상태와 실기 확인표를 함께 갱신한다. 사용자 성공 보고, 로그 확인, 정량 측정을 계속 구분한다.
-- 기존 최신 논문 발표는 [PDF 캡처 4장 PPTX](../../output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx)다. 왼쪽에 PDF 각 페이지를 그대로 넣고 오른쪽에 짧은 설명을 두는 4:3 자료다. 당시 사용자는 본문 재조판·대본을 원하지 않았다. 새 발표의 형식에 자동 적용하지 말고 확인한다.
+- 기존 최신 논문 발표는 [PDF 캡처 4장 PPTX](../presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx)다. 왼쪽에 PDF 각 페이지를 그대로 넣고 오른쪽에 짧은 설명을 두는 4:3 자료다. 당시 사용자는 본문 재조판·대본을 원하지 않았다. 새 발표의 형식에 자동 적용하지 말고 확인한다.
 - [8월 16일 프로젝트 발표 원고](../presentation/2026-08-draft/PRESENTATION.md)는 구성 참고용이다. 73개 테스트·과거 기본값·모든 초기화가 백업한다는 설명을 현재 사실로 옮기지 않는다.
 - 발표 근거는 현재 코드·README → 9월 18일 검토 문서 → 9월 22일 검사 로그와 실제 Pi 확인 기록 순으로 찾는다. 합성 브라우저 캡처와 실제 Pi 화면을 구분한다. 이번 실제 Pi 화면 캡처는 확보하지 않았다.
 - 최신 대시보드 시연 초기화, 기본 실물 흐름·재부팅·본인 PC HTTPS 성공은 설명할 수 있다. 9월 29일 Windows 핫스팟·노트북 SSH 웹·OpenAI 성공 보고를 추가 설명할 수 있다. 새 구성의 전원 재인가·무선 단독 복귀와 친구 Tailscale은 미확인으로 표시한다. 현장 정확도·장시간 안정성·비용 절감률·평균 지연을 만들지 않는다.
@@ -156,8 +156,8 @@
 
 [논문 시작점](../paper/README.md)을 따른다. `PAPER_DRAFT_JDCS.md`와 PDF는 **9월 16일 실측 전 원고**이며 9월 18·22일 구현과 동기화되지 않았다. 참고문헌 17개, 고유 placeholder 297종, 표 13개·그림 4개·수식 6개라는 기록을 유지한다. privacy 부팅 복원은 이미 구현됐으므로 다시 미구현으로 다루지 않는다.
 
-- [전체 PDF](../../output/paper/REFOUND_FULL_MANUSCRIPT.pdf): 19쪽
-- [발표 전반부 PDF](../../output/paper/RESEARCH_FRONT_MATTER.pdf): 4쪽
+- [전체 PDF](../paper/REFOUND_FULL_MANUSCRIPT.pdf): 19쪽
+- [발표 전반부 PDF](../paper/briefing/RESEARCH_FRONT_MATTER.pdf): 4쪽
 - 기존 최신 PPTX: 위 PDF 캡처 4장. `REFOUND_EARLY_PAPER_FINAL.pptx` 6장은 이전 시안.
 - `docs/paper/manuscript/revise_manuscript.py`는 편집을 덮어쓸 수 있어 실행하지 않는다. 기존 생성 명령은 [9월 16일 인계](PAPER_SESSION_HANDOFF_2026-09-16.md)를 읽는다.
 
