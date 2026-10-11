@@ -12,41 +12,22 @@ from __future__ import annotations
 
 import argparse
 import csv
-import json
 import sys
 import time
-import urllib.error
-import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 
-FIELDS = (
-    "timestamp_utc", "ok", "phase", "camera_connected", "fps", "processing_ms",
-    "frame_sequence", "detected_changes", "pending_changes", "error",
-)
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from experiments.live_session import HEALTH_FIELDS as FIELDS, Api, ApiError, health_row  # noqa: E402
 
 
 def sample(url: str, timeout: float) -> dict[str, object]:
-    row: dict[str, object] = {"timestamp_utc": datetime.now(timezone.utc).isoformat(timespec="seconds")}
     try:
-        with urllib.request.urlopen(url, timeout=timeout) as response:
-            payload = json.load(response)
-    except (urllib.error.URLError, OSError, ValueError) as exc:
-        row.update(ok=0, error=str(exc)[:200])
-        return row
-    camera = payload.get("camera") or {}
-    row.update(
-        ok=int(bool(payload.get("ok"))),
-        phase=camera.get("phase", ""),
-        camera_connected=int(bool(camera.get("camera_connected"))),
-        fps=camera.get("fps", ""),
-        processing_ms=camera.get("processing_ms", ""),
-        frame_sequence=camera.get("frame_sequence", ""),
-        detected_changes=camera.get("detected_changes", ""),
-        pending_changes=camera.get("pending_changes", ""),
-        error="",
-    )
-    return row
+        return health_row(Api(url, timeout=timeout).get(""))
+    except ApiError as exc:
+        return health_row(None, str(exc))
 
 
 def main(argv: list[str] | None = None) -> int:

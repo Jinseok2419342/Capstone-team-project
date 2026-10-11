@@ -235,28 +235,52 @@ def _metadata(raw: Any) -> dict[str, Any]:
     return value if isinstance(value, dict) else {}
 
 
-def summarize_database(
-    path: Path, *, since: datetime | None = None, until: datetime | None = None,
-) -> dict[str, Any]:
-    uri = Path(path).resolve().as_uri() + "?mode=ro"
-    connection = sqlite3.connect(uri, uri=True)
-    connection.row_factory = sqlite3.Row
-    try:
-        rows = connection.execute(
-            "SELECT type, item_id, metadata_json, created_at FROM activities ORDER BY created_at, id"
-        ).fetchall()
-    finally:
-        connection.close()
+def _activity_tuples(
+    rows: Iterable[dict[str, Any]], since: datetime | None, until: datetime | None,
+) -> list[tuple[str, Any, dict[str, Any], datetime]]:
     activities = []
     for row in rows:
-        created = _parse_time(row["created_at"])
+        created = _parse_time(row.get("created_at"))
         if created is None:
             continue
         if since is not None and created < since:
             continue
         if until is not None and created > until:
             continue
-        activities.append((row["type"], row["item_id"], _metadata(row["metadata_json"]), created))
+        meta = row.get("metadata")
+        if not isinstance(meta, dict):
+            meta = _metadata(row.get("metadata_json"))
+        activities.append((row.get("type"), row.get("item_id"), meta, created))
+    activities.sort(key=lambda a: a[3])
+    return activities
+
+
+def summarize_database(
+    path: Path, *, since: datetime | None = None, until: datetime | None = None,
+) -> dict[str, Any]:
+    """Summarize the activities table of a copied ``lost_items.db``."""
+    uri = Path(path).resolve().as_uri() + "?mode=ro"
+    connection = sqlite3.connect(uri, uri=True)
+    connection.row_factory = sqlite3.Row
+    try:
+        rows = connection.execute(
+            "SELECT id, type, item_id, metadata_json, created_at FROM activities ORDER BY created_at, id"
+        ).fetchall()
+    finally:
+        connection.close()
+    return summarize_activities([dict(row) for row in rows], since=since, until=until)
+
+
+def load_activities(path: Path) -> list[dict[str, Any]]:
+    """Read ``activities.json`` written by the live experiment session."""
+    data = json.loads(_read_text(Path(path)))
+    return data if isinstance(data, list) else data.get("activities", [])
+
+
+def summarize_activities(
+    rows: Iterable[dict[str, Any]], *, since: datetime | None = None, until: datetime | None = None,
+) -> dict[str, Any]:
+    activities = _activity_tuples(rows, since, until)
 
     def count(kind: str, source: str | None = None) -> int:
         return sum(
@@ -463,6 +487,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Re:Found 논문 결과표 생성")
     parser.add_argument("--trials", required=True, type=Path, help="실험 기록지 CSV")
     parser.add_argument("--db", type=Path, help="Pi에서 복사한 lost_items.db")
+    parser.add_argument("--activities", type=Path, help="실험 진행 도우미가 저장한 activities.json(--db 대신)")
     parser.add_argument("--health", type=Path, help="poll_health.py 출력 CSV")
     parser.add_argument("--resources", type=Path, help="monitor_pi_resources.py 출력 CSV")
     parser.add_argument("--since", help="DB 집계 시작 시각(ISO, 선택)")
@@ -471,6 +496,35 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--idle-end", help="무인 감시 종료 시각")
     parser.add_argument("--output-dir", type=Path, default=Path("paper-results"))
     return parser
+
+
+def build_summary(
+    trials_path: Path, *, activities: list[dict[str, Any]] | None = None,
+    health: Path | None = None, resources: Path | None = None,
+    idle_start: datetime | None = None, idle_end: datetime | None = None,
+) -> dict[str, Any]:
+    """Library entry used by the live experiment session."""
+    summary: dict[str, Any] = {"trials": summarize_trials(read_trials(trials_path))}
+    if activities is not None:
+        summary["database"] = summarize_activities(activities, until=idle_start)
+        if idle_start and idle_end and idle_end > idle_start:
+            summary["idle"] = {
+                "hours": (idle_end - idle_start).total_seconds() / 3600,
+                "false_events": summarize_activities(activities, since=idle_start, until=idle_end)["detected_events"],
+            }
+    if health is not None and Path(health).exists():
+        summary["health"] = summarize_health(health)
+    if resources is not None and Path(resources).exists():
+        summary["resources"] = summarize_resources(resources)
+    return summary
+
+
+def write_outputs(summary: dict[str, Any], output_dir: Path) -> Path:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    target = output_dir / "paper_tables.md"
+    target.write_text(render_markdown(summary), encoding="utf-8")
+    (output_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+    return target
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -484,26 +538,27 @@ def main(argv: Sequence[str] | None = None) -> int:
     if (args.idle_start and idle_start is None) or (args.idle_end and idle_end is None):
         print("시각 형식 오류: 예) 2026-10-20T14:30", file=sys.stderr)
         return 2
-    if args.db:
+    if args.db or args.activities:
+        rows = load_activities(args.activities) if args.activities else None
+
+        def summarize(since, until):
+            if rows is not None:
+                return summarize_activities(rows, since=since, until=until)
+            return summarize_database(args.db, since=since, until=until)
+
         until = _parse_time(args.until) or idle_start
-        summary["database"] = summarize_database(args.db, since=_parse_time(args.since), until=until)
+        summary["database"] = summarize(_parse_time(args.since), until)
         if idle_start and idle_end and idle_end > idle_start:
-            idle = summarize_database(args.db, since=idle_start, until=idle_end)
             summary["idle"] = {
                 "hours": (idle_end - idle_start).total_seconds() / 3600,
-                "false_events": idle["detected_events"],
+                "false_events": summarize(idle_start, idle_end)["detected_events"],
             }
     if args.health:
         summary["health"] = summarize_health(args.health)
     if args.resources:
         summary["resources"] = summarize_resources(args.resources)
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-    markdown = render_markdown(summary)
-    (args.output_dir / "paper_tables.md").write_text(markdown, encoding="utf-8")
-    (args.output_dir / "summary.json").write_text(
-        json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print(f"결과표를 만들었습니다: {args.output_dir / 'paper_tables.md'}")
+    target = write_outputs(summary, args.output_dir)
+    print(f"결과표를 만들었습니다: {target}")
     return 0
 
 

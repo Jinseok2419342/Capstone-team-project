@@ -10,7 +10,7 @@
 |---|---|
 | 원고 읽기 | [2단 근사 조판 PDF — 현재 7쪽(사진·결과 전)](../../output/pdf/REFOUND_FULL_MANUSCRIPT.pdf) |
 | 원고 수정 | [편집 원고](PAPER_DRAFT_JDCS.md) |
-| **실험하기** | [실험 진행 안내](EXPERIMENT_GUIDE.md) → [기록지](TRIAL_SHEET_TEMPLATE.csv) |
+| **실험하기** | [실험 진행 안내](EXPERIMENT_GUIDE.md) → `python scripts\experiments\run_experiment.py` |
 | 결과 넣기 | [실측값 입력표 — 32종](RESULTS_FILL_SHEET.md) |
 | 현재 상태 | [개정 상태](REVISION_STATUS.md) |
 
@@ -19,7 +19,7 @@
 - 투고처: **디지털콘텐츠학회논문지(JDCS)**. 심사 원고는 학회 홈페이지에서 내려받는 **공식 HWP 양식** 그대로 작성한다(A4 2단, 신명조 9.1pt, 국문 요약 약 500자, 영문 요약 약 200단어). 이 저장소의 PDF는 쪽수 확인용 근사 조판이고, 최종본은 HWP로 옮긴다.
 - 논문 유형: 새 AI 모델이 아니라 **저사양 장치의 사건 기반 감지와 선택적 외부 AI 호출을 결합한 시스템 설계·구현·실험 논문**.
 - 제목: **저사양 엣지 장치에서의 사건 기반 장면 변화 감지와 선택적 멀티모달 추론을 이용한 분실물 관리 시스템**
-- 실험: 실제 보관대에서 100회(등록·이동·제거 각 20, 무변화 40) + 무인 1시간. 사용자는 기록지에 화면 결과와 AI 이름·분류 O/X만 적고, 나머지는 자동 기록·집계한다.
+- 실험: 실제 보관대에서 100회(등록·이동·제거 각 20, 무변화 40) + 무인 1시간. 진행 도우미가 화면 결과 판정·기록·집계를 자동으로 하므로 사용자는 안내대로 행동하고 Enter, 끝에 AI 이름 20개만 확인한다.
 - 원고 구성: 표 8개, 그림 6개(도식 3, 사진·캡처 3), 수식 2개, 알고리즘 1개, 참고문헌 18편.
 
 ## 이번 논문 범위에서 뺀 것
@@ -32,14 +32,14 @@
 |---|---|
 | `PAPER_DRAFT_JDCS.md` | 원고 원본. HWP로 옮길 기준본 |
 | `EXPERIMENT_GUIDE.md` | 실험 당일 순서, 기록 방법, 파일 모으기, 집계 명령 |
-| `TRIAL_SHEET_TEMPLATE.csv` | 100행이 미리 채워진 기록지(엑셀로 열기) |
+| `TRIAL_SHEET_TEMPLATE.csv` | 도우미를 쓸 수 없을 때의 손 기록지(100행 미리 채움) |
 | `RESULTS_FILL_SHEET.md` | 원고의 이중 대괄호 32종과 채우는 방법 |
 | `manuscript/build_manuscript.py` | 2단 근사 PDF와 도식 SVG 생성 |
 | `REFERENCES.bib` | 참고문헌 후보 모음(원고는 18편 사용) |
 | `VENUE_AND_RELATED_WORK_STRATEGY.md` | 투고처 비교·비용·심사 절차(9월 15일 조사) |
 | `PAPER_AI_HANDOFF.md`, `SESSION_HANDOFF_2026-09-16.md` | 9월 원고 당시 기록. 실험 설계 부분은 이번 축소판으로 대체됨 |
 
-자동 집계 도구: `scripts/experiments/poll_health.py`(노트북에서 처리 속도 기록), `scripts/experiments/monitor_pi_resources.py`(Pi 자원 기록), `scripts/experiments/make_paper_tables.py`(표 5–8 생성). 모두 표준 Python만으로 실행된다(자원 기록은 Pi 설치 환경 사용).
+실험 도구: `scripts/experiments/run_experiment.py`(진행 도우미: 결과 자동 판정, 처리 속도 기록, Pi 자원 기록 시작·회수, AI 이름 확인, 표 5–8 생성, `--resume`으로 이어하기). 손 기록 대안용으로 `poll_health.py`, `make_paper_tables.py`가 있다. 모두 노트북의 표준 Python만으로 실행된다(자원 기록은 기존 Pi 설치본의 `monitor_pi_resources.py`를 SSH로 실행).
 
 ## PDF 다시 만들기
 
