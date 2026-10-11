@@ -10,7 +10,7 @@
 - **현재 상태(실험 전):** 원고의 이중 대괄호 32종은 비어 있다. 그림 2·5·6 사진도 없다(PDF에는 ‘사진 입력 예정’ 상자). 실험 도우미는 가짜 API로만 검사했고 실제 Pi에서는 아직 돌려보지 않았다. 사용자가 본 실험 전에 짧은 시험 실행(`--out paper-test --rounds 0 --hand 2 --light 0 --shadow 0 --idle-minutes 0 --no-pi`)을 하도록 권했다. 판정 대기 시간(최소 6초, 무반응 18초, 제거 30초)이 실제 장비에서 맞지 않으면 `experiments/live_session.py` 상단 상수를 조정한다.
 - **실험 결과를 받으면:** `paper-run-…/paper-results/paper_tables.md`의 표 5–8을 원고에 그대로 넣고 ‘본문 자리표시자 값’ 목록을 옮긴다. 장비·환경 항목과 `[[MAIN_ERROR]]`, `[[FAIL_CASES]]`는 사용자 메모와 `trials.csv` 메모로 작성한다. 사진은 `docs/paper/manuscript/figures/figure-2.png`, `figure-5.png`, `figure-6.png`로 넣고 `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만든다. 같은 수치는 최종보고 PPT 19쪽에, 캡처는 14·15쪽에 쓸 수 있다.
 - **검증 환경:** 새 클라우드 세션에서는 `python -m venv` 후 `pip install -r requirements-dev.txt`를 하면 전체 테스트(현재 281개 통과)를 돌릴 수 있다. PDF 빌드에는 `reportlab`, `pypdf`가 추가로 필요하다. Linux에서는 WenQuanYi 글꼴로 대체한다.
-- **Git:** 이 작업은 브랜치 `claude/laughing-goldberg-kh24x6`의 커밋 `9ed7193`, `b0a3fea`와 인계 보완 커밋에 있다. 사용자 요청으로 이 브랜치에 push했다. `main` 반영(PR·rebase 머지)은 사용자가 요청할 때만 한다. 새 세션이 `main`에서 시작해 이 절이 보이지 않으면 이 브랜치를 확인한다.
+- **Git:** 이 작업은 브랜치 `claude/laughing-goldberg-kh24x6`의 커밋 `9ed7193`, `b0a3fea`와 인계 보완 커밋에 있다. 사용자 요청으로 push한 뒤 PR을 rebase 방식으로 `main`에 반영했다(작성자는 사용자 계정). 이후 작업도 같은 규칙을 따른다.
 
 ## 최신 작업 선택·정리 — 2026-10-07
 
