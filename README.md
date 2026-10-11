@@ -52,6 +52,7 @@
 | API 토큰·비용 예측 자료 | [docs/02 캡스톤 API 토큰 및 가격 예측.pdf](<docs/02 캡스톤 API 토큰 및 가격 예측.pdf>) |
 | 회의록 | [docs/Meeting_Minutes](docs/Meeting_Minutes) |
 | 현재 발표 준비 | [발표 방향·개선점·검증 근거](docs/IMPROVEMENTS.md) |
+| 졸업작품집 브로셔 (최종) | [PDF 2쪽](<output/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP 편집본](<output/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
 | 과거 프로젝트 발표 원고 | [8월 16일 발표 초안 — 재검토 후 활용](docs/presentation/PRESENTATION.md) |
 | Raspberry Pi 설치·운영 | [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
 | 새 SD 재설치·첫 접속 | [짧은 설치 순서](docs/guides/FRESH_SD_START.md) |
