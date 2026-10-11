@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-11",
+  "request": "사용자가 다른 환경에서 완성한 졸업작품집 브로셔 최종본을 프로젝트에 정리하고 관련 문서를 최신화",
+  "start_head": "d340c5b",
+  "brochure_status": "complete",
+  "final": {
+    "hwp": {
+      "path": "output/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp",
+      "moved_from": "2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp",
+      "sha256": "c45b3a5194b5b31eb6d18c11211480e695d71293d876bd7d9e52dcfa3ac82226"
+    },
+    "pdf": {
+      "path": "output/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf",
+      "moved_from": "2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf",
+      "sha256": "22aace78384650a4e3acb3c74545b823bda83fb1ef8fbd3d34d837626c9922eb",
+      "pages": 2,
+      "page_size": "A4"
+    },
+    "class_from_filename": "A",
+    "roles_in_final": {"장진석": "HW/SW 구현", "권기원": "시연 도움"}
+  },
+  "school_template": {
+    "path": "output/brochure/template/[붙임 1] 2026학년도 졸업작품집 브로셔_학과명_반_팀명(샘플).hwp",
+    "moved_from": "[붙임 1] 2026학년도 졸업작품집 브로셔_학과명_반_팀명(샘플).hwp",
+    "sha256": "c7e6d4d13b73fbe0f452990c88cf044bdb3abe7333bafbe90631f5ed5094b454"
+  },
+  "deleted_draft_files": [
+    "output/brochure/[붙임 1] 2026학년도 졸업작품집 브로셔_인공지능소프트웨어학과_반미입력_상부상조_초안.hwp",
+    "output/brochure/REFOUND_BROCHURE_PREVIEW.pdf",
+    "output/brochure/REFOUND_BROCHURE_TEXT.md",
+    "output/brochure/REFOUND_BROCHURE_GUIDE.md",
+    "output/brochure/images/ (구성도 PNG 3개, 사진 자리 PNG 3개)",
+    "output/maintenance/2026-10-07-brochure/ (초안 검사 JSON 2개, 초안 렌더 PNG 2개)"
+  ],
+  "deleted_recoverable_from_git": "d340c5b",
+  "not_changed": "앱 코드·테스트·배포·Pi·논문·PPT 파일. 앱·Pi·AI·SMTP 검사는 재실행하지 않음. 과거 maintenance JSON은 당시 기록으로 수정하지 않음",
+  "git": "로컬 커밋만 수행, 사용자 요청으로 원격 push하지 않음"
+}
