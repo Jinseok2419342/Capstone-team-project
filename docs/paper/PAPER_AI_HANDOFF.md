@@ -1,5 +1,7 @@
 # Re:Found 논문 작성용 AI 인계 패킷
 
+> **2026-10-11 주의:** 원고와 실험 계획을 축소 개정했다. 이 문서의 4장 이후 실험 설계(D_pair·D_stream·D_vlm·D_fault, B0–B2, V1–V4, bootstrap·McNemar, 297개 입력 항목)는 **폐기된 이전 계획**이다. 현재 기준은 [논문 안내](README.md), [실험 진행 안내](EXPERIMENT_GUIDE.md), [입력표 32종](RESULTS_FILL_SHEET.md)이다. 코드 사실과 주장 금지선은 참고하되 9월 18·22일 변경(사건 반영 확인 후 기준 갱신, AI 거절도 확인 필요로 보존, JSON 스키마)과 대조한다.
+
 **2026-09-30 진행 반영:** [9월 29일 Windows 핫스팟 백업](../../REFOUND_WINDOWS_HOTSPOT_GUIDE.md)에는 Pi Wi-Fi 활성화 로그와 노트북 SSH 웹·OpenAI 동작의 사용자 성공 보고가 있습니다. 새 네트워크의 자동 연결·전원 재인가·무선 단독 복귀는 미확인입니다. 이는 논문용 정량 실험이나 개별 모델/응답 검증이 아닙니다. 기존 실측 전 원고·PDF·PPTX는 보존했고, 아래 과거 구현 설명은 최신 코드와 대조해야 합니다.
 
 > 최신 사용자 결정과 재개 위치는 [대화 인계 요약](SESSION_HANDOFF_2026-09-16.md)을 먼저 읽는다. 최신 발표본은 PDF 캡처 4장 `REFOUND_PDF_CAPTURE_BRIEFING.pptx`이며, 실제 성능 측정은 아직 수행하지 않았다.
