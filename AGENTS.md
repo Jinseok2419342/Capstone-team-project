@@ -7,7 +7,10 @@
 - 실험은 `docs/paper/EXPERIMENT_GUIDE.md` 하나로 축소했다: 실물 100회(등록·이동·제거 각 20, 손·조명·그림자 무변화 40) + 무인 1시간, 하루 약 2시간 반. 후속 요청으로 사용자 부담을 더 줄여 **진행 도우미 `scripts/experiments/run_experiment.py`(`experiments/live_session.py`)**를 추가했다: 시도 안내 → 사용자 Enter → `/api/dashboard` 활동 기록으로 결과 자동 판정, `/api/health` 처리 속도 기록, SSH로 Pi `monitor_pi_resources.py` 시작·회수, AI 이름 확인(분류 자동 채점), 무인 감시 시각 기록, 끝나면 `paper-results/paper_tables.md` 생성, `--resume` 이어하기. 손 기록지(`TRIAL_SHEET_TEMPLATE.csv`)+`make_paper_tables.py`는 대안이다. 같은 결과·캡처를 최종보고 PPT 14·15·19쪽에도 쓰도록 안내했다.
 - **폐기한 이전 계획:** D_pair/D_stream/D_vlm/D_fault, B0–B2 baseline, V1–V4, bootstrap·McNemar, 297개 입력 항목, 장애 주입·8시간·전력. 아래 과거 절과 `PAPER_AI_HANDOFF.md`의 해당 지시를 따르지 않는다. 심사위원 요청이 있을 때만 추가를 검토한다. 이전 원고는 커밋 `55d59a9`에 있다. `PERFORMANCE_MEASUREMENT_START.md`와 두 CSV 템플릿은 삭제했다.
 - **다음 논문 작업:** 사용자의 실험 결과(`paper-run-…` 폴더, 사진, 장비 메모)를 받아 원고를 채우고 요약·6장·결론을 결과에 맞게 고친 뒤 PDF 재생성 → HWP 이식 안내. 결과를 지어내지 않는다. 앱 코드·Pi 배포는 바꾸지 않았다(새 스크립트는 노트북에서 실행하거나 기존 Pi 설치본을 사용).
-- 커밋은 사용자 작성자로 로컬 브랜치에만 했고 push하지 않았다(아래 10월 11일 커밋 규칙).
+- **현재 상태(실험 전):** 원고의 이중 대괄호 32종은 비어 있다. 그림 2·5·6 사진도 없다(PDF에는 ‘사진 입력 예정’ 상자). 실험 도우미는 가짜 API로만 검사했고 실제 Pi에서는 아직 돌려보지 않았다. 사용자가 본 실험 전에 짧은 시험 실행(`--out paper-test --rounds 0 --hand 2 --light 0 --shadow 0 --idle-minutes 0 --no-pi`)을 하도록 권했다. 판정 대기 시간(최소 6초, 무반응 18초, 제거 30초)이 실제 장비에서 맞지 않으면 `experiments/live_session.py` 상단 상수를 조정한다.
+- **실험 결과를 받으면:** `paper-run-…/paper-results/paper_tables.md`의 표 5–8을 원고에 그대로 넣고 ‘본문 자리표시자 값’ 목록을 옮긴다. 장비·환경 항목과 `[[MAIN_ERROR]]`, `[[FAIL_CASES]]`는 사용자 메모와 `trials.csv` 메모로 작성한다. 사진은 `docs/paper/manuscript/figures/figure-2.png`, `figure-5.png`, `figure-6.png`로 넣고 `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만든다. 같은 수치는 최종보고 PPT 19쪽에, 캡처는 14·15쪽에 쓸 수 있다.
+- **검증 환경:** 새 클라우드 세션에서는 `python -m venv` 후 `pip install -r requirements-dev.txt`를 하면 전체 테스트(현재 281개 통과)를 돌릴 수 있다. PDF 빌드에는 `reportlab`, `pypdf`가 추가로 필요하다. Linux에서는 WenQuanYi 글꼴로 대체한다.
+- **Git:** 이 작업은 브랜치 `claude/laughing-goldberg-kh24x6`의 커밋 `9ed7193`, `b0a3fea`와 인계 보완 커밋에 있다. 사용자 요청으로 이 브랜치에 push했다. `main` 반영(PR·rebase 머지)은 사용자가 요청할 때만 한다. 새 세션이 `main`에서 시작해 이 절이 보이지 않으면 이 브랜치를 확인한다.
 
 ## 최신 작업 선택·정리 — 2026-10-07
 
@@ -17,7 +20,7 @@
 - **Git 밖의 로컬 전용 파일:** `.env`, `.venv/`, `data/`, `dist/`는 `.gitignore` 대상이라 새 clone·클라우드 세션에는 없다. 문서에 나오는 `dist/refound-pi.tar.gz`나 실제 DB·사진이 보이지 않아도 삭제된 것이 아니다. 배포 파일이 필요하면 Windows에서 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만든다.
 - **커밋·푸시 규칙(2026-10-11 사용자 지정):** 커밋 작성자·커미터는 사용자 `Jinseok2419342 <fjwkrtua@dongyang.ac.kr>`로 하고 Claude 공동 작성자(`Co-Authored-By`) 줄을 넣지 않는다. 원격 push, PR 생성·머지는 사용자가 요청할 때만 한다. `main`은 PR을 rebase 방식으로 머지해 사용자 커밋만 남긴다.
 - **PPT:** `output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx` 30장과 `docs/presentation/midterm/build_midterm_v5.mjs`를 사용한다. 실제 캡처·공식 진행률·AI 정량 결과는 추가 근거가 필요하다. 논문 전반부의 `REFOUND_PDF_CAPTURE_BRIEFING.pptx` 4장은 별도 목적의 최신 발표다.
-- **논문:** `docs/paper/README.md`부터 시작한다. 9월 16일 실측 전 원고이며 최신 구현과 대조한다. **Pi/API:** 기존 핫스팟 가이드와 `docs/guides/PI_API_KEY_CHANGE.md`를 따른다. API 문서는 키 수정·재시작·웹 제공자 선택 안내이며 새 키의 실제 Pi 호출 성공 기록이 아니다.
+- **논문:** 맨 위 10월 11일 절을 따른다(축소 개정 원고, 실험 진행 도우미). **Pi/API:** 기존 핫스팟 가이드와 `docs/guides/PI_API_KEY_CHANGE.md`를 따른다. API 문서는 키 수정·재시작·웹 제공자 선택 안내이며 새 키의 실제 Pi 호출 성공 기록이 아니다.
 - **정리 위임:** 사용자가 이전 버전과 파일 열람·수정용 일회성 도구·캐시 삭제를 명시적으로 요청했다. 중간보고 v3/v4·옛 생성 원본·옛 렌더 PNG, 이전 6장 논문 PPT·생성기, 개정 전 원고 사본, 브로셔 중복 HWP·`work/`, 일회성 점검·수정·정리 스크립트를 정리했다. 최신 생성 원본·의존 이미지·최신 한글 조판 도구·검사 JSON과 로그는 보존한다. 아래 과거 ‘이전 버전 보존’ 지침은 이번 삭제 대상에 적용하지 않는다.
 - 상세 삭제·보존 결과는 `output/maintenance/2026-10-07-session-close/`의 `cleanup-plan.json`, `cleanup-execution.json`, `POST_CLEANUP_CHECKS.json`, `SESSION_STATUS.json`을 따른다. 제작 당시 검사 JSON은 수정하지 않는다. 앱·Pi·AI·SMTP 검사를 재실행하거나 commit/push하지 않았다. 이번 시작 Git HEAD는 `9f5a89d`다.
 

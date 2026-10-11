@@ -4,7 +4,9 @@
 
 **아래에서 지금 할 일 하나만 고르면 됩니다.** 모든 문서나 `AGENTS.md`를 읽을 필요는 없습니다.
 
-## 다음 세션은 할 일을 선택하세요 — 2026-10-07
+## 다음 세션은 할 일을 선택하세요 — 2026-10-07 (논문 행은 10-11 갱신)
+
+**2026-10-11 논문 축소 개정:** 원고를 JDCS 심사용 2단 분량(현재 7쪽)으로 다시 쓰고, 실험을 하루 약 2시간 반으로 줄였습니다. 실험은 노트북에서 `python scripts\experiments\run_experiment.py`를 실행하고 안내대로 행동한 뒤 Enter만 누르면 결과표까지 자동으로 만들어집니다. 자세한 순서는 [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md)에 있습니다.
 
 **PPT·논문·Pi 시연을 각각 선택할 수 있습니다.** 다음 작업을 자동으로 결정하지 않습니다. 사용자가 작업을 지정하면 바로 이어가고, “계속하자”라고만 하면 아래 선택지를 짧게 안내합니다.
 
@@ -95,7 +97,7 @@ ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@192.168.137.243
 |---|---|
 | `dist/refound-pi.tar.gz` | 새 Pi에 복사할 배포 파일. `.sha256`도 함께 사용. **Git에 포함되지 않아** PC에만 있으며, 없으면 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만듦 |
 | `docs/guides/` | 설치·네트워크에 문제가 생겼을 때 찾는 상세 안내 |
-| `docs/paper/` | 논문 원고·실험 설계·참고문헌 |
+| `docs/paper/` | 논문 원고·실험 진행 안내·결과 입력표·참고문헌 |
 | `output/pdf/`, `output/presentation/` | 완성된 읽기·발표 파일. 현재 사용할 파일은 위 링크 기준 |
 | `output/maintenance/` | 코드 변경 전 백업·검증 로그·화면. 평소에는 열 필요 없음 |
 | `docs/Meeting_Minutes/`, `docs/Original_Ideas/`와 과거 보고서 | 팀 활동 보관 자료. 현재 설치 설명이 아님 |
