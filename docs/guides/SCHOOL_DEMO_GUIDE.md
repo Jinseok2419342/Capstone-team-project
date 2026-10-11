@@ -4,7 +4,7 @@
 
 ## 현재 기본 경로 — Windows 핫스팟과 SSH (9월 29일 결과)
 
-현재는 **상위 인터넷 Wi-Fi → Windows 노트북 `ReFoundLaptop` 핫스팟 → Pi**로 연결하고, **Windows PowerShell의 SSH 터널 → 같은 노트북 브라우저**로 앱을 엽니다. [실행·종료·오류 대응 전체 안내](../../REFOUND_WINDOWS_HOTSPOT_GUIDE.md)를 우선 사용합니다. Tailscale 초대 수락이나 노트북 앱 설치는 이 방식의 선행 조건이 아닙니다.
+현재는 **상위 인터넷 Wi-Fi → Windows 노트북 `ReFoundLaptop` 핫스팟 → Pi**로 연결하고, **Windows PowerShell의 SSH 터널 → 같은 노트북 브라우저**로 앱을 엽니다. [실행·종료·오류 대응 전체 안내](WINDOWS_HOTSPOT_GUIDE.md)를 우선 사용합니다. Tailscale 초대 수락이나 노트북 앱 설치는 이 방식의 선행 조건이 아닙니다.
 
 Pi Wi-Fi 활성화는 로그 확인, 웹 접속·OpenAI API 동작은 사용자 성공 보고입니다. 새 구성의 자동 연결 우선순위 명령 결과·정상 종료 후 전원 재인가·랜선 없는 부팅·영상/AI 복귀와 친구 Tailscale은 미확인입니다. 이전 비밀번호 없는 `s24+`는 간헐적 끊김이 보고됐으며 원인은 확정하지 않았습니다.
 

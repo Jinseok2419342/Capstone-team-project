@@ -12,19 +12,19 @@
 
 | 지금 할 일 | 먼저 열 파일 | 남은 작업 |
 |---|---|---|
-| **중간보고 PPT 보완** | [최신 v5 PPT](output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx) · [작성 가이드](output/presentation/REFOUND_MIDTERM_FILL_GUIDE.md) | 내용·흐름 검토, 실제 Pi 캡처·진행률·AI 정량 결과 보완 |
-| **논문 실험·결과 반영** | [논문 안내](docs/paper/README.md) · [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md) · [2단 PDF](output/pdf/REFOUND_FULL_MANUSCRIPT.pdf) | 10월 11일 JDCS 분량으로 축소 개정. 하루 약 2시간 반 실험(실물 100회 + 무인 1시간) → 자동 집계 → 원고 반영 → HWP 이식 |
-| **Pi 시연·실기 확인** | [핫스팟 실행·종료](REFOUND_WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 새 구성의 전원 재인가·자동 연결 등 확인 |
+| **중간보고 PPT 보완** | [최신 v5 PPT](output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx) · [작성 가이드](docs/presentation/midterm/FILL_GUIDE.md) | 내용·흐름 검토, 실제 Pi 캡처·진행률·AI 정량 결과 보완 |
+| **논문 실험·결과 반영** | [논문 안내](docs/paper/README.md) · [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md) · [2단 PDF](output/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 10월 11일 JDCS 분량으로 축소 개정. 하루 약 2시간 반 실험(실물 100회 + 무인 1시간) → 자동 집계 → 원고 반영 → HWP 이식 |
+| **Pi 시연·실기 확인** | [핫스팟 실행·종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 새 구성의 전원 재인가·자동 연결 등 확인 |
 | **Pi API 키 교체·Gemini 전환** | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
 | **PC 자체에서 앱 실행** | 아래 ‘PC 실행 환경 다시 준비하기’ | 필요할 때 `setup.ps1` → `start.ps1` |
 
 다음 AI에는 아래처럼 전달하면 됩니다.
 
-> START_HERE.md와 AGENTS.md의 최신 절, docs/SESSION_HANDOFF_2026-09-18.md 상단을 읽어줘. PPT·논문·Pi 시연 중 내가 선택한 작업부터 이어가고, 아직 선택하지 않았다면 선택지를 먼저 보여줘. 기존 완성본과 수동 수정본을 확인하고, 없는 사진·실험값은 만들지 마.
+> START_HERE.md와 AGENTS.md의 최신 절, docs/handoff/SESSION_HANDOFF.md 상단을 읽어줘. PPT·논문·Pi 시연 중 내가 선택한 작업부터 이어가고, 아직 선택하지 않았다면 선택지를 먼저 보여줘. 기존 완성본과 수동 수정본을 확인하고, 없는 사진·실험값은 만들지 마.
 
 ## 확정한 시연 실행·종료 순서
 
-**2026-09-30 사용자가 최종 순서를 다시 확인했습니다.** 상세 설명과 문제 해결 과정은 [핫스팟 가이드 2–4절](REFOUND_WINDOWS_HOTSPOT_GUIDE.md#2-매번-실행하는-순서)에 있습니다.
+**2026-09-30 사용자가 최종 순서를 다시 확인했습니다.** 상세 설명과 문제 해결 과정은 [핫스팟 가이드 2–4절](docs/guides/WINDOWS_HOTSPOT_GUIDE.md#2-매번-실행하는-순서)에 있습니다.
 
 1. 노트북을 학교 Wi-Fi 인터넷에 연결합니다.
 2. 노트북의 `ReFoundLaptop` 핫스팟을 켭니다.
@@ -60,7 +60,7 @@ ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@192.168.137.243
 
 ## PC 실행 환경 다시 준비하기
 
-**Pi 화면만 노트북에서 열 때는 아래 설치가 필요 없습니다.** [핫스팟 가이드](REFOUND_WINDOWS_HOTSPOT_GUIDE.md)의 SSH 터널을 노트북 PowerShell에서 열고 `http://127.0.0.1:18000`으로 접속합니다. 아래는 PC 자체에서 앱을 실행하려는 경우입니다.
+**Pi 화면만 노트북에서 열 때는 아래 설치가 필요 없습니다.** [핫스팟 가이드](docs/guides/WINDOWS_HOTSPOT_GUIDE.md)의 SSH 터널을 노트북 PowerShell에서 열고 `http://127.0.0.1:18000`으로 접속합니다. 아래는 PC 자체에서 앱을 실행하려는 경우입니다.
 
 **2026-09-22 후속 상태: 사용자가 PC 프로젝트의 `.venv`를 삭제했으며, 현재 없는 것을 확인했습니다.** PPT 검토·문서 작업에는 재설치가 필요하지 않습니다. PC에서 앱을 실행할 때만 이 프로젝트 폴더의 PowerShell에서 아래 순서로 실행합니다. Python 3.11 이상이 `python` 명령으로 실행 가능해야 하고, 패키지를 내려받을 인터넷 연결이 필요합니다.
 
@@ -79,7 +79,7 @@ ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@192.168.137.243
 
 **현재는 Windows 노트북 핫스팟과 SSH 터널을 사용합니다.** 9월 29일 Pi Wi-Fi 연결 활성화 로그와 노트북 웹 화면·OpenAI API 동작의 사용자 성공 보고가 있습니다. 새 구성의 자동 연결 설정 결과, 정상 종료 후 전원 재인가·무선 단독 부팅·화면/영상/AI 복귀는 아직 미확인입니다. 친구 Tailscale 수락·접속도 미확인이며 현재 SSH 방식의 선행 조건은 아닙니다. 이전 비밀번호 없는 `s24+` 휴대폰 핫스팟에서는 간헐적 끊김이 보고됐습니다. 확인 당시 Pi IP `192.168.137.243`은 고정 주소가 아니므로 이름 접속 실패 시 노트북 핫스팟의 현재 장치 목록을 확인합니다. 개별 AI 응답·현재 모델·정량 정확도·지연, 메일·장시간 안정성은 별도 확인 대상입니다.
 
-후속 요청으로 **개발 중간보고 PPT 30장(본문 27장·보충 3장)**을 만들었습니다. 사용자가 제공한 목차와 수업 일정에 맞춰 **10월 13일 중간보고·10월 27일 연습·11월 3일 최종보고**를 반영했습니다. 최신 v5에는 실제 Git 표와 출처를 표시한 개발 검사 화면을 넣었습니다. PPT는 다음 세션에서 선택할 수 있는 작업이며 실제 Pi 캡처·공식 진행률·정량 성능은 근거가 생기면 보완합니다. 설치를 처음부터 반복할 필요는 없습니다. 새 카드를 다시 만드는 경우에만 [새 SD 설치 안내](docs/guides/FRESH_SD_START.md)를 처음부터 따릅니다. 상세 기록은 [작업 인계](docs/SESSION_HANDOFF_2026-09-18.md)에 있습니다.
+후속 요청으로 **개발 중간보고 PPT 30장(본문 27장·보충 3장)**을 만들었습니다. 사용자가 제공한 목차와 수업 일정에 맞춰 **10월 13일 중간보고·10월 27일 연습·11월 3일 최종보고**를 반영했습니다. 최신 v5에는 실제 Git 표와 출처를 표시한 개발 검사 화면을 넣었습니다. PPT는 다음 세션에서 선택할 수 있는 작업이며 실제 Pi 캡처·공식 진행률·정량 성능은 근거가 생기면 보완합니다. 설치를 처음부터 반복할 필요는 없습니다. 새 카드를 다시 만드는 경우에만 [새 SD 설치 안내](docs/guides/FRESH_SD_START.md)를 처음부터 따릅니다. 상세 기록은 [작업 인계](docs/handoff/SESSION_HANDOFF.md)에 있습니다.
 
 메인 화면의 **시연 초기화**는 물건을 치운 뒤 확인 한 번으로 모든 물품·기록·사진을 **백업 없이 삭제**합니다. 설정과 API 키는 유지합니다. 복구용 백업이 필요하면 설정의 기존 초기화를 사용하세요.
 
@@ -89,19 +89,22 @@ ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@192.168.137.243
 
 사용자 요청으로 이전 버전과 재생성 가능한 일회성 도구·캐시를 정리했습니다. 중간보고는 **v5**, 논문 전반부 발표는 **PDF 캡처 4장**이 기준입니다. 이전 기록의 v3·v4·6장 PPT ‘보존’ 설명은 당시 상태입니다.
 
-최신 생성 원본과 필요한 이미지·한글 조판 보조 파일, 최종 검토 근거, 앱 소스·테스트, 학교 양식, 별도 과제의 기획·보고서는 유지합니다. 실제 데이터·비밀값·Git 이력·외부 공용 도구는 정리 대상이 아닙니다. [이번 정리 기록](output/maintenance/2026-10-07-session-close/SESSION_STATUS.json)에 삭제·보존 결과가 있습니다. 과거 검사 JSON은 그대로 보존하며, 삭제된 경로를 필요로 하는 검사를 그대로 재실행하지 않습니다.
+최신 생성 원본과 필요한 이미지·한글 조판 보조 파일, 최종 검토 근거, 앱 소스·테스트, 학교 양식, 별도 과제의 기획·보고서는 유지합니다. 실제 데이터·비밀값·Git 이력·외부 공용 도구는 정리 대상이 아닙니다. 당시 삭제·보존 결과는 커밋 `0279a75`까지의 Git 이력(`output/maintenance/2026-10-07-session-close/`)에 있습니다. 과거 검사 JSON은 그대로 보존하며, 삭제된 경로를 필요로 하는 검사를 그대로 재실행하지 않습니다.
 
 ## 나머지 폴더는 언제 보나요?
 
 | 위치 | 용도 |
 |---|---|
 | `dist/refound-pi.tar.gz` | 새 Pi에 복사할 배포 파일. `.sha256`도 함께 사용. **Git에 포함되지 않아** PC에만 있으며, 없으면 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만듦 |
-| `docs/guides/` | 설치·네트워크에 문제가 생겼을 때 찾는 상세 안내 |
-| `docs/paper/` | 논문 원고·실험 진행 안내·결과 입력표·참고문헌 |
-| `output/pdf/`, `output/presentation/` | 완성된 읽기·발표 파일. 현재 사용할 파일은 위 링크 기준 |
-| `output/maintenance/` | 코드 변경 전 백업·검증 로그·화면. 평소에는 열 필요 없음 |
-| `docs/Meeting_Minutes/`, `docs/Original_Ideas/`와 과거 보고서 | 팀 활동 보관 자료. 현재 설치 설명이 아님 |
+| `docs/` | **읽고 고치는 문서와 생성 원본.** 전체 지도는 [문서 인덱스](docs/README.md) |
+| `docs/guides/` | 설치·시연·네트워크 안내. 매번 쓰는 핫스팟 실행·종료 안내도 여기 있음 |
+| `docs/paper/` | 논문 원고·실험 진행 안내·결과 입력표·참고문헌·PDF 생성기 |
+| `docs/presentation/` | 발표 준비 근거, 중간보고 PPT 생성 원본·작성 가이드, 도식, 8월 발표 초안 |
+| `docs/development/`, `docs/handoff/` | 9월 개발 개선 기록, 다음 AI 세션용 인계 |
+| `docs/project-history/` | 1학기 아이디어·기획·회의록·보고서와 9월 현황보고. 팀 활동 보관 자료이며 현재 설치 설명이 아님 |
+| `output/paper/`, `output/presentation/`, `output/brochure/` | **완성본**(논문 PDF, 발표 PPTX, 브로셔). 현재 사용할 파일은 위 링크 기준 |
+| `output/records/` | 날짜별 검증 요약·벤치마크 원장·중간보고 최종 렌더. 평소에는 열 필요 없음 |
 | `data/` | 실제 DB·사진. **Git에 포함되지 않음**(PC·Pi에만 있음). 정리 대상으로 지우지 않음 |
 | `AGENTS.md` | 다음 AI 세션이 읽는 지침. 사용자용 설명서는 이 문서 |
 
-분야별 안내는 [문서 인덱스](docs/README.md), 다음 AI의 누적 기록은 [작업 인계](docs/SESSION_HANDOFF_2026-09-18.md)에 있습니다. 다음 작업이 정해졌다면 “PPT 검토”, “논문 수정”, “Pi 시연”처럼 작업 이름을 함께 말하면 됩니다.
+분야별 안내는 [문서 인덱스](docs/README.md), 다음 AI의 누적 기록은 [작업 인계](docs/handoff/SESSION_HANDOFF.md)에 있습니다. 다음 작업이 정해졌다면 “PPT 검토”, “논문 수정”, “Pi 시연”처럼 작업 이름을 함께 말하면 됩니다.

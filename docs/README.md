@@ -5,11 +5,40 @@
 | 할 일 | 시작 문서 |
 |---|---|
 | Pi API 키 교체·Gemini 전환 | [짧은 변경 순서](guides/PI_API_KEY_CHANGE.md) |
-| 현재 Pi 시연 준비 재개 | [Windows 핫스팟 실행·종료](../REFOUND_WINDOWS_HOTSPOT_GUIDE.md) → [실기 결과·남은 항목](guides/PI_ACCEPTANCE_CHECKLIST.md) |
+| 현재 Pi 시연 준비 재개 | [Windows 핫스팟 실행·종료](guides/WINDOWS_HOTSPOT_GUIDE.md) → [실기 결과·남은 항목](guides/PI_ACCEPTANCE_CHECKLIST.md) |
 | 새 카드에 처음부터 설치 | [새 SD 시작 안내](guides/FRESH_SD_START.md) |
 | 논문 수정·실험 준비 | [논문 작업 안내](paper/README.md) |
-| 프로젝트·개선점 발표 PPT 준비 | [발표 준비와 개선점](IMPROVEMENTS.md) |
+| 프로젝트·개선점 발표 PPT 준비 | [발표 준비와 개선점](presentation/IMPROVEMENTS.md) → [중간보고 작성·캡처 가이드](presentation/midterm/FILL_GUIDE.md) |
 
 설치 중 문제가 있을 때만 [전체 설치 참고서](guides/RASPBERRY_PI_GUIDE.md), [학교 운영](guides/SCHOOL_DEMO_GUIDE.md), [모니터·Wi-Fi 복구](guides/PI_MONITOR_WIFI_GUIDE.md)를 찾아봅니다.
 
-현재 시연 방식은 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**입니다. 9월 29일 Pi Wi-Fi 연결 활성화 로그와 노트북 웹 화면·OpenAI API 동작의 사용자 성공 보고가 있습니다. 새 구성의 자동 연결 설정 결과, 정상 종료 후 전원 재인가·무선 단독 부팅·화면/영상/AI 복귀는 아직 미확인입니다. 친구 Tailscale 수락·접속도 미확인이며 현재 SSH 방식의 선행 조건은 아닙니다. 다음 AI 세션용 [인계 문서](SESSION_HANDOFF_2026-09-18.md)는 파일명을 유지하고 10월 7일 작업 선택·정리 상태까지 반영했습니다. 나머지 검토 기록, 과거 발표·기획·회의 자료는 참고용이며 모두 읽을 필요가 없습니다. 최신 중간보고는 `output/presentation/`의 v5입니다. 다음 세션의 작업은 사용자가 선택합니다.
+현재 시연 방식은 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**입니다. 9월 29일 Pi Wi-Fi 연결 활성화 로그와 노트북 웹 화면·OpenAI API 동작의 사용자 성공 보고가 있습니다. 새 구성의 자동 연결 설정 결과, 정상 종료 후 전원 재인가·무선 단독 부팅·화면/영상/AI 복귀는 아직 미확인입니다. 친구 Tailscale 수락·접속도 미확인이며 현재 SSH 방식의 선행 조건은 아닙니다. 다음 AI 세션용 [인계 문서](handoff/SESSION_HANDOFF.md)는 10월 11일 논문 축소 개정까지 반영했습니다. 나머지 검토 기록, 과거 발표·기획·회의 자료는 참고용이며 모두 읽을 필요가 없습니다. 다음 세션의 작업은 사용자가 선택합니다.
+
+## 폴더 기준
+
+- **`docs/`** — 읽고 고치는 문서와 생성 원본(Markdown 원고·안내, PDF·PPT 생성 스크립트, 도식 원본, 과거 팀 자료).
+- **`output/`** — 완성본(논문 PDF, 발표 PPTX, 브로셔)과 검증 기록. 완성본은 직접 고치지 않고, 원본을 고친 뒤 다시 만들거나 새 이름으로 저장합니다.
+
+| 위치 | 들어 있는 것 |
+|---|---|
+| [`guides/`](guides/) | 설치·시연·운영 안내. 매번 쓰는 [핫스팟 실행·종료](guides/WINDOWS_HOTSPOT_GUIDE.md), [새 SD 설치](guides/FRESH_SD_START.md), [실기 확인표](guides/PI_ACCEPTANCE_CHECKLIST.md), [API 키 변경](guides/PI_API_KEY_CHANGE.md)과 문제 해결용 상세 안내 3개. Pi 배포 파일에도 함께 들어갑니다 |
+| [`paper/`](paper/README.md) | 논문 원고(`PAPER_DRAFT_JDCS.md`), 실험 진행 안내, 결과 입력표, 참고문헌, PDF 생성기(`manuscript/`), 9월 전반부 발표 원고(`briefing/`) |
+| [`presentation/`](presentation/IMPROVEMENTS.md) | 발표 준비: [개선점·근거](presentation/IMPROVEMENTS.md), 중간보고 PPT 생성 원본·목차·작성 가이드(`midterm/`), Mermaid 도식(`diagrams/`), 8월 발표 초안(`2026-08-draft/`, 과거 자료) |
+| [`development/`](development/) | 9월 18일 앱·영상·처리 구조·운영 흐름 개선 기록 4개 |
+| [`handoff/`](handoff/SESSION_HANDOFF.md) | 다음 AI 세션용 인계. 현재 기준은 [`SESSION_HANDOFF.md`](handoff/SESSION_HANDOFF.md), 나머지 둘은 9월 논문 작업 당시 기록 |
+| [`project-history/`](project-history/) | 1학기·9월 팀 과제 자료(아래 표). 현재 구현 설명이 아님 |
+| [`../output/paper/`](../output/paper/) | 논문 PDF: [JDCS 2단 근사 원고](../output/paper/REFOUND_FULL_MANUSCRIPT.pdf), [9월 전반부 4쪽](../output/paper/RESEARCH_FRONT_MATTER.pdf) |
+| [`../output/presentation/`](../output/presentation/) | 발표 PPTX: [중간보고 v5](../output/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx), [논문 전반부 PDF 캡처 4장](../output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx) |
+| [`../output/brochure/`](../output/brochure/README.md) | 졸업작품집 브로셔 최종본(HWP·PDF)과 학교 양식 |
+| [`../output/records/`](../output/records/) | 날짜별 검증 요약(JSON·보고서), 벤치마크 원장, 중간보고 v5 최종 렌더. 평소에는 열 필요 없음 |
+
+## 과거 팀 자료 (`project-history/`)
+
+| 폴더 | 내용 |
+|---|---|
+| [`ideas/`](project-history/ideas/) | 2026년 1학기 개인 아이디어 제안서 4개와 2조 팀 아이디어 제안서 |
+| [`planning/`](project-history/planning/) | 3월 개념 증명·API 비용 예측·아이디어 타당성 AI 평가, 5월 12일 팀 프로젝트 기획서, 초기 구상도(`Blueprint.jpg`) |
+| [`meeting-minutes/`](project-history/meeting-minutes/) | 캡스톤 회의록 01–06 |
+| [`reports/`](project-history/reports/) | 1학기 팀 프로젝트 중간보고서(5월)·최종보고서(6월), 9월 8일 팀프로젝트 현황보고 |
+
+과거 자료에는 Raspberry Pi 5, YOLO, 로컬 LLM, AWS 등 현재 구현과 다른 계획이 있습니다. 현재 구현은 루트 [README](../README.md)와 코드를 기준으로 합니다.

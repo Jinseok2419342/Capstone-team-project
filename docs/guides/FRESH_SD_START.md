@@ -1,6 +1,6 @@
 # 새 microSD에서 Re:Found 다시 시작하기
 
-**2026-09-30 현재:** 새 SD 설치·카메라·기본 실물 흐름·재부팅 확인은 9월 22일 완료했습니다. 9월 29일에는 Windows 노트북 `ReFoundLaptop` 핫스팟의 Pi 연결 로그와 노트북 SSH 웹·OpenAI 성공 보고가 추가됐습니다. 현재 시연 재개는 [Windows 실행·종료 안내](../../REFOUND_WINDOWS_HOTSPOT_GUIDE.md)와 [실기 확인표](PI_ACCEPTANCE_CHECKLIST.md)의 전원 재인가·자동 연결 시험입니다. 친구 Tailscale 수락은 미확인이지만 현재 방식의 선행 조건이 아닙니다.
+**2026-09-30 현재:** 새 SD 설치·카메라·기본 실물 흐름·재부팅 확인은 9월 22일 완료했습니다. 9월 29일에는 Windows 노트북 `ReFoundLaptop` 핫스팟의 Pi 연결 로그와 노트북 SSH 웹·OpenAI 성공 보고가 추가됐습니다. 현재 시연 재개는 [Windows 실행·종료 안내](WINDOWS_HOTSPOT_GUIDE.md)와 [실기 확인표](PI_ACCEPTANCE_CHECKLIST.md)의 전원 재인가·자동 연결 시험입니다. 친구 Tailscale 수락은 미확인이지만 현재 방식의 선행 조건이 아닙니다.
 
 **아래는 새 카드를 다시 만들 때만 사용하는 설치 절차입니다.** 기존 Pi에 반복 실행하지 않습니다. 노트북에서 Pi 화면만 열 때에는 PC 앱 설치도 필요 없습니다. 이전 카드의 OS·설정·키·DB는 새 카드로 자동 복구되지 않으므로 실제 새 설치에서는 다시 확인합니다.
 

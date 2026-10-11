@@ -9,7 +9,7 @@ process.env.RUNTIME_NODE_MODULES=path.join(RT,'dependencies/node/node_modules');
 process.env.RUNTIME_NODE=path.join(RT,'dependencies/node/bin/node.exe');
 const {Presentation,PresentationFile,FileBlob}=await import(pathToFileURL(path.join(process.env.RUNTIME_NODE_MODULES,'@oai/artifact-tool/dist/artifact_tool.mjs')).href);
 const {finalizePresentation,applyPresentationChartFont}=await import(pathToFileURL(path.join(SKILL,'container_tools/artifact_tool_utils.mjs')).href);
-const BUILD=path.join(ROOT,'output/maintenance/2026-10-02-midterm-content-review');
+const BUILD=path.join(ROOT,'build/midterm');
 const revision=process.env.DECK_REVISION||'v5_improved';
 const FINAL=path.join(ROOT,'output/presentation',`REFOUND_PROJECT_MIDTERM_2026-10-02${revision==='v1'?'':'_'+revision}.pptx`);
 if(await fs.stat(FINAL).then(()=>true,()=>false))throw new Error('Output exists. Set DECK_REVISION to a new revision name; preserve any manually edited PPTX.');
@@ -18,7 +18,7 @@ const C={navy:'#102D3C',ink:'#183442',teal:'#067C80',muted:'#566B77',line:'#CFDB
 const FONT='Malgun Gothic';
 const typography=[];
 const meta=[]; const tableOwners=[]; const chartOwners=[]; const noteText=new WeakMap();
-const src={hotspot:'REFOUND_WINDOWS_HOTSPOT_GUIDE.md',sync:'output/maintenance/2026-09-30-sync-review/REVIEW.md',git:'git log at 69eb6ff (2026-10-02 inspection)',readme:'README.md',accept:'docs/guides/PI_ACCEPTANCE_CHECKLIST.md',state:'output/maintenance/2026-09-22-network-plan/SESSION_STATUS.json',check:'output/maintenance/2026-09-22-quick-reset/VALIDATION.json',vision:'docs/VISION_REVIEW_2026-09-18.md',arch:'docs/ARCHITECTURE_REVIEW_2026-09-18.md',live:'docs/LIVE_FLOW_REVIEW_2026-09-18.md'};
+const src={hotspot:'docs/guides/WINDOWS_HOTSPOT_GUIDE.md',sync:'output/records/2026-09-30-sync-review/REVIEW.md',git:'git log at 69eb6ff (2026-10-02 inspection)',readme:'README.md',accept:'docs/guides/PI_ACCEPTANCE_CHECKLIST.md',state:'output/records/2026-09-22-network-plan/SESSION_STATUS.json',check:'output/records/2026-09-22-quick-reset/VALIDATION.json',vision:'docs/development/VISION_REVIEW_2026-09-18.md',arch:'docs/development/ARCHITECTURE_REVIEW_2026-09-18.md',live:'docs/development/LIVE_FLOW_REVIEW_2026-09-18.md'};
 
 const {createCanvas,GlobalFonts}=await import(pathToFileURL(path.join(process.env.RUNTIME_NODE_MODULES,'@napi-rs/canvas/index.js')).href);
 GlobalFonts.registerFromPath('C:/Windows/Fonts/malgun.ttf','Malgun Gothic');
@@ -210,8 +210,8 @@ const s=slide('AI 응답을 기다리는 동안에도 기록 보존','4. 핵심 
 // 14
 {
 
- const s=slide('물품 상세 화면과 처리 흐름','4. 핵심 기능 구현 결과',[src.accept,src.live,'output/maintenance/2026-09-18-live-flow-review/browser-classified-detail.png'],'9/18 개발 검사 화면 / 합성 물품·모의 AI 사용. 화면의 97%는 실제 모델 정확도가 아님');
- await screenshot(s,'output/maintenance/2026-10-02-midterm-review/assets/detail.png',64,171,399,466,'합성 데이터 개발 검사에서 저장된 물품 상세 화면');
+ const s=slide('물품 상세 화면과 처리 흐름','4. 핵심 기능 구현 결과',[src.accept,src.live,'docs/presentation/midterm/assets/detail.png'],'9/18 개발 검사 화면 / 합성 물품·모의 AI 사용. 화면의 97%는 실제 모델 정확도가 아님');
+ await screenshot(s,'docs/presentation/midterm/assets/detail.png',64,171,399,466,'합성 데이터 개발 검사에서 저장된 물품 상세 화면');
  rows(s,[['등록','물품을 놓고 손을 뺀 뒤 임시 기록 생성\nAI 분석 후 이름·분류를 확정하거나 검토 대기'],['이동','같은 물품의 위치·사진 갱신\n새 기록을 만들지 않고 기존 ID 유지'],['회수','화면에서 사라지면 같은 기록의 상태 전환\n활동 이력에 처리 결과 저장']],{x:515,y:195,w:701,gap:125,labelW:95});
  tx(s,'실물 흐름은 9/22 성공 보고. 동일 ID의 실제 Pi 캡처는 미확보.',515,595,701,49,22,false,C.muted);
  note(s,'왼쪽은 기존 개발 검사 PNG의 상세 창 영역만 비율을 유지해 잘랐다. 실제 카메라·원격 모델 결과로 해석하지 않는다. 오른쪽은 구현 흐름이다. 사용자 보고에서는 실물 등록·이동 시 중복 방지·제거 후 회수 확인에 성공했다고 했으나 개별 ID·사진은 수집하지 않았다.');
@@ -220,7 +220,7 @@ const s=slide('AI 응답을 기다리는 동안에도 기록 보존','4. 핵심 
 // 15
 {
 const s=slide('관리자는 확인이 필요한 물품부터 처리','4. 핵심 기능 구현 결과',['templates/index.html','static/app.js','tests/test_live_management.py',src.check],'9/22 개발 검사 화면 / 물품 수·사진·영상은 합성 테스트 데이터');
- await screenshot(s,'output/maintenance/2026-09-22-quick-reset/browser-dashboard-1440.png',64,178,740,455,'합성 카메라·임시 DB를 사용한 관리자 대시보드');
+ await screenshot(s,'docs/presentation/midterm/assets/dashboard-1440.png',64,178,740,455,'합성 카메라·임시 DB를 사용한 관리자 대시보드');
  tx(s,'확인 필요 물품',850,182,366,40,29,true,C.teal);
  tx(s,'사진과 AI 결과를 검토\n이름·분류 수정 후 검토 완료',850,239,366,91,25);
  tx(s,'기한과 처리 이력',850,372,366,40,29,true,C.teal);
@@ -298,7 +298,7 @@ const s=slide('오류 조건을 포함한 자동화 검사','6. 테스트 결과
 }
 // 24
 {
- const s=slide('개발 환경에서의 정지 장면 연산 비교','6. 테스트 결과 및 문제점 분석',[src.vision,'output/maintenance/2026-09-18-vision-review/benchmark-comparison.json'],'PC 합성 입력의 개발 검사 / Pi 성능·AI 정확도·종단간 지연 결과가 아님');
+ const s=slide('개발 환경에서의 정지 장면 연산 비교','6. 테스트 결과 및 문제점 분석',[src.vision,'output/records/2026-09-18-vision-review/benchmark-comparison.json'],'PC 합성 입력의 개발 검사 / Pi 성능·AI 정확도·종단간 지연 결과가 아님');
  tx(s,'분석 프레임당 처리 시간 (ms)',64,179,722,45,27,true,C.teal);
  const chart=s.charts.add('bar',{position:{left:64,top:235,width:697,height:348},categories:['변경 전','변경 후'],series:[{name:'처리 시간 (ms)',values:[27.756,13.212],fill:C.teal,dataLabelOverrides:[{idx:0,text:'27.76',showValue:false,textStyle:{typeface:FONT,fontSize:24,bold:true,fill:C.ink}},{idx:1,text:'13.21',showValue:false,textStyle:{typeface:FONT,fontSize:24,bold:true,fill:C.ink}}]}],barOptions:{direction:'column',grouping:'clustered',gapWidth:125},hasLegend:false,xAxis:{textStyle:{typeface:FONT,fontSize:25,fill:C.ink},majorGridlines:null},yAxis:{min:0,max:35,majorUnit:10,numberFormatCode:'0',textStyle:{typeface:FONT,fontSize:21,fill:C.muted},majorGridlines:{fill:C.line,width:1}},dataLabels:{showValue:true,position:'outEnd',textStyle:{typeface:FONT,fontSize:24,bold:true,fill:C.ink}},chartFill:C.white,chartLine:{fill:'none',width:0},plotAreaFill:C.white});
  applyPresentationChartFont(chart,{fontFamily:FONT});chartOwners.push(p.slides.items.length);
@@ -341,7 +341,7 @@ const s=slide('최종보고에서 제시할 결과물','7. 향후 개발 및 완
 {
 const s=slide('시연 실행과 데이터 초기화 구분','보충자료 B. 시연 운영',[src.hotspot,src.check],'앱·카메라는 Pi에서 실행 / 상세 단계는 저장소의 Windows 핫스팟 가이드');
  rows(s,[['시작','노트북 Wi-Fi·핫스팟 실행 후 Pi 전원 연결\n2~3분 뒤 Windows에서 SSH 터널, 같은 노트북 웹 접속'],['정상 종료','Pi 정상 종료 명령 후 종료 점멸이 끝날 때까지 대기\nPi 전원 분리 후 핫스팟 종료'],['시연 초기화','확인 후 모든 물품·활동·알림·사진을 백업 없이 삭제\n설정·API 키·기존 백업은 유지'],['설정의 일반 초기화','자동 백업과 확인 문구 입력을 거쳐 실행\n시연 초기화와 보존 방식이 다름']],{y:183,gap:111,labelW:263});
- note(s,'시연을 다시 시작할 때마다 초기화할 필요는 없다. 필요한 기록이 있으면 보존하고, 초기화 전 물품을 카메라 범위에서 치운다. 실행 7단계·종료 4단계·이름 오류 5단계는 REFOUND_WINDOWS_HOTSPOT_GUIDE.md를 따른다. 현재 시연 연결 성공 보고와 새 구성 전원 재인가 성공은 별개다. 내부 접속 주소·키는 발표자료에 적지 않았다.');
+ note(s,'시연을 다시 시작할 때마다 초기화할 필요는 없다. 필요한 기록이 있으면 보존하고, 초기화 전 물품을 카메라 범위에서 치운다. 실행 7단계·종료 4단계·이름 오류 5단계는 docs/guides/WINDOWS_HOTSPOT_GUIDE.md를 따른다. 현재 시연 연결 성공 보고와 새 구성 전원 재인가 성공은 별개다. 내부 접속 주소·키는 발표자료에 적지 않았다.');
 }
 // 30
 {
@@ -354,7 +354,7 @@ await fs.mkdir(BUILD,{recursive:true});
 const candidatePath=path.join(BUILD,`candidate-${revision}.pptx`);
 await(await PresentationFile.exportPptx(p)).save(candidatePath);
 const {execFileSync}=await import('node:child_process');
-execFileSync(path.join(RT,'dependencies/python/python.exe'),[path.join(BUILD,'korean_typography.py'),candidatePath],{stdio:'inherit'});
+execFileSync(path.join(RT,'dependencies/python/python.exe'),[path.join(HERE,'korean_typography.py'),candidatePath],{stdio:'inherit'});
 await fs.writeFile(path.join(BUILD,`typography-${revision}.json`),JSON.stringify(typography,null,2));
 await fs.writeFile(path.join(BUILD,`deck-manifest-${revision}.json`),JSON.stringify({slides:meta,tableOwners,chartOwners,asOf:'2026-10-02',presentationDate:'2026-10-13',finalReportDate:'2026-11-03',fontPolicy:{basis:'design',families:[FONT,'Consolas']},screenshots:['development detail: 2026-09-18','development dashboard: 2026-09-22']},null,2));
 await finalizePresentation({workspaceDir:ROOT,candidatePath,finalPath:FINAL,pythonExecutable:path.join(RT,'dependencies/python/python.exe'),integrityValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_package_integrity.py'),layoutValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_layout_geometry.py'),layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit','--validate-bullet-geometry',...tableOwners.flatMap(n=>['--require-native-table-slide',String(n)])],explicitTotalSlideCount:30,requiredNativeTableOwnerSlides:tableOwners,requiredNativeChartOwnerSlides:chartOwners,materializeLiteralChartWorkbooks:true,fontPolicy:{basis:'design',families:[FONT,'Consolas']},verifyArtifactToolImport:true,receiptPath:path.join(BUILD,`validation-${revision}.json`)});

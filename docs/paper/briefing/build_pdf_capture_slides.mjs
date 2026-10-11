@@ -10,7 +10,7 @@ process.env.RUNTIME_NODE_MODULES=path.join(RUNTIME,'dependencies/node/node_modul
 process.env.RUNTIME_NODE=path.join(RUNTIME,'dependencies/node/bin/node.exe');
 const {Presentation,PresentationFile,FileBlob}=await import(pathToFileURL(path.join(process.env.RUNTIME_NODE_MODULES,'@oai/artifact-tool/dist/artifact_tool.mjs')).href);
 const {finalizePresentation}=await import(pathToFileURL(path.join(SKILL,'container_tools/artifact_tool_utils.mjs')).href);
-const TMP=path.join(ROOT,'tmp/paper-capture-slides');
+const TMP=path.join(ROOT,'build/paper-capture-slides');
 const OUT=path.join(ROOT,'output/presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx');
 const data=[
  ['제목·요약',[
@@ -68,6 +68,6 @@ for(let i=0;i<4;i++){
  const png=await result.export({slide:result.slides.items[i],format:'png',scale:1.25});
  await fs.writeFile(path.join(TMP,`slide-${i+1}.png`),new Uint8Array(await png.arrayBuffer()));
 }
-const source=await fs.readFile(path.join(ROOT,'output/pdf/RESEARCH_FRONT_MATTER.pdf'));
+const source=await fs.readFile(path.join(ROOT,'output/paper/RESEARCH_FRONT_MATTER.pdf'));
 await fs.writeFile(path.join(HERE,'PDF_CAPTURE_SLIDES_CHECK.json'),JSON.stringify({slides:4,pdfPages:4,layout:'4:3; full PDF page on left, three brief explanations on right',pdfSha256:hash(source),pngSha256:imageHashes,pdfPageImageEditable:false,explanationsEditable:true,final:OUT},null,2));
 console.log(JSON.stringify({final:OUT,slides:4}));

@@ -144,6 +144,7 @@ class PiPackageTests(unittest.TestCase):
             self.assertIn("docs/guides/PI_MONITOR_WIFI_GUIDE.md", entries)
             self.assertIn("docs/guides/FRESH_SD_START.md", entries)
             self.assertIn("docs/guides/PI_ACCEPTANCE_CHECKLIST.md", entries)
+            self.assertIn("docs/guides/WINDOWS_HOTSPOT_GUIDE.md", entries)
             self.assertIn("scripts/raspberry-pi/check-system.sh", entries)
             self.assertIn("scripts/raspberry-pi/check-runtime.py", entries)
             self.assertIn("scripts/raspberry-pi/lib/common.sh", entries)
