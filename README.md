@@ -1,13 +1,13 @@
 # Re:Found — 분실물 자동 추론 및 시각화 관리 AI 시스템
 
-**무엇부터 볼지 찾는다면 [여기서 시작하세요](START_HERE.md).** Pi 시연 준비 재개 / 논문 / 최종보고 발표 준비 경로와 현재 진행 상태를 한 장에 정리했습니다.
+**지금 할 일과 진행 상태는 [여기서 시작하세요](START_HERE.md)에 있습니다.**
 
 ### 2026 AI 캡스톤디자인 · 동양미래대학교 인공지능소프트웨어학과 · 상부상조(2조)
 
 | 학번 | 이름 | 역할 | 현재 담당 영역 |
 |---|---|---|---|
 | 20241499 | **장진석** | 팀장 · 시스템 통합 | 기획 및 아키텍처, 로컬 비전·멀티모달 AI·FastAPI·관리자 웹 구현, Raspberry Pi 배포, 테스트 및 문서화 |
-| 20241516 | **권기원** | 팀원 · 개발/시연 지원 | 구현 및 발표 자료 검토, 자료 교정, 시연 준비와 운영 지원 |
+| 20241516 | **권기원** | 팀원 · 시연 지원 | 발표 자료 편집, 시연 준비 지원 |
 
 > Raspberry Pi 엣지 비전과 멀티모달 AI를 결합해 분실물의 **감지 · 분류 · 보관 · 알림 · 회수**를 하나의 관리자 서비스로 연결합니다.
 
@@ -40,26 +40,15 @@
 
 ## 빠른 링크
 
-**microSD 고장 후 새로 설치한다면 [새 SD 시작 안내](docs/guides/FRESH_SD_START.md)부터 따라갑니다.** 기본 배포 파일은 `dist/refound-pi.tar.gz`이며, [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)로 재부팅까지 확인한 뒤 논문·발표 작업으로 이어갑니다.
-
-**2026-09-30 갱신:** 새 SD 설치·카메라·기본 실물 흐름·재부팅의 9월 22일 확인에 이어, 현재는 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**을 사용합니다. 9월 29일 Pi Wi-Fi 연결 활성화 로그와 노트북 웹 화면·OpenAI API 동작의 사용자 성공 보고가 있습니다. 새 구성의 자동 연결 설정 결과, 정상 종료 후 전원 재인가·무선 단독 부팅·화면/영상/AI 복귀는 아직 미확인입니다. 친구 Tailscale 수락·접속도 미확인이며 현재 SSH 방식의 선행 조건은 아닙니다. [매번 실행·종료하는 순서](docs/guides/WINDOWS_HOTSPOT_GUIDE.md)와 [작업 인계](docs/handoff/SESSION_HANDOFF.md)를 따릅니다. Pi 화면만 여는 노트북에는 앱 설치가 필요 없습니다.
-
 | 구분 | 링크 |
 |---|---|
-| 전체 문서 지도 | [docs/README.md](docs/README.md) — 모든 문서·완성본은 `docs/` 아래 주제별 폴더에 있음 |
-| 학교 시연 절차 | [현재 Windows 핫스팟·SSH 실행/종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [Android/Tailscale 대안](docs/guides/SCHOOL_DEMO_GUIDE.md) |
-| 새 SD 재설치·첫 접속 | [짧은 설치 순서](docs/guides/FRESH_SD_START.md) |
-| Raspberry Pi 설치·운영 | [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
-| 실기 확인·다음 세션 | [결과·확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) · [작업 인계](docs/handoff/SESSION_HANDOFF.md) |
-| 논문 | [논문 작업 안내](docs/paper/README.md) · [JDCS 2단 근사 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) |
-| 발표 자료 | [중간보고 최종 PDF(10월 13일)](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) · [발표 근거·캡처 요령](docs/presentation/IMPROVEMENTS.md) |
-| 발표용 Mermaid 도식 | [도식 목록 및 사용 안내](docs/presentation/diagrams/README.md) |
-| 졸업작품집 브로셔 (최종) | [PDF 2쪽](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP 편집본](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
-| 팀 프로젝트 기획서 | [5월 12일 기획서 PDF](<docs/project-history/planning/팀 프로젝트기획서.pdf>) |
-| 핵심 개념 증명 | [01 캡스톤 개념 증명.pdf](<docs/project-history/planning/01 캡스톤 개념 증명.pdf>) |
-| API 토큰·비용 예측 자료 | [02 캡스톤 API 토큰 및 가격 예측.pdf](<docs/project-history/planning/02 캡스톤 API 토큰 및 가격 예측.pdf>) |
-| 회의록·과거 보고서 | [회의록](docs/project-history/meeting-minutes) · [과거 팀 자료 전체](docs/project-history) |
-| 과거 프로젝트 발표 원고 | [8월 16일 발표 초안 — 재검토 후 활용](docs/presentation/2026-08-draft/PRESENTATION.md) |
+| 전체 문서 지도 | [docs/README.md](docs/README.md) |
+| Raspberry Pi 설치 | [처음부터 설치하는 순서](docs/guides/FRESH_SD_START.md) · [상세 설치·운영 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
+| 시연 실행·종료 | [Windows 핫스팟·SSH 터널](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) |
+| 논문 | [논문 작업 안내](docs/paper/README.md) · [원고 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) |
+| 발표 | [중간보고 PDF(10월 13일)](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) · [발표 근거](docs/presentation/IMPROVEMENTS.md) · [Mermaid 도식](docs/presentation/diagrams/README.md) |
+| 졸업작품집 브로셔 | [PDF](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
+| 과거 팀 자료 | [기획서·회의록·보고서](docs/project-history) |
 
 ## 시스템 구성도
 
@@ -164,14 +153,7 @@ sequenceDiagram
 
 현재 구현에는 별도의 학습·검증·테스트 데이터셋이나 커스텀 CNN이 없습니다. 따라서 자동화 테스트 통과 수치를 AI 분류 정확도로 해석하지 않으며, 모델 성능은 실제 카메라 환경에서 정답 라벨을 가진 사건 데이터셋을 구축한 뒤 별도로 평가해야 합니다.
 
-발표 및 논문용 정량 평가는 다음 지표를 기준으로 수집할 계획입니다.
-
-- 사건 감지 `precision · recall · F1`
-- 고가품·일반·음식 분류 정확도와 혼동행렬
-- 시간당 오검출 수와 불확실 판정 비율
-- 감지부터 DB 반영까지의 `p50 · p95` 지연시간
-- Raspberry Pi의 메모리 사용량, CPU 사용률과 온도
-- OpenAI/Gemini별 정확도·지연시간·요청 비용 비교
+정량 평가는 논문 실험(실물 시도 100회 + 무인 감시 1시간)에서 등록·이동·제거 판정의 정확도·정밀도·재현율, AI 분류 정확도와 호출 비율, 무변화 상황의 오검출, 처리 속도와 Pi의 CPU·메모리·온도를 측정할 계획입니다([실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md)).
 
 ## UI/UX 및 서비스 구조
 
@@ -199,36 +181,14 @@ sequenceDiagram
 | 음식 1일 · 비음식 30일 · 고가품 6개월 | 음식 1일 · 일반 60일 · 고가품 90일 | 현재 프로토타입 운영 정책으로 통일 |
 | 외부 공개형 접속 검토 | 로컬 접속 + Tailscale 비공개 HTTPS + 오프라인 핫스팟 | 로그인 기능이 없는 시연 시스템의 노출 범위 제한 |
 
-## 검증 현황과 다음 과제
+## 검증 현황과 남은 과제
 
-2026-09-22 시연 초기화 변경 후 **Python 272개, 프런트엔드 Node 37개, Chromium 7개**가 통과했습니다. 이후 네트워크 안내·배포 변경에서는 배포 검사 6개와 패키지 47개 파일 대조를 완료했습니다. [앱 검사 요약](docs/records/2026-09-22-quick-reset/VALIDATION.json), [배포 당시 요약](docs/records/2026-09-22-network-plan/VALIDATION.json)을 보존했습니다. 이는 소프트웨어 회귀·배포 검증이며 실제 AI 정확도나 현장 감지율을 의미하지 않습니다.
+자동화 테스트(Python·Node.js)는 저장소·API·합성 카메라 장면·AI/메일 실패 처리를 검증하는 소프트웨어 회귀 검사이며, AI 정확도나 현장 감지율을 뜻하지 않습니다. 실제 Raspberry Pi에서는 설치·카메라 촬영·재부팅 후 자동 실행, 실물 등록·이동·회수, 노트북 핫스팟과 SSH 터널을 통한 웹 화면·OpenAI 동작을 확인했습니다([실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)). 날짜별 검증 기록은 [docs/records](docs/records/)에 있습니다.
 
-앞선 9월 18일 운영 흐름 검사에서는 Python 264개·Node 33개와 별도 Chromium 데스크톱 12개·모바일 4개를 검증했습니다. 합성 카메라의 사건부터 API·DB 반영, 기한·알림·연장·폐기·복원, AI·메일 실패, 편집 충돌·연결 복구를 다뤘습니다. [운영 흐름 점검](docs/development/LIVE_FLOW_REVIEW_2026-09-18.md), [처리 구조 개선](docs/development/ARCHITECTURE_REVIEW_2026-09-18.md), [앱 개선](docs/development/APP_REVIEW_2026-09-18.md), [영상 개선](docs/development/VISION_REVIEW_2026-09-18.md)은 해당 시점 기록입니다.
-
-9월 22일 새 Pi의 실제 촬영·재부팅 진단 로그와 초기화·등록·이동·회수·본인 PC HTTPS 화면/영상 성공 보고에 더해, 9월 29일 Windows 핫스팟 연결 로그·노트북 SSH 웹·OpenAI 동작 성공 보고를 [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)에 반영했습니다. 원격 AI의 세부 판정, 메일 수신과 현장 조건의 장시간 시험은 남아 있습니다. 개발 중간보고는 2026-10-12에 최종 PDF로 완료했습니다. 다음 작업은 사용자가 **논문 실험·결과 반영, 최종보고 발표 준비, Windows 핫스팟의 자동 연결·무선 단독 전원 재인가 시험** 중에서 선택합니다.
-
-9월 30일 Git 대량 반영 점검에서 기존 **Python 272개·Node 37개** 검사를 격리된 데이터로 재실행해 통과했습니다. 복사된 실행 소스는 9월 22일 설치 배포본과 일치했습니다. [저장소 점검 보고서](docs/records/2026-09-30-sync-review/REVIEW.md)에 검증 범위와 Git 관리상 남은 항목을 기록합니다. 실제 Pi·원격 AI·SMTP·브라우저 실기는 이번에 재실행하지 않았습니다.
-
-아래는 이후 선택할 장기 개선·연구 후보이며 자동으로 시작할 작업 목록은 아닙니다.
-
-1. 교실 조명, 가림, 겹침, 초점 변화가 포함된 실제 사건 데이터 수집과 정답 라벨링
-2. 동일 데이터에서 OpenAI와 Gemini의 정확도·지연시간·비용 비교
-3. Raspberry Pi 장시간 실행 시 메모리·CPU·온도와 카메라 안정성 측정
-4. Windows 노트북 핫스팟과 SSH 터널을 사용하는 발표 당일 리허설. Android/Tailscale은 별도 대안
-5. 실제 운영으로 확장할 경우 로그인·권한 관리, 촬영 고지, 얼굴·문서 마스킹과 보존 정책 추가
-
-## 발표용 Mermaid 원본
-
-각 `.mmd` 파일은 [Mermaid Live Editor](https://mermaid.live/)에 붙여 넣어 SVG 또는 PNG로 내려받을 수 있습니다.
-
-| 도식 | Mermaid 원본 |
-|---|---|
-| 시스템 구성도 | [01-system-architecture.mmd](docs/presentation/diagrams/01-system-architecture.mmd) |
-| 주요 기능 정의 | [02-core-features.mmd](docs/presentation/diagrams/02-core-features.mmd) |
-| 데이터 및 AI 모델 설계 | [03-data-ai-design.mmd](docs/presentation/diagrams/03-data-ai-design.mmd) |
-| UI/UX 및 서비스 구조 | [04-uiux-service-structure.mmd](docs/presentation/diagrams/04-uiux-service-structure.mmd) |
-| 데이터 모델 | [05-data-model.mmd](docs/presentation/diagrams/05-data-model.mmd) |
-| 전체 도식 한 파일 | [all-diagrams.md](docs/presentation/diagrams/all-diagrams.md) |
+1. 논문 실험으로 정량 성능 측정
+2. 실제 메일 수신과 장시간 운영 확인
+3. 시연 환경 리허설(핫스팟 자동 연결, 전원을 다시 넣은 뒤 복귀)
+4. 실제 운영으로 확장할 경우 로그인·권한 관리, 촬영 고지, 얼굴·문서 마스킹과 보존 정책 추가
 
 ---
 
@@ -256,15 +216,11 @@ Copy-Item .env.example .env
 
 #### Raspberry Pi 4 + 카메라 모듈
 
-새 설치는 [새 SD 시작 안내](docs/guides/FRESH_SD_START.md)의 **OS → 설치 → SSH 터널 실물 확인** 순서로 진행합니다. 카메라 연결, 자동 시작, Tailscale과 선택적 `ReFound-Demo` 전용 Wi-Fi의 자세한 설명은 [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md)에 있습니다.
+처음 설치는 [설치 순서](docs/guides/FRESH_SD_START.md)의 **OS → 설치 → SSH 터널 확인** 순서로 진행합니다. 카메라 연결, 자동 시작 등 자세한 설명은 [Raspberry Pi 가이드](docs/guides/RASPBERRY_PI_GUIDE.md)에 있습니다.
 
-설치와 Tailscale 설정을 이미 끝냈다면 [Android 핫스팟 학교 시연 운영 가이드](docs/guides/SCHOOL_DEMO_GUIDE.md)에서 지금 상태에 이어 핫스팟 저장, 냉간 부팅 리허설, 발표 당일 순서와 OpenAI/Gemini 전환 방법만 따라가면 됩니다.
-
-핫스팟을 미리 저장하지 못한 상태로 학교에 가더라도 별도 모니터와 USB 키보드가 있다면 [Pi 모니터·키보드 현장 Wi-Fi 연결 가이드](docs/guides/PI_MONITOR_WIFI_GUIDE.md)를 따라 현장에서 직접 로그인하고 연결할 수 있습니다.
-
-- 평상시와 학교 시연의 기본 경로: **Tailscale** — Pi와 노트북이 서로 다른 Wi-Fi에 연결되어도 양쪽에 인터넷만 있으면 접속할 수 있습니다.
-- 인터넷도 확신할 수 없는 경우: **Pi 오프라인 핫스팟** — 노트북을 Pi가 만든 Wi-Fi에 직접 연결해 `http://10.42.0.1:8000`을 엽니다. 이때 웹과 로컬 감지는 동작하지만 OpenAI/Gemini와 메일은 인터넷이 없어 사용할 수 없습니다.
-- 공유기 포트포워딩으로 8000번 포트를 인터넷에 직접 공개하지 마세요. 현재 앱은 단일 관리자 캡스톤 시연을 전제로 하며 자체 로그인 기능은 없습니다.
+- **현재 시연 방식:** Pi를 Windows 노트북의 핫스팟에 연결하고, 같은 노트북에서 SSH 터널로 화면을 엽니다. 노트북에는 앱을 설치하지 않습니다. [실행·종료 순서](docs/guides/WINDOWS_HOTSPOT_GUIDE.md)
+- **대안:** [Tailscale·Android 핫스팟](docs/guides/SCHOOL_DEMO_GUIDE.md), [모니터·키보드로 현장 Wi-Fi 연결](docs/guides/PI_MONITOR_WIFI_GUIDE.md), Pi 오프라인 핫스팟(`http://10.42.0.1:8000`, 인터넷이 없어 AI·메일은 동작하지 않음)
+- 공유기 포트포워딩으로 8000번 포트를 인터넷에 직접 공개하지 마세요. 현재 앱은 단일 관리자 시연을 전제로 하며 자체 로그인 기능이 없습니다.
 
 ### 2. 시연 전 권장 설정
 
@@ -349,8 +305,9 @@ static/                 관리자 화면 JavaScript·CSS
 templates/              관리자 화면 HTML
 tests/                  API·저장소·서비스·영상 처리 자동 테스트
 scripts/raspberry-pi/   Pi 설치, 서비스, 네트워크, 배포 스크립트
-scripts/experiments/    Raspberry Pi 자원 계측 스크립트
-experiments/            논문 실험 스키마, ablation, 사건 매칭과 지표 CLI
+scripts/experiments/    논문 실험 진행 도우미, Pi 자원 기록, 결과표 생성
+experiments/            논문 실험 판정·지표 계산 로직
+scripts/benchmarks/     합성 영상 개발 벤치마크
 docs/                   문서와 완성본: 설치·시연 안내, 논문·발표·브로셔, 개발 기록, 검증 기록, 과거 팀 자료
 data/                   SQLite DB와 감지 이미지(실행 중 생성, Git 제외)
 dist/                   Pi 배포 압축 파일(생성 산출물, Git 제외)
@@ -401,7 +358,7 @@ Invoke-RestMethod http://127.0.0.1:8000/api/health
 2. 설정한 OpenAI/Gemini 키로 실제 물품 이름이 표시되고, 일부러 가리킨 물품은 `확인 필요한 새 물품`으로 보존되는지
 3. **테스트 메일 보내기**로 관리자 주소에 메일이 도착하는지
 
-논문용 안정 이미지 쌍 ablation, 사건 원장 검증·집계, Raspberry Pi 자원 측정은 [논문 실험 실행 가이드](docs/paper/EXPERIMENT_GUIDE.md)를 따르세요. 자동 테스트나 합성 장면 결과를 현장 인식 정확도로 보고하지 않습니다.
+논문 실험은 [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md)를 따르세요. 자동 테스트나 합성 장면 결과를 현장 인식 정확도로 보고하지 않습니다.
 
 ### 9. 문제 해결
 
