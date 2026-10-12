@@ -1,6 +1,6 @@
 # Re:Found — 분실물 자동 추론 및 시각화 관리 AI 시스템
 
-**무엇부터 볼지 찾는다면 [여기서 시작하세요](START_HERE.md).** Pi 시연 준비 재개 / 논문 / 발표 PPT 제작 경로와 현재 진행 상태를 한 장에 정리했습니다.
+**무엇부터 볼지 찾는다면 [여기서 시작하세요](START_HERE.md).** Pi 시연 준비 재개 / 논문 / 최종보고 발표 준비 경로와 현재 진행 상태를 한 장에 정리했습니다.
 
 ### 2026 AI 캡스톤디자인 · 동양미래대학교 인공지능소프트웨어학과 · 상부상조(2조)
 
@@ -52,7 +52,7 @@
 | Raspberry Pi 설치·운영 | [Raspberry Pi 초보자 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
 | 실기 확인·다음 세션 | [결과·확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) · [작업 인계](docs/handoff/SESSION_HANDOFF.md) |
 | 논문 | [논문 작업 안내](docs/paper/README.md) · [JDCS 2단 근사 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) |
-| 현재 발표 준비 | [발표 방향·개선점·검증 근거](docs/presentation/IMPROVEMENTS.md) · [중간보고 v5 PPTX](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx) |
+| 발표 자료 | [중간보고 최종 PDF(10월 13일)](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) · [발표 근거·캡처 요령](docs/presentation/IMPROVEMENTS.md) |
 | 발표용 Mermaid 도식 | [도식 목록 및 사용 안내](docs/presentation/diagrams/README.md) |
 | 졸업작품집 브로셔 (최종) | [PDF 2쪽](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP 편집본](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
 | 팀 프로젝트 기획서 | [5월 12일 기획서 PDF](<docs/project-history/planning/팀 프로젝트기획서.pdf>) |
@@ -205,7 +205,7 @@ sequenceDiagram
 
 앞선 9월 18일 운영 흐름 검사에서는 Python 264개·Node 33개와 별도 Chromium 데스크톱 12개·모바일 4개를 검증했습니다. 합성 카메라의 사건부터 API·DB 반영, 기한·알림·연장·폐기·복원, AI·메일 실패, 편집 충돌·연결 복구를 다뤘습니다. [운영 흐름 점검](docs/development/LIVE_FLOW_REVIEW_2026-09-18.md), [처리 구조 개선](docs/development/ARCHITECTURE_REVIEW_2026-09-18.md), [앱 개선](docs/development/APP_REVIEW_2026-09-18.md), [영상 개선](docs/development/VISION_REVIEW_2026-09-18.md)은 해당 시점 기록입니다.
 
-9월 22일 새 Pi의 실제 촬영·재부팅 진단 로그와 초기화·등록·이동·회수·본인 PC HTTPS 화면/영상 성공 보고에 더해, 9월 29일 Windows 핫스팟 연결 로그·노트북 SSH 웹·OpenAI 동작 성공 보고를 [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)에 반영했습니다. 원격 AI의 세부 판정, 메일 수신과 현장 조건의 장시간 시험은 남아 있습니다. 현재 재개 지점은 **Windows 핫스팟의 자동 연결·무선 단독 전원 재인가 시험 또는 기존 발표 PPT 보완**입니다.
+9월 22일 새 Pi의 실제 촬영·재부팅 진단 로그와 초기화·등록·이동·회수·본인 PC HTTPS 화면/영상 성공 보고에 더해, 9월 29일 Windows 핫스팟 연결 로그·노트북 SSH 웹·OpenAI 동작 성공 보고를 [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)에 반영했습니다. 원격 AI의 세부 판정, 메일 수신과 현장 조건의 장시간 시험은 남아 있습니다. 개발 중간보고는 2026-10-12에 최종 PDF로 완료했습니다. 다음 작업은 사용자가 **논문 실험·결과 반영, 최종보고 발표 준비, Windows 핫스팟의 자동 연결·무선 단독 전원 재인가 시험** 중에서 선택합니다.
 
 9월 30일 Git 대량 반영 점검에서 기존 **Python 272개·Node 37개** 검사를 격리된 데이터로 재실행해 통과했습니다. 복사된 실행 소스는 9월 22일 설치 배포본과 일치했습니다. [저장소 점검 보고서](docs/records/2026-09-30-sync-review/REVIEW.md)에 검증 범위와 Git 관리상 남은 항목을 기록합니다. 실제 Pi·원격 AI·SMTP·브라우저 실기는 이번에 재실행하지 않았습니다.
 
