@@ -20,6 +20,8 @@
 | **Pi API 키 교체·Gemini 전환** | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
 | **PC 자체에서 앱 실행** | 아래 ‘PC 실행 환경 다시 준비하기’ | 필요할 때 `setup.ps1` → `start.ps1` |
 
+Pi 관련 작업(시연·실기·API 키)은 Claude가 Pi에 직접 접속할 수 없으므로, 안내받은 명령을 노트북이나 Pi에서 직접 실행하고 출력을 붙여 주면 됩니다. API 키·비밀번호는 채팅에 붙이지 않습니다.
+
 다음 AI에는 아래처럼 전달하면 됩니다.
 
 > START_HERE.md와 AGENTS.md의 최신 절, docs/handoff/SESSION_HANDOFF.md 상단을 읽어줘. 중간보고는 끝났어. 논문·최종보고·Pi 시연 중 내가 선택한 작업부터 이어가고, 아직 선택하지 않았다면 선택지를 먼저 보여줘. 없는 사진·실험값은 만들지 마.
