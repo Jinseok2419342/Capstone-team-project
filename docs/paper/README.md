@@ -39,7 +39,7 @@
 | `VENUE_AND_RELATED_WORK_STRATEGY.md` | 투고처 비교·비용·심사 절차(9월 15일 조사) |
 | [`PAPER_AI_HANDOFF.md`](../handoff/PAPER_AI_HANDOFF.md), [`PAPER_SESSION_HANDOFF_2026-09-16.md`](../handoff/PAPER_SESSION_HANDOFF_2026-09-16.md) | 9월 원고 당시 AI 인계 기록(`docs/handoff/`). 실험 설계 부분은 이번 축소판으로 대체됨 |
 
-실험 도구: `scripts/experiments/run_experiment.py`(진행 도우미: 결과 자동 판정, 처리 속도 기록, Pi 자원 기록 시작·회수, AI 이름 확인, 표 5–8 생성, `--resume`으로 이어하기). 손 기록 대안용으로 `poll_health.py`, `make_paper_tables.py`가 있다. 모두 노트북의 표준 Python만으로 실행된다(자원 기록은 기존 Pi 설치본의 `monitor_pi_resources.py`를 SSH로 실행).
+실험 도구: `scripts/experiments/run_experiment.py`(진행 도우미: 결과 자동 판정, 처리 속도 기록, Pi 자원 기록 시작·회수, AI 이름 확인, 표 5–8 생성, `--resume`으로 이어하기). 2026-10-24부터는 같은 실행에서 시연 리허설·녹화, 시도별 전후 장면, 움직임 종료→기록 시간, 실제 Pi 관리 기능 점검, 장비 메모(표 4)까지 남기고 최종보고용 `final_report_values.md`를 함께 만든다. Pi에는 새로 설치할 것이 없다. 손 기록 대안용으로 `poll_health.py`, `make_paper_tables.py`가 있다. 모두 노트북의 표준 Python만으로 실행된다(자원 기록은 기존 Pi 설치본의 `monitor_pi_resources.py`를 SSH로 실행).
 
 ## PDF 다시 만들기
 
