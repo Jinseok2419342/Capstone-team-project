@@ -32,7 +32,7 @@
 | [`presentation/`](presentation/IMPROVEMENTS.md) | [최종보고 준비 정리](presentation/FINAL_REPORT_PLAN.md)와 [형식 원문](presentation/FINAL_REPORT_OUTLINE.md), 중간보고 최종 PDF, 논문 전반부 발표 PPTX, [발표 근거·캡처 요령](presentation/IMPROVEMENTS.md). 하위 `diagrams/`는 Mermaid 도식, `2026-08-draft/`는 8월 발표 초안(과거 자료). 중간보고 편집 원본은 사용자의 Canva에 있음 |
 | [`brochure/`](brochure/README.md) | 졸업작품집 브로셔 최종본(HWP·PDF)과 학교 양식. 완료된 작업 |
 | [`development/`](development/) | 9월 18일 앱·영상·처리 구조·운영 흐름 개선 기록 4개 |
-| [`handoff/`](handoff/SESSION_HANDOFF.md) | 다음 AI 세션용 인계. 현재 기준은 [`SESSION_HANDOFF.md`](handoff/SESSION_HANDOFF.md), 나머지 둘은 9월 논문 작업 당시 기록 |
+| [`handoff/`](handoff/SESSION_HANDOFF.md) | 다음 AI 세션용 인계. 현재 기준은 [`SESSION_HANDOFF.md`](handoff/SESSION_HANDOFF.md), 10월 24일 작업의 결정·검증·검토 포인트는 [`REVIEW_NOTES_2026-10-24.md`](handoff/REVIEW_NOTES_2026-10-24.md), 나머지 둘은 9월 논문 작업 당시 기록 |
 | [`records/`](records/) | 날짜별 검증 요약(JSON·보고서), 벤치마크 원장. 평소에는 열 필요 없음 |
 | [`project-history/`](project-history/) | 1학기·9월 팀 과제 자료(아래 표). 현재 구현 설명이 아님 |
 
