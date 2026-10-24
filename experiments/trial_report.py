@@ -375,12 +375,135 @@ def summarize_resources(path: Path) -> dict[str, Any]:
     }
 
 
+def _optional_float(value: Any) -> float | None:
+    try:
+        number = float(str(value).strip())
+    except (TypeError, ValueError):
+        return None
+    return number if math.isfinite(number) else None
+
+
+def _distribution(values: Sequence[float]) -> dict[str, Any]:
+    if not values:
+        return {"n": 0, "median": None, "p90": None, "max": None}
+    ordered = sorted(values)
+    # Nearest-rank percentile: honest for the small samples of this study.
+    p90 = ordered[max(0, math.ceil(0.9 * len(ordered)) - 1)]
+    return {"n": len(ordered), "median": statistics.median(ordered), "p90": p90, "max": ordered[-1]}
+
+
+def _sheet_rows(path: Path) -> list[dict[str, str]]:
+    rows = []
+    for raw in _read_csv(path):
+        row = {(_COLUMN_ALIASES.get(_key(k)) or k): (v or "").strip() for k, v in raw.items() if k}
+        row["action"] = _ACTION_ALIASES.get(_key(row.get("action", "")), "")
+        row["result"] = _RESULT_ALIASES.get(_key(row.get("result", "")), "")
+        if row["action"] or row["result"]:
+            rows.append(row)
+    return rows
+
+
+def summarize_latency(trials_path: Path, activities: Iterable[dict[str, Any]]) -> dict[str, Any]:
+    """Motion end → event record (live session column) and → AI result.
+
+    ``감지지연_s`` is measured on the Pi's clock by the live session.  For
+    correct registrations the AI time (provisional record → classification
+    activity, also the Pi's clock) is added to get the time until the name and
+    category appear on the administrator screen.
+    """
+    detected: dict[str, datetime] = {}
+    classified: dict[str, datetime] = {}
+    for a_type, item_id, meta, created in _activity_tuples(activities, None, None):
+        key = str(item_id)
+        if a_type == "item_detected" and meta.get("source") == "camera":
+            detected.setdefault(key, created)
+        elif a_type in _CLASSIFICATION_DONE and key in detected:
+            classified.setdefault(key, created)
+    by_kind: dict[str, list[float]] = {kind: [] for kind in EVENT_KINDS}
+    until_ai: list[float] = []
+    for row in _sheet_rows(trials_path):
+        value = _optional_float(row.get("감지지연_s"))
+        action = row["action"]
+        if value is None or action not in EVENT_KINDS or row["result"] != action:
+            continue
+        by_kind[action].append(value)
+        item = str(row.get("item_id", "")).strip()
+        if action == "등록" and item in detected and item in classified:
+            until_ai.append(value + (classified[item] - detected[item]).total_seconds())
+    return {
+        "by_kind": {kind: _distribution(values) for kind, values in by_kind.items()},
+        "events": _distribution([v for values in by_kind.values() for v in values]),
+        "motion_to_ai": _distribution(until_ai),
+    }
+
+
+def failed_trials(trials_path: Path) -> list[dict[str, str]]:
+    failed = []
+    for row in _sheet_rows(trials_path):
+        expected = "반응 없음" if row["action"] == "무변화" else row["action"]
+        if row["result"] != expected:
+            failed.append({
+                "no": row.get("no", ""), "condition": row.get("condition", ""), "action": row["action"],
+                "item": row.get("물품", ""), "result": row["result"], "note": row.get("note", ""),
+            })
+    return failed
+
+
+def ai_mistakes(trials_path: Path) -> list[dict[str, str]]:
+    mistakes = []
+    for row in _sheet_rows(trials_path):
+        if row["action"] != "등록" or row["result"] != "등록":
+            continue
+        name, category = _key(row.get("ai_name", "")), _key(row.get("ai_category", ""))
+        if name == "x" or category == "x":
+            mistakes.append({
+                "no": row.get("no", ""), "item": row.get("물품", ""), "ai": row.get("AI결과", ""),
+                "name": "O" if name == "o" else "X", "category": "O" if category == "o" else "X",
+            })
+    return mistakes
+
+
 def _pct(value: float | None, digits: int = 1) -> str:
     return "—" if value is None else f"{value * 100:.{digits}f}"
 
 
 def _num(value: float | None, digits: int = 1) -> str:
     return "—" if value is None else f"{value:.{digits}f}"
+
+
+_PROVIDER_LABELS = {"openai": "OpenAI", "gemini": "Google Gemini", "offline": "외부 모델 없음(로컬 폴백)"}
+
+
+def environment_values(env: dict[str, Any] | None) -> dict[str, str]:
+    """Placeholders that the live session can fill from env.json."""
+    if not env:
+        return {}
+    manual = env.get("manual") or {}
+    start = env.get("start") or {}
+    provider = start.get("provider") or {}
+    started = str(env.get("experiment_started_local") or start.get("laptop_time_utc") or "")[:10]
+    values: dict[str, str] = {}
+    storage = str(manual.get("storage") or "").strip()
+    if storage:
+        values["EQUIP_STORAGE"] = storage if "sd" in storage.lower() else f"microSD {storage}"
+    for key, placeholder in (
+        ("cooling", "EQUIP_COOLING"), ("camera_geometry", "EQUIP_CAMERA_GEOMETRY"),
+        ("network", "NETWORK_CONDITION"),
+    ):
+        if str(manual.get(key) or "").strip():
+            values[placeholder] = str(manual[key]).strip()
+    if provider.get("active"):
+        label = _PROVIDER_LABELS.get(provider["active"], provider["active"])
+        model = provider.get("model") if provider.get("active") != "offline" else ""
+        values["VLM_MODEL_DATE"] = ", ".join(part for part in (f"{label} {model}".strip(), started) if part)
+    if len(started) == 10:
+        year, month, day = started.split("-")
+        place = str(manual.get("place") or "").strip()
+        values["EXPERIMENT_DATE_PLACE"] = f"{int(year)}년 {int(month)}월 {int(day)}일 {place}".strip()
+    names = [str(item.get("name")) for item in env.get("items") or [] if item.get("name")]
+    if names:
+        values["OBJECT_LIST"] = ", ".join(names)
+    return values
 
 
 def render_markdown(summary: dict[str, Any]) -> str:
@@ -472,14 +595,222 @@ def render_markdown(summary: dict[str, Any]) -> str:
     if idle:
         values["IDLE_HOURS"] = _num(idle["hours"])
         values["IDLE_FP"] = str(idle["false_events"])
+    env_values = environment_values(summary.get("environment"))
+    values.update(env_values)
     lines += ["## 본문 자리표시자 값", ""]
     lines += [f"- `[[{key}]]` = {value}" for key, value in values.items()]
+    manual_left = ["`[[MAIN_ERROR]]`", "`[[FAIL_CASES]]`"]
+    manual_left += [
+        f"`[[{key}]]`" for key in (
+            "EQUIP_STORAGE", "EQUIP_COOLING", "EQUIP_CAMERA_GEOMETRY", "VLM_MODEL_DATE",
+            "NETWORK_CONDITION", "EXPERIMENT_DATE_PLACE", "OBJECT_LIST",
+        ) if key not in env_values
+    ]
     lines += [
         "",
-        "직접 채울 항목: `[[MAIN_ERROR]]`, `[[FAIL_CASES]]`, 장비·환경 항목"
-        "(무인 감시 시각을 넣지 않았다면 `[[IDLE_HOURS]]`, `[[IDLE_FP]]`도).",
+        "직접 채울 항목: " + ", ".join(manual_left)
+        + "(무인 감시 시각을 넣지 않았다면 `[[IDLE_HOURS]]`, `[[IDLE_FP]]`도).",
         "",
     ]
+    latency = summary.get("latency")
+    if latency and latency["events"]["n"]:
+        lines += ["## 본문 보강용 추가 값(선택 — 원고 6-3절의 대기 시간 설명에 쓸 수 있음)", ""]
+        for kind in EVENT_KINDS:
+            dist = latency["by_kind"][kind]
+            if dist["n"]:
+                lines.append(
+                    f"- {kind}: 움직임 종료 → 사건 기록 중앙값 {_num(dist['median'])} s, "
+                    f"최대 {_num(dist['max'])} s (n={dist['n']})"
+                )
+        ai = latency["motion_to_ai"]
+        if ai["n"]:
+            lines.append(
+                f"- 등록: 움직임 종료 → AI 이름·분류 반영 중앙값 {_num(ai['median'])} s, "
+                f"최대 {_num(ai['max'])} s (n={ai['n']})"
+            )
+        lines.append("")
+    return "\n".join(lines)
+
+
+def _goal(ok: bool | None) -> str:
+    return "미측정" if ok is None else ("달성" if ok else "미달")
+
+
+def render_final_report(summary: dict[str, Any]) -> str:
+    """Numbers for the final presentation, the same ones the paper uses."""
+    trials = summary["trials"]
+    db = summary.get("database") or {}
+    latency = summary.get("latency") or {}
+    env = summary.get("environment") or {}
+    res = summary.get("resources") or {}
+    health = summary.get("health") or {}
+    idle = summary.get("idle")
+    env_values = environment_values(env)
+    start = env.get("start") or {}
+    provider = start.get("provider") or {}
+    none = trials["none_false_events"]
+    events = latency.get("events") or {"n": 0}
+    to_ai = latency.get("motion_to_ai") or {"n": 0}
+
+    def stat(group: dict[str, Any], key: str) -> dict[str, Any]:
+        return group.get(key) or {}
+
+    lines = ["# Re:Found 최종보고·논문 공통 수치 (자동 생성)", ""]
+    lines += [
+        f"> 실험: {env_values.get('EXPERIMENT_DATE_PLACE', '날짜 미기록')} · Raspberry Pi 4 2GB · "
+        f"AI {env_values.get('VLM_MODEL_DATE', '미기록')} · 시도 {trials['trials']}회. "
+        "같은 원시 기록에서 계산했으므로 발표와 논문에 같은 숫자를 씁니다.",
+        "",
+        "## 1. 발표에 쓸 핵심 숫자",
+        "",
+        "| 항목 | 값 | 표본 |",
+        "|---|---|---|",
+        f"| 사건 판정 정확도 | {_pct(trials['accuracy'])}% (95% 신뢰구간 {_pct(trials['accuracy_ci95'][0])}–"
+        f"{_pct(trials['accuracy_ci95'][1])}%) | {trials['trials']}회 |",
+        f"| 등록·이동·제거 평균 F1 | {_num(trials['macro']['f1'], 3)} | "
+        f"{sum(trials['counts'][k] for k in EVENT_KINDS)}회 |",
+        f"| 무변화 오탐 (손 / 조명 / 그림자) | {none['손']['false_events']}/{none['손']['trials']} · "
+        f"{none['조명']['false_events']}/{none['조명']['trials']} · "
+        f"{none['그림자']['false_events']}/{none['그림자']['trials']} | {trials['counts']['무변화']}회 |",
+    ]
+    if idle:
+        lines.append(f"| 무인 감시 중 잘못된 사건 | {idle['false_events']}건 | {_num(idle['hours'])}시간 |")
+    lines.append(
+        f"| AI 이름 / 분류 정확도 | {_pct(trials['ai_name_accuracy'])}% / {_pct(trials['ai_category_accuracy'])}% | "
+        f"n={trials['ai_name_judged']}/{trials['ai_category_judged']} |"
+    )
+    if db:
+        lines.append(
+            f"| AI 호출 비율 | {_pct(db['ai_call_ratio'])}% (등록 {db['added']} + 제거 검증 {db['verify_calls']}"
+            f" / 감지 사건 {db['detected_events']}) | 실험 중 전체 |"
+        )
+        lines.append(
+            f"| AI 처리 시간 (임시 기록 → 이름·분류) | 중앙값 {_num(db['classification_median_s'])}초 · "
+            f"최대 {_num(db['classification_max_s'])}초 | n={len(db['classification_seconds'])} |"
+        )
+    if events.get("n"):
+        lines.append(
+            f"| 움직임 종료 → 사건 기록 | 중앙값 {_num(events['median'])}초 · 최대 {_num(events['max'])}초 | "
+            f"n={events['n']} |"
+        )
+    if to_ai.get("n"):
+        lines.append(
+            f"| 움직임 종료 → 화면에 AI 이름·분류 | 중앙값 {_num(to_ai['median'])}초 · 최대 {_num(to_ai['max'])}초 | "
+            f"n={to_ai['n']} |"
+        )
+    if res:
+        lines.append(
+            f"| Pi 평균 CPU / 최고 온도 | {_num(stat(res, 'system_cpu_percent').get('mean'))}% / "
+            f"{_num(stat(res, 'temperature_c').get('max'))}°C | 1초 간격 {stat(res, 'temperature_c').get('n', 0)}회 |"
+        )
+        lines.append(f"| 서비스 최대 메모리 | {_num(stat(res, 'rss_mib').get('max'))} MiB | |")
+    if health:
+        lines.append(
+            f"| 분석 프레임률 / 프레임 처리 시간 | {_num(stat(health, 'fps').get('mean'))} fps / "
+            f"{_num(stat(health, 'processing_ms').get('mean'))} ms | 분석 {health.get('frames_processed') or '—'}프레임 |"
+        )
+    lines.append("")
+
+    category = trials["ai_category_accuracy"]
+    ratio = db.get("ai_call_ratio") if db else None
+    median_record = events.get("median") if events.get("n") else None
+    median_ai = to_ai.get("median") if to_ai.get("n") else None
+    lines += [
+        "## 2. 1학기 기획 목표 대비 (팀 프로젝트기획서 2026-05-12의 정량 목표)",
+        "",
+        "| 1학기 목표 | 이번 측정 | 판정 기준 | 판정 |",
+        "|---|---|---|---|",
+        f"| 물체 감지~DB 저장 10초 이내 | 움직임 종료→사건 기록 중앙값 {_num(median_record)}초, "
+        f"→AI 이름·분류 반영 중앙값 {_num(median_ai)}초 | AI 반영까지 중앙값 ≤ 10초 | "
+        f"{_goal(None if median_ai is None else median_ai <= 10)} |",
+        f"| 분류 정확도 85% 이상 | 3분류(귀중품·일반·음식) {_pct(category)}% (n={trials['ai_category_judged']}) | ≥ 85% | "
+        f"{_goal(None if category is None else category >= 0.85)} |",
+        f"| 멀티모달 API 호출 30% 이상 절감 | 감지 사건 대비 호출 {_pct(ratio)}% → 사건마다 호출하는 방식 대비 "
+        f"{_pct(None if ratio is None else 1 - ratio)}% 절감 | 절감 ≥ 30% | "
+        f"{_goal(None if ratio is None else 1 - ratio >= 0.30)} |",
+        "",
+        "1학기 계획의 수단(YOLOv8 탐지, 로컬 LLM, 임베딩 캐시)은 바뀌었으므로, 같은 목표를 현재 구현"
+        "(안정 장면 사건 감지 + 사건별 선택 호출)으로 측정한 결과라고 설명한다.",
+        "",
+    ]
+
+    checks = summary.get("function_checks") or {}
+    rows = checks.get("results") or []
+    if rows:
+        counted = [r for r in rows if r["결과"] != "해당 없음" and r["점검"] != "점검 대상 물품"]
+        passed = sum(r["결과"] == "통과" for r in counted)
+        lines += ["## 3. 실제 Pi 관리 기능 점검 (자동)", "", "| 점검 | 결과 | 내용 |", "|---|---|---|"]
+        lines += [f"| {r['점검']} | {r['결과']} | {r['내용']} |" for r in rows]
+        lines += ["", f"통과 {passed} / {len(counted)}항목"
+                  + (f", 메일 수신(사용자 확인): {checks['mail_received']}" if checks.get("mail_received") else ""), ""]
+    elif checks.get("skipped"):
+        lines += ["## 3. 실제 Pi 관리 기능 점검", "", "이번 실행에서는 건너뜀.", ""]
+
+    rehearsal = summary.get("rehearsal") or {}
+    if rehearsal.get("steps"):
+        lines += [
+            "## 4. 시연 리허설 (같은 물품의 등록 → 이동 → 회수)", "",
+            "| 단계 | 시스템 결과 | 물품 ID | 움직임 종료→기록 |", "|---|---|---|---|",
+        ]
+        for step in rehearsal["steps"]:
+            seconds = step.get("latency_s")
+            lines.append(
+                f"| {step['action']} | {step['result']} | {step.get('item_id') or '—'} | "
+                f"{'—' if seconds is None else f'{seconds:.1f}초'} |"
+            )
+        ai = rehearsal.get("ai") or {}
+        lines.append("")
+        if ai.get("name"):
+            lines.append(f"AI 결과: '{ai['name']}' ({ai.get('category', '')}), 기록 후 {_num(ai.get('classification_s'))}초.")
+        lines.append(
+            "같은 물품 ID로 세 단계가 이어짐: " + ("예" if rehearsal.get("same_item_id") else "아니요")
+            + ". 장면 사진은 `scenes/rehearsal_*_after.jpg`(최종보고의 등록·이동·회수 화면)."
+        )
+        lines.append("")
+
+    failures = summary.get("failed_trials") or []
+    mistakes = summary.get("ai_mistakes") or []
+    lines += ["## 5. 오류 사례 후보 (발표 '오류가 난 사례'·논문 `[[FAIL_CASES]]`)", ""]
+    if failures:
+        lines += ["| 번호 | 조건 | 정답 | 시스템 결과 | 메모 | 장면 사진 |", "|---|---|---|---|---|---|"]
+        for row in failures:
+            number = int(row["no"]) if str(row["no"]).isdigit() else row["no"]
+            scene = f"scenes/trial{number:03d}_after.jpg" if isinstance(number, int) else ""
+            lines.append(
+                f"| {row['no']} | {row['condition']} | {row['action']} {row['item']} | {row['result']} | "
+                f"{row['note']} | {scene} |"
+            )
+    else:
+        lines.append("사건 판정이 틀린 시도 없음.")
+    if mistakes:
+        lines += ["", "| 번호 | 실제 물품 | AI 결과 | 이름 | 분류 |", "|---|---|---|---|---|"]
+        lines += [f"| {m['no']} | {m['item']} | {m['ai']} | {m['name']} | {m['category']} |" for m in mistakes]
+    lines.append("")
+
+    manual = env.get("manual") or {}
+    settings = start.get("settings") or {}
+    lines += ["## 6. 실험 환경 (논문 표 4·발표 시연 환경)", ""]
+    if provider:
+        lines.append(f"- AI: {_PROVIDER_LABELS.get(provider.get('active'), provider.get('active'))} "
+                     f"{provider.get('model') or ''} (설정 {provider.get('requested')})")
+    if settings:
+        lines.append(
+            f"- 영상: {settings.get('camera_width')}×{settings.get('camera_height')}, 입력 {settings.get('camera_fps')} fps, "
+            f"분석 최대 {settings.get('monitor_fps')} fps, 대기·안정 {settings.get('settle_seconds')}/"
+            f"{settings.get('stable_seconds')} s, 정합 폭 {settings.get('stabilization_analysis_width')} px"
+        )
+    for key, label in (("storage", "저장장치"), ("cooling", "냉각"), ("camera_geometry", "카메라 설치"),
+                       ("network", "네트워크"), ("place", "장소")):
+        if manual.get(key):
+            lines.append(f"- {label}: {manual[key]}")
+    cold = str(manual.get("cold_boot") or "").strip().lower()
+    if cold in ("y", "n"):
+        lines.append(
+            "- 전원을 새로 켠 뒤 랜선 없이 무선 자동 접속·서비스 자동 시작: "
+            + ("확인(사용자 응답 y" if cold == "y" else "아님(사용자 응답 n")
+            + (f", 서비스 시작 기록 {env.get('service_started_at')})" if env.get("service_started_at") else ")")
+        )
+    lines.append("")
     return "\n".join(lines)
 
 
@@ -502,11 +833,16 @@ def build_summary(
     trials_path: Path, *, activities: list[dict[str, Any]] | None = None,
     health: Path | None = None, resources: Path | None = None,
     idle_start: datetime | None = None, idle_end: datetime | None = None,
+    env: dict[str, Any] | None = None, rehearsal: dict[str, Any] | None = None,
+    function_checks: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     """Library entry used by the live experiment session."""
     summary: dict[str, Any] = {"trials": summarize_trials(read_trials(trials_path))}
+    summary["failed_trials"] = failed_trials(trials_path)
+    summary["ai_mistakes"] = ai_mistakes(trials_path)
     if activities is not None:
         summary["database"] = summarize_activities(activities, until=idle_start)
+        summary["latency"] = summarize_latency(trials_path, activities)
         if idle_start and idle_end and idle_end > idle_start:
             summary["idle"] = {
                 "hours": (idle_end - idle_start).total_seconds() / 3600,
@@ -516,6 +852,12 @@ def build_summary(
         summary["health"] = summarize_health(health)
     if resources is not None and Path(resources).exists():
         summary["resources"] = summarize_resources(resources)
+    if env:
+        summary["environment"] = env
+    if rehearsal:
+        summary["rehearsal"] = rehearsal
+    if function_checks:
+        summary["function_checks"] = function_checks
     return summary
 
 
@@ -523,6 +865,7 @@ def write_outputs(summary: dict[str, Any], output_dir: Path) -> Path:
     output_dir.mkdir(parents=True, exist_ok=True)
     target = output_dir / "paper_tables.md"
     target.write_text(render_markdown(summary), encoding="utf-8")
+    (output_dir / "final_report_values.md").write_text(render_final_report(summary), encoding="utf-8")
     (output_dir / "summary.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     return target
 
@@ -531,6 +874,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     try:
         summary: dict[str, Any] = {"trials": summarize_trials(read_trials(args.trials))}
+        summary["failed_trials"] = failed_trials(args.trials)
+        summary["ai_mistakes"] = ai_mistakes(args.trials)
     except TrialSheetError as exc:
         print(f"기록지 오류: {exc}", file=sys.stderr)
         return 2
