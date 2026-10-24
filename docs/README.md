@@ -8,7 +8,9 @@
 | 현재 Pi 시연 준비 재개 | [Windows 핫스팟 실행·종료](guides/WINDOWS_HOTSPOT_GUIDE.md) → [실기 결과·남은 항목](guides/PI_ACCEPTANCE_CHECKLIST.md) |
 | 새 카드에 처음부터 설치 | [새 SD 시작 안내](guides/FRESH_SD_START.md) |
 | 논문 수정·실험 준비 | [논문 작업 안내](paper/README.md) |
-| 최종보고 발표 준비 (10/27 연습, 11/03 발표) | [최종보고 준비 정리](presentation/FINAL_REPORT_PLAN.md) → [실험 진행 안내](paper/EXPERIMENT_GUIDE.md) → [발표 근거·캡처 요령](presentation/IMPROVEMENTS.md) |
+| 10월 25일 실험 | [실험 안내 — 쉬운 버전](paper/EXPERIMENT_GUIDE.md) |
+| 최종보고 발표 준비 (10/27 연습, 11/03 발표) | [최종보고 준비 정리](presentation/FINAL_REPORT_PLAN.md) → [발표 근거·캡처 요령](presentation/IMPROVEMENTS.md) |
+| 학교에서 시연 | [시연 준비](presentation/FINAL_DEMO_GUIDE.md) |
 
 설치 중 문제가 있을 때만 [전체 설치 참고서](guides/RASPBERRY_PI_GUIDE.md), [학교 운영](guides/SCHOOL_DEMO_GUIDE.md), [모니터·Wi-Fi 복구](guides/PI_MONITOR_WIFI_GUIDE.md)를 찾아봅니다.
 
@@ -29,7 +31,7 @@
 |---|---|
 | [`guides/`](guides/) | 설치·시연·운영 안내. 매번 쓰는 [핫스팟 실행·종료](guides/WINDOWS_HOTSPOT_GUIDE.md), [새 SD 설치](guides/FRESH_SD_START.md), [실기 확인표](guides/PI_ACCEPTANCE_CHECKLIST.md), [API 키 변경](guides/PI_API_KEY_CHANGE.md)과 문제 해결용 상세 안내 3개. Pi 배포 파일에도 함께 들어갑니다 |
 | [`paper/`](paper/README.md) | 논문 PDF와 원고(`PAPER_DRAFT_JDCS.md`), 실험 진행 안내, 결과 입력표, 참고문헌. 하위 `manuscript/`는 PDF 생성기·그림, `briefing/`은 9월 16일 전반부 4쪽 원고 |
-| [`presentation/`](presentation/IMPROVEMENTS.md) | [최종보고 준비 정리](presentation/FINAL_REPORT_PLAN.md)와 [형식 원문](presentation/FINAL_REPORT_OUTLINE.md), 중간보고 최종 PDF, 논문 전반부 발표 PPTX, [발표 근거·캡처 요령](presentation/IMPROVEMENTS.md). 하위 `diagrams/`는 Mermaid 도식, `2026-08-draft/`는 8월 발표 초안(과거 자료). 중간보고 편집 원본은 사용자의 Canva에 있음 |
+| [`presentation/`](presentation/IMPROVEMENTS.md) | [최종보고 준비 정리](presentation/FINAL_REPORT_PLAN.md), [시연 준비](presentation/FINAL_DEMO_GUIDE.md), [형식 원문](presentation/FINAL_REPORT_OUTLINE.md), 중간보고 최종 PDF, 논문 전반부 발표 PPTX, [발표 근거·캡처 요령](presentation/IMPROVEMENTS.md). 하위 `diagrams/`는 Mermaid 도식, `2026-08-draft/`는 8월 발표 초안(과거 자료). 중간보고 편집 원본은 사용자의 Canva에 있음 |
 | [`brochure/`](brochure/README.md) | 졸업작품집 브로셔 최종본(HWP·PDF)과 학교 양식. 완료된 작업 |
 | [`development/`](development/) | 9월 18일 앱·영상·처리 구조·운영 흐름 개선 기록 4개 |
 | [`handoff/`](handoff/SESSION_HANDOFF.md) | 다음 AI 세션용 인계. 현재 기준은 [`SESSION_HANDOFF.md`](handoff/SESSION_HANDOFF.md), 10월 24일 작업의 결정·검증·검토 포인트는 [`REVIEW_NOTES_2026-10-24.md`](handoff/REVIEW_NOTES_2026-10-24.md), 나머지 둘은 9월 논문 작업 당시 기록 |
