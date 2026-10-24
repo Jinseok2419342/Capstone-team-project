@@ -39,19 +39,23 @@
 | `[[FPS_MEAN]]`, `[[PROC_MS_MEAN]]` | 평균 분석 프레임률, 프레임당 처리 시간 | health.csv |
 | `[[CPU_MEAN]]`, `[[RSS_MAX]]`, `[[TEMP_MAX]]` | 평균 CPU(%), 최대 서비스 메모리(MiB), 최고 온도(°C) | resources.csv |
 
-## 3. 직접 채우는 항목
+## 3. 장비·환경 항목과 서술 항목
 
-| 자리 | 넣을 내용 | 확인 방법 |
+2026-10-24부터 진행 도우미가 시작할 때 장비 질문 6개를 묻고 Pi에서 AI 모델·카메라 설정을 읽어 `env.json`에 남긴다. 아래 ‘자동’ 항목은 `paper_tables.md`의 자리표시자 목록에 바로 나온다(답을 비워 둔 항목만 직접 채운다).
+
+| 자리 | 넣을 내용 | 채우는 곳 |
 |---|---|---|
-| `[[EQUIP_STORAGE]]` | microSD 용량(예: microSD 32GB) | 카드 라벨 |
-| `[[EQUIP_COOLING]]` | 방열판·팬·케이스(예: 방열판, 팬 없음) | 장치 확인 |
-| `[[EQUIP_CAMERA_GEOMETRY]]` | 설치 높이·거리·각도(예: 책상 위 60cm, 하향 약 70°) | 줄자 |
-| `[[VLM_MODEL_DATE]]` | 제공자·모델명·실험일(예: OpenAI gpt-…, 2026-10-20) | 설정 화면 |
-| `[[NETWORK_CONDITION]]` | 연결 방식(예: 학교 Wi-Fi에 연결된 노트북 핫스팟) | 실험 당일 |
-| `[[EXPERIMENT_DATE_PLACE]]` | 날짜·장소(예: 2026년 10월 20일 교내 실습실) | 실험 당일 |
-| `[[OBJECT_LIST]]` | 물품 10종 이름 | session.json |
-| `[[MAIN_ERROR]]` | 표 5에서 가장 많은 오류 1–2문장(예: “오류는 주로 ○○을 ○○으로 판정한 경우였다.”) | 표 5·메모 |
-| `[[FAIL_CASES]]` | 대표 실패 사례와 원인 1–2문장 | 메모·캡처 |
+| `[[EQUIP_STORAGE]]` | microSD 용량(예: microSD 32GB) | 자동(시작 질문) |
+| `[[EQUIP_COOLING]]` | 방열판·팬·케이스(예: 방열판, 팬 없음) | 자동(시작 질문) |
+| `[[EQUIP_CAMERA_GEOMETRY]]` | 설치 높이·거리·각도(예: 책상 위 60cm, 하향 약 70°) | 자동(시작 질문) |
+| `[[VLM_MODEL_DATE]]` | 제공자·모델명·실험일(예: OpenAI gpt-…, 2026-10-25) | 자동(Pi 설정) |
+| `[[NETWORK_CONDITION]]` | 연결 방식(예: 학교 Wi-Fi에 연결된 노트북 핫스팟) | 자동(시작 질문) |
+| `[[EXPERIMENT_DATE_PLACE]]` | 날짜·장소(예: 2026년 10월 25일 교내 실습실) | 자동(시작 시각 + 질문) |
+| `[[OBJECT_LIST]]` | 물품 10종 이름 | 자동(물품 입력) |
+| `[[MAIN_ERROR]]` | 표 5에서 가장 많은 오류 1–2문장(예: “오류는 주로 ○○을 ○○으로 판정한 경우였다.”) | Claude가 `final_report_values.md` 5절·장면 사진으로 작성 |
+| `[[FAIL_CASES]]` | 대표 실패 사례와 원인 1–2문장 | Claude가 같은 자료로 작성 |
+
+`paper_tables.md` 끝의 ‘본문 보강용 추가 값’(움직임 종료 → 사건 기록 시간)은 원고에 아직 자리가 없는 선택 값이다. 6-3절의 “최소 4.2초를 기다리므로” 문장 뒤에 실측값 한 문장으로 넣을 수 있다.
 
 표 4의 운영체제·카메라·소프트웨어 버전은 9월 22일 Pi 진단 출력으로 채워 두었다. Pi를 다시 설치했다면 실험 직전 `check-system.sh` 출력으로 다시 확인한다.
 
@@ -62,7 +66,7 @@
 | 그림 1, 3, 4 | `manuscript/figures/figure-1·3·4.svg` | 구조·상태 전이·후보 처리 도식(완성, 빌드 시 생성) |
 | 그림 2 | `manuscript/figures/figure-2.png` | 관리자 웹 화면 캡처 |
 | 그림 5 | `manuscript/figures/figure-5.png` | 실험 장면 사진(보관대와 카메라 설치) |
-| 그림 6 | `manuscript/figures/figure-6.png` | 판정 성공 예 2개와 실패 예 1개를 한 장으로 |
+| 그림 6 | `manuscript/figures/figure-6.png` | 판정 성공 예 2개와 실패 예 1개를 한 장으로. 도우미가 저장한 `scenes/trial…_before·after.jpg`에서 Claude가 골라 합친다 |
 
 그림 2·5·6 파일이 없으면 PDF에 ‘사진 입력 예정’ 상자가 표시된다.
 

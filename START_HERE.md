@@ -4,7 +4,9 @@
 
 **아래에서 지금 할 일 하나만 고르면 됩니다.** 모든 문서나 `AGENTS.md`를 읽을 필요는 없습니다.
 
-## 다음 세션은 할 일을 선택하세요 — 2026-10-12 갱신
+## 다음 세션은 할 일을 선택하세요 — 2026-10-24 갱신
+
+**2026-10-24 최종보고 준비 정리:** 최종보고 형식(11/03, 시연 포함 10분)에 맞춘 슬라이드 구성안, 채울 숫자와 출처, 하루 한 번으로 논문·발표 측정을 끝내는 순서, 생성형 AI 그림 프롬프트를 [최종보고 준비 정리](docs/presentation/FINAL_REPORT_PLAN.md)에 모았습니다. **Pi에 새로 설치할 것은 없습니다.** 노트북의 실험 도우미만 확장했습니다(시연 리허설·녹화, 시도별 장면, 기록까지 걸린 시간, 관리 기능 자동 점검, 장비 메모, 발표용 수치 파일). 발표 자료는 아직 만들지 않았습니다.
 
 **2026-10-12 중간보고 완료:** 10월 13일 개발 중간보고 발표 자료는 사용자가 Canva에서 따로 완성했습니다. 최종본은 [중간보고 최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf)(28쪽)입니다. **중간보고 PPT 보완은 더 이상 할 일이 아닙니다.** 이전 v3–v5 PPTX와 생성 스크립트·작성 가이드·렌더는 삭제했습니다. 편집 원본은 사용자의 Canva에 있고 저장소에는 없습니다.
 
@@ -14,8 +16,8 @@
 
 | 지금 할 일 | 먼저 열 파일 | 남은 작업 |
 |---|---|---|
-| **논문 실험·결과 반영** | [논문 안내](docs/paper/README.md) · [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md) · [2단 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 10월 11일 JDCS 분량으로 축소 개정. 하루 약 2시간 반 실험(실물 100회 + 무인 1시간) → 자동 집계 → 원고 반영 → HWP 이식 |
-| **최종보고 발표 준비** (10/27 연습, 11/03 발표) | [중간보고 최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) · [발표 근거·캡처 요령](docs/presentation/IMPROVEMENTS.md) | 중간보고 최종본에서 출발해 실험 결과·실제 캡처·남은 과제를 반영. 아래 ‘최종보고 발표를 선택하면’ 참고 |
+| **논문 실험·결과 반영** | [논문 안내](docs/paper/README.md) · [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md) · [2단 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 하루 약 2시간 반 실험(리허설 + 실물 100회 + 기능 점검 + 무인 1시간) → 논문 표와 최종보고 수치가 함께 자동 집계 → 원고 반영 → HWP 이식 |
+| **최종보고 발표 준비** (10/27 연습, 11/03 발표) | [최종보고 준비 정리](docs/presentation/FINAL_REPORT_PLAN.md) · [형식 원문](docs/presentation/FINAL_REPORT_OUTLINE.md) · [중간보고 최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) | 정리 문서 9절의 확인 질문(실험일·제작 도구·중간보고 피드백·메일)부터. 실험 결과가 오면 `final_report_values.md`로 숫자 반영 |
 | **Pi 시연·실기 확인** | [핫스팟 실행·종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 새 구성의 전원 재인가·자동 연결 등 확인 |
 | **Pi API 키 교체·Gemini 전환** | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
 | **PC 자체에서 앱 실행** | 아래 ‘PC 실행 환경 다시 준비하기’ | 필요할 때 `setup.ps1` → `start.ps1` |
@@ -54,6 +56,8 @@ ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@192.168.137.243
 브라우저 주소는 그대로 `http://127.0.0.1:18000`입니다. 예시 IP를 고정값으로 사용하지 않습니다. 노트북 앱 설치·Tailscale 초대 수락은 이 절차에 필요하지 않습니다. **사용 순서의 확정과 새 전원 재인가 시험의 성공 보고는 별개**이며, 아직 없는 시험 결과는 성공으로 기록하지 않습니다.
 
 ## 최종보고 발표를 선택하면 이렇게 시작하세요
+
+**2026-10-24부터는 [최종보고 준비 정리](docs/presentation/FINAL_REPORT_PLAN.md)가 기준입니다.** 슬라이드 14장 구성안(형식 원문 순서), 채울 숫자와 출처, 실험일 순서, 그림 프롬프트, 초기 계획 대비 구현 상태 초안이 있습니다. 아래 1–4는 중간보고 PDF를 참고할 때의 규칙입니다.
 
 1. [중간보고 최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf)를 출발점으로 삼습니다. 아래 쪽 번호는 **화면 오른쪽 아래의 슬라이드 번호(01–27)** 기준입니다. 09번 ‘개발 목표 대비 현재 도달 수준’이 두 가지 버전으로 두 쪽이라, 10번 이후는 PDF 쪽수가 슬라이드 번호보다 1 큽니다. 보충자료 쪽은 없습니다.
 2. **편집 원본은 사용자의 Canva에 있습니다.** 사용자가 Canva에서 직접 고치는지, 별도 PPTX가 필요한지 먼저 확인합니다. 예전 v5 생성 스크립트를 찾거나 다시 만들지 않습니다. 필요하면 바꿀 문구·표·수치와 필요한 캡처 목록을 정리해 드립니다.
