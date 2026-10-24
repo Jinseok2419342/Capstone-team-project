@@ -19,6 +19,7 @@ import argparse
 import csv
 import json
 import math
+import shutil
 import subprocess
 import threading
 import time
@@ -74,6 +75,12 @@ ENV_QUESTIONS = (
     ("cold_boot", "오늘 Pi를 꺼진 상태에서 켜고 랜선 없이 바로 접속했나요? (y/n, 모르면 Enter)", ""),
 )
 REHEARSAL_TAGS = {"등록": "1_register", "이동": "2_move", "제거": "3_remove"}
+# What to restore before a trial that was undone is asked again.
+UNDO_HINTS = {
+    "등록": "{item}을(를) 치우고 화면이 다시 '감시 중'이 될 때까지 기다린 뒤",
+    "이동": "{item}을(를) 옮기기 전 자리로 되돌려 놓고 기다린 뒤",
+    "제거": "{item}을(를) 원래 자리에 다시 놓아 화면에 다시 등록된 뒤",
+}
 
 
 def now_utc() -> datetime:
@@ -827,7 +834,8 @@ class Session:
         self.write_environment()
 
     # -- experiment parts --------------------------------------------
-    def run_trial(self, trial: Trial, total: int) -> None:
+    def run_trial(self, trial: Trial, total: int) -> str:
+        """Run one trial; returns done, skipped, undo (redo the last one) or quit."""
         label = trial.action if trial.action != "무변화" else trial.condition
         text = INSTRUCTIONS[label].format(item=trial.item)
         self.poll_quietly()
@@ -835,10 +843,15 @@ class Session:
         motion_before = self.collector.latest_motion()
         self.save_scene(f"trial{trial.no:03d}_before")
         target = trial.item or trial.condition
-        answer = self.ask(f"\n[{trial.no}/{total}] {trial.action} · {target} — {text} Enter (s=건너뛰기) ").strip().lower()
+        answer = self.ask(
+            f"\n[{trial.no}/{total}] {trial.action} · {target} — {text} Enter "
+            "(s=건너뛰기 · u=방금 시도 다시 · q=여기서 마무리) "
+        ).strip().lower()
         if answer == "s":
             self.say("  건너뜀(기록하지 않음)")
-            return
+            return "skipped"
+        if answer in ("u", "q"):
+            return "undo" if answer == "u" else "quit"
         started = now_utc()
         self.poll_quietly()
         window = self.wait_for_reaction(baseline, trial.action)
@@ -863,6 +876,32 @@ class Session:
             self.say(self.repair_hint(trial, result))
             self.pause("  상태를 맞췄으면")
             self.poll_quietly()
+        return "done"
+
+    def undo_last_trial(self) -> int | None:
+        """Forget the most recently recorded trial so that it is asked again."""
+        trials = self.state.get("trials") or []
+        if not trials:
+            self.say("  되돌릴 시도가 없습니다.")
+            return None
+        row = trials.pop()
+        self.save_state()
+        action = row.get("행동", "")
+        target = row.get("물품") or row.get("조건", "")
+        self.say(f"  방금 시도 [{row['번호']}] {action} · {target} 기록을 지웠습니다. 다시 하기 전에 상태를 되돌립니다.")
+        hint = UNDO_HINTS.get(action, "")
+        if hint:
+            self.say(f"  도움말: {hint.format(item=target)}")
+        self.pause("  준비됐으면")
+        self.poll_quietly()
+        return int(row["번호"])
+
+    def report_progress(self, done: int, total: int, seconds_per_trial: float) -> None:
+        if done == 0 or done % 10 or done >= total:
+            return
+        remaining = total - done
+        minutes = max(1, round(seconds_per_trial * remaining / 60))
+        self.say(f"  진행 {done}/{total} · 남은 시도 {remaining}회 · 예상 약 {minutes}분 (이후 기능 점검 3분·무인 감시)")
 
     @staticmethod
     def repair_hint(trial: Trial, result: str) -> str:
@@ -984,12 +1023,13 @@ class Session:
     ) -> None:
         items = self.ensure_items(items_preset)
         plan = build_plan([i["name"] for i in items], **plan_kwargs)
-        done = self.done_numbers()
+        by_number = {t.no: t for t in plan}
         first_none = next((t.no for t in plan if t.action == "무변화"), None)
         last_first_round_add = len(items) if plan_kwargs.get("rounds", 2) > 0 else None
-        for trial in plan:
-            if trial.no in done:
-                continue
+        pending = [t for t in plan if t.no not in self.done_numbers()]
+        started, counted = self.clock(), 0
+        while pending:
+            trial = pending[0]
             if trial.no == first_none:
                 self.review_ai(items)
                 if not self.state.get("setup_b_done"):
@@ -997,9 +1037,26 @@ class Session:
                     self.capture_once("setup_photo", CAPTURE_SETUP_PHOTO)
                     self.state["setup_b_done"] = True
                     self.save_state()
-            self.run_trial(trial, len(plan))
-            if trial.no == last_first_round_add:
+            outcome = self.run_trial(trial, len(plan))
+            if outcome == "quit":
+                self.say("\n남은 시도는 건너뛰고 지금까지 기록으로 결과를 만듭니다. "
+                         "나중에 --resume으로 남은 시도를 이어서 할 수 있습니다.")
+                self.state["stopped_early"] = True
+                self.save_state()
+                self.review_ai(items)
+                return
+            if outcome == "undo":
+                undone = self.undo_last_trial()
+                if undone in by_number:
+                    pending.insert(0, by_number[undone])
+                continue
+            pending.pop(0)
+            if outcome == "done":
+                counted += 1
+                self.report_progress(len(self.done_numbers()), len(plan), (self.clock() - started) / counted)
+            if trial.no == last_first_round_add and outcome == "done":
                 self.capture_once("dashboard", CAPTURE_DASHBOARD)
+        self.state.pop("stopped_early", None)
         self.review_ai(items)
         if function_checks:
             self.run_function_checks()
@@ -1020,13 +1077,82 @@ def start_pi_recorder(host: str, remote_csv: str) -> bool:
     return result.returncode == 0 and "STARTED" in (result.stdout or "")
 
 
-def stop_pi_recorder(host: str, remote_csv: str, local_csv: Path) -> bool:
+def stop_pi_recorder(host: str, remote_csv: str) -> bytes | None:
+    """Stop the Pi-side recorder and return its CSV (read over the same SSH)."""
     command = f"pkill -TERM -f monitor_pi_resources.py; sleep 2; cat {remote_csv}"
     result = subprocess.run(["ssh", "-o", "ConnectTimeout=10", host, command], stdout=subprocess.PIPE)
     if result.returncode != 0 or not result.stdout:
-        return False
-    local_csv.write_bytes(result.stdout)
-    return True
+        return None
+    return result.stdout
+
+
+def append_csv(path: Path, data: bytes) -> None:
+    """Write a CSV, or append its rows when an earlier part was already saved."""
+    if not path.exists():
+        path.write_bytes(data)
+        return
+    rows = data.split(b"\n", 1)
+    if len(rows) == 2 and rows[1]:
+        with path.open("ab") as handle:
+            handle.write(rows[1])
+
+
+def collect_pi_resources(session: "Session", out: Path, default_host: str) -> None:
+    if not session.state.get("recorder_started"):
+        return
+    host = session.state.get("pi", default_host)
+    remote = session.state["remote_csv"]
+    print("\nPi 자원 기록(CPU·온도)을 끝내고 노트북으로 가져옵니다. Pi 비밀번호를 물으면 입력하세요.")
+    data = stop_pi_recorder(host, remote)
+    if data is None:
+        print("  가져오지 못했습니다. Pi가 켜져 있을 때 이 PowerShell에서 아래 두 줄을 실행하면 됩니다.")
+        print(f'    scp {host}:{remote} "{out / "resources.csv"}"')
+        print(f"    python scripts\\experiments\\run_experiment.py --report-only --resume {out}")
+        return
+    append_csv(out / "resources.csv", data)
+    session.state["recorder_started"] = False
+    session.state.pop("remote_csv", None)
+    session.save_state()
+    print("  가져왔습니다.")
+
+
+def make_archive(out: Path) -> Path | None:
+    """Zip the whole result folder next to it: the one file to hand over."""
+    try:
+        return Path(shutil.make_archive(str(out), "zip", root_dir=out.parent, base_dir=out.name))
+    except OSError:
+        return None
+
+
+def finalize(session: "Session", out: Path) -> int:
+    """Write trials, both result tables and the zip from what is saved so far."""
+    session.write_trials()
+    env_path = out / "env.json"
+    env = json.loads(env_path.read_text(encoding="utf-8")) if env_path.exists() else None
+    try:
+        summary = trial_report.build_summary(
+            out / "trials.csv", activities=session.experiment_activities(), health=out / "health.csv",
+            resources=out / "resources.csv",
+            idle_start=trial_report._parse_time(session.state.get("idle_start")),
+            idle_end=trial_report._parse_time(session.state.get("idle_end")),
+            env=env, rehearsal=session.state.get("rehearsal"),
+            function_checks=session.state.get("function_checks"),
+        )
+    except trial_report.TrialSheetError as exc:
+        print(f"\n결과표를 만들지 못했습니다: {exc}")
+        return 1
+    target = trial_report.write_outputs(summary, out / "paper-results")
+    archive = make_archive(out)
+    folder = out.resolve()
+    print("\n끝났습니다.")
+    print(f"  결과 폴더   : {folder}")
+    print(f"  논문 표     : {target.resolve()}")
+    print(f"  발표용 수치 : {target.with_name('final_report_values.md').resolve()}")
+    if archive:
+        print(f"  Claude에게 보낼 파일: {archive.resolve()}  ← 이 파일 하나를 채팅에 첨부하세요")
+    if session.state.get("stopped_early"):
+        print(f"  남은 시도가 있습니다. 이어서 하려면: python scripts\\experiments\\run_experiment.py --resume {out}")
+    return 0
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -1048,6 +1174,8 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--demo-check", action="store_true",
                         help="발표 직전 점검: 시연 리허설 1회만 하고 끝냄(결과표 없음)")
     parser.add_argument("--demo-item", default="", help="--demo-check에 쓸 물품 이름")
+    parser.add_argument("--report-only", action="store_true",
+                        help="Pi 연결 없이 --resume 폴더의 기록으로 결과표·압축 파일만 다시 만듦")
     return parser
 
 
@@ -1066,6 +1194,14 @@ def run_demo_check(session: Session, item_name: str) -> int:
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
+    if args.report_only:
+        # Rebuild the result files from a saved folder; no Pi or tunnel needed.
+        if not args.resume or not (args.resume / "session.json").exists():
+            print("--report-only는 결과 폴더와 함께 씁니다: --report-only --resume paper-run-…")
+            return 2
+        session = Session(None, args.resume)
+        session.load_state()
+        return finalize(session, args.resume)
     prefix = "demo-check" if args.demo_check else "paper-run"
     out = args.resume or args.out or Path(f"{prefix}-{datetime.now():%Y%m%d-%H%M}")
     out.mkdir(parents=True, exist_ok=True)
@@ -1114,25 +1250,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         session.save_state()
         session.write_trials()
     session.record_environment("end")
-
-    resources = out / "resources.csv"
-    if session.state.get("recorder_started") and not resources.exists():
-        print("\nPi 자원 기록을 끝내고 가져옵니다. Pi 비밀번호를 물으면 입력하세요.")
-        if not stop_pi_recorder(session.state.get("pi", args.pi), session.state["remote_csv"], resources):
-            print("  가져오지 못했습니다. 나중에 Pi에서 파일을 복사해 make_paper_tables.py --resources로 다시 집계하세요.")
-    idle_start = trial_report._parse_time(session.state.get("idle_start"))
-    idle_end = trial_report._parse_time(session.state.get("idle_end"))
-    env = json.loads((out / "env.json").read_text(encoding="utf-8"))
-    summary = trial_report.build_summary(
-        out / "trials.csv", activities=session.experiment_activities(), health=out / "health.csv",
-        resources=resources, idle_start=idle_start, idle_end=idle_end, env=env,
-        rehearsal=session.state.get("rehearsal"), function_checks=session.state.get("function_checks"),
-    )
-    target = trial_report.write_outputs(summary, out / "paper-results")
-    print(f"\n끝났습니다. 결과표: {target}")
-    print(f"발표용 수치: {target.with_name('final_report_values.md')}")
-    print(f"이 폴더({out})를 통째로 Claude에게 주면 원고와 발표 자료에 반영합니다.")
-    return 0
+    collect_pi_resources(session, out, args.pi)
+    return finalize(session, out)
 
 
 if __name__ == "__main__":

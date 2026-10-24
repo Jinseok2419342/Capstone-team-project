@@ -237,6 +237,78 @@ class SessionTests(unittest.TestCase):
             trial_prompts = [p for p in seen if p.startswith("\n[")]
             self.assertTrue(trial_prompts[0].startswith("\n[2/"))
 
+    def test_undo_repeats_the_last_trial_and_quit_finishes_early(self):
+        api = FakeApi()
+        clock = FakeClock()
+        prompts = []
+        answers = {"[2/": ["u"], "[3/": ["q"]}
+
+        def ask(prompt):
+            prompts.append(prompt)
+            for key, queue in answers.items():
+                if prompt.startswith(f"\n{key}") and queue:
+                    return queue.pop(0)
+            if "] 등록 · " in prompt:
+                name = prompt.split("] 등록 · ")[1].split(" —")[0]
+                api.act(5.0)
+                # The first attempt at the wallet is a mistake (wrong reaction).
+                if name == "지갑" and not any("기록을 지웠습니다" in p for p in said):
+                    api.add("item_moved", "camera", 1)
+                else:
+                    api.register(name, "valuable")
+            return ""
+
+        said = []
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            session = Session(api, out, ask=ask, say=said.append, sleep=clock.sleep, clock=clock)
+            session.run(["지갑/귀중품", "우산/일반"], idle_minutes=5,
+                        plan_kwargs={"rounds": 1, "hand": 1, "light": 0, "shadow": 0}, function_checks=True)
+            trial_prompts = [p.split("]")[0] for p in prompts if p[:2] == "\n[" and p[2:3].isdigit()]
+            # 1, then 2 -> undo, 1 again, 2, then 3 -> quit.
+            self.assertEqual(trial_prompts, ["\n[1/7", "\n[2/7", "\n[1/7", "\n[2/7", "\n[3/7"])
+            self.assertTrue(any("기록을 지웠습니다" in line for line in said))
+            rows = session.state["trials"]
+            self.assertEqual([(r["번호"], r["결과"]) for r in rows], [(1, "등록"), (2, "등록")])
+            self.assertTrue(session.state["stopped_early"])
+            # Quitting skips the function checks and the unattended hour.
+            self.assertNotIn("function_checks", session.state)
+            self.assertNotIn("idle_start", session.state)
+
+    def test_report_only_rebuilds_results_and_zip_without_the_pi(self):
+        api = FakeApi()
+        clock = FakeClock()
+
+        def ask(prompt):
+            if "] 등록 · " in prompt:
+                api.act(5.0)
+                api.register(prompt.split("] 등록 · ")[1].split(" —")[0], "general")
+            return ""
+
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "paper-run-test"
+            out.mkdir()
+            session = Session(api, out, ask=ask, say=lambda _: None, sleep=clock.sleep, clock=clock)
+            session.run(["우산/일반"], idle_minutes=0, plan_kwargs={"rounds": 1, "hand": 0, "light": 0, "shadow": 0})
+            session.write_trials()
+            (out / "resources.csv").write_text(
+                "trial_id,process_alive,system_cpu_percent,rss_mib,temperature_c\npaper,1,30,200,55\n",
+                encoding="utf-8",
+            )
+            with patch("builtins.print"):
+                code = live_session.main(["--report-only", "--resume", str(out)])
+            self.assertEqual(code, 0)
+            final = (out / "paper-results" / "final_report_values.md").read_text(encoding="utf-8")
+            self.assertIn("Pi 평균 CPU / 최고 온도 | 30.0% / 55.0°C", final)
+            self.assertTrue((Path(tmp) / "paper-run-test.zip").exists())
+
+    def test_resource_parts_are_merged_without_a_second_header(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "resources.csv"
+            live_session.append_csv(target, b"a,b\n1,2\n")
+            live_session.append_csv(target, b"a,b\n3,4\n")
+            self.assertEqual(target.read_bytes(), b"a,b\n1,2\n3,4\n")
+
     def test_rehearsal_keeps_same_id_evidence_outside_the_measured_run(self):
         api = FakeApi()
         clock = FakeClock()
