@@ -6,6 +6,8 @@
 
 ## 다음 세션은 할 일을 선택하세요 — 2026-10-24 갱신
 
+**지금 할 일 (10/24 기준): 10월 25일 실험은 [실험 안내](docs/paper/EXPERIMENT_GUIDE.md) 한 장, 학교 시연은 [시연 준비](docs/presentation/FINAL_DEMO_GUIDE.md) 한 장만 보면 됩니다.** 노트북에는 Python과 최신 코드 zip만 있으면 되고 Pi에는 설치할 것이 없습니다.
+
 **2026-10-24 최종보고 준비 정리:** 최종보고 형식(11/03, 시연 포함 10분)에 맞춘 슬라이드 구성안, 채울 숫자와 출처, 하루 한 번으로 논문·발표 측정을 끝내는 순서, 생성형 AI 그림 프롬프트를 [최종보고 준비 정리](docs/presentation/FINAL_REPORT_PLAN.md)에 모았습니다. **Pi에 새로 설치할 것은 없습니다.** 노트북의 실험 도우미만 확장했습니다(시연 리허설·녹화, 시도별 장면, 기록까지 걸린 시간, 관리 기능 자동 점검, 장비 메모, 발표용 수치 파일). 발표 자료는 아직 만들지 않았습니다.
 
 **2026-10-12 중간보고 완료:** 10월 13일 개발 중간보고 발표 자료는 사용자가 Canva에서 따로 완성했습니다. 최종본은 [중간보고 최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf)(28쪽)입니다. **중간보고 PPT 보완은 더 이상 할 일이 아닙니다.** 이전 v3–v5 PPTX와 생성 스크립트·작성 가이드·렌더는 삭제했습니다. 편집 원본은 사용자의 Canva에 있고 저장소에는 없습니다.
@@ -17,7 +19,7 @@
 | 지금 할 일 | 먼저 열 파일 | 남은 작업 |
 |---|---|---|
 | **논문 실험·결과 반영** | [논문 안내](docs/paper/README.md) · [실험 진행 안내](docs/paper/EXPERIMENT_GUIDE.md) · [2단 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 하루 약 2시간 반 실험(리허설 + 실물 100회 + 기능 점검 + 무인 1시간) → 논문 표와 최종보고 수치가 함께 자동 집계 → 원고 반영 → HWP 이식 |
-| **최종보고 발표 준비** (10/27 연습, 11/03 발표) | [최종보고 준비 정리](docs/presentation/FINAL_REPORT_PLAN.md) · [형식 원문](docs/presentation/FINAL_REPORT_OUTLINE.md) · [중간보고 최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) | 정리 문서 9절의 확인 질문(실험일·제작 도구·중간보고 피드백·메일)부터. 실험 결과가 오면 `final_report_values.md`로 숫자 반영 |
+| **최종보고 발표 준비** (10/27 연습, 11/03 발표) | [최종보고 준비 정리](docs/presentation/FINAL_REPORT_PLAN.md) · [시연 준비](docs/presentation/FINAL_DEMO_GUIDE.md) · [형식 원문](docs/presentation/FINAL_REPORT_OUTLINE.md) | 10/25 실험 결과(zip)가 오면 `final_report_values.md`로 숫자를 넣어 발표 자료 완성(학교 가기 전), 시연 문서의 ⟨ ⟩ 채우기 |
 | **Pi 시연·실기 확인** | [핫스팟 실행·종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 새 구성의 전원 재인가·자동 연결 등 확인 |
 | **Pi API 키 교체·Gemini 전환** | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
 | **PC 자체에서 앱 실행** | 아래 ‘PC 실행 환경 다시 준비하기’ | 필요할 때 `setup.ps1` → `start.ps1` |
