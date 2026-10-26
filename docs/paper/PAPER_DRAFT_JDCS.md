@@ -192,7 +192,7 @@ D(x)=\max\left(\min\left(|s(x)-m-\ell(x)|,\,|s(x)-m|\right),\,|\Delta a(x)|,\,|\
 
 실험은 2026년 10월 25일 교내 실내에서 수행하였다. 보관판은 사람이 평소 지나다니지 않는 자리에 두었고, 조명은 실내 형광등만 사용하였다. 물품은 리모컨, 볼펜, 충전기, 무선 이어폰 케이스, 튜브형 화장품, 줄이어폰, 약통, 머그컵, 지갑, 음료 팩의 10종이다. 정답 분류는 실험 전에 지갑을 귀중품, 음료 팩을 음식, 나머지 8종을 일반으로 정하였으며 결과를 확인한 뒤에도 바꾸지 않았다.
 
-각 회차는 한 물품을 보관판에 놓는 등록, 다른 자리로 옮기는 이동, 보관판에서 치우는 제거의 세 동작으로 구성하였고, 물품마다 10회를 반복하도록 하여 동작별 100회, 모두 300회를 계획하였다. 실험자는 각 동작 뒤 관리자 화면에 결과가 반영될 때까지 기다렸다가 다음 동작을 수행하고, 결과가 의도한 동작과 일치하는지를 기록하였다. 등록은 새 물품 기록이 생성되면, 이동은 새 기록 없이 기존 기록의 위치가 갱신되면, 제거는 해당 기록이 회수 상태로 바뀌면 성공으로 보았다. 등록이 실패하면 물품을 다시 놓아 등록시킨 뒤 같은 회차의 이동과 제거를 이어서 수행하였으며, 성공 횟수에는 첫 시도만 포함하였다. 등록된 물품마다 외부 모델이 붙인 이름과 분류가 모두 맞는지를 함께 기록하였다. 줄이어폰은 다시 놓아도 등록되지 않아 이동과 제거 20회를 시도할 수 없었으므로, 실제로 시도한 동작은 280회이다.
+각 회차는 한 물품을 보관판에 놓는 등록, 다른 자리로 옮기는 이동, 보관판에서 치우는 제거의 세 동작으로 구성하였고, 물품마다 10회를 반복하도록 하여 동작별 100회, 모두 300회를 계획하였다. 회차에 따라 보관판에 해당 물품만 놓인 경우와 다른 물품이 함께 놓인 경우를 모두 포함하였으며, 두 배치 조건의 결과는 나누어 기록하지 않았다. 실험자는 각 동작 뒤 관리자 화면에 결과가 반영될 때까지 기다렸다가 다음 동작을 수행하고, 결과가 의도한 동작과 일치하는지를 기록하였다. 등록은 새 물품 기록이 생성되면, 이동은 새 기록 없이 기존 기록의 위치가 갱신되면, 제거는 해당 기록이 회수 상태로 바뀌면 성공으로 보았다. 등록이 실패하면 물품을 다시 놓아 등록시킨 뒤 같은 회차의 이동과 제거를 이어서 수행하였으며, 성공 횟수에는 첫 시도만 포함하였다. 등록된 물품마다 외부 모델이 붙인 이름과 분류가 모두 맞는지를 함께 기록하였다. 줄이어폰은 다시 놓아도 등록되지 않아 이동과 제거 20회를 시도할 수 없었으므로, 실제로 시도한 동작은 280회이다.
 
 물품 변화가 없는 조건으로는 보관판 위에 손을 넣었다 빼는 동작, 형광등의 점등 상태를 바꾸는 조명 변화, 사람의 그림자가 보관판에 드리우는 경우를 실험 중 반복해 관찰하였다. 이 조건들은 반복 횟수를 기록하지 않았으므로 잘못된 기록의 발생 여부만 보고한다. 또한 보관판을 1시간 동안 사람의 개입 없이 감시하였다.
 
@@ -284,7 +284,7 @@ D(x)=\max\left(\min\left(|s(x)-m-\ell(x)|,\,|s(x)-m|\right),\,|\Delta a(x)|,\,|\
 
 그림 6은 판정 사례이다. 그림 6(a)는 보조 구간 33번째 동작에서 음료 팩을 놓기 전후의 장면과 등록된 물품 이미지로, 외부 모델은 ‘두유 팩’, 음식으로 응답하여 보관 기한 1일이 적용되었다. 그림 6(b)는 이동 실패가 집중된 눕힌 머그컵이며, 그림 6(c)는 같은 시점의 확인 필요 목록이다. 머그컵은 제거 검증에서 모델이 물품이 남아 있다고 판단하여, 볼펜과 리모컨은 원격 작업 한도를 넘어 자동 회수 대신 관리자 확인으로 남았다.
 
-본 연구의 한계는 다음과 같다. 첫째, 한 장소, 한 대의 카메라, 한 명의 실험자와 10종의 물품으로 수행하였으므로 다른 설치 높이, 조명, 바닥과 물품으로 결과를 바로 일반화하기 어렵다. 둘째, 본 실험의 결과는 실험자가 화면을 보고 손으로 기록하였으며 독립된 평가자의 교차 확인은 없었다. 셋째, 무변화 조건의 반복 횟수, CPU 사용률과 온도를 기록하지 못하였고, 처리 시간과 호출 수는 본 실험이 아닌 보조 구간에서 측정하였다. 넷째, 단순 차영상이나 배경 차감 방법과의 비교와 처리 단계별 기여 분석을 수행하지 않았다. 다섯째, 외부 모델의 응답은 모델 갱신에 따라 달라질 수 있고 전체 장면 이미지에 사람이 포함될 수 있으므로, 실제 운영에서는 촬영 범위와 개인정보 보호 절차가 필요하다. 또한 안정 장면만 비교하므로 물품을 들었다가 같은 자리에 다시 놓은 행동은 기록되지 않으며, 여러 물품이 동시에 움직이는 경우는 평가하지 않았다.
+본 연구의 한계는 다음과 같다. 첫째, 한 장소, 한 대의 카메라, 한 명의 실험자와 10종의 물품으로 수행하였으므로 다른 설치 높이, 조명, 바닥과 물품으로 결과를 바로 일반화하기 어렵다. 둘째, 본 실험의 결과는 실험자가 화면을 보고 손으로 기록하였으며 독립된 평가자의 교차 확인은 없었다. 셋째, 무변화 조건의 반복 횟수, 물품 배치 조건(단독·여러 물품)별 결과, CPU 사용률과 온도를 기록하지 못하였고, 처리 시간과 호출 수는 본 실험이 아닌 보조 구간에서 측정하였다. 넷째, 단순 차영상이나 배경 차감 방법과의 비교와 처리 단계별 기여 분석을 수행하지 않았다. 다섯째, 외부 모델의 응답은 모델 갱신에 따라 달라질 수 있고 전체 장면 이미지에 사람이 포함될 수 있으므로, 실제 운영에서는 촬영 범위와 개인정보 보호 절차가 필요하다. 또한 안정 장면만 비교하므로 물품을 들었다가 같은 자리에 다시 놓은 행동은 기록되지 않으며, 여러 물품이 동시에 움직이는 경우는 평가하지 않았다.
 
 # Ⅶ. 결 론
 
@@ -296,11 +296,11 @@ D(x)=\max\left(\min\left(|s(x)-m-\ell(x)|,\,|s(x)-m|\right),\,|\Delta a(x)|,\,|\
 
 # 참고문헌
 
-[1] H. Jeong, H. Yoo, T. You, Y. Kim, and Y. H. Ahn, “Lost and Found Registration and Inquiry Management System for User-dependent Interface using Automatic Image Classification and Ranking System based on Deep Learning,” Journal of Convergence Security, Vol. 18, No. 4, pp. 19-25, 2018. https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002401814
+[1] H. Jeong, H. Yoo, T. You, Y. Kim, and Y. Ahn, “Lost and Found Registration and Inquiry Management System for User-dependent Interface using Automatic Image Classification and Ranking System based on Deep Learning,” Convergence Security Journal, Vol. 18, No. 4, pp. 19-25, 2018. https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002401814
 
 [2] H. S. Jang et al., “Implementation of a Deep OC-SORT based Multi-Object Tracking and Matching Algorithm for Managing Lost Items and Owners in Trains,” Journal of Korean Institute of Information Technology, Vol. 23, No. 2, pp. 165-176, February 2025. https://doi.org/10.14801/jkiit.2025.23.2.165
 
-[3] H. J. Yang and K. S. Choi, “In-Vehicle Lost Item Detection System Using Histogram Equalization and Contour Filtering,” in Proceedings of the Korean Institute of Information Technology Summer Conference, pp. 1221-1224, 2025. (in Korean) https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12288829
+[3] H. J. Yang and K. S. Choi, “In-Vehicle Lost Item Detection Using Histogram Equalization and Contour-Based Filtering,” in Proceedings of the 2025 KIIT Summer Conference, Korean Institute of Information Technology, pp. 1221-1224, June 2025. (in Korean) https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12288829
 
 [4] K. Toyama, J. Krumm, B. Brumitt, and B. Meyers, “Wallflower: Principles and Practice of Background Maintenance,” in Proceedings of the 7th IEEE International Conference on Computer Vision, Vol. 1, pp. 255-261, September 1999. https://doi.org/10.1109/ICCV.1999.791228
 
