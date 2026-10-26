@@ -1,0 +1,47 @@
+<section id="aimethod" data-transition="fade" style="background:#F3F6F7;color:#12303F;font-family:'Noto Sans KR', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:16px">
+<p style="font-size:24px;font-weight:700;color:#0F7C7C;letter-spacing:1px">2.2 AI 활용 방법 — 프롬프트 · RAG · 학습 데이터</p>
+<h2 style="font-size:72px;font-weight:800;line-height:1.15;letter-spacing:-1px;color:#12303F">학습시키지 않고, 잘 묻는 데 집중했습니다.</h2>
+<div style="flex:1"></div>
+<div style="display:flex;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FBFDFD;border:3px solid #0F7C7C;border-radius:20px;padding:28px 32px">
+<div style="display:flex;gap:16px;align-items:center">
+<h3 style="font-size:44px;font-weight:800;color:#12303F">프롬프트</h3>
+<p style="font-size:24px;font-weight:700;color:#F2F6F6;background:#0F7C7C;border-radius:999px;padding:4px 18px">사용 · 핵심</p>
+</div>
+<ul style="font-size:24px;line-height:1.45;color:#12303F">
+<li>전체 장면으로 무엇이 바뀌었는지, 확대 사진으로 무엇인지</li>
+<li>손·그림자·빛·흔들림은 물건이 아님</li>
+<li>확실하지 않으면 ‘uncertain’으로 답하게</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:28px 32px">
+<div style="display:flex;gap:16px;align-items:center">
+<h3 style="font-size:44px;font-weight:800;color:#12303F">RAG</h3>
+<p style="font-size:24px;font-weight:700;color:#4E6670;border:2px solid #9DB5BA;border-radius:999px;padding:2px 18px">사용 안 함</p>
+</div>
+<ul style="font-size:24px;line-height:1.45;color:#12303F">
+<li>판단에 필요한 건 문서 지식이 아니라 눈앞의 전후 장면</li>
+<li>1학기 기획의 관리자 챗봇(RAG)은 검토 단계에서 제외</li>
+</ul>
+</div>
+<div style="flex:1;display:flex;flex-direction:column;gap:16px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:28px 32px">
+<div style="display:flex;gap:16px;align-items:center">
+<h3 style="font-size:44px;font-weight:800;color:#12303F">학습 데이터</h3>
+<p style="font-size:24px;font-weight:700;color:#4E6670;border:2px solid #9DB5BA;border-radius:999px;padding:2px 18px">없음</p>
+</div>
+<ul style="font-size:24px;line-height:1.45;color:#12303F">
+<li>이미 학습된 시각언어모델을 추가 학습 없이 사용</li>
+<li>분실물 종류는 정해져 있지 않아 고정 분류 학습이 맞지 않음</li>
+<li>Pi 4 2GB에서는 로컬 모델을 감시와 함께 돌릴 수 없음</li>
+</ul>
+</div>
+</div>
+<div style="display:flex;gap:32px;align-items:center;background:#12303F;border-radius:20px;padding:24px 32px">
+<p style="font-size:24px;font-weight:700;color:#6FCFC4;white-space:nowrap">답 형식 고정</p>
+<p style="font-size:24px;line-height:1.45;color:#F2F6F6">JSON 스키마로 이름 · 설명 · 분류 · 추정 가격 · 확신도만 받습니다. 추정 가격 10만 원 이상은 귀중품, 확신이 낮거나 오류가 나도 기록은 지우지 않고 ‘확인 필요’로 남깁니다.</p>
+</div>
+<div style="flex:1"></div>
+<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#4E6670">분류 기준: 음식·음료 → 음식 · 지갑·휴대전화·고가 전자기기 → 귀중품 · 그 밖 → 일반</p>
+<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#4E6670">10</p>
+<aside>약 25초. 형식이 묻는 세 가지에 바로 답한다. “AI는 새로 학습시키지 않았습니다. 대신 잘 묻는 데 집중했습니다. 프롬프트에 판단 순서와 금지 규칙을 적고, 답은 정해진 형식으로만 받습니다. RAG는 쓰지 않았습니다. 필요한 건 문서가 아니라 눈앞의 사진이기 때문입니다. 확신이 낮으면 지우지 않고 ‘확인 필요’로 남겨 관리자가 판단합니다.”</aside>
+</section>

@@ -1,0 +1,29 @@
+{
+  "v": 4,
+  "createdOnFiles": {"v": 1, "at": "2026-10-26T09:30:00Z"},
+  "lists": "css",
+  "title": "Re:Found 최종보고",
+  "cover": "cover",
+  "order": [
+    "cover", "team", "problem", "goal", "features",
+    "architecture", "selective", "aiflow", "stack", "aimethod",
+    "screens", "results", "conditions", "speed", "cases",
+    "progress", "tests",
+    "demo", "live",
+    "goals", "future", "onemore", "thanks",
+    "appx-setup", "appx-numbers"
+  ],
+  "sections": {
+    "s1": {"description": "개요 — 프로젝트와 팀, 해결하려는 문제와 목표, 핵심 기능", "start": "cover"},
+    "s2": {"description": "설계 — 시스템 구성, 입력에서 AI를 거쳐 출력까지, 사용 기술과 AI 활용 방법", "start": "architecture"},
+    "s3": {"description": "결과 — 실제 화면, 10월 25일 실측 성능, 사례, 구현 현황과 테스트", "start": "screens"},
+    "s4": {"description": "시연 — 순서와 확인할 기능, 현장 시연", "start": "demo"},
+    "s5": {"description": "결론 — 목표 달성도와 한계, 향후 계획", "start": "goals"},
+    "s6": {"description": "부록 — 질의응답용 실험 환경과 숫자 정의", "start": "appx-setup"}
+  },
+  "faces": {
+    "noto-sans-kr": {"family": "Noto Sans KR", "href": "https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300..900&display=swap"},
+    "dm-sans": {"family": "DM Sans", "href": "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400..800&display=swap"}
+  },
+  "designSystems": []
+}
