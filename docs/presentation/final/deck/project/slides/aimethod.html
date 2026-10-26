@@ -1,47 +1,40 @@
 <section id="aimethod" data-transition="fade" style="background:#F3F6F7;color:#12303F;font-family:'Noto Sans KR', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:16px">
-<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C;letter-spacing:1px">2.2 AI 활용 방법 — 프롬프트 · RAG · 학습 데이터</p>
-<h2 style="white-space:nowrap;font-size:72px;font-weight:800;line-height:1.15;letter-spacing:-1px;color:#12303F">학습시키지 않고, 잘 묻는 데 집중했습니다.</h2>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C;letter-spacing:1px">2.2 AI 활용 방법 — 실제로 적용한 것</p>
+<h2 style="white-space:nowrap;font-size:72px;font-weight:800;line-height:1.15;letter-spacing:-1px;color:#12303F">잘 묻고, 정해진 틀로만 받습니다.</h2>
 <div style="flex:1"></div>
-<div style="display:flex;gap:24px">
-<div style="width:538px;display:flex;flex-direction:column;gap:20px;background:#FBFDFD;border:3px solid #0F7C7C;border-radius:20px;padding:28px 32px">
-<div style="display:flex;gap:16px;align-items:center">
-<h3 style="white-space:nowrap;font-size:44px;font-weight:800;color:#12303F">프롬프트</h3>
-<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#F2F6F6;background:#0F7C7C;border-radius:999px;padding:4px 18px">사용 · 핵심</p>
+<div style="display:grid;grid-template-columns:538px 538px 538px;gap:24px">
+<div style="display:flex;flex-direction:column;gap:10px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:26px 30px">
+<p style="white-space:nowrap;font-size:32px;font-weight:800;color:#12303F">① 사진 4장에 이름표</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#4E6670">전체 장면 전 · 후 + 확대 전 · 후<br>사진마다 ‘변화 전 / 후’를 표시</p>
 </div>
-<ul style="white-space:nowrap;font-size:28px;line-height:1.45;color:#12303F">
-<li>전체 장면 → 무엇이 바뀌었나<br>확대 사진 → 무엇인가</li>
-<li>손 · 그림자 · 빛 · 흔들림은<br>물건이 아니다</li>
-<li>확실하지 않으면<br>‘uncertain’으로 답한다</li>
-</ul>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:26px 30px">
+<p style="white-space:nowrap;font-size:32px;font-weight:800;color:#12303F">② 판단 순서 프롬프트</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#4E6670">전체 장면으로 방향 → 확대로 식별<br>손 · 그림자 · 빛은 물건이 아님</p>
 </div>
-<div style="width:538px;display:flex;flex-direction:column;gap:20px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:28px 32px">
-<div style="display:flex;gap:16px;align-items:center">
-<h3 style="white-space:nowrap;font-size:44px;font-weight:800;color:#12303F">RAG</h3>
-<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#4E6670;border:2px solid #9DB5BA;border-radius:999px;padding:2px 18px">사용 안 함</p>
+<div style="display:flex;flex-direction:column;gap:10px;background:#12303F;border-radius:20px;padding:26px 30px">
+<p style="white-space:nowrap;font-size:32px;font-weight:800;color:#F2F6F6">③ JSON 스키마로 고정</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#C5D8DB">이름 · 설명 · 분류 · 추정 가격 · 확신도<br>정해진 칸과 값만 받습니다</p>
 </div>
-<ul style="white-space:nowrap;font-size:28px;line-height:1.45;color:#12303F">
-<li>필요한 건 문서 지식이 아니라<br>눈앞의 전후 장면</li>
-<li>1학기 기획의 관리자 챗봇은<br>검토 단계에서 제외</li>
-</ul>
+<div style="display:flex;flex-direction:column;gap:10px;background:#12303F;border-radius:20px;padding:26px 30px">
+<p style="white-space:nowrap;font-size:32px;font-weight:800;color:#F2F6F6">④ 답을 그대로 믿지 않기</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#C5D8DB">확신도 0.5 미만 · 형식 오류 · 끊긴 응답<br>→ 지우지 않고 ‘확인 필요’로</p>
 </div>
-<div style="width:538px;display:flex;flex-direction:column;gap:20px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:28px 32px">
-<div style="display:flex;gap:16px;align-items:center">
-<h3 style="white-space:nowrap;font-size:44px;font-weight:800;color:#12303F">학습 데이터</h3>
-<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#4E6670;border:2px solid #9DB5BA;border-radius:999px;padding:2px 18px">없음</p>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:26px 30px">
+<p style="white-space:nowrap;font-size:32px;font-weight:800;color:#12303F">⑤ 규칙으로 한 번 더</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#4E6670">추정 가격 10만 원 이상 → 귀중품<br>분류에 맞춰 보관 기한 자동</p>
 </div>
-<ul style="white-space:nowrap;font-size:28px;line-height:1.45;color:#12303F">
-<li>이미 학습된 시각언어모델을<br>추가 학습 없이 사용</li>
-<li>물건 종류가 정해져 있지 않아<br>고정 분류 학습은 맞지 않음</li>
-<li>Pi 4 2GB에서는 로컬 모델을<br>감시와 함께 돌릴 수 없음</li>
-</ul>
+<div style="display:flex;flex-direction:column;gap:10px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:26px 30px">
+<p style="white-space:nowrap;font-size:32px;font-weight:800;color:#12303F">⑥ 필요할 때, 최신 것만</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#4E6670">새 물건 · 애매한 사라짐만 호출<br>그사이 상태가 바뀐 늦은 답은 적용 안 함</p>
 </div>
 </div>
-<div style="display:flex;gap:32px;align-items:center;background:#12303F;border-radius:20px;padding:24px 32px">
-<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#6FCFC4">답 형식 고정</p>
-<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#F2F6F6">JSON 스키마로 이름 · 설명 · 분류 · 추정 가격 · 확신도만 받습니다.<br>추정 가격 10만 원 이상은 귀중품 · 확신이 낮거나 오류가 나도 기록은 지우지 않고 ‘확인 필요’로 남깁니다.</p>
+<div style="display:grid;grid-template-columns:538px 538px 538px;gap:24px;background:#DDF1EE;border-radius:20px;padding:20px 0px">
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#12303F;padding:0px 30px"><b style="color:#0F7C7C">프롬프트</b> — 사용 (①② 핵심)</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#12303F;padding:0px 30px"><b style="color:#0F7C7C">RAG</b> — 사용 안 함<br>필요한 건 문서가 아닌 눈앞의 장면</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.5;color:#12303F;padding:0px 30px"><b style="color:#0F7C7C">학습 데이터</b> — 없음<br>이미 학습된 모델을 그대로 사용</p>
 </div>
 <div style="flex:1"></div>
-<p style="white-space:nowrap;position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#4E6670">분류 기준: 음식 · 음료 → 음식 · 지갑 · 휴대전화 · 고가 전자기기 → 귀중품 · 그 밖 → 일반</p>
+<p style="white-space:nowrap;position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#4E6670">모두 현재 코드에 적용된 방식 · 분류 기준: 음식 · 음료 → 음식, 지갑 · 고가 전자기기 → 귀중품, 그 밖 → 일반</p>
 <p style="white-space:nowrap;position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#4E6670">10</p>
-<aside>약 25초. 형식이 묻는 세 가지에 바로 답한다. “AI는 새로 학습시키지 않았습니다. 대신 잘 묻는 데 집중했습니다. 프롬프트에 판단 순서와 금지 규칙을 적고, 답은 정해진 형식으로만 받습니다. RAG는 쓰지 않았습니다. 필요한 건 문서가 아니라 눈앞의 사진이기 때문입니다. 확신이 낮으면 지우지 않고 ‘확인 필요’로 남겨 관리자가 판단합니다.”</aside>
+<aside>약 25초. “AI는 새로 학습시키지 않았습니다. 대신 잘 묻고, 정해진 틀로만 받도록 만들었습니다. 사진 네 장에 ‘변화 전·후’ 이름표를 붙여 보내고, 프롬프트에는 판단 순서와 물건이 아닌 것을 적었습니다. 답은 JSON 스키마로 정해진 칸과 값만 받고, 확신도가 0.5보다 낮거나 형식이 틀리면 지우지 않고 ‘확인 필요’로 남깁니다. 추정 가격 10만 원 이상은 귀중품으로 한 번 더 보정하고, AI는 새 물건이나 사라짐이 애매할 때만 부릅니다. 늦게 온 답은 그사이 물건 상태가 바뀌었으면 적용하지 않습니다.” 형식이 묻는 RAG와 학습 데이터는 아래 줄로 답한다(둘 다 쓰지 않음).</aside>
 </section>
