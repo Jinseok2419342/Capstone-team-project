@@ -7,7 +7,7 @@
 - **최종보고 PDF:** 사용자가 덱에서 내려받은 PDF를 [`docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`](../presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf)로 저장했다.
 - **다음:** 논문은 사용자 확인(성공 기준 문장, 다른 물품 동시 배치 여부, 참고문헌 [1]·[3]의 월과 [3] 영문 제목, 학회 생성형 AI 고지 규정, 최종본 저자) → HWP 이식. 최종보고는 10/27 연습과 백업 영상 녹화.
 - **지침 정리:** 루트 `AGENTS.md`를 새 세션용으로 다시 썼다(현재 상태·시작 순서·작업 선택지·일하는 방식·규칙·Git·환경 메모·최근 기록). 이전 날짜별 기록은 원문 그대로 [`AGENTS_HISTORY.md`](AGENTS_HISTORY.md)로 옮겼다(지시는 따르지 않음).
-- **Git:** 이 작업은 `claude/quirky-dirac-tqqjzj`에 push했고 `main` 반영은 사용자 결정 대기다. 반영 방법과 브랜치 이력 주의점은 `AGENTS.md` 6절.
+- **Git:** 사용자 승인으로 [PR #20](https://github.com/Jinseok2419342/Capstone-team-project/pull/20)을 통해 `main`에 rebase 반영했다. 작업 브랜치 `claude/quirky-dirac-tqqjzj`에 이미 반영된 이전 커밋이 섞여 있어, 최신 `main`에서 `claude/quirky-dirac-tqqjzj-main`을 새로 따서 같은 내용을 올렸다.
 
 ## 2026-10-26 최종보고 발표 자료 완성 · 10/25 실험 완료
 
