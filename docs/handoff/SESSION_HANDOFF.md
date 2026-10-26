@@ -1,8 +1,15 @@
 # 다음 세션 인계 — 논문·최종보고 연습·Pi 작업 선택
 
+## 2026-10-26 논문 결과 반영 · 최종 PDF 저장
+
+- **논문:** 사용자 요청으로 JDCS 형식부터 점검한 뒤 10/25 결과를 원고에 반영했다. 장 번호를 게재 논문 형식(`Ⅰ. 서 론`, `1-1`)으로 바꾸고, 참고문헌에 발행 월과 영문 표기를 맞췄다. 방법·결과·결론은 실제 실험 방식(손 기록, 계획 300·시도 280, 무변화는 관찰, CPU·온도 없음)으로 다시 썼다. [원고 PDF](../paper/REFOUND_FULL_MANUSCRIPT.pdf)는 9쪽이고 빈칸은 없다. 형식 점검표·HWP 이식 방법·투고 전 사용자 확인은 [개정 상태](../paper/REVISION_STATUS.md), 숫자별 출처는 [원고 숫자 출처표](../paper/MANUSCRIPT_NUMBERS.md)에 있다.
+- **정정:** 보조 구간 원본을 다시 계산했더니 AI 실제 요청은 80건(74.1%, 절감 25.9%)이었다. 발표 덱 20장·부록 B의 81건(75%, 25%)은 대기열 보류 1건이 섞인 값이다(결론 ‘목표 30% 미달’은 같음). 덱은 사용자가 원할 때만 고친다.
+- **최종보고 PDF:** 사용자가 덱에서 내려받은 PDF를 [`docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`](../presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf)로 저장했다.
+- **다음:** 논문은 사용자 확인(성공 기준 문장, 다른 물품 동시 배치 여부, 참고문헌 [1]·[3]의 월과 [3] 영문 제목, 학회 생성형 AI 고지 규정, 최종본 저자) → HWP 이식. 최종보고는 10/27 연습과 백업 영상 녹화.
+
 ## 2026-10-26 최종보고 발표 자료 완성 · 10/25 실험 완료
 
-- **최종보고(11/03) 발표 덱 완성.** claude.ai Slides [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) 25장(본문 23 + 부록 2), 사용자가 마지막 세부 수정까지 마쳤다. 발표는 덱에서 내려받은 PDF로 한다. 원본(사용자 수정 반영본)·GPT 그림·실험 캡처는 [`docs/presentation/final/`](../presentation/final/README.md). 덱을 다시 고칠 때의 런타임 규칙(padding ≤ 256px, 모든 글 nowrap + `<br>`, 목록 대신 점 + 글)도 그 README에 있다.
+- **최종보고(11/03) 발표 덱 완성.** claude.ai Slides [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) 25장(본문 23 + 부록 2), 사용자가 마지막 세부 수정까지 마쳤다. 발표는 덱에서 내려받은 PDF로 한다 — 사용자가 내려받은 최종 PDF를 [`docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`](../presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf)(25쪽, SHA-256 `cbe3cf55…241306`)로 저장했다. 원본(사용자 수정 반영본)·GPT 그림·실험 캡처는 [`docs/presentation/final/`](../presentation/final/README.md). 덱을 다시 고칠 때의 런타임 규칙(padding ≤ 256px, 모든 글 nowrap + `<br>`, 목록 대신 점 + 글)도 그 README에 있다.
 - **시연:** [시연 준비](../presentation/FINAL_DEMO_GUIDE.md) 한 장. 시연은 준비한 물건(리모컨·지갑·음료 팩)으로만 하고 청중 물건은 빌리지 않는다. 10/25에는 리허설 녹화가 없어 **10/27 연습 때 백업 영상을 녹화**해야 한다.
 - **10/25 실험 완료.** 결과 원본은 [10/25 실험 결과](../paper/RESULTS_2026-10-25.md). 노트북 실험 도우미는 38회까지 쓰고 중단했고(앞 시도의 늦은 AI 재확인·재배치가 판정에 섞임, Windows에서 Pi 비밀번호 단계 멈춤 → `--no-pi`), 본 실험은 사용자가 손으로 기록했다(물품 10개 × 10회 × 등록·이동·제거). 도우미 자동 정확도 57.9%는 쓰지 않는다. CPU·온도는 없다. 다시 실험할 때의 주의점은 [실험 안내](../paper/EXPERIMENT_GUIDE.md) 맨 위.
 - **정리(사용자 요청):** 발표 제작에만 쓰던 문서 — 최종보고 준비 정리(`FINAL_REPORT_PLAN.md`), 형식 원문(`FINAL_REPORT_OUTLINE.md`), 발표 근거·캡처 요령(`IMPROVEMENTS.md`), 10/24 검토자 노트(`REVIEW_NOTES_2026-10-24.md`), 덱 확인 도구(`final/preview/`) — 를 삭제했다. 형식 항목별 장 대응표는 `final/README.md`로 옮겼다.

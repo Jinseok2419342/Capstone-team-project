@@ -1,5 +1,5 @@
 {
-  "pages": 7,
+  "pages": 9,
   "layout": "A4 two-column approximation of the JDCS HWP template",
   "margins_mm": {
     "top_bottom_incl_header_footer": 25,
@@ -14,10 +14,10 @@
   "equations": 2,
   "references": 18,
   "photo_figures_present": {
-    "2": false,
-    "5": false,
-    "6": false
+    "2": true,
+    "5": true,
+    "6": true
   },
-  "unmeasured_display": "[입력 대기]",
+  "placeholders_left": 0,
   "pdf": "docs/paper/REFOUND_FULL_MANUSCRIPT.pdf"
 }

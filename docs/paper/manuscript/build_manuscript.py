@@ -14,7 +14,7 @@ from xml.sax.saxutils import escape
 from reportlab.graphics import renderSVG
 from reportlab.graphics.shapes import Drawing, Line, Polygon, Rect, String
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_RIGHT
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
@@ -46,8 +46,13 @@ BODY_H = A4[1] - 2 * MARGIN_Y
 
 
 def _register_fonts():
+    # Myeongjo (serif) faces first: the JDCS body font is Shin Myeongjo.
     candidates = [
         ('C:/Windows/Fonts/batang.ttc', 'C:/Windows/Fonts/malgunbd.ttf', 0),
+        ('/usr/share/fonts/truetype/nanum/NanumMyeongjo_400Regular.ttf',
+         '/usr/share/fonts/truetype/nanum/NanumMyeongjo_700Bold.ttf', None),
+        ('/usr/share/fonts/truetype/nanum/NanumMyeongjo.ttf',
+         '/usr/share/fonts/truetype/nanum/NanumMyeongjoBold.ttf', None),
         ('C:/Windows/Fonts/malgun.ttf', 'C:/Windows/Fonts/malgunbd.ttf', None),
         ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', '/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', 0),
     ]
@@ -59,7 +64,7 @@ def _register_fonts():
             pdfmetrics.registerFont(TTFont('KoreanBold', bold, **bold_kwargs))
             break
     else:
-        raise SystemExit('Korean font not found (Batang/Malgun Gothic or WenQuanYi Zen Hei)')
+        raise SystemExit('Korean font not found (Batang, Nanum Myeongjo, Malgun Gothic or WenQuanYi Zen Hei)')
     for path, kwargs in (('C:/Windows/Fonts/cambria.ttc', {'subfontIndex': 0}),
                          ('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', {})):
         if Path(path).exists():
@@ -68,6 +73,31 @@ def _register_fonts():
     else:
         pdfmetrics.registerFont(TTFont('Equation', regular, **kwargs))
     pdfmetrics.registerFontFamily('Korean', normal='Korean', bold='KoreanBold', italic='Korean', boldItalic='KoreanBold')
+    # Some Korean faces (e.g. Nanum Myeongjo) lack Roman numerals and U+2212.
+    for path, kwargs in (('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', {}),
+                         ('C:/Windows/Fonts/batang.ttc', {'subfontIndex': 0}),
+                         ('C:/Windows/Fonts/seguisym.ttf', {})):
+        if Path(path).exists():
+            pdfmetrics.registerFont(TTFont('Fallback', path, **kwargs))
+            break
+    else:
+        pdfmetrics.registerFont(TTFont('Fallback', regular, **kwargs))
+
+
+def has_glyph(font, ch):
+    return ord(ch) in pdfmetrics.getFont(font).face.charToGlyph
+
+
+def with_fallback(s, font):
+    """Draw characters missing from `font` with a face that has them."""
+    out = []
+    for ch in s:
+        if ch.isspace() or ord(ch) < 0x80 or has_glyph(font, ch):
+            out.append(ch)
+        else:
+            alt = next((f for f in ('Korean', 'Fallback', 'Equation') if f != font and has_glyph(f, ch)), None)
+            out.append(f'<font name="{alt}">{ch}</font>' if alt else ch)
+    return ''.join(out)
 
 
 _register_fonts()
@@ -100,7 +130,7 @@ def label(d, x, y, txt, size=6.6):
     d.add(String(x, y, txt, fontName='Korean', fontSize=size, fillColor=MUTED, textAnchor='middle'))
 
 
-def make_figures():
+def make_figures(write_svg=False):
     w = COL_W
     figs = {}
 
@@ -154,8 +184,13 @@ def make_figures():
             arrow(d, w / 2, y + bh + gap, w / 2, y + bh)
     figs[4] = d
 
+    # The PDF draws these Drawings directly. SVG copies (for the HWP version)
+    # are rewritten only on request, so a build on another OS with different
+    # font metrics does not shift the committed files.
     for n, f in figs.items():
         target = FIG / f'figure-{n}.svg'
+        if target.exists() and not write_svg:
+            continue
         renderSVG.drawToFile(f, str(target))
         svg = target.read_text(encoding='utf-8')
         svg = svg.replace("font-family: 'KoreanBold'", "font-family: 'Malgun Gothic'; font-weight: bold").replace("font-family: 'Korean'", "font-family: 'Malgun Gothic'")
@@ -192,7 +227,8 @@ ST = {
     'figcaption': ParagraphStyle('figcaption', fontName='KoreanBold', fontSize=8, leading=11, wordWrap='CJK', alignment=TA_CENTER, spaceBefore=3, spaceAfter=8),
     'table': ParagraphStyle('table', fontName='Korean', fontSize=7.4, leading=10, wordWrap='CJK'),
     'ref': ParagraphStyle('ref', fontName='Korean', fontSize=7.6, leading=10.6, wordWrap='CJK', spaceAfter=3, leftIndent=14, firstLineIndent=-14),
-    'eq': ParagraphStyle('eq', fontName='Equation', fontSize=8.6, leading=14, alignment=TA_CENTER, spaceBefore=4, spaceAfter=6),
+    'eq': ParagraphStyle('eq', fontName='Equation', fontSize=8.6, leading=13, alignment=TA_CENTER),
+    'eqno': ParagraphStyle('eqno', fontName='Korean', fontSize=8.6, leading=13, alignment=TA_RIGHT),
     'alg': ParagraphStyle('alg', fontName='Korean', fontSize=8, leading=11.2, wordWrap='CJK', leftIndent=11, firstLineIndent=-11),
     'note': ParagraphStyle('note', fontName='Korean', fontSize=7.4, leading=10.5, wordWrap='CJK', textColor=MUTED, alignment=TA_CENTER, spaceAfter=6),
 }
@@ -203,12 +239,16 @@ def markup(s):
     s = re.sub(r'\\\((.*?)\\\)', lambda m: m[1], s)
     for src, dst in (('\\hat I_t', 'Î_t'), ('\\ell', 'ℓ'), ('\\tau', 'τ'), ('\\Delta', 'Δ'), ("p'_i", 'p′_i')):
         s = s.replace(src, dst)
+    s = re.sub(r'(?<=[a-z])-(?=t_)', '−', s)  # t_r-t_m reads as a difference
     s = s.replace('\\', '')
     s = escape(s)
     s = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', s)
     s = re.sub(r'`([^`]+)`', r'\1', s)
-    s = re.sub(r'\b(p|p′)_i\b', r'\1<sub>i</sub>', s)
-    return s
+    # Hangul counts as a word character, so end subscripts with an explicit lookahead.
+    s = re.sub(r'\b(p|p′)_i(?![A-Za-z0-9_])', r'\1<sub>i</sub>', s)
+    s = re.sub(r'\bt_([mra])(?![A-Za-z0-9_])', r'<i>t</i><sub>\1</sub>', s)
+    return ''.join(with_fallback(part, 'Korean') if not part.startswith('<') else part
+                   for part in re.split(r'(<[^>]+>)', s))
 
 
 def p(s, style='body'):
@@ -216,9 +256,22 @@ def p(s, style='body'):
 
 
 EQ = {
-    1: 'F* = arg max<sub>F</sub> Σ<sub>i</sub> 1(‖p′<sub>i</sub> − Fp<sub>i</sub>‖ ≤ τ)　　(1)',
-    2: 'D(x)=max(min(|s(x)−m−ℓ(x)|,|s(x)−m|),|Δa(x)|,|Δb(x)|)　(2)',
+    1: 'F* = arg max<sub>F</sub> Σ<sub>i</sub> 1(‖p′<sub>i</sub> − Fp<sub>i</sub>‖<sub>2</sub> ≤ τ)',
+    2: 'D(x) = max( min(|s(x) − m − ℓ(x)|, |s(x) − m|),<br/>|Δa(x)|, |Δb(x)| )',
 }
+
+
+def equation(n):
+    formula = ''.join(with_fallback(part, 'Equation') if not part.startswith('<') else part
+                      for part in re.split(r'(<[^>]+>)', EQ[n]))
+    table = Table([[Paragraph(formula, ST['eq']), Paragraph(f'({n})', ST['eqno'])]],
+                  colWidths=[COL_W - 26, 26], hAlign='CENTER')
+    table.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0), ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+        ('TOPPADDING', (0, 0), (-1, -1), 4), ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+    ]))
+    return table
 
 
 def table_flowable(block):
@@ -270,11 +323,11 @@ def parse():
                 front.append(p(b[2:], 'title'))
             elif b.startswith('An Event-'):
                 front.append(p(b, 'en_title'))
-            elif b in ('## 요약', '## Abstract'):
+            elif b in ('## [요 약]', '## [Abstract]'):
                 front.append(p(b[3:], 'abs_head'))
-            elif b.startswith('주제어:') or b.startswith('Keywords:'):
+            elif b.startswith('핵심어:') or b.startswith('Key words:'):
                 front.append(p(b, 'keywords'))
-            elif b.startswith('# 1.'):
+            elif re.match(r'# [ⅠⅡⅢⅣⅤⅥⅦ]\.', b):
                 in_front = False
                 body.append(p(b[2:], 'h1'))
             else:
@@ -287,12 +340,12 @@ def parse():
             if n in figs:
                 graphic = figs[n]
             else:
-                hint = {2: '관리자 웹 화면 캡처', 5: '보관대와 카메라 설치 사진'}.get(n, '판정 성공 예와 실패 예')
+                hint = {2: '관리자 웹 화면 캡처', 5: '실험 장치 사진'}.get(n, '판정 사례')
                 graphic, photos[n] = photo_or_placeholder(n, hint)
             body.append(KeepTogether([Spacer(1, 4), graphic, p(caption, 'figcaption')]))
         elif b.startswith('\\['):
             n = int(re.search(r'\\tag\{(\d+)\}', b)[1])
-            body.append(Paragraph(EQ[n], ST['eq']))
+            body.append(equation(n))
         elif b.startswith('# '):
             refs = b[2:] == '참고문헌'
             body.append(p(b[2:], 'h1'))
@@ -325,7 +378,7 @@ def footer(canvas, doc):
     canvas.saveState()
     canvas.setFont('Korean', 7)
     canvas.setFillColor(MUTED)
-    canvas.drawString(MARGIN_X, 14 * mm, 'Re:Found 심사용 원고 초안 · JDCS 2단 근사 조판(최종 투고는 학회 HWP 양식)')
+    canvas.drawString(MARGIN_X, 14 * mm, 'JDCS 심사용 원고(익명) · 2단 근사 조판 — 최종 투고는 학회 HWP 양식')
     canvas.drawRightString(A4[0] - MARGIN_X, 14 * mm, str(doc.page))
     canvas.restoreState()
 
@@ -344,19 +397,25 @@ def build():
         Frame(MARGIN_X + COL_W + GAP, MARGIN_Y, COL_W, BODY_H, id='l2', leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0),
     ], onPage=footer)
     doc = BaseDocTemplate(str(OUT), pagesize=A4, pageTemplates=[first, later],
-                          title=text.splitlines()[0][2:], author='', subject='JDCS 심사용 원고 초안(실측 전)')
+                          title=text.splitlines()[0][2:], author='', subject='JDCS 심사용 원고(2026-10-25 실험 결과 반영)')
     from reportlab.platypus import FrameBreak
     doc.build(front + [FrameBreak(), NextPageTemplate('later')] + body)
     texts = [page.extract_text() for page in PdfReader(OUT).pages]
-    assert '[[' not in '\n'.join(texts)
+    joined = '\n'.join(texts)
+    assert '[[' not in joined and '입력 대기' not in joined
+    blocks = [b.strip() for b in text.split('\n\n')]
     report = {
         'pages': len(texts),
         'layout': 'A4 two-column approximation of the JDCS HWP template',
         'margins_mm': {'top_bottom_incl_header_footer': 25, 'left_right': 20, 'column_gap': 8},
         'body_font_pt': BODY_PT, 'leading_pt': LEADING,
-        'figures': 6, 'tables': 8, 'algorithms': 1, 'equations': 2, 'references': 18,
+        'figures': sum(b.startswith('**그림 ') for b in blocks),
+        'tables': sum(b.startswith('**표 ') for b in blocks),
+        'algorithms': sum(b.startswith('**알고리즘 ') for b in blocks),
+        'equations': len(re.findall(r'\\tag\{\d+\}', text)),
+        'references': len(re.findall(r'^\[\d+\] ', text, flags=re.M)),
         'photo_figures_present': photos,
-        'unmeasured_display': '[입력 대기]',
+        'placeholders_left': len(re.findall(r'\[\[[^\]]+\]\]', text)),
         'pdf': OUT.relative_to(ROOT).as_posix(),
     }
     (HERE / 'PDF_BUILD_REPORT.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
@@ -365,6 +424,6 @@ def build():
 
 if __name__ == '__main__':
     if '--figures-only' in sys.argv:
-        make_figures()
+        make_figures(write_svg=True)
     else:
         build()

@@ -509,7 +509,7 @@ def environment_values(env: dict[str, Any] | None) -> dict[str, str]:
 def render_markdown(summary: dict[str, Any]) -> str:
     trials = summary["trials"]
     lines = ["# Re:Found 논문 결과표 (자동 생성)", ""]
-    lines += ["아래 표를 `PAPER_DRAFT_JDCS.md`의 같은 번호 표에 그대로 붙여넣고, 마지막 목록의 값을 이중 대괄호 자리에 넣는다.", ""]
+    lines += ["실험 도우미의 자동 집계다. 2026-10-26 원고는 10/25 손 기록 결과(`docs/paper/RESULTS_2026-10-25.md`)로 작성했으므로, 다시 실험한 경우 이 값을 원고의 표 형식(표 5–8)에 맞춰 옮긴다.", ""]
 
     lines += ["**표 5. 사건 판정 혼동행렬 / Table 5. Confusion matrix of event decisions**", ""]
     lines += ["| 정답＼결과 | " + " | ".join(RESULT_KINDS) + " |", "|---" * (len(RESULT_KINDS) + 1) + "|"]

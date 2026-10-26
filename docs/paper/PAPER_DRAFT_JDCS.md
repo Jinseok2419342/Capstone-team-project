@@ -1,40 +1,40 @@
 # 저사양 엣지 장치에서의 사건 기반 장면 변화 감지와 선택적 멀티모달 추론을 이용한 분실물 관리 시스템
 
-> 2026-10-11 축소 개정본(JDCS 심사용 원고 기준 약 10쪽 목표). 이중 대괄호는 실험 후 채운다. 표 5–8의 `[[T5]]`–`[[T8]]`은 집계 스크립트가 만든 표로 통째로 교체한다. 결과가 예상과 다르면 요약·고찰·결론 문장을 결과에 맞게 고친다.
+> 2026-10-26 결과 반영본(JDCS 심사용, 저자 정보 없음). 숫자의 원본은 [10/25 실험 결과](RESULTS_2026-10-25.md), 숫자별 출처는 [원고 숫자 출처표](MANUSCRIPT_NUMBERS.md)다. HWP 양식으로 옮길 때 장 번호·캡션·요약 표기는 학회 양식을 따르고, 투고 전 확인 사항은 [개정 상태](REVISION_STATUS.md)에 있다.
 
 An Event-Triggered Scene Change Detection and Selective Multimodal Inference System for Lost-Item Management on a Resource-Constrained Edge Device
 
-## 요약
+## [요 약]
 
-분실물 보관대를 자동으로 관리하려면 물품의 종류뿐 아니라 물품이 새로 놓이거나 옮겨지고 사라지는 상태 변화를 기록해야 한다. 본 연구는 Raspberry Pi 4(2GB)와 카메라로 보관대의 상태 변화를 감지하고, 필요한 경우에만 외부 시각언어모델로 물품 정보를 보완하는 분실물 관리 시스템 Re:Found를 제안한다. 장치는 움직임이 끝나고 장면이 안정된 뒤에만 전후 영상을 비교하며, 영상 정합과 조명 보정으로 흔들림과 밝기 변화의 영향을 줄이고 기존 물품과의 대응으로 등록·이동·제거를 구분한다. 외부 모델은 새 물품과 판단이 모호한 제거에만 전후 이미지 최대 4장으로 호출하며, 결과는 보관 기한과 처리 이력을 관리하는 웹 서비스에 연결된다. 실제 보관대 환경의 [[N_TRIALS]]회 실험에서 사건 판정 정확도는 [[ACC_OVERALL]]%였고, 조명·그림자 방해 조건 20회 중 오등록은 [[NUISANCE_FP]]건이었다. 외부 모델 호출은 전체 감지 사건의 [[AI_CALL_RATIO]]%에 한정되었으며, 장치의 평균 CPU 사용률은 [[CPU_MEAN]]%, 최고 온도는 [[TEMP_MAX]]°C였다.
+분실물 보관대를 자동으로 관리하려면 물품의 종류뿐 아니라 물품이 놓이고 옮겨지고 치워지는 상태 변화를 기록해야 한다. 본 연구는 Raspberry Pi 4(2GB)와 카메라로 보관대의 상태 변화를 사건 단위로 감지하고, 의미 판단이 필요한 사건에만 외부 시각언어모델을 호출하는 분실물 관리 시스템을 제안한다. 장치는 움직임이 끝나 장면이 안정된 뒤에만 영상 정합과 조명 보정을 거쳐 전후 영상을 비교하고, 기존 물품과의 대응으로 등록·이동·제거를 구분한다. 새 물품과 모호한 제거에는 전후 이미지 최대 4장으로 JSON 스키마 응답을 요청하며, 원격 응답 전에 관찰을 먼저 저장한다. 물품 10종으로 등록·이동·제거를 각 10회 반복한 실험에서 얇은 줄이어폰은 한 번도 등록되지 않았고, 나머지 9종의 동작 270회 중 244회(90.4%)가 올바르게 기록되었다. 등록과 제거는 각각 93.3%, 96.7%였고 이동은 81.1%로, 굴러서 모양이 바뀐 물품이 주된 실패 원인이었다. 외부 모델의 이름·분류 정확도는 95.2%였으며, 손을 뗀 뒤 이름이 표시되기까지 중앙값 7.8초가 걸렸다.
 
-주제어: 엣지 컴퓨팅, 장면 변화 감지, 멀티모달 인공지능, 분실물 관리, 라즈베리 파이
+핵심어: 엣지 컴퓨팅, 장면 변화 감지, 시각언어모델, 분실물 관리, 라즈베리 파이
 
-## Abstract
+## [Abstract]
 
-Managing a lost-item shelf requires recording not only what an object is but also when it is added, moved, or removed. This paper presents Re:Found, a lost-item management system that detects such state changes with a Raspberry Pi 4 (2 GB) and a camera, and consults an external vision-language model only when necessary. The device compares before-and-after images only after motion has ended and the scene has stabilized. Image alignment and illumination compensation reduce the effects of camera shake and lighting changes, and association with registered items distinguishes additions, moves, and removals. The external model is invoked only for new items and ambiguous removals, with up to four before-and-after images, and its results are linked to a web service that manages retention periods and handling histories. In [[N_TRIALS]] trials on a real storage shelf, the event classification accuracy was [[ACC_OVERALL]]%, and [[NUISANCE_FP]] false registrations occurred in 20 trials with lighting and shadow disturbances. External model calls were limited to [[AI_CALL_RATIO]]% of all detected events, while the device showed an average CPU utilization of [[CPU_MEAN]]% and a maximum temperature of [[TEMP_MAX]]°C.
+Managing a lost-and-found shelf requires recording not only what an item is but also when it is placed, moved, or taken away. This paper presents a lost-item management system that detects such state changes as discrete events on a Raspberry Pi 4 (2 GB) with a camera and consults an external vision-language model only for events that require semantic judgment. The device compares before-and-after images only after motion has ended and the scene has stabilized, applying image alignment and illumination compensation, and it distinguishes placement, movement, and removal by associating changes with registered items. New items and ambiguous removals are sent to the model with up to four before-and-after images and a JSON-schema-constrained response, and each observation is stored before the remote call. In an experiment that repeated placement, movement, and removal ten times for each of ten items, a thin wired earphone was never registered, while 244 of the 270 actions on the other nine items (90.4%) were recorded correctly. Placement and removal reached 93.3% and 96.7%, whereas movement reached 81.1%, mainly because rolling items changed their appearance. The model named and categorized 95.2% of the registered items correctly, and the median time from the end of the hand action to the displayed name was 7.8 s.
 
-Keywords: Edge Computing, Scene Change Detection, Multimodal AI, Lost-Item Management, Raspberry Pi
+Key words: Edge Computing, Scene Change Detection, Vision-Language Model, Lost-and-Found Management, Raspberry Pi
 
-# 1. 서론
+# Ⅰ. 서 론
 
 ## 1-1 연구 배경
 
-학교와 공공시설의 분실물 업무는 물품 접수, 특징 기록, 보관 기한 관리와 반환·폐기 처리로 이루어지며 대부분 담당자의 수작업에 의존한다. 이를 돕기 위해 정하민 등[1]은 사진에서 물품의 분류와 태그를 추출하는 등록·조회 시스템을 제안하였고, 장현상 등[2]은 열차 영상에서 사람과 가방을 추적해 소유 관계를 판단하였다. 양형준과 최규상[3]은 Raspberry Pi 4에서 차량 내부의 전후 이미지를 비교해 분실물 후보를 찾았다. 그러나 담당자가 물품을 놓아두는 고정 보관대에서는 물품이 언제 새로 놓이고, 옮겨지고, 사라졌는지를 지속적으로 기록하는 문제가 남는다.
+학교와 공공시설의 분실물 업무는 물품 접수, 특징 기록, 보관 기한 관리와 반환·폐기 처리로 이루어지며 대부분 담당자의 수작업에 의존한다. 이를 돕기 위해 정하민 등[1]은 사진에서 물품의 분류와 태그를 추출하는 등록·조회 시스템을 제안하였고, 장현상 등[2]은 열차 영상에서 사람과 가방을 추적해 소유 관계를 판단하였다. 양형준과 최규상[3]은 Raspberry Pi 4에서 차량 내부의 전후 이미지를 비교해 분실물 후보를 찾았다. 그러나 담당자가 물품을 놓아두는 고정 보관대에서는 물품이 언제 새로 놓이고, 옮겨지고, 치워졌는지를 지속적으로 기록하는 문제가 남는다. 이 기록이 있어야 보관 기한과 처리 이력을 사람의 입력 없이 이어서 관리할 수 있다.
 
 ## 1-2 문제와 접근
 
-보관대를 촬영하는 고정 카메라에서도 조명 변화, 그림자, 미세한 흔들림이 물품 변화와 비슷한 영상 차이를 만든다[4]. 물품을 놓는 손의 움직임과 최종 배치도 구분해야 한다. 또한 모든 프레임에 고성능 객체 탐지나 외부 인공지능 모델을 적용하면 저사양 장치의 연산 자원과 네트워크·비용 부담이 커진다.
+보관대를 비추는 고정 카메라에서도 조명 변화, 그림자, 미세한 흔들림과 카메라의 자동 노출·초점 조정이 물품 변화와 비슷한 영상 차이를 만든다[4]. 물품을 놓는 손의 움직임과 최종 배치를 구분해야 하며, 옮겨진 물품을 새 물품으로 중복 등록하지 않아야 한다. 또한 모든 프레임에 고성능 객체 탐지나 외부 인공지능 모델을 적용하면 저사양 장치의 연산 자원과 네트워크·비용 부담이 커진다.
 
-본 연구는 분석 단위를 개별 프레임이 아닌 상태 변화 사건으로 바꾼다. 저사양 장치는 움직임이 끝난 안정 장면만 비교하여 등록·이동·제거 사건을 판정하고, 물품의 이름과 분류처럼 의미 이해가 필요한 경우에만 외부 시각언어모델을 호출한다.
+본 연구는 분석 단위를 개별 프레임이 아닌 상태 변화 사건으로 바꾼다. 저사양 장치는 움직임이 끝난 안정 장면만 비교하여 등록·이동·제거 사건을 판정하고, 물품의 이름과 분류처럼 의미 이해가 필요한 경우에만 외부 시각언어모델을 호출한다. 외부 모델의 응답은 늦거나 틀릴 수 있으므로, 장치는 응답을 기다리기 전에 관찰을 먼저 저장하고 기준에 맞지 않는 응답은 관리자 확인 대상으로 남긴다.
 
 ## 1-3 연구 기여
 
-본 연구의 기여는 다음과 같다. 첫째, 안정 장면 상태기계, 영상 정합, 조명 보정과 기존 물품 대응을 결합하여 Raspberry Pi 4에서 동작하는 사건 검출 절차를 설계하였다. 둘째, 사건 종류에 따라 외부 모델 호출 여부를 결정하고, 원격 응답 전에 관찰을 먼저 저장하는 선택적 추론 구조를 구현하였다. 셋째, 실제 보관대 실험으로 사건 판정 정확도, 방해 조건의 오등록, 외부 호출 비율과 장치 자원 사용량을 검증하였다.
+본 연구의 기여는 다음과 같다. 첫째, 안정 장면 상태기계, 영상 정합, 조명 보정과 기존 물품 대응을 결합하여 Raspberry Pi 4에서 초당 약 6프레임으로 동작하는 사건 검출 절차를 설계·구현하였다. 둘째, 사건 종류에 따라 외부 모델의 호출 여부를 정하고, 관찰을 먼저 저장한 뒤 정해진 응답 형식과 신뢰도 기준을 통과한 결과만 반영하는 선택적 추론 구조를 구현하였다. 셋째, 실제 보관대에서 물품 10종의 등록·이동·제거를 각 10회 반복하고 무변화 조건을 관찰하여 동작별 기록 성공률, 외부 모델의 인식 정확도와 처리 시간을 측정하고 실패 유형을 분석하였다.
 
-논문의 구성은 다음과 같다. 2장은 관련 연구, 3장은 시스템 구조, 4장은 사건 검출과 선택적 추론 방법을 설명한다. 5장과 6장은 실험 방법과 결과를, 7장은 결론을 제시한다.
+논문의 구성은 다음과 같다. Ⅱ장은 관련 연구, Ⅲ장은 시스템 구조, Ⅳ장은 사건 검출과 선택적 추론 방법을 설명한다. Ⅴ장과 Ⅵ장은 실험 방법과 결과를, Ⅶ장은 결론을 제시한다.
 
-# 2. 관련 연구
+# Ⅱ. 관련 연구
 
 ## 2-1 장면 변화 감지
 
@@ -53,11 +53,11 @@ Keywords: Edge Computing, Scene Change Detection, Multimodal AI, Lost-Item Manag
 | [3] | 차량 내부 전후 비교 | 연속 감시 중 등록·이동·제거 구분 |
 | [7], [8] | 고비용 분석 전 프레임 선별 | 사건 단위 선별과 의미 추론 결합 |
 
-# 3. 시스템 설계
+# Ⅲ. 시스템 설계
 
 ## 3-1 전체 구조
 
-Re:Found는 그림 1과 같이 엣지 영상 처리, 선택적 의미 추론, 관리 서비스의 세 계층으로 구성된다. Raspberry Pi 4에 연결된 CSI 카메라 영상은 Picamera2[10]로 입력되고, OpenCV 기반 감시 모듈이 움직임과 장면 변화를 판정한다. 영상 수집과 사건 처리를 별도 스레드로 분리하여 데이터베이스 저장이나 네트워크 지연이 영상 수집을 멈추지 않게 하였다. FastAPI 서버는 사건 반영, 관리자 웹 화면과 실시간 미리보기를 제공하고, SQLite WAL[11]에 물품·활동 이력·알림·설정을 저장한다. 외부 의미 추론은 설정에 따라 OpenAI[12] 또는 Gemini[13] API를 사용한다.
+Re:Found는 그림 1과 같이 엣지 영상 처리, 선택적 의미 추론, 관리 서비스의 세 계층으로 구성된다. Raspberry Pi 4에 연결된 CSI 카메라 영상은 Picamera2[10]로 입력되고, OpenCV 기반 감시 모듈이 움직임과 장면 변화를 판정한다. 영상 수집과 사건 처리를 별도 스레드로 분리하여 데이터베이스 저장이나 네트워크 지연이 영상 수집을 멈추지 않게 하였다. FastAPI 서버는 사건 반영, 관리자 웹 화면과 실시간 미리보기를 제공하고, SQLite WAL[11]에 물품·활동 이력·알림·설정을 저장한다. 외부 의미 추론은 설정에 따라 OpenAI[12] 또는 Google Gemini[13] API를 사용하며, 실험에는 Gemini를 사용하였다.
 
 ![그림 1 시스템 구조](manuscript/figures/figure-1.svg)
 
@@ -65,7 +65,7 @@ Re:Found는 그림 1과 같이 엣지 영상 처리, 선택적 의미 추론, �
 
 ## 3-2 사건별 처리 정책
 
-로컬 감시 모듈은 표 2의 네 가지 사건을 생성한다. 외부 모델은 의미 정보가 필요한 등록과 판단이 모호한 제거에만 호출하고, 기존 물품으로 식별된 이동과 명확한 제거는 장치에서 처리한다.
+로컬 감시 모듈은 표 2의 네 가지 사건을 생성한다. 외부 모델은 의미 정보가 필요한 등록과 판단이 모호한 제거에만 호출하고, 기존 물품으로 식별된 이동과 명확한 제거는 장치에서 처리한다. 화면 대부분이 동시에 변하면 조명 전환이나 카메라 충격으로 보고 사건을 만들지 않는다.
 
 **표 2. 사건별 처리 / Table 2. Processing by event type**
 
@@ -76,25 +76,23 @@ Re:Found는 그림 1과 같이 엣지 영상 처리, 선택적 의미 추론, �
 | 제거 | 기존 위치가 빈 배경과 일치 | 없음 | 회수 상태로 전환 |
 | 제거 검증 | 제거 여부가 모호함 | 호출 | 확신할 때만 회수, 아니면 관리자 확인 |
 
-화면 대부분이 동시에 변하면 조명 전환이나 카메라 충격으로 보고 사건을 만들지 않는다.
-
 ## 3-3 저사양 장치를 위한 설계 선택
 
-Raspberry Pi 4 2GB에서 모든 프레임에 딥러닝 객체 탐지기를 실행하면 감시와 웹 서비스를 함께 운영할 여유가 부족하고, 미리 학습한 분류에 없는 다양한 분실물을 다루기도 어렵다. 본 시스템은 학습 모델의 경량화 대신 분석 시점과 대상을 줄이는 방식으로 이 제약에 대응한다. 첫째, 무거운 비교는 움직임이 끝난 안정 장면에서만 수행한다. 둘째, 영상 정합은 폭 360화소로 축소한 영상에서 계산하고, 외부 모델에 보낼 후보 영역만 원본 해상도로 잘라 JPEG 품질 88로 유지한다. 셋째, 관리자 화면의 미리보기는 분석 영상과 분리하여 낮은 해상도와 프레임률로 전송한다. 넷째, 물품의 종류처럼 학습 범위가 넓은 판단은 외부 시각언어모델에 맡기고, 장치는 사건이 언제 어디서 일어났는지를 판단한다.
+Raspberry Pi 4 2GB에서 모든 프레임에 딥러닝 객체 탐지기를 실행하면 감시와 웹 서비스를 함께 운영할 여유가 부족하고, 미리 학습한 분류에 없는 다양한 분실물을 다루기도 어렵다. 본 시스템은 학습 모델의 경량화 대신 분석 시점과 대상을 줄이는 방식으로 이 제약에 대응한다. 첫째, 무거운 비교는 움직임이 끝난 안정 장면에서만 수행한다. 둘째, 영상 정합은 폭 360화소로 축소한 영상에서 계산하고, 외부 모델에 보낼 후보 영역만 원본 해상도로 잘라 낸다. 셋째, 관리자 화면의 미리보기는 분석 영상과 분리하여 낮은 해상도와 프레임률로 전송한다. 넷째, 물품의 종류처럼 학습 범위가 넓은 판단은 외부 시각언어모델에 맡기고, 장치는 사건이 언제 어디서 일어났는지를 판단한다. 다섯째, 외부 요청은 하나의 작업자가 차례로 처리하며 실행 중인 요청을 포함해 최대 4건까지만 받아 둔다. 이를 넘는 사건은 요청 없이 관리자 확인 대상으로 저장하여, 원격 지연이 장치의 메모리와 작업 대기열을 잠식하지 않게 한다.
 
 ## 3-4 관리 기능
 
-관리자 웹 화면은 그림 2와 같이 실시간 카메라 영상, 보관 물품 목록, 확인 필요 물품과 활동 이력을 제공한다. 등록된 물품은 보관 중, 기한 임박, 회수, 폐기 상태로 관리되며 분류별 기본 보관 기한은 귀중품 90일, 일반 60일, 음식 1일이다. 이 기한은 법정 기간이 아니라 본 시스템의 운영 정책이며 관리자가 물품별로 수정할 수 있다. 기한이 임박하면 관리자에게 전자우편 알림을 보내고, 관리자는 물품 정보 수정, 회수·폐기·복원, 감지 제외를 처리한다. 영상에서 사라진 물품의 회수 처리는 시스템상의 상태 전환이며 실제 소유자 반환을 증명하지는 않는다.
+관리자 웹 화면은 그림 2와 같이 실시간 카메라 영상, 보관 물품 목록, 확인 필요 물품과 활동 이력을 제공한다. 등록된 물품은 보관 중, 기한 임박, 회수, 폐기 상태로 관리되며 분류별 기본 보관 기한은 귀중품 90일, 일반 60일, 음식 1일이다. 이 기한은 법정 기간이 아니라 본 시스템의 운영 정책이며 관리자가 물품별로 수정할 수 있다. 기한이 임박하거나 지난 물품은 관리자 화면에 표시하고 설정한 경우 전자우편으로도 알리며, 관리자는 물품 정보 수정, 회수·폐기·복원, 감지 제외를 처리한다. 영상에서 사라진 물품의 회수 처리는 시스템상의 상태 전환이며 실제 소유자 반환을 증명하지는 않는다. 그림 2(a)의 대시보드는 추적 중인 물품의 영역을 실시간 영상 위에 표시하고 자동 확정하지 않은 물품을 확인 필요 목록에 모으며, 그림 2(b)의 목록은 외부 모델이 붙인 이름·분류와 분류별 보관 기한을 보여 준다.
 
 ![그림 2 관리자 화면](manuscript/figures/figure-2.png)
 
-**그림 2. 관리자 웹 화면 / Fig. 2. Administrator web interface**
+**그림 2. 실험 중 관리자 웹 화면: (a) 대시보드, (b) 보관 물품 목록 / Fig. 2. Administrator web interface during the experiment: (a) dashboard, (b) item list**
 
-# 4. 사건 검출과 선택적 추론
+# Ⅳ. 사건 검출과 선택적 추론
 
 ## 4-1 안정 장면 상태기계
 
-감시 모듈은 그림 3과 같이 카메라 준비, 감시, 대기, 안정 확인, 분석의 다섯 상태로 동작한다. 감시 중 움직임이 발생하면 대기 상태로 전이하고, 마지막 움직임 이후 3.0초가 지나면 1.2초 동안 움직임이 없는지 확인한다. 장면이 안정된 경우에만 기준 영상과 현재 영상을 비교하므로, 물품을 놓는 손이나 이동 중인 물품을 분석할 가능성이 줄어든다. 천천히 놓인 물품처럼 인접 프레임 차이가 작은 경우를 위해 기준 장면과의 누적 변화도 낮은 빈도로 검사한다. 분석 결과가 데이터베이스에 반영된 것을 확인한 뒤 현재 안정 영상을 새 기준으로 삼으며, 저장에 실패하면 기준을 유지하고 다시 시도한다.
+감시 모듈은 그림 3과 같이 카메라 준비, 감시, 대기, 안정 확인, 분석의 다섯 상태로 동작한다. 감시 중 움직임이 발생하면 대기 상태로 전이하고, 마지막 움직임 이후 3.0초가 지나면 1.2초 동안 움직임이 없는지 확인한다. 장면이 안정된 경우에만 기준 영상과 현재 영상을 비교하므로, 물품을 놓는 손이나 이동 중인 물품을 분석할 가능성이 줄어든다. 천천히 놓인 물품처럼 인접 프레임 차이가 작은 경우를 위해 기준 장면과의 누적 변화도 초당 2회 검사한다. 분석 결과가 데이터베이스에 반영된 것을 확인한 뒤 현재 안정 영상을 새 기준으로 삼으며, 저장에 실패하면 기준을 유지하고 다시 시도한다.
 
 ![그림 3 상태 전이](manuscript/figures/figure-3.svg)
 
@@ -126,13 +124,15 @@ D(x)=\max\left(\min\left(|s(x)-m-\ell(x)|,\,|s(x)-m|\right),\,|\Delta a(x)|,\,|\
 
 ## 4-3 기존 물품 대응과 사건 판정
 
-데이터베이스의 보관 중 물품은 등록 당시의 위치 상자, 물품 이미지와 물품이 놓이기 전의 빈 배경 이미지를 가진다. 변화 후보가 기존 물품의 위치와 겹치고 그 영역이 저장된 빈 배경과 충분히 유사하면 제거로 판정한다. 휴대전화 화면이 켜진 경우처럼 물품 내부의 외형만 바뀌었거나 근거가 경계값에 가까우면 자동으로 회수하지 않고 제거 검증으로 보낸다.
+데이터베이스의 보관 중 물품은 등록 당시의 위치 상자, 물품 이미지와 물품이 놓이기 전의 빈 배경 이미지를 가진다. 변화 후보가 기존 물품의 위치와 겹치고 그 영역이 저장된 빈 배경과 충분히 유사해지면 제거로 판정한다. 휴대전화 화면이 켜진 경우처럼 물품 내부의 외형만 바뀌었거나 근거가 경계값에 가까우면 자동으로 회수하지 않고 제거 검증으로 보낸다.
 
 기존 위치의 변화와 새 위치의 후보가 함께 나타나면 같은 물품의 이동 여부를 확인한다. 템플릿 상관도와 색상 유사도를 먼저 비교하고, 크기나 배경이 달라 판단이 어려우면 ORB 특징[17] 대응으로 재검증한다. 이동으로 판정되면 새 물품을 만들지 않고 기존 ID의 위치와 참조 이미지를 갱신한다. 어떤 기존 물품과도 대응되지 않는 후보는 등록 사건이 된다.
 
 ## 4-4 선택적 멀티모달 추론
 
-등록과 제거 검증 사건에서는 후보 영역의 전후 확대 이미지 2장과 후보 상자를 표시한 전후 전체 장면 2장, 최대 4장을 외부 모델에 보낸다. 확대 이미지는 물품의 종류와 재질을, 전체 장면은 변화 방향과 주변 맥락을 판단하는 데 쓰인다. 모델에는 표 3의 항목을 JSON 스키마 형식으로 응답하도록 요청하고, 전체 장면과 확대 이미지의 결론이 다르거나 새 물품이 분명하지 않으면 불확실로 답하게 한다. 일반 물품이라도 추정 가격이 10만 원 이상이면 귀중품으로 분류한다.
+등록과 제거 검증 사건에서는 후보 영역의 전후 확대 이미지 2장과 후보 상자를 표시한 전후 전체 장면 2장, 최대 4장을 외부 모델에 보낸다. 확대 이미지는 원본 해상도에서 잘라 JPEG 품질 88로, 전체 장면은 폭 960화소, 품질 72로 부호화한다. 각 이미지 앞에는 ‘전체 장면·변화 전(BEFORE)’과 같은 라벨을 붙여 순서와 역할을 명시한다. 프롬프트는 전체 장면에서 변화 방향을 먼저 확인한 뒤 확대 이미지로 물품을 식별하도록 판단 순서를 정하고, 손·그림자·빛과 원래 있던 물건을 새 물품으로 보지 않도록 지시한다. 두 증거의 결론이 다르거나 새 물품이 분명하지 않으면 불확실로 답하게 한다.
+
+응답은 표 3의 항목으로 구성된 JSON 스키마로 제한하며, OpenAI는 strict 모드의 구조화 출력을, Gemini는 JSON 스키마 응답 형식을 사용한다. 장치는 생성이 정상 종료되지 않았거나 값의 형식과 범위가 맞지 않는 응답을 불확실로 처리한다. 분류는 음식·음료를 음식, 지갑과 고가 전자기기를 귀중품, 그 밖을 일반으로 정의하고, 일반으로 응답된 물품이라도 추정 가격이 10만 원 이상이면 귀중품으로 보정한다.
 
 **표 3. 외부 모델 응답 항목 / Table 3. Fields of the external model response**
 
@@ -144,7 +144,7 @@ D(x)=\max\left(\min\left(|s(x)-m-\ell(x)|,\,|s(x)-m|\right),\,|\Delta a(x)|,\,|\
 | estimated_value_krw | 추정 가격(원) |
 | confidence | 판단 신뢰도(0–1) |
 
-등록 사건은 원격 요청 전에 물품 이미지와 함께 '분석 중' 상태로 먼저 저장한다. 따라서 네트워크 오류, 응답 지연, 형식 오류나 낮은 신뢰도가 발생해도 관찰 기록은 삭제되지 않고 관리자 확인 대상으로 남는다. 제거 검증은 모델이 신뢰도 0.5 이상으로 제거를 판단한 경우에만 회수 처리하며, 응답을 기다리는 동안 물품이 이동하거나 관리자가 상태를 바꾸었다면 늦게 도착한 응답을 적용하지 않는다.
+등록 사건은 원격 요청 전에 물품 이미지와 함께 ‘분석 중’ 상태로 먼저 저장한다. 따라서 네트워크 오류, 응답 지연, 형식 오류나 낮은 신뢰도가 발생해도 관찰 기록은 삭제되지 않고 관리자 확인 대상으로 남는다. 등록 응답은 모델이 신뢰도 0.5 이상으로 새 물품이라고 답한 경우에만 이름·분류·보관 기한을 확정한다. 제거 검증은 모델이 신뢰도 0.5 이상으로 제거를 판단한 경우에만 회수 처리하며, 응답을 기다리는 동안 물품이 이동하거나 관리자가 상태를 바꾸었다면 늦게 도착한 응답을 적용하지 않는다.
 
 ## 4-5 전체 처리 절차
 
@@ -162,148 +162,172 @@ D(x)=\max\left(\min\left(|s(x)-m-\ell(x)|,\,|s(x)-m|\right),\,|\Delta a(x)|,\,|\
 8. 등록은 임시 저장한 뒤, 제거 검증은 기존 상태를 유지한 채 외부 모델을 호출한다.
 9. 사건이 데이터베이스에 반영되면 B를 I로 갱신하고 감시로 돌아간다.
 
-# 5. 구현 및 실험 방법
+# Ⅴ. 구현 및 실험 방법
 
 ## 5-1 구현 환경
 
-표 4는 실험 장치와 주요 설정이다. 영상은 1280×720, 초당 10프레임으로 입력하고 감시 모듈은 초당 최대 7프레임을 분석한다. 웹 미리보기는 분석과 별도로 폭 800화소, 초당 5프레임으로 전송한다. 관리자는 Windows 노트북의 모바일 핫스팟에 연결된 Pi에 SSH 터널로 접속해 웹 화면을 사용하였다.
+표 4는 실험 장치와 주요 설정이다. 영상은 1280×720, 초당 10프레임으로 입력하고 감시 모듈은 초당 최대 7프레임을 분석한다. 웹 미리보기는 분석과 별도로 폭 800화소, 초당 5프레임으로 전송한다. 카메라는 바닥판 위 60 cm 높이에서 아래를 향하도록 스탠드에 고정하였다(그림 5). 관리자 노트북은 학교 무선망에 연결한 상태에서 모바일 핫스팟으로 Pi를 연결하였고, SSH 터널로 웹 화면에 접속하였다.
+
+![그림 5 실험 환경](manuscript/figures/figure-5.png)
+
+**그림 5. 실험 장치: (a) 스탠드에 고정한 카메라와 Raspberry Pi(사진의 링 조명은 실험에서 사용하지 않음), (b) 실험 중 카메라 영상 / Fig. 5. Experimental setup: (a) camera and Raspberry Pi on a stand (the ring light was not used in the experiment), (b) camera view during the experiment**
 
 **표 4. 실험 장치와 주요 설정 / Table 4. Experimental setup and main parameters**
 
 | 항목 | 내용 |
 |---|---|
-| 장치 | Raspberry Pi 4 Model B 2GB, [[EQUIP_STORAGE]], [[EQUIP_COOLING]] |
+| 장치 | Raspberry Pi 4 Model B 2GB, microSD 32GB, 케이스만 사용(방열판·팬 없음) |
 | 운영체제 | Debian 13 기반 Raspberry Pi OS 64비트, 커널 6.18 |
-| 카메라 | OV5647 CSI 카메라, [[EQUIP_CAMERA_GEOMETRY]] |
+| 카메라 | OV5647 CSI 카메라, 바닥판 위 60 cm에서 아래를 향함 |
 | 소프트웨어 | Python 3.13, OpenCV 4.10, Picamera2 0.3, FastAPI 0.141 |
 | 영상 입력·분석 | 1280×720, 10 fps 입력, 최대 7 fps 분석 |
 | 대기·안정 확인 | 3.0 s / 1.2 s |
 | 정합 분석 폭 | 360 pixel |
-| 외부 모델 | [[VLM_MODEL_DATE]] |
-| 네트워크 | [[NETWORK_CONDITION]] |
+| 외부 모델 | Google Gemini 3.5 Flash-Lite(gemini-3.5-flash-lite), 2026년 10월 25일 사용 |
+| 원격 작업 한도 | 작업자 1개, 실행 중 포함 최대 4건 |
+| 네트워크 | 학교 무선망에 연결된 노트북의 모바일 핫스팟 |
+| 조명·바닥 | 실내 형광등, 짙은 녹색 바닥판 |
 
 ## 5-2 실험 절차
 
-실험은 [[EXPERIMENT_DATE_PLACE]]에서 책상 위 보관대를 대상으로 수행하였다. 물품은 귀중품, 일반 물품, 음식을 포함한 [[OBJECT_LIST]]의 10종이다. 각 실험 전에 모든 기록을 초기화하고, 한 행동 후 화면에 결과가 반영될 때까지 기다린 뒤 다음 행동을 수행하였다.
+실험은 2026년 10월 25일 교내 실내에서 수행하였다. 보관판은 사람이 평소 지나다니지 않는 자리에 두었고, 조명은 실내 형광등만 사용하였다. 물품은 리모컨, 볼펜, 충전기, 무선 이어폰 케이스, 튜브형 화장품, 줄이어폰, 약통, 머그컵, 지갑, 음료 팩의 10종이다. 정답 분류는 실험 전에 지갑을 귀중품, 음료 팩을 음식, 나머지 8종을 일반으로 정하였으며 결과를 확인한 뒤에도 바꾸지 않았다.
 
-일반 조건에서는 10종을 하나씩 놓는 등록, 놓인 물품을 다른 위치로 옮기는 이동, 하나씩 치우는 제거를 차례로 수행하고 이 과정을 2회 반복하여 사건 종류별 20회를 얻었다. 여러 물품이 함께 놓인 상태에서 이동과 제거가 일어나므로 기존 물품과의 대응도 함께 평가된다. 물품 변화가 없는 조건으로는 손을 보관대 위에 넣었다 빼는 동작 20회, 실내 조명을 끄고 켜는 조명 변화 10회, 사람이 옆에 서서 그림자를 만드는 그림자 조건 10회를 수행하였다. 전체 시도는 100회이다. 이와 별도로 물품을 둔 상태에서 [[IDLE_HOURS]]시간 동안 사람의 개입 없이 감시하여 잘못 생성된 사건을 기록하였다.
+각 회차는 한 물품을 보관판에 놓는 등록, 다른 자리로 옮기는 이동, 보관판에서 치우는 제거의 세 동작으로 구성하였고, 물품마다 10회를 반복하도록 하여 동작별 100회, 모두 300회를 계획하였다. 실험자는 각 동작 뒤 관리자 화면에 결과가 반영될 때까지 기다렸다가 다음 동작을 수행하고, 결과가 의도한 동작과 일치하는지를 기록하였다. 등록은 새 물품 기록이 생성되면, 이동은 새 기록 없이 기존 기록의 위치가 갱신되면, 제거는 해당 기록이 회수 상태로 바뀌면 성공으로 보았다. 등록이 실패하면 물품을 다시 놓아 등록시킨 뒤 같은 회차의 이동과 제거를 이어서 수행하였으며, 성공 횟수에는 첫 시도만 포함하였다. 등록된 물품마다 외부 모델이 붙인 이름과 분류가 모두 맞는지를 함께 기록하였다. 줄이어폰은 다시 놓아도 등록되지 않아 이동과 제거 20회를 시도할 수 없었으므로, 실제로 시도한 동작은 280회이다.
 
-시도마다 수행한 행동을 정답으로 하고, 관리자 화면에 나타난 결과를 등록·이동·제거·확인 필요·반응 없음 중 하나로 기록하였다. 등록 사건에서는 외부 모델이 붙인 이름과 분류가 실제 물품에 맞는지를 함께 기록하였다.
+물품 변화가 없는 조건으로는 보관판 위에 손을 넣었다 빼는 동작, 형광등의 점등 상태를 바꾸는 조명 변화, 사람의 그림자가 보관판에 드리우는 경우를 실험 중 반복해 관찰하였다. 이 조건들은 반복 횟수를 기록하지 않았으므로 잘못된 기록의 발생 여부만 보고한다. 또한 보관판을 1시간 동안 사람의 개입 없이 감시하였다.
+
+처리 시간, 처리 속도와 외부 모델 호출 수는 본 실험에 앞서 같은 장치와 설정으로 진행한 38회의 동작 구간(이하 보조 구간, 약 43분)에서 측정하였다. 이 구간에서는 노트북의 진행 보조 프로그램이 Raspberry Pi의 활동 기록과 1초 간격의 상태 정보를 저장하였다. 다만 이 프로그램은 동작 직후 처음 나타난 사건을 결과로 자동 판정하였기 때문에, 앞선 동작의 늦은 외부 모델 처리나 실패한 동작을 바로잡기 위한 재배치가 다음 동작의 결과로 집계되었다. 따라서 보조 구간의 자동 판정은 성공률 산출에 사용하지 않았다.
 
 ## 5-3 평가 지표
 
-사건 판정은 정답 행동과 시스템 결과의 혼동행렬로 정리하고, 정확도와 사건 종류별 정밀도, 재현율, F1 점수를 계산한다. 무변화 시도에서 등록·이동·제거가 나타나면 오탐으로 센다. 정확도에는 Wilson 95% 신뢰구간[18]을 함께 제시한다.
+동작별 기록 성공률은 성공 횟수를 시도 횟수로 나눈 값이며, 표본이 작고 비율이 1에 가까운 경우에도 구간이 [0, 1]을 벗어나지 않는 Wilson 95% 신뢰구간[18]을 함께 제시한다. 외부 모델의 인식 정확도는 등록에 성공한 경우 중 이름과 분류가 모두 맞은 비율이다. 처리 시간은 Raspberry Pi의 시계를 기준으로 마지막 움직임 시각 \(t_m\), 물품 기록 생성 시각 \(t_r\), 외부 모델 결과 반영 시각 \(t_a\)를 정의하고, 기록 지연 \(t_r-t_m\), 인식 지연 \(t_a-t_r\)과 사용자가 체감하는 전체 지연 \(t_a-t_m\)으로 나누어 계산한다. 외부 모델 호출률은 장치가 생성한 사건 수에 대한 실제 원격 요청 수의 비율이다. 처리 속도는 1초마다 기록한 분석 프레임률과 직전 프레임의 처리 시간으로 나타낸다.
 
-외부 모델 평가는 호출 비율, 인식 정확도와 처리 시간으로 한다. 호출 비율은 실험 중 감지된 전체 사건 중 외부 모델을 호출한 사건의 비율이고, 인식 정확도는 성공한 등록 사건 중 이름과 분류가 맞은 비율이다. 처리 시간은 데이터베이스의 활동 기록에서 임시 등록 시각부터 인식 결과 반영 시각까지로 계산한다. 장치 자원은 실험 중 1초 간격으로 CPU 사용률, 메모리, SoC 온도를 기록하고, 시스템 상태 API로 실제 분석 프레임률과 프레임당 처리 시간을 기록한다.
+# Ⅵ. 실험 결과 및 고찰
 
-# 6. 실험 결과 및 고찰
+## 6-1 동작별 기록 결과
 
-## 6-1 사건 판정 결과
+표 5는 줄이어폰을 제외한 9종의 동작별 결과이다. 줄이어폰은 10회 모두 등록되지 않아 이동과 제거를 시도할 수 없었으므로 별도로 다룬다. 9종의 동작 270회 중 244회가 올바르게 기록되어 성공률은 90.4%(95% 신뢰구간 86.3–93.3%)였다. 시도할 수 있었던 280회를 분모로 하면 87.1%이고, 줄이어폰을 포함한 등록 성공률은 84.0%(84/100)이다. 등록과 제거의 성공률은 각각 93.3%, 96.7%로 높았으며, 등록에 실패한 6회는 물품을 다시 놓았을 때 등록되었다. 줄이어폰은 폭이 좁고 짙은 바닥판과의 명암·색 대비가 작아, 차이 영상의 임계값과 최소 면적 조건을 통과하는 변화 영역이 만들어지지 않은 것으로 보인다. 다만 보조 구간에서 줄이어폰을 뭉쳐 놓은 1회에는 변화 영역이 검출되었고 외부 모델이 변화 방향을 제거로 판단하여 새 물품으로 확정되지 않았으므로, 가늘고 대비가 작은 물품은 놓인 모양에 따라 검출 여부가 달라지는 것으로 보인다.
 
-표 5는 100회 시도의 혼동행렬이고, 표 6은 사건 종류별 성능이다. 전체 정확도는 [[ACC_OVERALL]]%(95% 신뢰구간 [[ACC_CI]])였고 세 사건 종류의 평균 F1 점수는 [[MACRO_F1]]였다. [[MAIN_ERROR]]
+**표 5. 동작별 기록 결과(줄이어폰 제외 9종) / Table 5. Results by action (nine items, wired earphone excluded)**
 
-**표 5. 사건 판정 혼동행렬 / Table 5. Confusion matrix of event decisions**
+| 동작 | 시도 | 성공 | 성공률(%) | 95% 신뢰구간(%) |
+|---|---|---|---|---|
+| 등록 | 90 | 84 | 93.3 | 86.2–96.9 |
+| 이동 | 90 | 73 | 81.1 | 71.8–87.9 |
+| 제거 | 90 | 87 | 96.7 | 90.7–98.9 |
+| 전체 | 270 | 244 | 90.4 | 86.3–93.3 |
+| 등록(줄이어폰 포함) | 100 | 84 | 84.0 | 75.6–89.9 |
 
-| 정답＼결과 | 등록 | 이동 | 제거 | 확인 필요 | 반응 없음 |
-|---|---|---|---|---|---|
-| 등록(20) | [[T5]] | [[T5]] | [[T5]] | [[T5]] | [[T5]] |
-| 이동(20) | [[T5]] | [[T5]] | [[T5]] | [[T5]] | [[T5]] |
-| 제거(20) | [[T5]] | [[T5]] | [[T5]] | [[T5]] | [[T5]] |
-| 무변화(40) | [[T5]] | [[T5]] | [[T5]] | [[T5]] | [[T5]] |
+## 6-2 이동 실패의 원인
 
-**표 6. 사건 종류별 성능 / Table 6. Performance by event type**
+이동의 성공률은 81.1%로 세 동작 중 가장 낮았다. 표 6과 같이 실패 17회 중 8회는 옆으로 눕혀 둔 머그컵에서 발생하였다. 머그컵은 옮기는 과정에서 구르거나 돌아가 위에서 본 윤곽과 손잡이·입구의 위치가 달라지는데(그림 6(b)), 이동 판정은 저장된 물품 이미지와의 템플릿 상관도, 색상 유사도와 ORB 특징 대응에 의존하므로 외형이 크게 달라지면 같은 물품으로 대응되지 않는다. 원통형인 약통도 2회 실패하였다. 나머지 7종의 실패 7회 중 3회는 물품이 화각 가장자리에 걸친 경우로, 물품의 일부가 영상 밖으로 나가 저장된 이미지와 비교하기 어려웠다. 가장자리 3회를 제외하면 나머지 7종의 이동 성공률은 94.0%(63/67)이다.
 
-| 사건 | 정밀도 | 재현율 | F1 |
-|---|---|---|---|
-| 등록 | [[T6]] | [[T6]] | [[T6]] |
-| 이동 | [[T6]] | [[T6]] | [[T6]] |
-| 제거 | [[T6]] | [[T6]] | [[T6]] |
-| 평균 | [[T6]] | [[T6]] | [[T6]] |
+**표 6. 물품별 이동 결과 / Table 6. Movement results by item**
 
-물품 변화가 없는 조건에서 오탐은 손 동작 20회 중 [[HAND_FP]]건, 조명 변화 10회 중 [[LIGHT_FP]]건, 그림자 10회 중 [[SHADOW_FP]]건이었다. 조명 전환과 그림자는 넓은 영역의 화소값을 바꾸므로 단순 차영상에서는 변화로 검출된다. 제안 방법에서는 노출 보정, 그림자 후보 제거와 전역 변화 억제가 이러한 차이를 물품 사건에서 제외하는 역할을 한다. [[IDLE_HOURS]]시간 무인 감시에서는 잘못된 사건이 [[IDLE_FP]]건 발생하였다.
+| 물품 | 시도 | 성공 | 성공률(%) | 비고 |
+|---|---|---|---|---|
+| 머그컵(눕힘) | 10 | 2 | 20.0 | 구르며 외형 변화 |
+| 약통 | 10 | 8 | 80.0 | 원통형 |
+| 나머지 7종 | 70 | 63 | 90.0 | 실패 7회 중 3회는 화각 가장자리 |
+| 합계 | 90 | 73 | 81.1 | — |
 
-## 6-2 외부 모델 호출과 인식 결과
-
-표 7은 외부 모델의 호출과 인식 결과이다. 실험 중 감지된 사건 중 외부 모델 호출은 [[AI_CALL_RATIO]]%였으며, 이동과 명확한 제거는 원격 요청 없이 처리되었다. 같은 시간 동안 감시 모듈이 분석한 [[FRAMES_PROCESSED]]프레임과 비교하면, 프레임마다 외부 모델을 호출하는 방식에 비해 요청 수가 크게 줄어든다. 등록 물품의 이름 정확도는 [[AI_NAME_ACC]]%, 분류 정확도는 [[AI_CATEGORY_ACC]]%였다.
-
-**표 7. 외부 모델 호출과 인식 결과 / Table 7. External model calls and recognition results**
-
-| 항목 | 값 |
-|---|---|
-| 전체 감지 사건 / 외부 호출(등록·제거 검증) | [[T7]] |
-| 호출 비율 | [[T7]] |
-| 이름 / 분류 정확도 | [[T7]] |
-| 관리자 확인 필요 비율 | [[T7]] |
-| 처리 시간 중앙값 / 최대 | [[T7]] |
-
-## 6-3 장치 자원과 처리 시간
-
-표 8은 실험 중 Raspberry Pi의 자원 사용량이다. 평균 CPU 사용률은 [[CPU_MEAN]]%, 서비스 프로세스의 최대 메모리는 [[RSS_MAX]]MiB, 최고 온도는 [[TEMP_MAX]]°C였다. 실제 분석 프레임률은 평균 [[FPS_MEAN]] fps, 프레임당 처리 시간은 평균 [[PROC_MS_MEAN]]ms였다. 사건 등록은 안정 확인을 위해 마지막 움직임 후 최소 4.2초를 기다리므로, 사용자가 느끼는 등록 시간은 이 대기와 외부 모델 처리 시간의 합으로 나타난다.
-
-**표 8. Raspberry Pi 자원 사용량 / Table 8. Resource usage on Raspberry Pi**
-
-| 항목 | 평균 | 최대 |
-|---|---|---|
-| 장치 CPU 사용률(%) | [[T8]] | [[T8]] |
-| 서비스 메모리(MiB) | [[T8]] | [[T8]] |
-| SoC 온도(°C) | [[T8]] | [[T8]] |
-| 분석 프레임률(fps) | [[T8]] | [[T8]] |
-| 프레임 처리 시간(ms) | [[T8]] | [[T8]] |
-
-## 6-4 실패 사례와 한계
-
-그림 5는 실험 환경이고, 그림 6은 판정 결과의 예이다. 주요 실패 사례는 [[FAIL_CASES]]였다.
-
-![그림 5 실험 환경](manuscript/figures/figure-5.png)
-
-**그림 5. 실험 환경 / Fig. 5. Experimental setup**
+이동에 실패한 경우는 모두 기존 기록의 제거와 새 물품의 등록으로 처리되었다. 물품의 기록이 사라지지는 않지만 하나의 물품 이력이 두 기록으로 나뉘므로 관리자가 확인해야 한다. 같은 분석에서 제거와 등록이 함께 생긴 경우 두 영역의 이미지를 외부 모델에 함께 보내 같은 물품인지 묻는 방식으로 보완할 수 있다. 화각 가장자리의 실패는 보관함의 벽이나 바구니로 놓을 수 있는 범위를 화각 안으로 제한하는 설치 조건으로 줄일 수 있다.
 
 ![그림 6 판정 예](manuscript/figures/figure-6.png)
 
-**그림 6. 사건 판정의 성공과 실패 예 / Fig. 6. Examples of successful and failed decisions**
+**그림 6. 판정 사례: (a) 등록 성공(전후 장면과 등록된 물품 이미지), (b) 이동 실패가 집중된 눕힌 머그컵, (c) 자동 회수하지 않고 남긴 확인 필요 목록 / Fig. 6. Examples: (a) successful registration, (b) mug lying on its side, (c) items kept for review**
 
-본 실험은 한 장소, 한 대의 카메라와 10종의 물품으로 수행하였으므로 다른 설치 높이, 조명과 배경으로 결과를 바로 일반화하기 어렵다. 안정 장면만 비교하므로 물품을 들었다가 같은 자리에 다시 놓은 행동은 기록되지 않으며, 여러 물품이 동시에 움직이는 경우는 평가하지 않았다. 외부 모델의 응답은 모델 갱신에 따라 달라질 수 있고, 전체 장면 이미지에 사람이 포함될 수 있으므로 실제 운영에서는 촬영 범위와 개인정보 보호 절차가 필요하다.
+## 6-3 물품이 아닌 변화
 
-# 7. 결론
+손을 넣었다 빼는 동작에서는 카메라의 초점·화이트밸런스 조정으로 보이는 화면 변화가 잠시 나타났으나, 장면이 안정된 뒤에만 비교하므로 사건이 생성되지 않았다. 형광등의 점등 변화와 그림자 조건에서도 잘못된 기록은 관찰되지 않았다. 1시간 무인 감시에서 잘못 생성된 기록은 0건이었으며, 0건 관측에 대한 포아송 분포의 95% 단측 상한은 시간당 3.0건이다. 무변화 조건의 반복 횟수를 기록하지 않았으므로, 이 결과는 오탐률이 아니라 관찰한 범위에서 오탐이 없었다는 의미로 한정한다. 또한 보관판이 사람의 동선에서 떨어진 자리였으므로, 사람이 자주 지나가는 장소에서는 그림자와 가림의 영향을 따로 평가해야 한다.
 
-본 논문은 Raspberry Pi 4와 고정 카메라로 분실물 보관대의 상태 변화를 감지하고, 필요한 사건에만 외부 시각언어모델을 적용하는 분실물 관리 시스템 Re:Found를 제안하였다. 안정 장면 상태기계, 영상 정합, 조명 보정과 기존 물품 대응으로 등록·이동·제거를 구분하고, 새 물품과 모호한 제거에만 전후 이미지 최대 4장을 보내 의미 정보를 보완하였다. 원격 응답 전에 관찰을 저장하여 외부 오류에도 기록이 보존되도록 하였다.
+## 6-4 외부 모델의 인식과 호출
 
-실제 보관대 실험에서 사건 판정 정확도는 [[ACC_OVERALL]]%였고, 외부 모델 호출은 감지 사건의 [[AI_CALL_RATIO]]%에 한정되었다. 장치는 평균 CPU [[CPU_MEAN]]%, 최고 온도 [[TEMP_MAX]]°C에서 감시와 관리 서비스를 함께 운영하였다. 향후에는 여러 설치 환경과 동시 다중 물품 조건으로 평가를 확장하고, 기존 배경 차감 방법과의 비교를 수행할 계획이다.
+본 실험에서 등록에 성공한 84회 중 80회는 외부 모델이 붙인 이름과 분류가 모두 맞아 인식 정확도는 95.2%(95% 신뢰구간 88.4–98.1%)였다. 틀린 4회는 튜브형 화장품을 모양이 비슷한 다른 물건으로 부른 경우와 귀중품·일반의 분류를 잘못한 경우였다. 분류의 경계는 보조 구간에서도 나타났다. 보조 구간의 등록 17회에서 이름은 16회 맞았으나 분류는 13회만 맞았고, 틀린 4회는 무선 이어폰 케이스 2회와 충전기 1회를 귀중품으로, 약통 1회를 영양제 통으로 보아 음식으로 분류한 경우였다. 무선 이어폰 케이스는 시중 가격이 10만 원을 넘는 경우가 많아 시스템의 가격 규칙으로는 귀중품에 해당할 수 있으나 실험에서는 사전에 일반으로 정하였다. 이처럼 분류 오류의 일부는 모델보다 분류 기준의 모호성에서 비롯되므로, 운영 기관은 귀중품 기준을 명시적으로 정해 프롬프트와 규칙에 반영해야 하며 최종 분류는 관리자가 확인하는 것이 바람직하다.
+
+**표 7. 외부 모델 인식과 호출 / Table 7. Recognition and calls of the external model**
+
+| 항목 | 값 |
+|---|---|
+| 인식 정확도(본 실험, 이름·분류 모두) | 80/84(95.2%) |
+| 장치가 생성한 사건(보조 구간) | 108건: 등록 54, 이동 7, 제거 16, 제거 검증 31 |
+| 외부 모델 대상 / 실제 요청 | 85건 / 80건(사건의 74.1%) |
+| 작업 한도 초과로 보류 | 5건(등록 1, 제거 검증 4) |
+| 등록 응답 52건 | 확정 37, 방향 불일치 14, 불확실 1 |
+| 제거 검증 응답 27건 | 자동 회수 15, 관리자 확인 12 |
+| 요청 오류·시간 초과 | 0건 |
+| 분석 프레임 대비 요청 | 80/15,397(0.52%) |
+
+표 7은 보조 구간에서 장치가 생성한 사건과 외부 모델 요청을 정리한 것이다. 108개 사건 중 정책상 외부 모델이 필요한 등록과 제거 검증은 85건이었고, 이 중 5건은 원격 작업 한도를 넘어 요청 없이 확인 대상으로 저장되어 실제 요청은 80건(74.1%)이었다. 이동 7건과 로컬 근거가 충분한 제거 16건은 요청 없이 처리되었고, 요청 오류나 시간 초과는 없었다. 등록 요청 53건 중 1건은 응답 전에 관리자가 감지 제외하여 반영되지 않았다.
+
+사건 단위 호출률 74.1%는 모든 사건에 외부 모델을 호출하는 방식보다 요청을 25.9% 줄인 값이다. 이 비율은 실험 절차의 구성에 크게 좌우된다. 각 회차가 반드시 등록 1회를 포함하므로, 이동과 제거를 모두 장치에서 처리하더라도 호출률은 약 1/3 아래로 내려가지 않는다. 실제로는 제거 사건 47건 중 31건(66.0%)이 제거 검증으로 넘어갔고, 이동 실패가 제거와 새 등록으로 나뉘면서 등록 요청도 늘었다. 따라서 로컬 제거 판정의 근거를 보강하면 호출률을 더 낮출 여지가 있다. 반면 같은 구간의 분석 프레임 15,397장과 비교하면 요청은 80건(0.52%)으로, 분석 프레임마다 외부 모델을 호출하는 방식의 약 190분의 1이다.
+
+외부 모델의 방향 판단은 로컬 판정과 다를 때 자동 확정을 막는 역할도 하였다. 응답이 반영된 등록 52건 중 14건에서 모델은 변화 방향을 제거로 판단하여 새 물품으로 확정하지 않았고, 제거 검증 27건 중 12건은 모델이 물품이 남아 있다고 보거나(10건) 판단을 유보하여(2건) 자동 회수하지 않았다. 이러한 사건은 기록과 사진을 유지한 채 확인 필요 목록으로 옮겨졌다. 예를 들어 그림 6(a)에서 음료 팩을 리모컨 옆에 놓을 때 리모컨 영역도 함께 변해 제거 검증이 요청되었으나, 모델은 리모컨이 남아 있다고 판단하였고 리모컨은 실제로 보관판에 남아 있었다(그림 2(a)의 확인 필요 목록). 반대로 6-1절의 줄이어폰처럼 실제로 놓인 물품을 제거로 판단한 경우도 있었다. 보조 구간은 사건별 정답을 따로 기록하지 않았으므로 이러한 판단의 정확도는 산출하지 않으며, 이 결과는 로컬 판정과 모델 판단이 다른 사건을 자동으로 처리하지 않고 관리자 확인으로 남기는 설계가 필요하다는 근거로 해석한다.
+
+## 6-5 처리 시간과 처리 속도
+
+표 8은 보조 구간에서 측정한 처리 시간과 처리 속도이다. 마지막 움직임부터 물품 기록이 생성되기까지는 중앙값 4.74초(범위 4.53–5.01초)였다. 이 중 4.2초는 손이 빠진 뒤 장면 안정을 확인하기 위한 의도된 대기이므로, 정합·비교·저장에 걸린 시간은 약 0.5초이다. 기록 생성부터 외부 모델의 결과가 반영되기까지는 중앙값 4.20초였으나 최대 19.77초까지 길어졌다. 가장 긴 두 경우는 다른 원격 작업과 처리 시간이 겹친 경우로, 하나의 작업자가 요청을 차례로 처리하므로 사건이 몰리면 대기 시간이 더해진다. 손을 뗀 시점부터 관리자 화면에 이름과 분류가 표시되기까지는 중앙값 7.82초(범위 6.97–11.78초)였다.
+
+**표 8. 처리 시간과 처리 속도(보조 구간) / Table 8. Latency and throughput (auxiliary segment)**
+
+| 항목 | n | 중앙값 | 범위·비고 |
+|---|---|---|---|
+| 기록 지연 \(t_r-t_m\)(s) | 20 | 4.74 | 4.53–5.01 |
+| 인식 지연 \(t_a-t_r\)(s) | 52 | 4.20 | 2.21–19.77 |
+| 전체 지연 \(t_a-t_m\)(s) | 17 | 7.82 | 6.97–11.78 |
+| 분석 프레임률(fps) | 2,425 | 6.2 | 평균 6.0, 범위 3.9–7.1 |
+| 프레임 처리 시간(ms) | 2,425 | 97.3 | 평균 106.6, 95백분위 164.6 |
+
+감시 모듈의 분석 프레임률은 평균 6.0 fps로 설정 상한 7 fps보다 낮았고, 프레임당 처리 시간은 평균 106.6 ms였다. 이 구간에서 감시 모듈은 시간의 75.5%를 감시 상태로, 나머지를 움직임 이후의 대기·안정 확인·반영 대기 상태로 보냈다. CPU 사용률과 SoC 온도는 기록하지 못하였다. 1시간 무인 감시 후 장치가 뜨거워진 것이 관찰되었으므로, 장시간 운영에는 방열판이나 팬을 함께 사용하는 것이 바람직하다.
+
+## 6-6 판정 사례와 한계
+
+그림 6은 판정 사례이다. 그림 6(a)는 보조 구간 33번째 동작에서 음료 팩을 놓기 전후의 장면과 등록된 물품 이미지로, 외부 모델은 ‘두유 팩’, 음식으로 응답하여 보관 기한 1일이 적용되었다. 그림 6(b)는 이동 실패가 집중된 눕힌 머그컵이며, 그림 6(c)는 같은 시점의 확인 필요 목록이다. 머그컵은 제거 검증에서 모델이 물품이 남아 있다고 판단하여, 볼펜과 리모컨은 원격 작업 한도를 넘어 자동 회수 대신 관리자 확인으로 남았다.
+
+본 연구의 한계는 다음과 같다. 첫째, 한 장소, 한 대의 카메라, 한 명의 실험자와 10종의 물품으로 수행하였으므로 다른 설치 높이, 조명, 바닥과 물품으로 결과를 바로 일반화하기 어렵다. 둘째, 본 실험의 결과는 실험자가 화면을 보고 손으로 기록하였으며 독립된 평가자의 교차 확인은 없었다. 셋째, 무변화 조건의 반복 횟수, CPU 사용률과 온도를 기록하지 못하였고, 처리 시간과 호출 수는 본 실험이 아닌 보조 구간에서 측정하였다. 넷째, 단순 차영상이나 배경 차감 방법과의 비교와 처리 단계별 기여 분석을 수행하지 않았다. 다섯째, 외부 모델의 응답은 모델 갱신에 따라 달라질 수 있고 전체 장면 이미지에 사람이 포함될 수 있으므로, 실제 운영에서는 촬영 범위와 개인정보 보호 절차가 필요하다. 또한 안정 장면만 비교하므로 물품을 들었다가 같은 자리에 다시 놓은 행동은 기록되지 않으며, 여러 물품이 동시에 움직이는 경우는 평가하지 않았다.
+
+# Ⅶ. 결 론
+
+본 논문은 Raspberry Pi 4와 고정 카메라로 분실물 보관대의 상태 변화를 사건 단위로 감지하고, 의미 판단이 필요한 사건에만 외부 시각언어모델을 적용하는 분실물 관리 시스템을 제안하였다. 안정 장면 상태기계, 영상 정합, 조명 보정과 기존 물품 대응으로 등록·이동·제거를 구분하고, 새 물품과 모호한 제거에만 전후 이미지 최대 4장과 JSON 스키마 응답 형식으로 의미 정보를 보완하였다. 관찰을 원격 응답보다 먼저 저장하고 기준에 맞지 않는 응답은 관리자 확인으로 남겨, 외부 모델의 지연과 오류가 기록 손실로 이어지지 않게 하였다.
+
+실제 보관대에서 물품 10종으로 등록·이동·제거를 각 10회 반복한 결과, 얇은 줄이어폰을 제외한 9종의 270회 중 90.4%가 올바르게 기록되었고 외부 모델의 이름·분류 정확도는 95.2%였다. 손을 뗀 뒤 이름이 표시되기까지는 중앙값 7.8초가 걸렸으며, 장치는 초당 약 6프레임을 분석하면서 관리 서비스를 함께 운영하였다. 손·조명·그림자 변화와 1시간 무인 감시에서는 잘못된 기록이 관찰되지 않았다. 반면 굴러서 외형이 바뀌는 물품의 이동, 바닥과 대비가 작은 얇은 물품, 화각 가장자리에서는 실패가 집중되었다.
+
+향후에는 제거와 등록이 함께 생긴 경우 두 영역을 외부 모델로 비교해 같은 물품의 이동을 복원하고, 얇은 물품을 위해 대비가 높은 바닥판과 적응적 최소 면적을 검토한다. 또한 여러 장소와 평가자로 실험을 확장하여 무변화 조건의 반복 횟수와 장치 온도를 함께 기록하고, 배경 차감 방법과의 비교를 수행할 계획이다.
 
 # 참고문헌
 
 [1] H. Jeong, H. Yoo, T. You, Y. Kim, and Y. H. Ahn, “Lost and Found Registration and Inquiry Management System for User-dependent Interface using Automatic Image Classification and Ranking System based on Deep Learning,” Journal of Convergence Security, Vol. 18, No. 4, pp. 19-25, 2018. https://www.kci.go.kr/kciportal/ci/sereArticleSearch/ciSereArtiView.kci?sereArticleSearchBean.artiId=ART002401814
 
-[2] H. S. Jang et al., “Implementation of a Deep OC-SORT based Multi-Object Tracking and Matching Algorithm for Managing Lost Items and Owners in Trains,” Journal of Korean Institute of Information Technology, Vol. 23, No. 2, pp. 165-176, 2025. https://doi.org/10.14801/jkiit.2025.23.2.165
+[2] H. S. Jang et al., “Implementation of a Deep OC-SORT based Multi-Object Tracking and Matching Algorithm for Managing Lost Items and Owners in Trains,” Journal of Korean Institute of Information Technology, Vol. 23, No. 2, pp. 165-176, February 2025. https://doi.org/10.14801/jkiit.2025.23.2.165
 
-[3] 양형준, 최규상, “히스토그램 평활화 및 윤곽선 필터링을 활용한 차량 내 분실물 감지 시스템,” 한국정보기술학회 하계종합학술대회 논문집, pp. 1221-1224, 2025. https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12288829
+[3] H. J. Yang and K. S. Choi, “In-Vehicle Lost Item Detection System Using Histogram Equalization and Contour Filtering,” in Proceedings of the Korean Institute of Information Technology Summer Conference, pp. 1221-1224, 2025. (in Korean) https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12288829
 
-[4] K. Toyama, J. Krumm, B. Brumitt, and B. Meyers, “Wallflower: Principles and Practice of Background Maintenance,” Proceedings of ICCV, Vol. 1, pp. 255-261, 1999. https://doi.org/10.1109/ICCV.1999.791228
+[4] K. Toyama, J. Krumm, B. Brumitt, and B. Meyers, “Wallflower: Principles and Practice of Background Maintenance,” in Proceedings of the 7th IEEE International Conference on Computer Vision, Vol. 1, pp. 255-261, September 1999. https://doi.org/10.1109/ICCV.1999.791228
 
-[5] Z. Zivkovic, “Improved Adaptive Gaussian Mixture Model for Background Subtraction,” Proceedings of the 17th International Conference on Pattern Recognition, Vol. 2, pp. 28-31, 2004. https://doi.org/10.1109/ICPR.2004.1333992
+[5] Z. Zivkovic, “Improved Adaptive Gaussian Mixture Model for Background Subtraction,” in Proceedings of the 17th International Conference on Pattern Recognition, Vol. 2, pp. 28-31, August 2004. https://doi.org/10.1109/ICPR.2004.1333992
 
-[6] M. Satyanarayanan, “The Emergence of Edge Computing,” Computer, Vol. 50, No. 1, pp. 30-39, 2017. https://doi.org/10.1109/MC.2017.9
+[6] M. Satyanarayanan, “The Emergence of Edge Computing,” Computer, Vol. 50, No. 1, pp. 30-39, January 2017. https://doi.org/10.1109/MC.2017.9
 
-[7] D. Kang, J. Emmons, F. Abuzaid, P. Bailis, and M. Zaharia, “NoScope: Optimizing Neural Network Queries over Video at Scale,” Proceedings of the VLDB Endowment, Vol. 10, No. 11, pp. 1586-1597, 2017. https://doi.org/10.14778/3137628.3137664
+[7] D. Kang, J. Emmons, F. Abuzaid, P. Bailis, and M. Zaharia, “NoScope: Optimizing Neural Network Queries over Video at Scale,” Proceedings of the VLDB Endowment, Vol. 10, No. 11, pp. 1586-1597, August 2017. https://doi.org/10.14778/3137628.3137664
 
-[8] Y. Li, A. Padmanabhan, P. Zhao, Y. Wang, G. H. Xu, and R. Netravali, “Reducto: On-Camera Filtering for Resource-Efficient Real-Time Video Analytics,” Proceedings of ACM SIGCOMM, pp. 359-376, 2020. https://doi.org/10.1145/3387514.3405874
+[8] Y. Li, A. Padmanabhan, P. Zhao, Y. Wang, G. H. Xu, and R. Netravali, “Reducto: On-Camera Filtering for Resource-Efficient Real-Time Video Analytics,” in Proceedings of the ACM SIGCOMM 2020 Conference, pp. 359-376, August 2020. https://doi.org/10.1145/3387514.3405874
 
-[9] J. Li, D. Li, S. Savarese, and S. Hoi, “BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models,” Proceedings of ICML, PMLR, Vol. 202, pp. 19730-19742, 2023. https://proceedings.mlr.press/v202/li23q.html
+[9] J. Li, D. Li, S. Savarese, and S. Hoi, “BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models,” in Proceedings of the 40th International Conference on Machine Learning, PMLR Vol. 202, pp. 19730-19742, July 2023. https://proceedings.mlr.press/v202/li23q.html
 
-[10] Raspberry Pi Ltd., “The Picamera2 Library,” [Online]. Available: https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf (accessed Sep. 15, 2026).
+[10] Raspberry Pi Ltd. The Picamera2 Library [Internet]. Available: https://datasheets.raspberrypi.com/camera/picamera2-manual.pdf
 
-[11] SQLite, “Write-Ahead Logging,” [Online]. Available: https://www.sqlite.org/wal.html (accessed Sep. 15, 2026).
+[11] SQLite. Write-Ahead Logging [Internet]. Available: https://www.sqlite.org/wal.html
 
-[12] OpenAI, “Create a Model Response,” [Online]. Available: https://developers.openai.com/api/reference/cli/resources/responses/methods/create (accessed Sep. 15, 2026).
+[12] OpenAI. Create a Model Response [Internet]. Available: https://developers.openai.com/api/reference/cli/resources/responses/methods/create
 
-[13] Google, “Image Understanding,” Gemini API Documentation, [Online]. Available: https://ai.google.dev/gemini-api/docs/image-understanding (accessed Sep. 15, 2026).
+[13] Google. Image Understanding, Gemini API Documentation [Internet]. Available: https://ai.google.dev/gemini-api/docs/image-understanding
 
-[14] J. Shi and C. Tomasi, “Good Features to Track,” Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 593-600, 1994. https://doi.org/10.1109/CVPR.1994.323794
+[14] J. Shi and C. Tomasi, “Good Features to Track,” in Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 593-600, June 1994. https://doi.org/10.1109/CVPR.1994.323794
 
-[15] B. D. Lucas and T. Kanade, “An Iterative Image Registration Technique with an Application to Stereo Vision,” Proceedings of the 7th International Joint Conference on Artificial Intelligence, pp. 674-679, 1981. https://publications.ri.cmu.edu/an-iterative-image-registration-technique-with-an-application-to-stereo-vision-ijcai
+[15] B. D. Lucas and T. Kanade, “An Iterative Image Registration Technique with an Application to Stereo Vision,” in Proceedings of the 7th International Joint Conference on Artificial Intelligence, pp. 674-679, August 1981. https://publications.ri.cmu.edu/an-iterative-image-registration-technique-with-an-application-to-stereo-vision-ijcai
 
-[16] M. A. Fischler and R. C. Bolles, “Random Sample Consensus: A Paradigm for Model Fitting with Applications to Image Analysis and Automated Cartography,” Communications of the ACM, Vol. 24, No. 6, pp. 381-395, 1981. https://doi.org/10.1145/358669.358692
+[16] M. A. Fischler and R. C. Bolles, “Random Sample Consensus: A Paradigm for Model Fitting with Applications to Image Analysis and Automated Cartography,” Communications of the ACM, Vol. 24, No. 6, pp. 381-395, June 1981. https://doi.org/10.1145/358669.358692
 
-[17] E. Rublee, V. Rabaud, K. Konolige, and G. Bradski, “ORB: An Efficient Alternative to SIFT or SURF,” 2011 International Conference on Computer Vision, pp. 2564-2571, 2011. https://doi.org/10.1109/ICCV.2011.6126544
+[17] E. Rublee, V. Rabaud, K. Konolige, and G. Bradski, “ORB: An Efficient Alternative to SIFT or SURF,” in Proceedings of the 2011 International Conference on Computer Vision, pp. 2564-2571, November 2011. https://doi.org/10.1109/ICCV.2011.6126544
 
-[18] E. B. Wilson, “Probable Inference, the Law of Succession, and Statistical Inference,” Journal of the American Statistical Association, Vol. 22, No. 158, pp. 209-212, 1927. https://doi.org/10.1080/01621459.1927.10502953
+[18] E. B. Wilson, “Probable Inference, the Law of Succession, and Statistical Inference,” Journal of the American Statistical Association, Vol. 22, No. 158, pp. 209-212, June 1927. https://doi.org/10.1080/01621459.1927.10502953

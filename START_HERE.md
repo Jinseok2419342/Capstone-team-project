@@ -8,10 +8,10 @@
 
 | 항목 | 상태 |
 |---|---|
-| **최종보고 발표 자료** (11/03, 시연 포함 10분) | **완성.** [Re:Found 최종보고 덱](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B)(25장)에서 PDF로 내려받아 발표합니다. 원본·그림은 [최종보고 발표 자료](docs/presentation/final/README.md) |
+| **최종보고 발표 자료** (11/03, 시연 포함 10분) | **완성.** 발표 파일은 [최종 PDF](docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf)(25장, 10/26 덱에서 내려받은 것). 편집은 [Re:Found 최종보고 덱](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B), 원본·그림은 [최종보고 발표 자료](docs/presentation/final/README.md) |
 | **시연** (10/27 연습, 11/03 발표) | [시연 준비](docs/presentation/FINAL_DEMO_GUIDE.md) 한 장만 보면 됩니다. 10/27 연습 때 백업 영상을 녹화합니다 |
 | **10월 25일 실험** | **완료.** [10/25 실험 결과](docs/paper/RESULTS_2026-10-25.md) — 놓기·옮기기·치우기 270번 중 244번(90.4%), AI 이름·분류 84번 중 80번(95.2%), 손을 뗀 뒤 이름까지 7.8초 |
-| **논문** | 실측 결과를 원고에 넣는 단계입니다([논문 안내](docs/paper/README.md)) |
+| **논문** | **결과 반영 완료(10/26).** JDCS 형식 점검·수정 후 [원고 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) 9쪽. 남은 일은 학회 HWP 양식으로 옮기기와 투고 전 확인입니다([개정 상태](docs/paper/REVISION_STATUS.md)) |
 | 개발 중간보고 (10/13) | 완료. [최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) |
 
 남은 일정: **10/27 최종보고 연습, 11/03 최종보고**, 11/10 본론, 11/17 팀논문, 11/24 최종논문 발표.
@@ -22,7 +22,7 @@
 
 | 할 일 | 먼저 열 파일 | 남은 작업 |
 |---|---|---|
-| **논문 결과 반영** | [논문 안내](docs/paper/README.md) · [10/25 실험 결과](docs/paper/RESULTS_2026-10-25.md) · [2단 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 결과를 원고에 넣고 방법 절을 실제 실험 방식에 맞게 수정 → PDF 재생성 → HWP 이식 |
+| **논문 마무리·투고** | [논문 안내](docs/paper/README.md) · [개정 상태(형식 점검·투고 전 확인)](docs/paper/REVISION_STATUS.md) · [2단 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 투고 전 확인 항목에 답하기 → 원고 수정 → 학회 HWP 양식으로 옮기기 |
 | **최종보고 연습·발표** | [시연 준비](docs/presentation/FINAL_DEMO_GUIDE.md) · [최종보고 발표 자료](docs/presentation/final/README.md) | 10/27 연습(백업 영상 녹화, 시간 확인) → 고칠 점이 있으면 덱 수정 → 11/03 발표 |
 | **Pi 시연·실기 확인** | [핫스팟 실행·종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 새 구성의 전원 재인가·자동 연결 등 확인 |
 | **Pi API 키 교체·Gemini 전환** | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
@@ -32,7 +32,7 @@ Pi 관련 작업(시연·실기·API 키)은 Claude가 Pi에 직접 접속할 �
 
 다음 AI에는 아래처럼 전달하면 됩니다.
 
-> START_HERE.md와 AGENTS.md 맨 위 절을 읽어줘. 최종보고 발표 자료와 10/25 실험은 끝났어. 논문 결과 반영·최종보고 연습·Pi 시연 중 내가 선택한 작업부터 이어가고, 아직 선택하지 않았다면 선택지를 먼저 보여줘. 없는 사진·실험값은 만들지 마.
+> START_HERE.md와 AGENTS.md 맨 위 절을 읽어줘. 최종보고 발표 자료, 10/25 실험, 논문 결과 반영은 끝났어. 논문 HWP 이식·최종보고 연습·Pi 시연 중 내가 선택한 작업부터 이어가고, 아직 선택하지 않았다면 선택지를 먼저 보여줘. 없는 사진·실험값은 만들지 마.
 
 ## 확정한 시연 실행·종료 순서
 
@@ -93,7 +93,7 @@ PC 프로젝트의 `.venv`는 9월 22일 사용자가 삭제했습니다. 발표
 | `dist/refound-pi.tar.gz` | 새 Pi에 복사할 배포 파일. `.sha256`도 함께 사용. **Git에 포함되지 않아** PC에만 있으며, 없으면 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만듦 |
 | `docs/` | **모든 문서와 완성본.** 전체 지도는 [문서 인덱스](docs/README.md) |
 | `docs/guides/` | 설치·시연·네트워크 안내. 매번 쓰는 핫스팟 실행·종료 안내도 여기 있음 |
-| `docs/paper/` | 논문 PDF·원고·10/25 실험 결과·실험 안내·결과 입력표·참고문헌·PDF 생성기 |
+| `docs/paper/` | 논문 PDF·원고·10/25 실험 결과·원고 숫자 출처표·개정 상태·실험 안내·참고문헌·PDF·그림 생성기 |
 | `docs/presentation/` | 최종보고 발표 자료(`final/` — 덱 원본·그림), 시연 준비, 중간보고 최종 PDF, 논문 전반부 발표 PPTX, 도식, 8월 발표 초안 |
 | `docs/brochure/` | 졸업작품집 브로셔 최종본(HWP·PDF). 완료된 작업 |
 | `docs/development/`, `docs/handoff/` | 9월 개발 개선 기록, 다음 AI 세션용 인계 |
@@ -102,4 +102,4 @@ PC 프로젝트의 `.venv`는 9월 22일 사용자가 삭제했습니다. 발표
 | `data/` | 실제 DB·사진. **Git에 포함되지 않음**(PC·Pi에만 있음). 정리 대상으로 지우지 않음 |
 | `AGENTS.md` | 다음 AI 세션이 읽는 지침. 사용자용 설명서는 이 문서 |
 
-분야별 안내는 [문서 인덱스](docs/README.md), 다음 AI의 누적 기록은 [작업 인계](docs/handoff/SESSION_HANDOFF.md)에 있습니다. 다음 작업이 정해졌다면 “논문 결과 반영”, “최종보고 연습”, “Pi 시연”처럼 작업 이름을 함께 말하면 됩니다.
+분야별 안내는 [문서 인덱스](docs/README.md), 다음 AI의 누적 기록은 [작업 인계](docs/handoff/SESSION_HANDOFF.md)에 있습니다. 다음 작업이 정해졌다면 “논문 HWP 이식”, “최종보고 연습”, “Pi 시연”처럼 작업 이름을 함께 말하면 됩니다.
