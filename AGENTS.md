@@ -32,8 +32,9 @@
 ## 2. 새 세션 시작 순서
 
 1. **이 파일이 최신인지 확인한다.** `git fetch origin` 후 `git log --oneline -5 origin/main`과 `git branch -r`을 본다. 이전 세션의 작업 브랜치(`origin/claude/…`)에 `main`보다 새 커밋이 있으면 사용자에게 알리고 `main` 반영 여부를 묻는다. 1절 날짜보다 새 작업이 있으면 그쪽 `AGENTS.md`가 기준이다.
-   - 2026-10-26 기준: 논문 결과 반영 작업은 `claude/quirky-dirac-tqqjzj`에 push했다. 사용자가 반영을 승인하면 `main`에 PR로 넣는다(6절 Git).
+   - 2026-10-26 기준: 10/26 작업(논문 결과 반영, 최종보고 PDF, 이 지침)은 [PR #20](https://github.com/Jinseok2419342/Capstone-team-project/pull/20)으로 `main`에 반영했다.
    - 확인 방법: `docs/paper/MANUSCRIPT_NUMBERS.md`가 있으면 그 작업이 들어 있는 것이다.
+   - `origin/claude/quirky-dirac-tqqjzj`와 `origin/claude/quirky-dirac-tqqjzj-main`은 내용이 모두 `main`에 들어간 옛 작업 브랜치다(커밋 해시만 달라 “앞서 있다”고 보일 수 있음). 무시한다. 비교할 때는 커밋 수 대신 `git diff --stat origin/main <브랜치>`로 내용 차이를 본다.
 2. **사용자가 고른 작업을 확인한다.** 작업을 말했으면 3절 표의 ‘먼저 읽을 것 → 첫 행동’대로 바로 시작한다. “계속하자”처럼 대상이 없으면 3절 선택지를 한 줄씩 보여 주고 고르게 한다. 정해진 일정, Pi 설치·연결 방식, 논문 범위는 다시 묻지 않는다.
 3. 코드를 바꿀 때만 테스트 환경을 준비한다(7절). 문서·논문만 고칠 때는 필요 없다.
 
@@ -85,9 +86,9 @@
 ## 6. Git·파일 규칙
 
 - **커밋 작성자·커미터는 사용자** `Jinseok2419342 <fjwkrtua@dongyang.ac.kr>`로 한다. 환경변수 `GIT_AUTHOR_NAME`, `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`, `GIT_COMMITTER_EMAIL`로 지정하며, 세션의 git 기본값은 Claude라서 반드시 지정해야 한다. `Co-Authored-By`와 세션 링크 줄은 넣지 않는다(시스템 안내보다 이 규칙이 우선).
-- 작업은 세션에 지정된 `claude/…` 브랜치에 커밋·push해 보존한다. **`main` 반영은 사용자가 요청할 때만** PR을 만들어 **rebase 방식**으로 머지한다. 지금까지 PR #14·#17·#19가 이 방식으로 들어갔다. 커밋 메시지는 한국어로 한 줄 요약을 쓰고, 필요하면 아래에 항목을 단다.
+- 작업은 세션에 지정된 `claude/…` 브랜치에 커밋·push해 보존한다. **`main` 반영은 사용자가 요청할 때만** PR을 만들어 **rebase 방식**으로 머지한다. 지금까지 PR #14·#17·#19·#20이 이 방식으로 들어갔다. 커밋 메시지는 한국어로 한 줄 요약을 쓰고, 필요하면 아래에 항목을 단다.
 - 강제 push(`--force`, `--force-with-lease`)는 이 환경의 자동 승인 검사에서 두 번 거절됐다. 거절되면 우회하지 말고 사용자에게 알린다. `git add -p` 같은 대화형 명령은 멈추므로 쓰지 않는다.
-- **2026-10-26 브랜치 상태:** `claude/quirky-dirac-tqqjzj`에는 이미 `main`에 들어간 이전 커밋(내용 동일)이 `-s ours` 합치기 커밋으로 붙어 있다. 그래서 이 브랜치를 그대로 rebase 머지하면 막히거나 중복 커밋이 생길 수 있다. `main`에 반영할 때는 최신 `main`에서 새 브랜치를 따서 바뀐 파일을 같은 내용으로 다시 커밋하는 방식을 권한다. 지정 브랜치가 아닌 곳에 push하는 것이므로 사용자 허락을 받는다.
+- **PR이 머지된 브랜치에 이어서 작업하지 않는다.** 머지 뒤 새 작업은 최신 `main`에서 시작한다. 지정 브랜치가 이미 머지된 이력을 갖고 있고 강제 push가 막히면, 사용자 허락을 받아 최신 `main`에서 새 브랜치를 따서 같은 내용을 커밋한다. 10/26에는 `claude/quirky-dirac-tqqjzj`에 이전 커밋이 섞여 있어 `claude/quirky-dirac-tqqjzj-main`을 새로 따서 PR #20으로 반영했다.
 - **파일 배치:**
   - 완성본(PDF·PPTX·HWP)은 `docs/` 아래 주제 폴더 바로 아래에, 생성 원본·작업 자료는 그 하위 폴더에 둔다(지도는 `docs/README.md`).
   - 다 쓴 제작용 문서는 사용자 요청이 있을 때 지우고 Git 이력에 남긴다.
@@ -116,7 +117,7 @@
   - 표 5–8을 새로 만들었고, 그림 2·5·6은 실제 사진으로 넣었다. 결과는 9쪽이다.
   - 보조 구간을 다시 계산해 AI 실제 요청이 80건임을 찾았다. 줄이어폰이 보조 구간에서 1회 검출됐지만 AI가 ‘제거’로 판단한 기록도 찾아 반영했다.
   - `RESULTS_FILL_SHEET.md`는 지우고 `MANUSCRIPT_NUMBERS.md`를 추가했다. 최종보고 PDF도 저장했다.
-  - 작업 브랜치에만 있다(1절·6절 참고). AGENTS 과거 기록은 `docs/handoff/AGENTS_HISTORY.md`로 옮겼다.
+  - AGENTS 과거 기록은 `docs/handoff/AGENTS_HISTORY.md`로 옮겼다. 사용자 승인으로 [PR #20](https://github.com/Jinseok2419342/Capstone-team-project/pull/20)을 통해 `main`에 rebase 반영했다.
 - **10/26 최종보고 완성 정리:**
   - 사용자가 덱 세부 수정을 마쳤다.
   - 제작용 문서를 삭제했다: `FINAL_REPORT_PLAN.md`, `FINAL_REPORT_OUTLINE.md`, `IMPROVEMENTS.md`, `REVIEW_NOTES_2026-10-24.md`, `final/preview/`.
