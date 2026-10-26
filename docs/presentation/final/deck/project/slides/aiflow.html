@@ -1,54 +1,52 @@
 <section id="aiflow" data-transition="fade" style="background:#F3F6F7;color:#12303F;font-family:'Noto Sans KR', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:700;color:#0F7C7C;letter-spacing:1px">2.1 입력 → AI 처리 → 결과 출력</p>
-<h2 style="font-size:72px;font-weight:800;line-height:1.15;letter-spacing:-1px;color:#12303F">AI에게는 사진 네 장만 보여 줍니다.</h2>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C;letter-spacing:1px">2.1 입력 → AI 처리 → 결과 출력</p>
+<h2 style="white-space:nowrap;font-size:72px;font-weight:800;line-height:1.15;letter-spacing:-1px;color:#12303F">AI에게는 사진 네 장만 보여 줍니다.</h2>
 <div style="flex:1"></div>
 <div style="display:flex;gap:24px;align-items:center">
 <div style="width:656px;display:flex;flex-direction:column;gap:12px">
-<p style="font-size:24px;font-weight:700;color:#0F7C7C">입력 · 실제 장면 (10/25, 33번 시도)</p>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C">입력 · 실제 장면 (10/25, 33번 시도)</p>
 <div style="display:grid;grid-template-columns:320px 320px;gap:16px">
 <div style="display:flex;flex-direction:column;gap:6px">
 <img src="/_blob/dd5686dfc5b399fbd9e259ca47a21903" alt="놓기 전 전체 장면: 볼펜과 리모컨" style="width:320px;height:180px;object-fit:cover;border-radius:12px">
-<p style="font-size:24px;color:#4E6670">① 전체 장면 · 전</p>
+<p style="white-space:nowrap;font-size:24px;color:#4E6670">① 전체 장면 · 전</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:6px">
 <img src="/_blob/8e2441a4c0cd8ce497eea89d72359578" alt="놓은 뒤 전체 장면: 음료 팩이 추가됨" style="width:320px;height:180px;object-fit:cover;border-radius:12px">
-<p style="font-size:24px;color:#4E6670">② 전체 장면 · 후</p>
+<p style="white-space:nowrap;font-size:24px;color:#4E6670">② 전체 장면 · 후</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:6px">
-<div style="width:320px;height:180px;display:flex;align-items:center;justify-content:center;background:#E3ECED;border:2px dashed #9DB5BA;border-radius:12px">
-<p style="font-size:24px;color:#4E6670">빈 바닥</p>
-</div>
-<p style="font-size:24px;color:#4E6670">③ 확대 · 전</p>
+<img src="/_blob/1ce659cff2f0e33a6b8bed4f2a1f4c17" alt="변화 영역 확대 · 놓기 전: 빈 바닥" style="width:320px;height:180px;object-fit:contain;background:#2E4A3C;border-radius:12px">
+<p style="white-space:nowrap;font-size:24px;color:#4E6670">③ 확대 · 전 (빈 바닥)</p>
 </div>
 <div style="display:flex;flex-direction:column;gap:6px">
-<img src="/_blob/7fd6f5f749b3eefe25ade73dd780d226" alt="변화 영역 확대: 음료 팩" style="width:320px;height:180px;object-fit:contain;background:#2E4A3C;border-radius:12px">
-<p style="font-size:24px;color:#4E6670">④ 확대 · 후</p>
+<img src="/_blob/7fd6f5f749b3eefe25ade73dd780d226" alt="변화 영역 확대 · 놓은 뒤: 음료 팩" style="width:320px;height:180px;object-fit:contain;background:#2E4A3C;border-radius:12px">
+<p style="white-space:nowrap;font-size:24px;color:#4E6670">④ 확대 · 후</p>
 </div>
 </div>
 </div>
 <x-shape kind="arrow-right" style="width:64px;height:32px;background:#0F7C7C"></x-shape>
-<div style="width:300px;display:flex;flex-direction:column;gap:10px;background:#12303F;border-radius:24px;padding:32px 28px">
-<p style="font-size:24px;font-weight:700;color:#6FCFC4">AI 처리</p>
-<h3 style="font-size:32px;font-weight:800;line-height:1.25;color:#F2F6F6">Gemini 3.5 Flash-Lite</h3>
-<p style="font-size:24px;line-height:1.4;color:#C5D8DB">규칙을 적은 프롬프트 + 정해진 답 형식(JSON 스키마)</p>
+<div style="width:320px;display:flex;flex-direction:column;gap:10px;background:#12303F;border-radius:24px;padding:32px 28px">
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#6FCFC4">AI 처리</p>
+<h3 style="white-space:nowrap;font-size:32px;font-weight:800;line-height:1.25;color:#F2F6F6">Gemini 3.5<br>Flash-Lite</h3>
+<p style="white-space:nowrap;font-size:24px;line-height:1.45;color:#C5D8DB">판단 규칙을 적은<br>프롬프트와<br>정해진 답 형식</p>
 </div>
 <x-shape kind="arrow-right" style="width:64px;height:32px;background:#0F7C7C"></x-shape>
 <div style="flex:1;display:flex;flex-direction:column;gap:12px">
-<p style="font-size:24px;font-weight:700;color:#0F7C7C">출력 · 실제 응답에서</p>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C">출력 · 실제 응답에서</p>
 <div style="display:flex;flex-direction:column;gap:2px;background:#0B1F28;border-radius:16px;padding:24px 28px">
-<p style="font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">{</p>
-<p style="font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">  "action": <span style="color:#6FCFC4">"added"</span>,</p>
-<p style="font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">  "name": <span style="color:#F2B49B">"두유 팩"</span>,</p>
-<p style="font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">  "category": <span style="color:#6FCFC4">"food"</span>,</p>
-<p style="font-family:'Courier New', monospace;font-size:24px;color:#7F9AA2">  "description": …,</p>
-<p style="font-family:'Courier New', monospace;font-size:24px;color:#7F9AA2">  "confidence": …</p>
-<p style="font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">}</p>
+<p style="white-space:nowrap;font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">{</p>
+<p style="white-space:nowrap;font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">  "action": <span style="color:#6FCFC4">"added"</span>,</p>
+<p style="white-space:nowrap;font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">  "name": <span style="color:#F2B49B">"두유 팩"</span>,</p>
+<p style="white-space:nowrap;font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">  "category": <span style="color:#6FCFC4">"food"</span>,</p>
+<p style="white-space:nowrap;font-family:'Courier New', monospace;font-size:24px;color:#7F9AA2">  "description": …,</p>
+<p style="white-space:nowrap;font-family:'Courier New', monospace;font-size:24px;color:#7F9AA2">  "confidence": …</p>
+<p style="white-space:nowrap;font-family:'Courier New', monospace;font-size:24px;color:#C5D8DB">}</p>
 </div>
-<p style="font-size:24px;font-weight:700;color:#12303F;background:#DDF1EE;border-radius:999px;padding:8px 20px">→ 음식 · 보관 1일 자동 설정</p>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#12303F;background:#DDF1EE;border-radius:999px;padding:8px 20px">→ 음식 · 보관 1일 자동 설정</p>
 </div>
 </div>
 <div style="flex:1"></div>
-<p style="position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#4E6670">실제 실험 사진과 응답의 일부(물품명·분류) · 나머지 항목은 생략 · 확대 사진은 변화 영역만 잘라 낸 것</p>
-<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#4E6670">08</p>
-<aside>약 25초. 실제 실험 장면이다. “음료 팩을 놓으면, 놓기 전과 후의 전체 장면, 그리고 바뀐 부분만 확대한 사진을 AI에 보냅니다. 전체 장면으로 무엇이 바뀌었는지, 확대 사진으로 무엇인지 보게 합니다. Gemini는 정해진 형식으로 ‘두유 팩, 음식’이라고 답했고, 시스템이 보관 기한 1일을 자동으로 붙였습니다.” 응답 화면의 다른 필드 값은 보여 주지 않는다(가리지 않은 값만 실제).</aside>
+<p style="white-space:nowrap;position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#4E6670">실제 실험 사진과 응답의 일부(물품명 · 분류) · 나머지 항목은 생략 · 확대 사진은 바뀐 영역만 잘라 낸 것</p>
+<p style="white-space:nowrap;position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#4E6670">08</p>
+<aside>약 25초. 실제 실험 장면이다. “음료 팩을 놓으면, 놓기 전과 후의 전체 장면, 그리고 바뀐 자리만 확대한 전후 사진, 이렇게 네 장을 AI에 보냅니다. 전체 장면으로 무엇이 바뀌었는지, 확대 사진으로 무엇인지 보게 합니다. Gemini는 정해진 형식으로 ‘두유 팩, 음식’이라고 답했고, 시스템이 보관 기한 1일을 자동으로 붙였습니다.” 응답의 다른 필드 값은 보여 주지 않는다(보이는 값만 실제).</aside>
 </section>
