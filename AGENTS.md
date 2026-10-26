@@ -35,7 +35,7 @@
 1. **이 파일이 최신인지 확인한다.** `git fetch origin` 후 `git log --oneline -5 origin/main`과 `git branch -r`을 본다. 이전 세션의 작업 브랜치(`origin/claude/…`)에 `main`보다 새 커밋이 있으면 사용자에게 알리고 `main` 반영 여부를 묻는다. 1절 날짜보다 새 작업이 있으면 그쪽 `AGENTS.md`가 기준이다.
    - 2026-10-26 기준: 10/26 작업(논문 결과 반영, 최종보고 PDF, 이 지침)은 [PR #20](https://github.com/Jinseok2419342/Capstone-team-project/pull/20)으로 `main`에 반영했다.
    - 확인 방법: `docs/paper/MANUSCRIPT_NUMBERS.md`가 있으면 그 작업이 들어 있는 것이다.
-   - `origin/claude/quirky-dirac-tqqjzj`와 `origin/claude/quirky-dirac-tqqjzj-main`은 내용이 모두 `main`에 들어간 옛 작업 브랜치다(커밋 해시만 달라 “앞서 있다”고 보일 수 있음). 무시한다. 비교할 때는 커밋 수 대신 `git diff --stat origin/main <브랜치>`로 내용 차이를 본다.
+   - `origin/claude/quirky-dirac-tqqjzj`로 시작하는 브랜치들(`…-main`, `…-docs` 포함)은 내용이 모두 `main`에 들어간 옛 작업 브랜치다(커밋 해시만 달라 “앞서 있다”고 보일 수 있음). 무시한다. 비교할 때는 커밋 수 대신 `git diff --stat origin/main <브랜치>`로 내용 차이를 본다.
 2. **사용자가 고른 작업을 확인한다.** 작업을 말했으면 3절 표의 ‘먼저 읽을 것 → 첫 행동’대로 바로 시작한다. “START_HERE.md, AGENTS.md 보고 시작하자”, “계속하자”처럼 대상이 없으면 1절을 3–5줄로 요약(끝난 것·남은 일정·사용자가 할 일)한 뒤 3절 선택지를 한 줄씩 보여 주고 고르게 한다. 정해진 일정, Pi 설치·연결 방식, 논문 범위는 다시 묻지 않는다.
 3. 코드를 바꿀 때만 테스트 환경을 준비한다(7절). 문서·논문만 고칠 때는 필요 없다.
 
