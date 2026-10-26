@@ -1,44 +1,42 @@
 # Re:Found 작업 인계 및 재개 지침
 
-## 최종보고 준비 정리 — 2026-10-24 (최종보고·실험 작업은 이 절이 최우선)
-
-- **요청:** 사용자가 최종보고 형식(11/03, 시연 포함 10분, 생성형 AI 그림 다수 — 원문 `docs/presentation/FINAL_REPORT_OUTLINE.md`)을 주고, 논문 실측까지 한 번에·가장 짧게 끝나도록 무엇을 어떻게 채우고 실험할지 정리를 요청했다. **발표 자료는 아직 만들지 말라고 했다.** 그림은 Claude가 프롬프트를 주면 사용자가 GPT로 생성해 첨부하고 Claude가 각 장에 넣는 방식을 제안했고, 사용자는 이 채팅에서 ‘/design’ 같은 방식으로 만들 것 같다고 했다(제작 도구는 미확정).
-- **결과물:** `docs/presentation/FINAL_REPORT_PLAN.md` — 형식 순서의 14장 구성안(시간 배분), 2.2 AI 활용 설명, AI/일반 기능 구분표, 숫자별 출처, 측정 필요성 판단(유지·추가·제외), 그림 원칙과 프롬프트 9개(`img-01-cover`…`img-09-thanks`, 글자 없는 그림만 GPT, 글자·도식·차트는 Claude), 1학기 기획서 8개 기능 대비 구현 상태 초안(산정 제안 81%, 사용자 확인 필요), 시연 3분 대본, 할 일 순서, **확인 질문 4개(실험일, 제작 도구, 중간보고 피드백, SMTP)**. 답을 받기 전에는 슬라이드 제작을 시작하지 않는다.
-- **실험 도우미 확장(노트북 전용, Pi 변경 없음):** `experiments/live_session.py`·`trial_report.py`에 시연 리허설·녹화 안내와 같은 ID 확인, 시도별 전·후 장면(`scenes/`, `/camera/stream`에서 한 장), 움직임 종료→기록 시간(`last_motion_at`와 활동 `created_at`, 둘 다 Pi 시계), 실제 Pi API 관리 기능 14단계 점검(`FunctionChecker`, 마지막에 원래 이름·기한으로 복구), 장비 질문 6개와 모델·카메라 설정 기록(`env.json`, 메일 설정은 저장 안 함), 캡처 시점 안내, `final_report_values.md`(1학기 목표 10초·85%·30% 대비 포함), `--demo-check`를 추가했다. 리허설 활동은 `first_activity_id`로 결과표에서 뺀다. 실험 안내 `docs/paper/EXPERIMENT_GUIDE.md`를 새 흐름으로 고쳤다.
-- **Pi에 새 소프트웨어 불필요:** 앱 코드는 9/30 이후 변경 없음(9/22 설치본과 동일), `monitor_pi_resources.py`·`experiments/resources.py`는 9/22 배포 파일에 포함(9/30 대조 기록). 노트북은 최신 폴더 + Python 3.11 이상만.
-- **검증:** 클라우드에서 Python 290개 실행(289 통과·1 건너뜀, 후속 작업 후), Node 37개 통과. 관리 기능 점검은 실제 FastAPI 라우트+격리 DB, 도우미 전체 흐름과 `--demo-check`는 HTTP 가짜 Pi로 끝까지 실행, MJPEG 한 장 받기는 uvicorn 실제 스트림으로 확인. **실제 Pi·카메라·AI·SMTP에서는 미실행** — 실험 첫 단계 리허설이 시험 실행을 겸한다. 판정 대기 상수가 실제 장비에 안 맞으면 `live_session.py` 상단 상수를 조정한다.
-- **후속 요청(같은 날):** ①작업하며 다음 AI 검토자용 설명을 문서에 남길 것 → [`docs/handoff/REVIEW_NOTES_2026-10-24.md`](docs/handoff/REVIEW_NOTES_2026-10-24.md)(결정·이유·검증·의심할 곳·진행 기록)를 계속 갱신한다. ②발표는 중간보고와 달라도 되며 품질 우선, **키노트식 강조**(평범한 기능을 사용자 가치로 크게, 단 과장 금지선), 형식 항목 전부 포함 → 정리 문서 1-1절(장별 큰 문장, 기능→문장 표, 형식 누락 점검표, 디자인 방향). ③Pi 측정값을 다른 PC로 옮기는 쉬운 방법(사용자 예: Pi 웹 측정 모드) → **Pi를 바꾸지 않는 현 방식 유지**: 값은 처음부터 노트북에 저장, CPU·온도 CSV만 끝에 SSH로 회수, `u`(방금 시도 다시)·`q`(중간 마무리)·`paper-run-날짜.zip` 자동 생성·`--report-only --resume`(Pi 없이 재집계) 추가. 사용자 설명은 실험 안내의 ‘측정값은 어떻게 노트북으로 오나’·‘실수했을 때’.
-- **후속 2(같은 날):** 사용자 답 — **실험 10월 25일, 메일 안 함, 중간보고 피드백 없음**, 가장 쉬운 방식(노트북 도우미)으로 진행. 실험 안내를 한 장으로 단순화(노트북에 필요한 것 = Python 3.10+와 브랜치 zip 링크, 패키지 없음 — 3.10·3.11·패키지 없는 3.13에서 끝까지 실행 확인), **시연을 `docs/presentation/FINAL_DEMO_GUIDE.md`로 분리**(학교에서는 이 문서만, 확정 7단계 그대로, 손 1분 점검 → 시연 초기화 → 3분 대본 → 막혔을 때 표), GPT 그림에 짧은 한글 라벨 허용(실측 숫자는 금지). 계산 정의·대안 경로는 검토자 노트 9절로 옮김. 발표 자료는 학교 가기 전에 완성(이 채팅에서 제작 예정).
-- **10/25 실험 결과(1차):** 도우미는 38회까지 쓰고 중단 — 앞 시도의 늦은 AI 재확인·재배치 동작이 판정에 섞여 사용자가 **본 실험(10개 물품 × 10회 × 등록·이동·제거 = 300회)을 손으로 기록**했다. 도우미 자동 정확도(57.9%)는 쓰지 않는다. 발표·논문 숫자의 원본은 [`docs/paper/RESULTS_2026-10-25.md`](docs/paper/RESULTS_2026-10-25.md)(사용자 보고와 활동 기록 계산을 구분, ⟨확인⟩ 칸은 미확정). 분류 정답은 사용자가 처음 정한 기준을 유지한다(에어팟 등 사후 변경 안 함). CPU·온도 수치는 없다.
-- **발표 덱 완성(10/26, 연습판):** 사용자가 GPT 그림 9장을 주고 “제일 퀄리티 좋게, PDF로 할 것이니 PPT 규격은 신경 쓰지 말 것”을 요청. claude.ai Slides 아티팩트 [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) 25장(본문 23 + 부록 2)으로 만들었고 원본은 `docs/presentation/final/deck/`, 그림·캡처는 `docs/presentation/final/images/`(설명 `final/README.md`). 숫자는 `RESULTS_2026-10-25.md`만 사용, 구현률은 “6/8 · 완료6·부분1·미구현1 (환산 81%)”, AI 호출 절감은 25%로 **미달** 표기. 시연 문서의 ⟨ ⟩도 실측으로 채웠다. 다음: 사용자 검토 → 수정, 10/27 연습 때 백업 영상 녹화(10/25에는 리허설 녹화 없음), 논문 원고 반영.
-- **다음:** 10/25 실험 zip 수령 → 발표 자료 완성·시연 문서 ⟨ ⟩ 채우기·원고 반영. (요청 시) `main` 반영 → 사용자 실험 → `paper-run-…` 폴더·캡처·사진·그림 수령 → `final_report_values.md`로 발표 숫자, `paper_tables.md`로 원고(10월 11일 절 규칙) 반영. 결과·사진·진행률을 지어내지 않는다. 팀 역할 규칙(개발·구현은 장진석 전담, 권기원은 발표 자료 편집·시연 준비 지원)은 슬라이드에도 그대로 적용한다.
-
-## 중간보고 완료·정리 — 2026-10-12 (작업 선택은 이 절이 최우선)
+## 현재 상태 — 2026-10-26 (작업 선택은 이 절이 최우선)
 
 ### 처음 읽는 Claude를 위한 요약
 
-- **현재 상태:** 개발 중간보고(10/13)는 완료. 남은 큰 일정은 **10/27 최종보고 연습, 11/03 최종보고**, 이후 11/10 본론, 11/17 팀논문, 11/24 최종논문 발표다. 논문은 10월 11일 축소 개정 원고가 있고 **실험 전**이다. Pi는 Windows 핫스팟 + 노트북 SSH 터널로 시연한다.
+- **현재 상태:** 개발 중간보고(10/13) 완료. **최종보고(11/03) 발표 덱 완성**(10/26, 사용자가 마지막 세부 수정까지 함) — claude.ai Slides [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) 25장, 원본·그림은 `docs/presentation/final/`(설명 `final/README.md`). 발표는 덱에서 내려받은 PDF로 한다. **10/25 실험 완료** — 결과 원본은 `docs/paper/RESULTS_2026-10-25.md`(발표·논문 공통 숫자). 남은 일정은 **10/27 최종보고 연습, 11/03 최종보고**, 이후 11/10 본론, 11/17 팀논문, 11/24 최종논문 발표다. Pi는 Windows 핫스팟 + 노트북 SSH 터널로 시연한다.
 - **다음 작업은 사용자가 고른다.** 아래 ①–⑤ 중 사용자가 지정하면 그 항목의 ‘먼저 읽을 것 → 첫 행동’대로 바로 시작한다. “계속하자”처럼 대상이 없으면 ①–⑤를 한 줄씩 보여 주고 고르게 한다. 이미 정한 수업 일정·Pi 설치·연결 방식·논문 축소 방향을 다시 묻지 않는다.
-- **공통 금지:** 실험값·사진·AI 응답·진행률을 만들어 넣지 않는다. API 키·비밀번호·초대 링크를 채팅이나 문서에 받지 않는다. Claude는 Pi에 직접 접속할 수 없다. Pi·노트북 명령은 사용자가 실행하고 출력을 붙여 준다. 클라우드 세션에는 `.env`·`data/`·`dist/`가 없다(삭제가 아니라 Git 제외). **팀 역할:** 개발·구현은 장진석이 전담했다. 권기원은 발표 자료 편집과 시연 준비 지원만 했으므로 발표·논문·문서에 권기원의 개발·구현 참여를 쓰지 않는다.
+- **공통 금지:** 실험값·사진·AI 응답·진행률을 만들어 넣지 않는다. API 키·비밀번호·초대 링크를 채팅이나 문서에 받지 않는다. Claude는 Pi에 직접 접속할 수 없다. Pi·노트북 명령은 사용자가 실행하고 출력을 붙여 준다. 클라우드 세션에는 `.env`·`data/`·`dist/`가 없다(삭제가 아니라 Git 제외). **팀 역할:** 개발·구현은 장진석이 전담했다. 권기원은 발표 자료 점검·편집과 시연 준비 지원만 했으므로(최종 덱 표기: ‘발표 자료 점검 · 시연 준비 지원’) 발표·논문·문서에 권기원의 개발·구현 참여를 쓰지 않는다.
 
 | 선택지 | 먼저 읽을 것 | 첫 행동 |
 |---|---|---|
-| ① **논문 실험·결과 반영** | 위 10월 24일 절 → 아래 10월 11일 절 → `docs/paper/README.md` → `docs/paper/EXPERIMENT_GUIDE.md` | 실험 결과(`paper-run-…` 폴더·사진·장비 메모)를 받았는지 확인한다. 있으면 10월 11일 절의 ‘실험 결과를 받으면’대로 원고를 채우고 PDF를 다시 만든다. 없으면 본 실험 전 짧은 시험 실행(10월 11일 절의 `--out paper-test …`)부터 돕는다. |
-| ② **최종보고 발표 준비** | 위 10월 24일 절 → `docs/presentation/FINAL_REPORT_PLAN.md`(형식 원문 `FINAL_REPORT_OUTLINE.md`) → 중간보고 최종 PDF | 정리 문서 9절의 확인 질문 답을 받았는지 본다. 받았으면 그 답대로 슬라이드 뼈대를 만들고(숫자 자리는 비움), 실험 결과가 오면 `final_report_values.md`로 채운다. 형식·시간 요구는 이미 받았으므로 다시 묻지 않는다. |
+| ① **논문 결과 반영** | 아래 ‘10/25 실험’ → 10월 11일 절 → `docs/paper/README.md` → `docs/paper/RESULTS_2026-10-25.md` | 결과 문서 값으로 원고를 채운다. 원고는 ‘각 20회 + 무변화 40회, 도우미 자동 판정’ 전제라 **방법 절·표 5–8 형식을 실제 방식(손 기록, 물품 10개 × 10회 × 등록·이동·제거, 무변화는 관찰, CPU·온도 없음)에 맞게** 고친다 → 요약·6장·결론 → PDF 재생성 → HWP 이식 안내. 사진은 `docs/presentation/final/images/`(실험 장면·확대 사진·관리자 화면)에서 고른다. |
+| ② **최종보고 연습·발표** | `docs/presentation/FINAL_DEMO_GUIDE.md` → `docs/presentation/final/README.md` | 10/27 연습 지원(백업 영상 녹화 — 10/25에는 리허설 녹화 없음, 시간 확인). 덱 수정 요청이 오면 덱(아티팩트)을 고치고 `final/deck/project/`도 갱신한다. 덱 수정 규칙(padding ≤ 256px, 모든 글 nowrap + `<br>`, 목록 대신 점 + 글, 글은 칸 폭 90% 이내)은 `final/README.md`. 숫자는 결과 문서 값만 쓴다. |
 | ③ **Pi 시연·실기 확인** | `START_HERE.md`의 ‘확정한 시연 실행·종료 순서’ → `docs/guides/WINDOWS_HOTSPOT_GUIDE.md`(2–5절 실행·종료·오류, 8절 남은 시험) → `docs/guides/PI_ACCEPTANCE_CHECKLIST.md` → 아래 2026-09-30 Pi 절 | 시연 실행 안내인지, 남은 시험(핫스팟 자동 연결·정상 종료 후 전원 재인가·무선 단독 영상/AI 복귀)인지 확인한다. 확정된 실행 7단계·종료 4단계를 바꾸지 않는다. 결과는 사용자 출력·보고로만 실기 확인표에 기록한다. |
-| ④ **Pi API 키 교체·Gemini 전환** | `docs/guides/PI_API_KEY_CHANGE.md` | 안내 순서(Pi `.env` 수정 → 서비스 재시작 → 웹 제공자 선택 → 실물 확인)를 따른다. 키 값은 사용자가 Pi에서 직접 넣는다. |
+| ④ **Pi API 키 교체·Gemini 전환** | `docs/guides/PI_API_KEY_CHANGE.md` | 안내 순서(Pi `.env` 수정 → 서비스 재시작 → 웹 제공자 선택 → 실물 확인)를 따른다. 키 값은 사용자가 Pi에서 직접 넣는다. 10/25 실험은 Gemini 3.5 Flash-Lite로 했다. |
 | ⑤ **PC 자체 앱 실행** | `START_HERE.md`의 ‘PC 실행 환경 다시 준비하기’ | 처음이면 `setup.ps1` → `start.ps1`. 개발 테스트는 `requirements-dev.txt` 설치 후 실행한다. |
+
+### 10/25 실험
+
+- 결과(사용자 손 기록): 줄이어폰 제외 9개 물품 기준 등록 84/90, 이동 73/90, 제거 87/90(합계 244/270 = 90.4%), AI 이름·분류 80/84(95.2%), 손·조명·그림자·무인 1시간 잘못된 기록 0건(손·조명·그림자는 횟수 미기록). 시간(손 뗀 뒤 → 기록 4.7초, → AI 이름 7.8초 중앙값)과 처리 속도(6.0장/초)는 도우미 구간 Pi 기록에서 계산. 줄이어폰 0/10, 눕힌 머그컵 이동 2/10. 분류 정답은 실험 전 사용자 기준을 유지한다(에어팟 등 사후 변경 안 함). CPU·온도 없음.
+- 실험 도우미(`experiments/live_session.py`)는 38회까지 쓰고 중단했다: 앞 시도의 늦은 AI 재확인·재배치 동작이 ‘Enter 이후 첫 사건’ 판정에 섞이고, Windows에서 Pi 비밀번호 단계가 멈췄다(`--no-pi`로 우회). **도우미 자동 정확도 57.9%와 `paper_tables.md`는 쓰지 않는다.** 원인은 미수정이며 다시 실험할 때의 주의점은 `docs/paper/EXPERIMENT_GUIDE.md` 맨 위.
+
+### 2026-10-26 정리
+
+- 사용자 요청으로 최종보고 **제작에만 쓰던 문서**를 삭제했다: `docs/presentation/FINAL_REPORT_PLAN.md`(구성안·그림 프롬프트), `FINAL_REPORT_OUTLINE.md`(형식 원문 — 장 대응표는 `final/README.md`로 이동), `IMPROVEMENTS.md`(발표 근거·캡처 요령), `docs/handoff/REVIEW_NOTES_2026-10-24.md`(검토자 노트), `docs/presentation/final/preview/`(덱 확인 도구). 필요하면 `main`의 2026-10-26 정리 커밋 직전 이력에서 꺼낸다. 시연 준비 문서와 실험 안내는 남겼다(실험 안내는 ‘다시 할 때만’ 표시).
+- 이번 정리와 10/24–26 작업 전체(실험 도우미 확장, 실험 결과, 덱 원본, 문서 갱신)는 사용자 요청으로 PR을 rebase 방식으로 `main`에 반영했다.
+
+
+## 중간보고 완료·정리 — 2026-10-12 (과거 기록 — 작업 선택은 맨 위 절)
 
 ### 중간보고 최종본
 
 - 사용자가 10월 13일 발표 자료를 Canva에서 완성해 PDF로 전달했다. 최종본은 `docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf`(28쪽, 6.4MB, PDF 제목 ‘캡스톤 10월 13일 중간발표 슬라이드’, SHA-256 `f8ed81d5…99ce2e`)다. **편집 원본은 사용자의 Canva에 있고 저장소에는 없다.** 내용을 볼 때는 Read 도구에 쪽 범위를 지정해 20쪽 이하로 나눠 읽는다.
 - **쪽 번호 규칙:** 문서에서 말하는 쪽은 화면 오른쪽 아래 슬라이드 번호(01–27)다. 09번 ‘개발 목표 대비 현재 도달 수준’이 두 가지 버전으로 2쪽이라 10번 이후는 PDF 쪽수 = 슬라이드 번호 + 1이다. 옛 v5의 보충자료(28–30쪽)는 없다. 주요 위치: 01 표지(실제 장치 사진), 08 일정, 09 목표 대비 도달 수준(백분율 없음), 11 GitHub 커밋 목록·공유 폴더 화면, 14 물품 상세 화면과 카메라 화면 3장(등록·이동·회수; 각주는 9/18 개발 검사·모의 AI로 표시), 15 대시보드(합성 데이터 표시), 19 AI 정량 평가 지표와 필요한 기록(수치 없음), 20 Baseline 계획, 21–24 검사·실기·문제 해결·PC 합성 연산 비교, 25–27 최종보고 과제·주차별 목표·결과물. 사실 기준은 표지의 ‘자료 정리 2026.10.02’다.
-- **최종보고에 쓰는 법:** 실험 결과(`paper_tables.md`)는 19번, 실험 중 찍은 실제 관리자 캡처는 14·15번 위치에 쓴다. 공식 진행률은 팀·학교 기준이 정해질 때만 숫자로 쓴다. 결과·사진이 없으면 미측정·예정으로 둔다. 예전 생성 스크립트를 찾거나 새로 만들지 않는다(사용자가 새 PPTX를 명시적으로 요청할 때만 별도 제작). 중간보고 때 쓴 수업 목차 원문은 `git show d7cd505:docs/presentation/midterm/OUTLINE_REFERENCE.md`로 볼 수 있다.
-- **최종 PDF에서 본 확인 사항(사용자에게 전달, 수정 요청 없음):** 09번이 두 쪽이고 두 번째 쪽의 표가 하단 선·쪽 번호 영역까지 내려온다. 그 표의 ‘정량 성능 평가’ 행 남은 작업이 ‘새 핫스팟의 재부팅 복귀 미확인’으로 되어 있다. 14번 각주의 ‘화면의 97%’는 바뀐 상세 화면에 보이지 않는다. 최종보고를 만들 때 함께 고칠지 사용자에게 묻는다.
 
 ### 정리·삭제와 Git
 
-- **삭제(사용자 요청):** 이전 버전 `docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx`, 제작용 `docs/presentation/midterm/` 전체(`build_midterm_v5.mjs`, `korean_typography.py`, `assets/` 화면 PNG 2장, `FILL_GUIDE.md`, 수업 목차 원문 `OUTLINE_REFERENCE.md`), v5 렌더·검사 `docs/records/2026-10-02-midterm-content-review/`. v3·v4와 옛 생성기는 10월 7일에 이미 삭제됐다. 필요하면 커밋 `d7cd505`에서 `git show d7cd505:<경로>`로 꺼낸다. 캡처 요령(읽기 전용 API로 물품 ID 확인, 노출 금지 정보)은 `docs/presentation/IMPROVEMENTS.md`로 옮겼다. 8월 발표 초안(`docs/presentation/2026-08-draft/`), Mermaid 도식(`docs/presentation/diagrams/`), 논문 전반부 4장 PPTX와 그 생성기(`docs/paper/briefing/`)는 중간보고 제작물이 아니라 유지했다. 저장소에 캐시·빌드 폴더(`build/`, `node_modules/`)는 없었다.
+- **삭제(사용자 요청):** 이전 버전 `docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-02_v5_improved.pptx`, 제작용 `docs/presentation/midterm/` 전체(`build_midterm_v5.mjs`, `korean_typography.py`, `assets/` 화면 PNG 2장, `FILL_GUIDE.md`, 수업 목차 원문 `OUTLINE_REFERENCE.md`), v5 렌더·검사 `docs/records/2026-10-02-midterm-content-review/`. v3·v4와 옛 생성기는 10월 7일에 이미 삭제됐다. 필요하면 커밋 `d7cd505`에서 `git show d7cd505:<경로>`로 꺼낸다. 캡처 요령(읽기 전용 API로 물품 ID 확인, 노출 금지 정보)은 `docs/presentation/IMPROVEMENTS.md`로 옮겼다(2026-10-26 최종보고 완성 후 삭제). 8월 발표 초안(`docs/presentation/2026-08-draft/`), Mermaid 도식(`docs/presentation/diagrams/`), 논문 전반부 4장 PPTX와 그 생성기(`docs/paper/briefing/`)는 중간보고 제작물이 아니라 유지했다. 저장소에 캐시·빌드 폴더(`build/`, `node_modules/`)는 없었다.
 - **링크 정리:** 시작 안내·문서 지도·README·인계·발표 근거·실험 안내에서 삭제된 파일을 가리키던 링크를 최종 PDF 또는 ‘2026-10-12 삭제’ 표기로 바꿨다. 남은 깨진 링크는 논문 그림 2·5·6(실험 후 넣을 사진 자리)뿐이다. 아래 과거 절과 `docs/handoff/`의 v3/v4/v5·`FILL_GUIDE`·`build_midterm*`·`powerpoint-final` 경로는 당시 기록이며 지금은 없다. “PPT 보완부터 재개”, “v5에서 이어감” 같은 과거 지시를 따르지 않는다.
 - **Git 규칙:** 커밋 작성자·커미터는 `Jinseok2419342 <fjwkrtua@dongyang.ac.kr>`, `Co-Authored-By`·세션 링크 줄 없음. 클라우드 세션은 작업이 사라지지 않도록 지정된 작업 브랜치(`claude/…`)에 커밋·push한다. **`main` 반영은 사용자가 “반영해”처럼 요청할 때만** PR을 만들어 rebase 방식으로 머지한다. 이번 작업은 사용자 요청으로 [PR #17](https://github.com/Jinseok2419342/Capstone-team-project/pull/17)을 통해 `main`에 rebase 반영했다. 앱 코드·Pi 배포·논문 원고는 바꾸지 않았고 테스트·실기도 다시 실행하지 않았다.
 
@@ -48,16 +46,16 @@
 - 원고 `docs/paper/PAPER_DRAFT_JDCS.md`를 JDCS 2단 기준으로 다시 썼다: 표 8, 그림 6(도식 3·사진/캡처 3), 수식 2, 알고리즘 1, 참고문헌 18, 입력 항목 32종. `docs/paper/REFOUND_FULL_MANUSCRIPT.pdf`는 2단 근사 조판 7쪽(사진·결과 전)이다. 9월 18·22일 코드 변경을 반영했다.
 - 실험은 `docs/paper/EXPERIMENT_GUIDE.md` 하나로 축소했다: 실물 100회(등록·이동·제거 각 20, 손·조명·그림자 무변화 40) + 무인 1시간, 하루 약 2시간 반. 후속 요청으로 사용자 부담을 더 줄여 **진행 도우미 `scripts/experiments/run_experiment.py`(`experiments/live_session.py`)**를 추가했다: 시도 안내 → 사용자 Enter → `/api/dashboard` 활동 기록으로 결과 자동 판정, `/api/health` 처리 속도 기록, SSH로 Pi `monitor_pi_resources.py` 시작·회수, AI 이름 확인(분류 자동 채점), 무인 감시 시각 기록, 끝나면 `paper-results/paper_tables.md` 생성, `--resume` 이어하기. 손 기록지(`TRIAL_SHEET_TEMPLATE.csv`)+`make_paper_tables.py`는 대안이다. 같은 결과·캡처를 최종보고 발표의 14·15·19번 슬라이드 위치(중간보고 최종 PDF의 슬라이드 번호 기준)에도 쓰도록 안내했다.
 - **폐기한 이전 계획:** D_pair/D_stream/D_vlm/D_fault, B0–B2 baseline, V1–V4, bootstrap·McNemar, 297개 입력 항목, 장애 주입·8시간·전력. 아래 과거 절과 `docs/handoff/PAPER_AI_HANDOFF.md`의 해당 지시를 따르지 않는다. 심사위원 요청이 있을 때만 추가를 검토한다. 이전 원고는 커밋 `55d59a9`에 있다. `PERFORMANCE_MEASUREMENT_START.md`와 두 CSV 템플릿은 삭제했다.
-- **다음 논문 작업:** 사용자의 실험 결과(`paper-run-…` 폴더, 사진, 장비 메모)를 받아 원고를 채우고 요약·6장·결론을 결과에 맞게 고친 뒤 PDF 재생성 → HWP 이식 안내. 결과를 지어내지 않는다. 앱 코드·Pi 배포는 바꾸지 않았다(새 스크립트는 노트북에서 실행하거나 기존 Pi 설치본을 사용).
-- **현재 상태(실험 전):** 원고의 이중 대괄호 32종은 비어 있다. 그림 2·5·6 사진도 없다(PDF에는 ‘사진 입력 예정’ 상자). 실험 도우미는 가짜 API로만 검사했고 실제 Pi에서는 아직 돌려보지 않았다. 사용자가 본 실험 전에 짧은 시험 실행(`--out paper-test --rounds 0 --hand 2 --light 0 --shadow 0 --idle-minutes 0 --no-pi`)을 하도록 권했다. 판정 대기 시간(최소 6초, 무반응 18초, 제거 30초)이 실제 장비에서 맞지 않으면 `experiments/live_session.py` 상단 상수를 조정한다.
-- **실험 결과를 받으면:** `paper-run-…/paper-results/paper_tables.md`의 표 5–8을 원고에 그대로 넣고 ‘본문 자리표시자 값’ 목록을 옮긴다. 장비·환경 항목과 `[[MAIN_ERROR]]`, `[[FAIL_CASES]]`는 사용자 메모와 `trials.csv` 메모로 작성한다. 사진은 `docs/paper/manuscript/figures/figure-2.png`, `figure-5.png`, `figure-6.png`로 넣고 `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만든다. 같은 수치는 최종보고 발표의 19번에, 캡처는 14·15번 슬라이드 위치에 쓸 수 있다(중간보고 최종 PDF 번호 기준).
+- **다음 논문 작업(2026-10-26 갱신):** 맨 위 ① 참고. 결과는 `docs/paper/RESULTS_2026-10-25.md`에서만 가져오고, 원고를 채운 뒤 요약·6장·결론을 결과에 맞게 고치고 PDF 재생성 → HWP 이식 안내. 결과를 지어내지 않는다.
+- **(10/25 이전 기록) 실험 전 상태:** 원고의 이중 대괄호 32종과 그림 2·5·6은 아직 비어 있다(실험은 10/25 완료 — 맨 위 절). 도우미의 판정 대기 상수는 `experiments/live_session.py` 상단에 있다.
+- **결과 반영 방법:** 표 5–8과 ‘본문 자리표시자 값’은 도우미의 `paper_tables.md`가 아니라 결과 문서 값으로 채운다(형식은 실제 실험 방식에 맞게 수정). `[[MAIN_ERROR]]`, `[[FAIL_CASES]]`는 결과 문서 3절(머그컵 이동, 줄이어폰, 분류 경계)로 쓴다. 사진은 `docs/paper/manuscript/figures/figure-2.png`, `figure-5.png`, `figure-6.png`로 넣고 `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만든다.
 - **검증 환경:** 새 클라우드 세션에서는 `python -m venv` 후 `pip install -r requirements-dev.txt`를 하면 전체 테스트(현재 281개 통과)를 돌릴 수 있다. PDF 빌드에는 `reportlab`, `pypdf`가 추가로 필요하다. Linux에서는 WenQuanYi 글꼴로 대체한다.
 - **Git:** 이 작업은 `main`의 커밋 `2436e9d`(원고·실험 축소), `70ffccd`(진행 도우미), `8c9fb35`·`28cf62a`(인계 보완)에 있다([PR #14](https://github.com/Jinseok2419342/Capstone-team-project/pull/14)). 사용자 요청으로 push한 뒤 PR을 rebase 방식으로 `main`에 반영했다(작성자는 사용자 계정). 이후 작업도 같은 규칙을 따른다.
 
-## 작업 선택·정리 — 2026-10-07 (선택지는 맨 위 10월 12일 절로 갱신)
+## 작업 선택·정리 — 2026-10-07 (선택지는 맨 위 절로 갱신)
 
-- **다음 작업은 사용자가 선택한다.** 선택지는 맨 위 10월 12일 절을 따른다(중간보고 PPT는 완료돼 선택지에서 빠짐, 최종보고 준비 추가). 지정한 작업은 바로 이어가고, “계속 진행”처럼 대상이 없으면 선택지를 짧게 제시한다. 아래 10월 2일의 ‘PPT 기본 재개’보다 이 지침이 우선한다.
-- 읽기 순서: `START_HERE.md` → 맨 위 10월 12일 절(논문이면 10월 11일 절) → `docs/handoff/SESSION_HANDOFF.md` 상단 → 선택한 분야 가이드. 이미 정한 PPT 목적·분량·목차·수업 일정과 Pi 설치를 반복 확인하지 않는다. 파일 위치는 `docs/README.md`(문서 지도)를 따른다. 문서와 완성본(PDF·PPTX·HWP)은 모두 `docs/` 아래 주제별 폴더에 있고, 완성본은 각 주제 폴더 바로 아래에 있다. 아래 과거 절에 나오는 경로 중 지금 없는 파일은 정리된 이전 버전이며 Git 이력에만 있다.
+- **다음 작업은 사용자가 선택한다.** 선택지는 맨 위 절을 따른다. 지정한 작업은 바로 이어가고, “계속 진행”처럼 대상이 없으면 선택지를 짧게 제시한다. 아래 10월 2일의 ‘PPT 기본 재개’보다 이 지침이 우선한다.
+- 읽기 순서: `START_HERE.md` → 맨 위 절(논문이면 10월 11일 절) → `docs/handoff/SESSION_HANDOFF.md` 상단 → 선택한 분야 가이드. 이미 정한 PPT 목적·분량·목차·수업 일정과 Pi 설치를 반복 확인하지 않는다. 파일 위치는 `docs/README.md`(문서 지도)를 따른다. 문서와 완성본(PDF·PPTX·HWP)은 모두 `docs/` 아래 주제별 폴더에 있고, 완성본은 각 주제 폴더 바로 아래에 있다. 아래 과거 절에 나오는 경로 중 지금 없는 파일은 정리된 이전 버전이며 Git 이력에만 있다.
 - **브로셔:** 최종본은 `docs/brochure/`에 있다(`docs/brochure/README.md` 참고). 진행할 작업이 아니다.
 - **Git 밖의 로컬 전용 파일:** `.env`, `.venv/`, `data/`, `dist/`는 `.gitignore` 대상이라 새 clone·클라우드 세션에는 없다. 문서에 나오는 `dist/refound-pi.tar.gz`나 실제 DB·사진이 보이지 않아도 삭제된 것이 아니다. 배포 파일이 필요하면 Windows에서 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만든다.
 - **커밋·푸시 규칙(2026-10-11 사용자 지정):** 커밋 작성자·커미터는 사용자 `Jinseok2419342 <fjwkrtua@dongyang.ac.kr>`로 하고 Claude 공동 작성자(`Co-Authored-By`) 줄을 넣지 않는다. 원격 push, PR 생성·머지는 사용자가 요청할 때만 한다. `main`은 PR을 rebase 방식으로 머지해 사용자 커밋만 남긴다. (10월 12일 보완: 클라우드 세션의 지정 작업 브랜치 push는 작업 보존용으로 하고, PR·`main` 반영은 요청 시에만 한다. 맨 위 절의 Git 규칙 참고.)
@@ -140,7 +138,7 @@
 ## 이전 요청 — 2026-09-22 시연 초기화와 새 SD 설치
 
 - **최신 사용자 요청은 진행 상태 정리와 다음 세션 준비다.** 프로젝트 코드·시작 안내·실기 기록·논문/발표 자료의 역할을 대조하고 기존 문서를 갱신했다. 다음 요청은 **친구 공유·핫스팟 등 시연 준비 계속** 또는 **발표 PPT 제작**일 수 있다. 발표를 명시적으로 선택하면 친구 응답·남은 실기 확인을 선행 조건으로 강제하지 말고, 확인 범위를 정확히 표시한 자료를 준비한다. 새 발표의 목적·시간·청중·형식은 미정이다. 이번 기록 요청만으로 PPT·원고·계측 개발을 시작하지 않는다.
-- 사용자 진입점은 `START_HERE.md`, 상세 인계는 **`docs/handoff/SESSION_HANDOFF.md`(9월 22일 내용으로 갱신)**다. `docs/guides/PI_ACCEPTANCE_CHECKLIST.md`는 이제 빈 양식이 아니라 로그·사용자 보고·부분 확인·미확인을 구분한 누적 기록이다. 발표 시작점 `docs/presentation/IMPROVEMENTS.md`에는 최신 코드/검사 근거와 기존 PPTX의 용도를 연결했다. 과거 `docs/presentation/2026-08-draft/PRESENTATION.md`는 8월 16일 자료임을 명시했다.
+- 사용자 진입점은 `START_HERE.md`, 상세 인계는 **`docs/handoff/SESSION_HANDOFF.md`(9월 22일 내용으로 갱신)**다. `docs/guides/PI_ACCEPTANCE_CHECKLIST.md`는 이제 빈 양식이 아니라 로그·사용자 보고·부분 확인·미확인을 구분한 누적 기록이다. 당시 발표 시작점 `docs/presentation/IMPROVEMENTS.md`(2026-10-26 삭제)에는 최신 코드/검사 근거와 기존 PPTX의 용도를 연결했다. 과거 `docs/presentation/2026-08-draft/PRESENTATION.md`는 8월 16일 자료임을 명시했다.
 - 이번 인계 정리는 문서와 상태 기록만 바꿨다. 앱·배포·기존 원고/PDF/PPTX는 보존하고 앱 테스트도 다시 실행하지 않는다. 배포 안의 안내 문서는 PC의 최신 인계보다 오래될 수 있다. 두 기존 9월 22일 `VALIDATION.json`의 미설치/실기 미실시 플래그는 당시 스냅샷이며, 최신 진행은 `docs/records/2026-09-22-network-plan/SESSION_STATUS.json`을 따른다.
 - **현재 재개 지점: 친구에게 Pi 공유 초대 링크 전송 완료, 응답 대기로 중단.** 사용자가 초대 링크를 친구에게 보냈고 친구가 응답하면 나머지를 진행하겠다고 했다. `Reusable link`를 꺼도 친구의 첫 수락 이후 공유 관계는 유지된다고 설명했다. 실제 수락·친구 노트북 접속·핫스팟 연결은 아직 미확인이다. Pi의 `sudo shutdown -h now` 정상 종료를 안내했으며 실제 종료·전원 분리 완료는 아직 보고받지 않았다. 다음 세션은 **Pi 전원 켜기 → 친구가 시연 노트북 Tailscale과 같은 계정으로 초대 수락 → 친구 노트북에서 전체 HTTPS 주소 확인 → 친구 핫스팟으로 랜선 없는 부팅 시험**으로 이어간다. 설치·초대 링크 전송을 처음부터 반복시키지 않는다. 인증·공유 초대 링크는 기록하지 않는다.
 - **확인된 원격 접속:** Tailscale **1.102.4** 설치·인증·Serve 백그라운드 실행과 `Tailscale access is ready`를 사용자 로그로 확인했다. PC에서 HTTPS 화면·영상 확인에 사용자가 “나와”라고 보고했다. 새 Pi 주소는 **`https://refound-pi-1.tail7a1a61.ts.net/`**이며 `-1`을 생략하지 않는다. 앱은 loopback을 유지하고 출력은 `tailnet only`이며 Funnel 비활성 검사도 통과했다.
@@ -164,7 +162,7 @@
 
 - **최종 정리 완료:** 사용자가 수정된 스크립트를 직접 실행했다. 후속 파일시스템 검사에서 대상 18개 폴더가 모두 없어졌고, 보존 대상 121개 파일의 해시가 그대로임을 확인했다. 삭제 대상은 캐시·합성 테스트 데이터·빈 tmp의 1,091개 파일(약 4.1MiB)이었다. 아래 차단·오류·재실행 대기 설명은 이전 경과이며 현재 미완료 상태가 아니다. `workspace-cleanup.json`의 `user_execution_verification.status=complete`가 최종 상태다.
 - 사용자는 파일과 안내가 복잡하다고 했으며 목적별 시작점과 불필요한 캐시 정리를 요청했다. 사용자에게는 루트 `START_HERE.md`부터 안내한다. 새 안내 문서를 계속 늘리기보다 이 시작점과 각 분야의 기존 안내를 갱신한다.
-- 설치·실물 테스트는 `docs/guides/FRESH_SD_START.md`, 논문은 `docs/paper/README.md`, 개선점 설명·발표는 `docs/presentation/IMPROVEMENTS.md`다. 새 개선점 발표 PPTX는 아직 없다.
+- 설치·실물 테스트는 `docs/guides/FRESH_SD_START.md`, 논문은 `docs/paper/README.md`, 개선점 설명·발표는 `docs/presentation/IMPROVEMENTS.md`였다(2026-10-26 삭제). 새 개선점 발표 PPTX는 아직 없다.
 - 논문 안내에 9월 16일 원고와 9월 18일 구현의 차이를 표시했다. privacy 부팅 복원은 이미 구현됐으므로 다시 미구현으로 취급하지 않는다.
 - 캐시 7곳과 빈 `tmp` 폴더 삭제는 자동 승인 검토가 `blocked by policy`로 거절하여 **실행되지 않았다**. 이전 삭제 거절 대상도 다시 시도하지 않았다. 논문·과거 팀 산출물·실제 데이터·검증 증거는 보존했다. 이번 탐색 정리와 삭제 차단 기록은 커밋 `0279a75`까지의 Git 이력의 `output/maintenance/2026-09-18-fresh-sd/workspace-cleanup.json`이다. 다음 세션에서 다른 명령으로 삭제를 우회하지 않는다.
 - 이후 사용자가 삭제 재시도를 명시적으로 요청했다. 캐시 8곳·합성 브라우저 fixture 9곳·빈 `tmp`를 다시 검증했으나 삭제 명령은 동일하게 차단됐고 실제 삭제는 0개다. `cleanup-retry-plan.json`에 대상, `cleanup-protected-hashes.json`에 보존 파일 해시를 기록했다. 사용자 직접 실행용 `cleanup-temporary-files.ps1`은 같은 maintenance 폴더에 있으며 문법만 검사하고 실행하지 않았다. 이전 거절 이력은 `workspace-cleanup.json`에 보존한다.
@@ -224,7 +222,7 @@
 - 생성 스크립트의 전체 경로와 런타임은 대화 인계 요약을 따른다. 최신 PPTX 입력인 `docs/paper/briefing/pdf_pages/`와 그림 SVG, 실제 `data/captures/`, 원고 보관본은 유지한다. 임시 렌더링·중간 PPTX·캐시 정리 내역과 보존한 검사 기록은 커밋 `0279a75`까지의 Git 이력의 `docs/paper/validation/`에 있다. 외부 런타임으로 향하는 `node_modules` junction은 연결만 제거한다.
 - `manuscript/validate_artifacts.py`와 `FINAL_VALIDATION.json`(커밋 `0279a75`까지의 Git 이력)은 전체·전반부 원고와 **이전 6장 시안** 검사다. 최신 4장 검사 기록은 `docs/paper/briefing/PDF_CAPTURE_SLIDES_CHECK.json`과 커밋 `0279a75`까지의 Git 이력의 `docs/paper/validation/PDF_CAPTURE_SLIDES.validation.json`이다. 과거 시각 검사와 이번 백업·정리 후 무결성 검사를 구분한다.
 
-## 1. 사용자의 목표 (9월 기록 — 현재 선택지는 맨 위 10월 12일 절)
+## 1. 사용자의 목표 (9월 기록 — 현재 선택지는 맨 위 절)
 
 - 고장 난 microSD를 교체한 새 설치에서 기본 실물 동작·재부팅·본인 PC Tailscale 접속을 확인했고, 9월 29일 Windows 핫스팟·SSH 웹 접속과 OpenAI 동작 성공 보고가 추가됐다. 다음에는 새 네트워크의 전원 재인가·자동 연결 시험 또는 기존 발표 PPT 보완을 진행한다. 논문은 별도 선택한 경우에 진행한다.
 - 이 캡스톤 프로젝트를 현재 코드와 루트 `README.md` 기준으로 정확히 이해한다.
@@ -344,9 +342,9 @@
 
 B0–B2의 공통 FPS, warm-up, 후보 병합 시간창, foreground→사건 adapter, 참조 갱신 규칙과 MOG2 파라미터를 개발 세트에서 먼저 고정한다. 이것이 정의되기 전에는 세 사건 종류의 Macro-F1 비교를 만들지 않는다.
 
-## 10. 재개 지점 (9월 기록 — 따르지 않음, 맨 위 10월 12일 절 우선)
+## 10. 재개 지점 (9월 기록 — 따르지 않음, 맨 위 절 우선)
 
-현재 시연 준비의 재개 지점은 **Windows 핫스팟의 자동 연결 설정 확인·전원 재인가·무선 단독 복귀 시험**이다. 사용자가 발표 PPT를 선택하면 `docs/presentation/IMPROVEMENTS.md`부터 시작한다. 아래는 **논문용 정량 실험을 명시적으로 선택했을 때만** 수행할 대기 작업이다.
+현재 시연 준비의 재개 지점은 **Windows 핫스팟의 자동 연결 설정 확인·전원 재인가·무선 단독 복귀 시험**이다. (당시) 발표 PPT는 `docs/presentation/IMPROVEMENTS.md`(2026-10-26 삭제)에서 시작했다. 아래는 **논문용 정량 실험을 명시적으로 선택했을 때만** 수행할 대기 작업이다.
 
 1. 실제 `VisionMonitor`의 motion 시작, action 종료, stable 확정, local callback, provisional DB와 final commit timestamp를 영속 원장에 추가한다.
 2. VLM logical job ID, provider attempt, 성공 여부, model ID, prompt hash, 직렬화 payload byte, token/usage/cost와 request/response timestamp를 기록한다.
