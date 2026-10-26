@@ -28,6 +28,7 @@
 - 그림 2·5·6은 실제 캡처·장치 사진으로 `docs/paper/manuscript/make_photo_figures.py`가 만든다(GPT 그림은 논문에 쓰지 않음). 빌드는 Linux에서 나눔명조를 쓴다(이 클라우드 세션에서는 npm `@expo-google-fonts/nanum-myeongjo`의 TTF를 `/usr/share/fonts/truetype/nanum/`에 설치해 빌드했다. 저장소에는 글꼴을 넣지 않는다).
 - `docs/paper/RESULTS_FILL_SHEET.md`(자리표시자 입력표)는 삭제하고 `docs/paper/MANUSCRIPT_NUMBERS.md`(숫자별 출처)로 대체했다. 남은 사용자 확인: 성공 기준 문장, 다른 물품 동시 배치 여부, 참고문헌 [1]·[3]의 월·[3] 영문 제목, 학회의 생성형 AI 고지 규정, 최종본 저자 정보.
 - 사용자가 내려받은 최종보고 PDF를 `docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`로 저장하고 시작 안내·문서 지도·인계·README에 연결했다.
+- **Git:** 작업 브랜치 `claude/quirky-dirac-tqqjzj`에 커밋·push했고 `main` 반영(PR)은 하지 않았다. 강제 push가 막혀 이미 `main`에 반영된 이전 커밋(내용 동일)을 `-s ours` 합치기 커밋으로 이어 붙였으므로, `main` 반영을 요청받으면 PR의 rebase 머지가 막힐 수 있다. 그때는 최신 `main`에서 새 커밋으로 같은 변경을 다시 만들어 반영한다(작성자는 사용자 계정).
 
 ### 2026-10-26 정리
 
