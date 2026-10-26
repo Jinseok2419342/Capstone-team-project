@@ -24,7 +24,7 @@
 
 ## 기존 초안과의 관계
 
-- 전체 `../PAPER_DRAFT_JDCS.md`와 `../RESULTS_FILL_SHEET.md`도 이번에 개정했다. 세부 변경과 남은 일은 `../REVISION_STATUS.md`에 정리했다.
+- 전체 `../PAPER_DRAFT_JDCS.md`와 `../RESULTS_FILL_SHEET.md`(2026-10-26 삭제)도 이번에 개정했다. 세부 변경과 남은 일은 `../REVISION_STATUS.md`에 정리했다.
 - 원래 초안의 서론·관련 연구를 사용하되, 이론적 배경을 별도 절로 풀어 설명했다.
 - 코드 세부 알고리즘, 구현 설정, 실험 절차와 결과표는 이번 범위에 포함하지 않았다.
 - 측정값 placeholder 대신 구현된 사실과 앞으로 평가할 내용을 구분했다.

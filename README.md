@@ -45,8 +45,8 @@
 | 전체 문서 지도 | [docs/README.md](docs/README.md) |
 | Raspberry Pi 설치 | [처음부터 설치하는 순서](docs/guides/FRESH_SD_START.md) · [상세 설치·운영 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
 | 시연 실행·종료 | [Windows 핫스팟·SSH 터널](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) |
-| 논문 | [논문 작업 안내](docs/paper/README.md) · [원고 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) |
-| 발표 | [최종보고 덱(11월 3일)](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) · [덱 원본·그림](docs/presentation/final/README.md) · [시연 준비](docs/presentation/FINAL_DEMO_GUIDE.md) · [중간보고 PDF(10월 13일)](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) · [Mermaid 도식](docs/presentation/diagrams/README.md) |
+| 논문 | [논문 작업 안내](docs/paper/README.md) · [원고 PDF(9쪽, 결과 반영)](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) · [개정 상태](docs/paper/REVISION_STATUS.md) |
+| 발표 | [최종보고 PDF(11월 3일)](docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf) · [편집용 덱](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) · [덱 원본·그림](docs/presentation/final/README.md) · [시연 준비](docs/presentation/FINAL_DEMO_GUIDE.md) · [중간보고 PDF(10월 13일)](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) · [Mermaid 도식](docs/presentation/diagrams/README.md) |
 | 실측 결과 | [2026-10-25 실험 결과](docs/paper/RESULTS_2026-10-25.md) |
 | 졸업작품집 브로셔 | [PDF](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
 | 과거 팀 자료 | [기획서·회의록·보고서](docs/project-history) |
@@ -163,8 +163,9 @@ sequenceDiagram
 | 손을 뗀 뒤 → 기록 / → AI 이름·분류 | 중앙값 4.7초 / 7.8초 |
 | 손·조명·그림자, 무인 1시간 | 잘못 생긴 기록 0건(손·조명·그림자는 횟수 미기록 관찰) |
 | Pi 분석 속도 | 초당 6.0장(장당 106.6ms) |
+| AI 호출(보조 구간 38회) | 장치 사건 108건 중 80건(74.1%), 분석 프레임 15,397장의 0.52% |
 
-얇은 물건(줄이어폰)은 10번 모두 감지하지 못했고, 굴러서 모양이 바뀌는 물건(눕힌 머그컵)의 이동은 ‘사라짐 + 새 물품’으로 나뉘는 경우가 많았습니다(10번 중 8번). CPU·온도는 이번에 기록하지 못했습니다.
+얇은 물건(줄이어폰)은 본 실험에서 10번 모두 등록되지 않았고, 굴러서 모양이 바뀌는 물건(눕힌 머그컵)의 이동은 ‘사라짐 + 새 물품’으로 나뉘는 경우가 많았습니다(10번 중 8번). CPU·온도는 이번에 기록하지 못했습니다.
 
 ## UI/UX 및 서비스 구조
 
@@ -196,7 +197,7 @@ sequenceDiagram
 
 자동화 테스트(Python·Node.js)는 저장소·API·합성 카메라 장면·AI/메일 실패 처리를 검증하는 소프트웨어 회귀 검사이며, AI 정확도나 현장 감지율을 뜻하지 않습니다. 실제 Raspberry Pi에서는 설치·카메라 촬영·재부팅 후 자동 실행, 실물 등록·이동·회수, 노트북 핫스팟과 SSH 터널을 통한 웹 화면·OpenAI 동작을 확인했고, 10월 25일 Gemini로 실측을 했습니다([실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md)). 날짜별 검증 기록은 [docs/records](docs/records/)에 있습니다.
 
-1. 10/25 실측 결과를 논문 원고에 반영(측정은 완료)
+1. 논문을 학회 HWP 양식으로 옮기고 투고 전 확인 항목 처리(결과 반영은 2026-10-26 완료)
 2. 얇은 물건 감지와 모양이 바뀌는 물건의 이동 추적 개선, 장시간 온도 기록
 3. 실제 메일 수신과 장시간 운영 확인
 4. 시연 환경 리허설(핫스팟 자동 연결, 전원을 다시 넣은 뒤 복귀)

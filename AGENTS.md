@@ -4,13 +4,13 @@
 
 ### 처음 읽는 Claude를 위한 요약
 
-- **현재 상태:** 개발 중간보고(10/13) 완료. **최종보고(11/03) 발표 덱 완성**(10/26, 사용자가 마지막 세부 수정까지 함) — claude.ai Slides [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) 25장, 원본·그림은 `docs/presentation/final/`(설명 `final/README.md`). 발표는 덱에서 내려받은 PDF로 한다. **10/25 실험 완료** — 결과 원본은 `docs/paper/RESULTS_2026-10-25.md`(발표·논문 공통 숫자). 남은 일정은 **10/27 최종보고 연습, 11/03 최종보고**, 이후 11/10 본론, 11/17 팀논문, 11/24 최종논문 발표다. Pi는 Windows 핫스팟 + 노트북 SSH 터널로 시연한다.
+- **현재 상태:** 개발 중간보고(10/13) 완료. **최종보고(11/03) 발표 덱 완성**(10/26, 사용자가 마지막 세부 수정까지 함) — claude.ai Slides [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) 25장, 원본·그림은 `docs/presentation/final/`(설명 `final/README.md`). 발표는 덱에서 내려받은 PDF로 하며, 사용자가 내려받은 최종 PDF를 `docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`(25쪽)로 저장했다(10/26). **10/25 실험 완료** — 결과 원본은 `docs/paper/RESULTS_2026-10-25.md`(발표·논문 공통 숫자). **논문 원고 결과 반영 완료**(10/26) — JDCS 형식 점검·수정 후 2단 근사 PDF 9쪽, 남은 일은 HWP 이식과 투고 전 사용자 확인(`docs/paper/REVISION_STATUS.md` 3·4절). 남은 일정은 **10/27 최종보고 연습, 11/03 최종보고**, 이후 11/10 본론, 11/17 팀논문, 11/24 최종논문 발표다. Pi는 Windows 핫스팟 + 노트북 SSH 터널로 시연한다.
 - **다음 작업은 사용자가 고른다.** 아래 ①–⑤ 중 사용자가 지정하면 그 항목의 ‘먼저 읽을 것 → 첫 행동’대로 바로 시작한다. “계속하자”처럼 대상이 없으면 ①–⑤를 한 줄씩 보여 주고 고르게 한다. 이미 정한 수업 일정·Pi 설치·연결 방식·논문 축소 방향을 다시 묻지 않는다.
 - **공통 금지:** 실험값·사진·AI 응답·진행률을 만들어 넣지 않는다. API 키·비밀번호·초대 링크를 채팅이나 문서에 받지 않는다. Claude는 Pi에 직접 접속할 수 없다. Pi·노트북 명령은 사용자가 실행하고 출력을 붙여 준다. 클라우드 세션에는 `.env`·`data/`·`dist/`가 없다(삭제가 아니라 Git 제외). **팀 역할:** 개발·구현은 장진석이 전담했다. 권기원은 발표 자료 점검·편집과 시연 준비 지원만 했으므로(최종 덱 표기: ‘발표 자료 점검 · 시연 준비 지원’) 발표·논문·문서에 권기원의 개발·구현 참여를 쓰지 않는다.
 
 | 선택지 | 먼저 읽을 것 | 첫 행동 |
 |---|---|---|
-| ① **논문 결과 반영** | 아래 ‘10/25 실험’ → 10월 11일 절 → `docs/paper/README.md` → `docs/paper/RESULTS_2026-10-25.md` | 결과 문서 값으로 원고를 채운다. 원고는 ‘각 20회 + 무변화 40회, 도우미 자동 판정’ 전제라 **방법 절·표 5–8 형식을 실제 방식(손 기록, 물품 10개 × 10회 × 등록·이동·제거, 무변화는 관찰, CPU·온도 없음)에 맞게** 고친다 → 요약·6장·결론 → PDF 재생성 → HWP 이식 안내. 사진은 `docs/presentation/final/images/`(실험 장면·확대 사진·관리자 화면)에서 고른다. |
+| ① **논문 마무리·투고** | 아래 ‘10/26 논문 결과 반영’ → `docs/paper/README.md` → `docs/paper/REVISION_STATUS.md`(형식 점검표·HWP 이식·투고 전 확인) → `docs/paper/MANUSCRIPT_NUMBERS.md` | 원고(`PAPER_DRAFT_JDCS.md`)는 결과까지 완성됐다. 사용자가 투고 전 확인 항목(REVISION_STATUS 4절)에 답하면 원고·PDF를 고친다. HWP 이식을 도울 때는 3절 순서를 따르고, 수정 후 `make_photo_figures.py` → `build_manuscript.py`로 PDF를 다시 만든다. 숫자는 결과 문서·출처표에 있는 값만 쓴다. 다른 방법과의 비교 등 새 실험은 심사위원이 요청할 때만. |
 | ② **최종보고 연습·발표** | `docs/presentation/FINAL_DEMO_GUIDE.md` → `docs/presentation/final/README.md` | 10/27 연습 지원(백업 영상 녹화 — 10/25에는 리허설 녹화 없음, 시간 확인). 덱 수정 요청이 오면 덱(아티팩트)을 고치고 `final/deck/project/`도 갱신한다. 덱 수정 규칙(padding ≤ 256px, 모든 글 nowrap + `<br>`, 목록 대신 점 + 글, 글은 칸 폭 90% 이내)은 `final/README.md`. 숫자는 결과 문서 값만 쓴다. |
 | ③ **Pi 시연·실기 확인** | `START_HERE.md`의 ‘확정한 시연 실행·종료 순서’ → `docs/guides/WINDOWS_HOTSPOT_GUIDE.md`(2–5절 실행·종료·오류, 8절 남은 시험) → `docs/guides/PI_ACCEPTANCE_CHECKLIST.md` → 아래 2026-09-30 Pi 절 | 시연 실행 안내인지, 남은 시험(핫스팟 자동 연결·정상 종료 후 전원 재인가·무선 단독 영상/AI 복귀)인지 확인한다. 확정된 실행 7단계·종료 4단계를 바꾸지 않는다. 결과는 사용자 출력·보고로만 실기 확인표에 기록한다. |
 | ④ **Pi API 키 교체·Gemini 전환** | `docs/guides/PI_API_KEY_CHANGE.md` | 안내 순서(Pi `.env` 수정 → 서비스 재시작 → 웹 제공자 선택 → 실물 확인)를 따른다. 키 값은 사용자가 Pi에서 직접 넣는다. 10/25 실험은 Gemini 3.5 Flash-Lite로 했다. |
@@ -20,6 +20,14 @@
 
 - 결과(사용자 손 기록): 줄이어폰 제외 9개 물품 기준 등록 84/90, 이동 73/90, 제거 87/90(합계 244/270 = 90.4%), AI 이름·분류 80/84(95.2%), 손·조명·그림자·무인 1시간 잘못된 기록 0건(손·조명·그림자는 횟수 미기록). 시간(손 뗀 뒤 → 기록 4.7초, → AI 이름 7.8초 중앙값)과 처리 속도(6.0장/초)는 도우미 구간 Pi 기록에서 계산. 줄이어폰 0/10, 눕힌 머그컵 이동 2/10. 분류 정답은 실험 전 사용자 기준을 유지한다(에어팟 등 사후 변경 안 함). CPU·온도 없음.
 - 실험 도우미(`experiments/live_session.py`)는 38회까지 쓰고 중단했다: 앞 시도의 늦은 AI 재확인·재배치 동작이 ‘Enter 이후 첫 사건’ 판정에 섞이고, Windows에서 Pi 비밀번호 단계가 멈췄다(`--no-pi`로 우회). **도우미 자동 정확도 57.9%와 `paper_tables.md`는 쓰지 않는다.** 원인은 미수정이며 다시 실험할 때의 주의점은 `docs/paper/EXPERIMENT_GUIDE.md` 맨 위.
+
+### 10/26 논문 결과 반영
+
+- 사용자 요청(“논문 작업 진행, 규격에 맞는지부터”)으로 JDCS 형식을 점검하고 원고에 결과를 반영했다. 형식상 불일치 세 가지를 고쳤다: 장 번호(`1.` → `Ⅰ. 서 론`, 게재 논문 기준), 참고문헌(발행 월 추가, 국문 [3]을 영문 + `(in Korean)`으로), 방법-실험 불일치(‘각 20회 + 무변화 40회, 도우미 자동 판정’ → 실제 손 기록, 계획 300·시도 280, 무변화는 관찰, CPU·온도는 측정 안 함으로 삭제·한계 명시). 학회 홈페이지는 이 환경에서 접속이 막혀 9/15 조사 기록과 2024–25 게재 논문 검색으로 대조했다.
+- 보조 구간(도우미 38회) 원본을 다시 계산해 표 7·8을 만들었다. **AI 실제 요청은 80건(74.1%, 절감 25.9%)** 으로, 발표 덱 20장·부록 B의 81건(75%, 25%)은 대기열 보류 1건이 섞인 값이다. 논문은 80건을 쓰고 덱은 사용자가 원할 때만 고친다. 보조 구간에서 줄이어폰이 1회 검출됐으나 AI가 ‘제거’로 판단한 기록도 찾아 원고에 반영했다(요약은 ‘등록되지 않음’).
+- 그림 2·5·6은 실제 캡처·장치 사진으로 `docs/paper/manuscript/make_photo_figures.py`가 만든다(GPT 그림은 논문에 쓰지 않음). 빌드는 Linux에서 나눔명조를 쓴다(이 클라우드 세션에서는 npm `@expo-google-fonts/nanum-myeongjo`의 TTF를 `/usr/share/fonts/truetype/nanum/`에 설치해 빌드했다. 저장소에는 글꼴을 넣지 않는다).
+- `docs/paper/RESULTS_FILL_SHEET.md`(자리표시자 입력표)는 삭제하고 `docs/paper/MANUSCRIPT_NUMBERS.md`(숫자별 출처)로 대체했다. 남은 사용자 확인: 성공 기준 문장, 다른 물품 동시 배치 여부, 참고문헌 [1]·[3]의 월·[3] 영문 제목, 학회의 생성형 AI 고지 규정, 최종본 저자 정보.
+- 사용자가 내려받은 최종보고 PDF를 `docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`로 저장하고 시작 안내·문서 지도·인계·README에 연결했다.
 
 ### 2026-10-26 정리
 
@@ -279,7 +287,7 @@
 ## 5. 논문 준비 산출물 (9월 기록 — 10월 11일 절로 대체)
 
 - `docs/paper/PAPER_DRAFT_JDCS.md`: 국·영문 초록부터 결론과 참고문헌까지의 JDCS 전체 초안
-- `docs/paper/RESULTS_FILL_SHEET.md`: 초안의 모든 실측 placeholder 정의와 원천·우선순위
+- `docs/paper/RESULTS_FILL_SHEET.md`: 초안의 모든 실측 placeholder 정의와 원천·우선순위(2026-10-26 삭제 — 원고 숫자 출처는 `docs/paper/MANUSCRIPT_NUMBERS.md`)
 - `docs/handoff/PAPER_AI_HANDOFF.md`: 다른 AI에 전달할 코드 사실, 논지, 금지선과 작성 프롬프트
 - `docs/paper/VENUE_AND_RELATED_WORK_STRATEGY.md`: JDCS/JPEE 선택과 선행연구 전략
 - `docs/paper/EXPERIMENT_GUIDE.md`: 데이터 스키마, 실행, 지표, 통계와 해석 경계

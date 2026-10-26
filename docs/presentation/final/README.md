@@ -2,11 +2,12 @@
 
 [시작 안내](../../../START_HERE.md) · [시연 준비](../FINAL_DEMO_GUIDE.md) · [10/25 실험 결과](../../paper/RESULTS_2026-10-25.md)
 
-**2026-10-26 완성.** 사용자가 마지막 세부 수정까지 마쳤다. 발표는 덱에서 내려받은 PDF로 한다.
+**2026-10-26 완성.** 사용자가 마지막 세부 수정까지 마쳤다. 발표는 덱에서 내려받은 PDF로 하며, 그 파일을 [`../REFOUND_PROJECT_FINAL_2026-11-03.pdf`](../REFOUND_PROJECT_FINAL_2026-11-03.pdf)(25쪽, 960×540pt, SHA-256 `cbe3cf55…241306`)로 저장했다.
 
 | 무엇 | 어디 |
 |---|---|
-| 발표 덱(편집·발표·PDF 내려받기) | [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) — claude.ai Slides, 본인만 열람(공유는 덱 화면의 Share) |
+| **발표용 최종 PDF** | [`docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`](../REFOUND_PROJECT_FINAL_2026-11-03.pdf) — 사용자가 10/26 덱에서 내려받은 25쪽 |
+| 발표 덱(편집·PDF 다시 내려받기) | [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) — claude.ai Slides, 본인만 열람(공유는 덱 화면의 Share) |
 | 덱 원본(사용자 수정 반영본) | `deck/project/` — `deck.json` + `slides/*.html` 25장, 장마다 발표자 노트 |
 | 그림·캡처 원본 | `images/` — GPT 그림 9장, 10/25 실험 캡처 5장, 실제 장치 사진 2장, 덱용으로 자른 사진(`crops/`) |
 | 시연 | [시연 준비](../FINAL_DEMO_GUIDE.md) 한 장(10/27 연습, 11/03 발표) |
@@ -28,11 +29,11 @@
 | 5.2 향후 | 21 |
 | 마무리 · 부록 | 22 논문 투고 준비, 23 감사, A 실험 환경, B 숫자 표 |
 
-숫자는 모두 [10/25 실험 결과](../../paper/RESULTS_2026-10-25.md) 2절 값이다. GPT 그림은 사용자가 ChatGPT로 생성했고 실측 숫자를 넣지 않았다. 구성도·차트·표는 슬라이드 안에서 직접 그렸다.
+숫자는 모두 [10/25 실험 결과](../../paper/RESULTS_2026-10-25.md) 2절 값이다. 단, 20장·부록 B의 AI 호출 ‘81건·75%·절감 25%’는 대기열 보류 1건이 섞인 값으로, 원본 재계산 결과는 **80건·74.1%·절감 25.9%**다(결과 문서 5절, 2026-10-26 확인). 논문은 80건을 쓴다. 결론(목표 30% 미달)은 같고, 덱 수정은 사용자가 원할 때만 한다. GPT 그림은 사용자가 ChatGPT로 생성했고 실측 숫자를 넣지 않았다. 구성도·차트·표는 슬라이드 안에서 직접 그렸다.
 
 ## 다시 고쳐야 할 때
 
-덱(아티팩트)을 고친 뒤 이 폴더의 `deck/project/`도 같은 내용으로 갱신한다. Slides 런타임에서 확인된 규칙:
+덱(아티팩트)을 고친 뒤 이 폴더의 `deck/project/`도 같은 내용으로 갱신하고, 사용자가 PDF를 다시 내려받아 주면 `../REFOUND_PROJECT_FINAL_2026-11-03.pdf`를 교체한다. Slides 런타임에서 확인된 규칙:
 
 - `padding`은 256px까지만 적용된다. 큰 여백으로 글을 밀지 말고 행(row) 배치를 쓴다.
 - 한글은 음절 사이에서도 줄이 바뀌므로 모든 글에 `white-space:nowrap`을 두고 줄바꿈은 `<br>`로 직접 정한다.

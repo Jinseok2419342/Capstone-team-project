@@ -1,6 +1,6 @@
 # Re:Found 논문 작성용 AI 인계 패킷
 
-> **2026-10-11 주의:** 원고와 실험 계획을 축소 개정했다. 이 문서의 4장 이후 실험 설계(D_pair·D_stream·D_vlm·D_fault, B0–B2, V1–V4, bootstrap·McNemar, 297개 입력 항목)는 **폐기된 이전 계획**이다. 현재 기준은 [논문 안내](../paper/README.md), [실험 진행 안내](../paper/EXPERIMENT_GUIDE.md), [입력표 32종](../paper/RESULTS_FILL_SHEET.md)이다. 코드 사실과 주장 금지선은 참고하되 9월 18·22일 변경(사건 반영 확인 후 기준 갱신, AI 거절도 확인 필요로 보존, JSON 스키마)과 대조한다.
+> **2026-10-11 주의:** 원고와 실험 계획을 축소 개정했다. 이 문서의 4장 이후 실험 설계(D_pair·D_stream·D_vlm·D_fault, B0–B2, V1–V4, bootstrap·McNemar, 297개 입력 항목)는 **폐기된 이전 계획**이다. 현재 기준은 [논문 안내](../paper/README.md), [실험 진행 안내](../paper/EXPERIMENT_GUIDE.md), 입력표 32종(`RESULTS_FILL_SHEET.md`)이다(2026-10-26: 결과를 원고에 반영해 입력표는 삭제했다 — 현재 기준은 [원고 숫자 출처표](../paper/MANUSCRIPT_NUMBERS.md)와 [개정 상태](../paper/REVISION_STATUS.md)). 코드 사실과 주장 금지선은 참고하되 9월 18·22일 변경(사건 반영 확인 후 기준 갱신, AI 거절도 확인 필요로 보존, JSON 스키마)과 대조한다.
 
 **2026-09-30 진행 반영:** [9월 29일 Windows 핫스팟 백업](../guides/WINDOWS_HOTSPOT_GUIDE.md)에는 Pi Wi-Fi 활성화 로그와 노트북 SSH 웹·OpenAI 동작의 사용자 성공 보고가 있습니다. 새 네트워크의 자동 연결·전원 재인가·무선 단독 복귀는 미확인입니다. 이는 논문용 정량 실험이나 개별 모델/응답 검증이 아닙니다. 기존 실측 전 원고·PDF·PPTX는 보존했고, 아래 과거 구현 설명은 최신 코드와 대조해야 합니다.
 
@@ -16,7 +16,7 @@
 다른 AI에는 최소한 다음을 함께 전달한다.
 
 1. 전체 초안 `docs/paper/PAPER_DRAFT_JDCS.md`
-2. 결과 입력표 `docs/paper/RESULTS_FILL_SHEET.md`
+2. 결과 입력표 `docs/paper/RESULTS_FILL_SHEET.md`(2026-10-26 삭제)
 3. 구현 사실과 주장 경계를 정리한 이 파일
 4. 루트 `README.md`
 5. 실험 절차 `docs/paper/EXPERIMENT_GUIDE.md`
