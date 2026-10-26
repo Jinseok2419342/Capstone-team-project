@@ -1,21 +1,21 @@
-<section id="selective" data-transition="fade" style="background:#F3F6F7;color:#12303F;font-family:'Noto Sans KR', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:row;align-items:center;gap:64px">
-<img src="/_blob/fea9488903d3a2291ac2911c6c2fca5c" alt="보관대를 지키는 로봇이 새 물건이 놓였을 때만 사진 카드를 클라우드의 AI 두뇌로 보내고 이름표를 돌려받는 일러스트" style="width:880px;height:587px;object-fit:cover;border-radius:24px">
-<div style="flex:1;display:flex;flex-direction:column;gap:28px">
-<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C;letter-spacing:1px">2.1 핵심 설계 — 선택적 AI 호출</p>
-<h2 style="white-space:nowrap;font-size:72px;font-weight:800;line-height:1.15;letter-spacing:-1px;color:#12303F">매 장면이 아니라,<br>새 물건일 때만.</h2>
-<p style="white-space:nowrap;font-size:32px;line-height:1.5;color:#4E6670">Pi는 장면을 계속 스스로 분석하고,<br>AI는 새 물건이 놓였거나<br>사라짐이 애매할 때만 부릅니다.</p>
-<div style="display:flex;gap:24px">
-<div style="flex:1;display:flex;flex-direction:column;gap:4px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:24px 28px">
-<p style="white-space:nowrap;font-family:'DM Sans', 'Noto Sans KR', Arial, sans-serif;font-size:72px;font-weight:800;line-height:1.1;color:#0F7C7C">6.0</p>
-<p style="white-space:nowrap;font-size:24px;color:#4E6670">Pi가 분석하는 장/초</p>
-</div>
-<div style="flex:1;display:flex;flex-direction:column;gap:4px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:24px 28px">
-<p style="white-space:nowrap;font-family:'DM Sans', 'Noto Sans KR', Arial, sans-serif;font-size:72px;font-weight:800;line-height:1.1;color:#0F7C7C">4</p>
-<p style="white-space:nowrap;font-size:24px;color:#4E6670">AI에 보내는 사진 수</p>
-</div>
-</div>
-</div>
-<p style="white-space:nowrap;position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#4E6670">생성형 AI 이미지 · 6.0장/초는 10/25 실험 중 15,397장 분석 평균 · 옮기기와 분명한 치우기는 AI 없이 처리</p>
-<p style="white-space:nowrap;position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#4E6670">07</p>
-<aside>약 15초. “이 프로젝트의 핵심 설계입니다. 모든 장면을 AI에 보내지 않습니다. 라즈베리파이가 초당 6장씩 스스로 분석하다가, 새 물건이 놓였거나 사라졌는지 애매할 때만 AI를 부릅니다. 옮기기와 분명한 치우기는 AI 없이 처리합니다.” 6.0장/초는 10월 25일 실험 중 Pi가 기록한 평균 분석 속도(장당 약 0.1초).</aside>
+<section id="selective" data-transition="fade" style="display:flex; flex-direction:row; gap:64px; align-items:center; padding:128px 128px 160px; background:#f3f6f7">
+  <img src="/_blob/fea9488903d3a2291ac2911c6c2fca5c" alt="보관대를 지키는 로봇이 새 물건이 놓였을 때만 사진 카드를 클라우드의 AI 두뇌로 보내고 이름표를 돌려받는 일러스트" style="width:880px; height:587px; border-radius:24px">
+  <div style="display:flex; flex-direction:column; gap:28px; flex:1">
+    <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:24px; font-weight:700; letter-spacing:1px; white-space:nowrap; color:#0f7c7c">2.1 핵심 설계 — 선택적 AI 호출</p>
+    <h2 style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:72px; font-weight:800; line-height:1.15; letter-spacing:-1px; white-space:nowrap; color:#12303f">매 장면이 아니라,<br>새 물건일 때만.</h2>
+    <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:32px; line-height:1.5; white-space:nowrap; color:#4e6670">Pi는 장면을 계속 스스로 분석하고,<br>AI는 새 물건이 놓였거나<br>사라짐이 애매할 때만 부릅니다.</p>
+    <div style="display:flex; flex-direction:row; gap:24px">
+      <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:24px 28px; background:#fbfdfd; border:2px solid #d3e0e2; border-radius:20px">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:72px; font-weight:800; line-height:1.1; white-space:nowrap; color:#0f7c7c">6.0</p>
+        <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:24px; white-space:nowrap; color:#4e6670">Pi가 분석하는 장/초</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:4px; flex:1; padding:24px 28px; background:#fbfdfd; border:2px solid #d3e0e2; border-radius:20px">
+        <p style="font-family:'DM Sans', Arial, sans-serif; font-size:72px; font-weight:800; line-height:1.1; white-space:nowrap; color:#0f7c7c">4</p>
+        <p style="font-family:'Noto Sans KR', Arial, sans-serif; font-size:24px; white-space:nowrap; color:#4e6670">AI에 보내는 사진 수</p>
+      </div>
+    </div>
+  </div>
+  <p style="position:absolute; bottom:64px; left:128px; width:1300px; font-family:'Noto Sans KR', Arial, sans-serif; font-size:24px; white-space:nowrap; color:#4e6670">6.0장/초는 10/25 실험 중 15,397장 분석 평균 · 옮기기와 분명한 치우기는 AI 없이 처리</p>
+  <p style="position:absolute; right:128px; bottom:64px; width:120px; font-family:'Noto Sans KR', Arial, sans-serif; font-size:24px; text-align:right; white-space:nowrap; color:#4e6670">07</p>
+  <aside>약 15초. “이 프로젝트의 핵심 설계입니다. 모든 장면을 AI에 보내지 않습니다. 라즈베리파이가 초당 6장씩 스스로 분석하다가, 새 물건이 놓였거나 사라졌는지 애매할 때만 AI를 부릅니다. 옮기기와 분명한 치우기는 AI 없이 처리합니다.” 6.0장/초는 10월 25일 실험 중 Pi가 기록한 평균 분석 속도(장당 약 0.1초).</aside>
 </section>
