@@ -68,7 +68,9 @@ table{border-collapse:collapse} td,th{padding:0.35em 0.6em;border-bottom:1px sol
         if (tb.right > eb.right + 2 || tb.left < eb.left - 2) out.push({ kind: 'text-overflow', over: Math.round(tb.right - eb.right), ctx: el.textContent.slice(0, 40) });
         let par = el.parentElement;
         while (par && par.tagName !== 'SECTION') { const cs = getComputedStyle(par); if (cs.backgroundColor !== 'rgba(0, 0, 0, 0)' || cs.borderTopWidth !== '0px') break; par = par.parentElement; }
-        if (par && par.tagName !== 'SECTION') { const pb = par.getBoundingClientRect(); const pr = parseFloat(getComputedStyle(par).paddingRight) || 0; if (tb.right > pb.right - pr + 6) out.push({ kind: 'past-card', over: Math.round(tb.right - (pb.right - pr)), ctx: el.textContent.slice(0, 40) }); }
+        if (par && par.tagName !== 'SECTION') { const pb = par.getBoundingClientRect(); const pr = parseFloat(getComputedStyle(par).paddingRight) || 0; if (tb.right > pb.right - pr + 6) out.push({ kind: 'past-card', over: Math.round(tb.right - (pb.right - pr)), ctx: el.textContent.slice(0, 40) });
+          const pl = parseFloat(getComputedStyle(par).paddingLeft) || 0; const avail = (pb.right - pr) - Math.max(pb.left + pl, 0); const used = tb.right - (pb.left + pl);
+          if (avail > 0 && used / avail > 0.9 && tb.width > 120) out.push({ kind: 'tight', pct: Math.round(100 * used / avail), ctx: el.textContent.slice(0, 40) }); }
         const r = el.getBoundingClientRect();
         const pinned = getComputedStyle(el).position === 'absolute';
         if (!pinned && r.bottom > 925) out.push({ kind: 'below-safe', bottom: Math.round(r.bottom), ctx: el.textContent.slice(0, 40) });
