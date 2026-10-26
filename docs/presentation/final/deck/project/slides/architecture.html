@@ -1,53 +1,53 @@
 <section id="architecture" data-transition="fade" style="background:#F3F6F7;color:#12303F;font-family:'Noto Sans KR', Arial, sans-serif;padding:128px 128px 160px;display:flex;flex-direction:column;gap:16px">
-<p style="font-size:24px;font-weight:700;color:#0F7C7C;letter-spacing:1px">2.1 시스템 구성도 — 화면 · 서버 · DB · AI 모델</p>
-<h2 style="font-size:72px;font-weight:800;line-height:1.15;letter-spacing:-1px;color:#12303F">작은 컴퓨터가 지켜보고,<br>필요할 때만 AI에게 묻습니다.</h2>
-<div style="position:absolute;left:128px;top:520px;width:220px;height:200px;display:flex;flex-direction:column;justify-content:center;gap:6px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:24px">
-<h3 style="font-size:32px;font-weight:800;color:#12303F">카메라</h3>
-<p style="font-size:24px;color:#4E6670">OV5647</p>
-<p style="font-size:24px;color:#4E6670">초당 10장</p>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C;letter-spacing:1px">2.1 시스템 구성도 — 화면 · 서버 · DB · AI 모델</p>
+<h2 style="white-space:nowrap;font-size:72px;font-weight:800;line-height:1.15;letter-spacing:-1px;color:#12303F">작은 컴퓨터가 지켜보고,<br>필요할 때만 AI에게 묻습니다.</h2>
+<div style="position:absolute;left:128px;top:540px;width:180px;height:180px;display:flex;flex-direction:column;justify-content:center;gap:6px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:24px">
+<h3 style="white-space:nowrap;font-size:32px;font-weight:800;color:#12303F">카메라</h3>
+<p style="white-space:nowrap;font-size:24px;color:#4E6670">OV5647</p>
+<p style="white-space:nowrap;font-size:24px;color:#4E6670">초당 10장</p>
 </div>
-<div style="position:absolute;left:408px;top:400px;width:736px;height:480px;display:flex;flex-direction:column;gap:16px;background:#DDF1EE;border-radius:24px;padding:28px">
-<div style="display:flex;gap:16px;align-items:center">
-<h3 style="font-size:32px;font-weight:800;color:#12303F">Raspberry Pi 4 · 2GB</h3>
-<p style="font-size:24px;font-weight:700;color:#0F7C7C">AI 없이 스스로 판단</p>
+<div style="position:absolute;left:368px;top:400px;width:800px;height:480px;display:flex;flex-direction:column;justify-content:space-between;background:#DDF1EE;border-radius:24px;padding:28px">
+<div style="display:flex;gap:20px;align-items:center">
+<h3 style="white-space:nowrap;font-size:32px;font-weight:800;color:#12303F">Raspberry Pi 4 · 2GB</h3>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C">AI 없이 스스로 판단</p>
 </div>
 <div style="display:flex;gap:12px">
-<div style="flex:1;display:flex;flex-direction:column;gap:6px;background:#FBFDFD;border-radius:16px;padding:18px">
-<p style="font-size:24px;font-weight:700;color:#0F7C7C">① 움직임 멈춤</p>
-<p style="font-size:24px;line-height:1.4;color:#4E6670">손이 빠지고 장면 안정</p>
+<div style="width:240px;display:flex;flex-direction:column;gap:6px;background:#FBFDFD;border-radius:16px;padding:18px 20px">
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C">① 움직임 멈춤</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.4;color:#4E6670">손이 빠지고<br>장면이 안정되면</p>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;gap:6px;background:#FBFDFD;border-radius:16px;padding:18px">
-<p style="font-size:24px;font-weight:700;color:#0F7C7C">② 전·후 비교</p>
-<p style="font-size:24px;line-height:1.4;color:#4E6670">흔들림·조명 보정</p>
+<div style="width:240px;display:flex;flex-direction:column;gap:6px;background:#FBFDFD;border-radius:16px;padding:18px 20px">
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C">② 전 · 후 비교</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.4;color:#4E6670">흔들림과<br>조명 변화 보정</p>
 </div>
-<div style="flex:1;display:flex;flex-direction:column;gap:6px;background:#FBFDFD;border-radius:16px;padding:18px">
-<p style="font-size:24px;font-weight:700;color:#0F7C7C">③ 같은 물건 찾기</p>
-<p style="font-size:24px;line-height:1.4;color:#4E6670">등록·이동·제거 판단</p>
+<div style="width:240px;display:flex;flex-direction:column;gap:6px;background:#FBFDFD;border-radius:16px;padding:18px 20px">
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C">③ 같은 물건 찾기</p>
+<p style="white-space:nowrap;font-size:24px;line-height:1.4;color:#4E6670">등록 · 이동 · 제거<br>중 무엇인지 판단</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:column;gap:6px;background:#12303F;border-radius:16px;padding:20px 24px">
-<p style="font-size:28px;font-weight:700;color:#F2F6F6">④ 기록 먼저 저장 · SQLite</p>
-<p style="font-size:24px;color:#C5D8DB">AI가 늦거나 실패해도 기록은 남습니다</p>
+<p style="white-space:nowrap;font-size:28px;font-weight:700;color:#F2F6F6">④ 기록 먼저 저장 · SQLite</p>
+<p style="white-space:nowrap;font-size:24px;color:#C5D8DB">AI가 늦거나 실패해도 기록은 남습니다</p>
 </div>
 </div>
 <div style="position:absolute;left:1312px;top:400px;width:480px;height:200px;display:flex;flex-direction:column;justify-content:center;gap:6px;background:#12303F;border-radius:20px;padding:28px">
-<p style="font-size:24px;font-weight:700;color:#6FCFC4">외부 AI · 필요할 때만</p>
-<h3 style="font-size:32px;font-weight:800;color:#F2F6F6">Gemini 3.5 Flash-Lite</h3>
-<p style="font-size:24px;color:#C5D8DB">새 물건 · 애매한 사라짐</p>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#6FCFC4">외부 AI · 필요할 때만</p>
+<h3 style="white-space:nowrap;font-size:32px;font-weight:800;color:#F2F6F6">Gemini 3.5 Flash-Lite</h3>
+<p style="white-space:nowrap;font-size:24px;color:#C5D8DB">새 물건 · 애매한 사라짐</p>
 </div>
 <div style="position:absolute;left:1312px;top:680px;width:480px;height:200px;display:flex;flex-direction:column;justify-content:center;gap:6px;background:#FBFDFD;border:2px solid #D3E0E2;border-radius:20px;padding:28px">
-<p style="font-size:24px;font-weight:700;color:#0F7C7C">관리자 화면</p>
-<h3 style="font-size:32px;font-weight:800;color:#12303F">웹 대시보드 · FastAPI</h3>
-<p style="font-size:24px;color:#4E6670">노트북 브라우저 (SSH 터널)</p>
+<p style="white-space:nowrap;font-size:24px;font-weight:700;color:#0F7C7C">관리자 화면</p>
+<h3 style="white-space:nowrap;font-size:32px;font-weight:800;color:#12303F">웹 대시보드 · FastAPI</h3>
+<p style="white-space:nowrap;font-size:24px;color:#4E6670">노트북 브라우저 (SSH 터널)</p>
 </div>
-<x-connector x1="348" y1="620" x2="408" y2="620" head="end" style="color:#0F7C7C;border-width:3px"></x-connector>
-<x-connector x1="1144" y1="470" x2="1312" y2="470" head="end" style="color:#0F7C7C;border-width:3px"></x-connector>
-<x-connector x1="1312" y1="550" x2="1144" y2="550" head="end" style="color:#0F7C7C;border-width:3px;border-style:dashed"></x-connector>
-<x-connector x1="1144" y1="780" x2="1312" y2="780" head="end" style="color:#0F7C7C;border-width:3px"></x-connector>
-<p style="position:absolute;left:1148px;top:422px;width:160px;text-align:center;font-size:24px;font-weight:700;color:#0F7C7C">사진 4장</p>
-<p style="position:absolute;left:1148px;top:558px;width:160px;text-align:center;font-size:24px;font-weight:700;color:#0F7C7C">이름·분류</p>
-<p style="position:absolute;left:1148px;top:732px;width:160px;text-align:center;font-size:24px;font-weight:700;color:#0F7C7C">실시간</p>
-<p style="position:absolute;left:128px;bottom:64px;width:1300px;font-size:24px;color:#4E6670">Python · OpenCV · Picamera2 · FastAPI · SQLite(WAL) · systemd 자동 실행 — 모두 라즈베리파이 한 대 안에서</p>
-<p style="position:absolute;right:128px;bottom:64px;width:200px;text-align:right;font-size:24px;color:#4E6670">06</p>
+<x-connector x1="308" y1="630" x2="368" y2="630" head="end" style="color:#0F7C7C;border-width:3px"></x-connector>
+<x-connector x1="1168" y1="470" x2="1312" y2="470" head="end" style="color:#0F7C7C;border-width:3px"></x-connector>
+<x-connector x1="1312" y1="550" x2="1168" y2="550" head="end" style="color:#0F7C7C;border-width:3px;border-style:dashed"></x-connector>
+<x-connector x1="1168" y1="780" x2="1312" y2="780" head="end" style="color:#0F7C7C;border-width:3px"></x-connector>
+<p style="white-space:nowrap;position:absolute;left:1170px;top:422px;width:140px;text-align:center;font-size:24px;font-weight:700;color:#0F7C7C">사진 4장</p>
+<p style="white-space:nowrap;position:absolute;left:1170px;top:558px;width:140px;text-align:center;font-size:24px;font-weight:700;color:#0F7C7C">이름 · 분류</p>
+<p style="white-space:nowrap;position:absolute;left:1170px;top:732px;width:140px;text-align:center;font-size:24px;font-weight:700;color:#0F7C7C">실시간</p>
+<p style="white-space:nowrap;position:absolute;left:128px;bottom:64px;width:1400px;font-size:24px;color:#4E6670">Python · OpenCV · Picamera2 · FastAPI · SQLite(WAL) · systemd 자동 실행 — 모두 라즈베리파이 한 대 안에서</p>
+<p style="white-space:nowrap;position:absolute;right:128px;bottom:64px;width:120px;text-align:right;font-size:24px;color:#4E6670">06</p>
 <aside>약 35초. 왼쪽에서 오른쪽으로 따라간다. “카메라가 초당 10장을 찍으면 라즈베리파이가 AI 없이 스스로 판단합니다. 손이 빠지고 장면이 멈추면, 전후를 비교하고, 이미 있던 물건인지 맞춰 봅니다. 그리고 AI에게 묻기 전에 기록부터 저장합니다. 새 물건이거나 사라졌는지 애매할 때만 사진 네 장을 Gemini에 보내 이름과 분류를 받아 옵니다. 결과는 관리자 웹 화면에 바로 나타납니다.”</aside>
 </section>
