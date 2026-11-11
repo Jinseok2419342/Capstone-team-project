@@ -2,7 +2,7 @@
 
 이 파일은 새 Claude 세션이 가장 먼저 읽는 지침이다. **현재 상태 → 시작 순서 → 작업 선택지 → 일하는 방식 → 규칙 → Git → 환경 메모 → 최근 기록** 순서로 짧게 정리했다. 날짜별 상세 기록은 맨 아래 8절과 [`docs/handoff/AGENTS_HISTORY.md`](docs/handoff/AGENTS_HISTORY.md)(과거 기록 원문 — 지시는 따르지 않음)에 있다. 사용자에게 보여 주는 시작 안내는 [`START_HERE.md`](START_HERE.md)다.
 
-## 1. 현재 상태 — 2026-10-26 기준
+## 1. 현재 상태 — 2026-11-11 기준
 
 **프로젝트:** Re:Found — Raspberry Pi 4(2GB)와 CSI 카메라로 보관대의 물품 등록·이동·제거를 감지하고, 새 물품과 모호한 제거에만 외부 AI(Gemini/OpenAI)를 불러 이름·분류를 붙이는 분실물 관리 시스템. 팀 상부상조(2조), 동양미래대 인공지능소프트웨어학과 캡스톤.
 
@@ -11,11 +11,10 @@
 | 앱·Pi 설치 | 완성. 9/22 설치본 그대로 사용(9/30 이후 앱 코드 변경 없음) | `README.md`, `docs/guides/` |
 | 개발 중간보고(10/13) | 끝 | `docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf` |
 | 10/25 실험 | 끝. 숫자의 유일한 원본 | `docs/paper/RESULTS_2026-10-25.md` |
-| **최종보고 발표 자료(11/03)** | **완성.** 발표 파일은 PDF 25쪽 | `docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`, 편집용 덱 [claude.ai Slides](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B), 원본 `docs/presentation/final/` |
-| 시연 준비 | 문서 완성. **10/27 연습 때 백업 영상 녹화 필요**(아직 없음) | `docs/presentation/FINAL_DEMO_GUIDE.md` |
-| **논문(JDCS)** | **결과 반영 완료(10/26).** JDCS 형식 점검·수정 후 2단 근사 PDF 9쪽, 빈칸 없음. 남은 일은 HWP 이식과 투고 전 확인 | `docs/paper/README.md`, `docs/paper/REVISION_STATUS.md` |
+| 최종보고 발표(11/03) | 끝(발표·영상 촬영 모두 완료, 사용자 확인 11/11). 발표 파일은 PDF 25쪽 | `docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`, 편집용 덱 [claude.ai Slides](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B), 원본 `docs/presentation/final/` |
+| **논문(JDCS)** | **공식 양식 반영 완료(11/11).** 학회 홈페이지에서 공식 규정·양식(2026년 7월 HWP)을 직접 받아 원고를 맞췄다. 공식 용지 기준 근사 PDF 10쪽, 빈칸 없음. **남은 일은 논문뿐이다:** HWP 이식과 투고 전 확인 2가지 | `docs/paper/README.md`, `docs/paper/REVISION_STATUS.md`, `docs/paper/template/` |
 
-**일정:** 10/27 최종보고 연습 → 11/03 최종보고 → 11/10 본론 → 11/17 팀논문 → 11/24 최종논문 발표.
+**일정:** 11/03 최종보고(끝) → 11/10 본론(지남) → **11/17 팀논문 → 11/24 최종논문 발표.**
 
 **정해진 것:** **발표 덱은 고치지 않는다(사용자 결정, 10/26).** 덱 20장·부록 B의 AI 호출 "81건·75%·절감 25%"는 그대로 둔다. 원본 재계산 값은 80건·74.1%·절감 25.9%이고 논문은 80건을 쓴다. 결론(목표 30% 미달)은 같다. 다시 묻거나 덱 수정을 제안하지 않는다. 발표 질의에서 물으면 "정확히는 80건, 74.1%"라고 답하면 된다.
 
@@ -24,14 +23,14 @@
 **사용자가 답하거나 해야 할 것(아직 안 됨):**
 
 1. 논문 최종본 **저자 정보**(저자·순서·소속·교신저자·약력) — 지도교수님과 정할 일. 교수님께 보낼 메시지는 `docs/paper/REVISION_STATUS.md` 4절에 준비돼 있다(사용자가 다음 세션에 진행하겠다고 함). 답을 받으면 저자·소속 정리 → 약력 초안 → HWP 이식으로 이어 간다. 투고 전 확인 5가지 중 나머지는 10/26에 답을 받아 반영했다(`docs/paper/REVISION_STATUS.md` 4절: 성공 기준 맞음, 단독·여러 물품 배치 둘 다, 참고문헌 1·3번 확인 완료, AI 고지는 넣지 않음).
-2. 10/27 연습 때 백업 영상 녹화.
+2. 논문 **참고문헌 [3]의 학술대회 개최 장소** — 공식 양식은 학술대회 논문에 개최 장소를 적게 한다. 2025년 한국정보기술학회 하계종합학술대회(6/12–14)의 장소를 확인하지 못해 비워 두었다. 사용자가 DBpia 페이지나 논문 PDF에서 확인해 알려 주면 넣는다(추측해서 넣지 않는다).
 3. Pi 남은 시험(선택): 핫스팟 자동 연결, 정상 종료 후 전원 재인가, 랜선 없이 영상과 AI가 돌아오는지.
 
 ## 2. 새 세션 시작 순서
 
 1. **이 파일이 최신인지 확인한다.** `git fetch origin` 후 `git log --oneline -5 origin/main`과 `git branch -r`을 본다. 이전 세션의 작업 브랜치(`origin/claude/…`)에 `main`보다 새 커밋이 있으면 사용자에게 알리고 `main` 반영 여부를 묻는다. 1절 날짜보다 새 작업이 있으면 그쪽 `AGENTS.md`가 기준이다.
-   - 2026-10-26 기준: 10/26 작업(논문 결과 반영, 최종보고 PDF, 이 지침)은 [PR #20](https://github.com/Jinseok2419342/Capstone-team-project/pull/20)으로 `main`에 반영했다.
-   - 확인 방법: `docs/paper/MANUSCRIPT_NUMBERS.md`가 있으면 그 작업이 들어 있는 것이다.
+   - 2026-11-11 기준: 10/26 작업까지는 [PR #20](https://github.com/Jinseok2419342/Capstone-team-project/pull/20)으로 `main`에 들어 있다. **11/11 작업(논문 공식 양식 반영)은 브랜치 `claude/gracious-ramanujan-bfolt8`에 있고, 사용자가 요청하면 `main`에 반영한다.**
+   - 확인 방법: `docs/paper/template/` 폴더가 있으면 11/11 작업이 들어 있는 것이다. `main`에 없으면 사용자에게 그 브랜치의 반영 여부를 먼저 묻는다.
    - `origin/claude/quirky-dirac-tqqjzj`로 시작하는 브랜치들(`…-main`, `…-docs` 포함)은 내용이 모두 `main`에 들어간 옛 작업 브랜치다(커밋 해시만 달라 “앞서 있다”고 보일 수 있음). 무시한다. 비교할 때는 커밋 수 대신 `git diff --stat origin/main <브랜치>`로 내용 차이를 본다.
 2. **사용자가 고른 작업을 확인한다.** 작업을 말했으면 3절 표의 ‘먼저 읽을 것 → 첫 행동’대로 바로 시작한다. “START_HERE.md, AGENTS.md 보고 시작하자”, “계속하자”처럼 대상이 없으면 1절을 3–5줄로 요약(끝난 것·남은 일정·사용자가 할 일)한 뒤 3절 선택지를 한 줄씩 보여 주고 고르게 한다. 정해진 일정, Pi 설치·연결 방식, 논문 범위는 다시 묻지 않는다.
 3. 코드를 바꿀 때만 테스트 환경을 준비한다(7절). 문서·논문만 고칠 때는 필요 없다.
@@ -40,8 +39,8 @@
 
 | 선택지 | 먼저 읽을 것 | 첫 행동 |
 |---|---|---|
-| ① **논문 마무리·투고** | `docs/paper/README.md` → `docs/paper/REVISION_STATUS.md`(1절 형식 점검표, 3절 HWP 이식, 4절 투고 전 확인) → `docs/paper/MANUSCRIPT_NUMBERS.md` | 원고 `docs/paper/PAPER_DRAFT_JDCS.md`는 완성본이다. 사용자가 4절에 답하면 원고를 고친다. 수정 후 `python docs/paper/manuscript/make_photo_figures.py` → `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만들고 쪽수·글자 깨짐을 이미지로 확인한다. HWP 이식은 3절 순서대로 돕는다. 새 실험(다른 방법과의 비교 등)은 심사위원이 요청할 때만 한다. |
-| ② **최종보고 연습·발표** | `docs/presentation/FINAL_DEMO_GUIDE.md` → `docs/presentation/final/README.md` | 10/27 연습을 지원한다(시간 확인, 백업 영상 녹화 안내). 덱 수정 요청이 오면 덱 아티팩트를 `Artifact` 도구로 읽고 고친 뒤 `docs/presentation/final/deck/project/`도 같은 내용으로 갱신한다. 덱 수정 규칙은 `final/README.md`에 있다(padding ≤ 256px, 모든 글 `white-space:nowrap` + `<br>`, 목록 대신 점 + 글, 글은 칸 폭 90% 이내). 사용자가 PDF를 다시 내려받아 주면 `REFOUND_PROJECT_FINAL_2026-11-03.pdf`를 교체한다. |
+| ① **논문 마무리·투고** | `docs/paper/README.md` → `docs/paper/REVISION_STATUS.md`(1절 형식 점검표, 3절 HWP 이식, 4절 투고 전 확인) → `docs/paper/MANUSCRIPT_NUMBERS.md` | 원고 `docs/paper/PAPER_DRAFT_JDCS.md`는 공식 양식에 맞춘 완성본이다. 사용자가 4절에 답하면 원고를 고친다. 수정 후 `python docs/paper/manuscript/make_figures.py` → `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만들고 쪽수(10쪽 이내)·글자 깨짐을 이미지로 확인한다. HWP 이식은 3절 순서대로 돕는다(HWP 파일은 Claude가 직접 만들 수 없으므로 필요한 파일은 사용자에게 부탁한다). 새 실험(다른 방법과의 비교 등)은 심사위원이 요청할 때만 한다. |
+| ② 최종보고 발표(끝, 11/03) | `docs/presentation/FINAL_DEMO_GUIDE.md` → `docs/presentation/final/README.md` | 발표와 영상 촬영은 끝났다. 11/24 최종논문 발표 등으로 덱 수정 요청이 오면 덱 아티팩트를 `Artifact` 도구로 읽고 고친 뒤 `docs/presentation/final/deck/project/`도 같은 내용으로 갱신한다. 덱 수정 규칙은 `final/README.md`에 있다(padding ≤ 256px, 모든 글 `white-space:nowrap` + `<br>`, 목록 대신 점 + 글, 글은 칸 폭 90% 이내). 사용자가 PDF를 다시 내려받아 주면 `REFOUND_PROJECT_FINAL_2026-11-03.pdf`를 교체한다. |
 | ③ **Pi 시연·실기 확인** | `START_HERE.md` ‘확정한 시연 실행·종료 순서’ → `docs/guides/WINDOWS_HOTSPOT_GUIDE.md`(2–5절, 8절 남은 시험) → `docs/guides/PI_ACCEPTANCE_CHECKLIST.md` | 시연 실행 안내인지, 남은 시험인지 확인한다. 실행 7단계·종료 4단계는 바꾸지 않는다. 결과는 사용자가 붙여 준 출력·보고로만 실기 확인표에 적는다. |
 | ④ **Pi API 키 교체·제공자 전환** | `docs/guides/PI_API_KEY_CHANGE.md` | 안내 순서대로 진행한다(Pi `.env` 수정 → 서비스 재시작 → 웹에서 제공자 선택 → 실물 확인). 키 값은 사용자가 Pi에서 직접 넣는다. 10/25 실험은 Gemini 3.5 Flash-Lite(`gemini-3.5-flash-lite`)로 했다. |
 | ⑤ **PC 자체 앱 실행** | `START_HERE.md` ‘PC 실행 환경 다시 준비하기’ | 처음이면 `setup.ps1` → `start.ps1`. |
@@ -63,6 +62,13 @@
 - **팀 역할:** 기획·설계·개발·구현은 장진석(팀장)이 전담했다. 권기원(팀원)은 발표 자료 점검·편집과 시연 준비 지원만 했다(최종 덱 표기: ‘발표 자료 점검 · 시연 준비 지원’). 발표·논문·문서에 권기원의 개발·구현 참여를 쓰지 않는다.
 - 논문에는 GPT 생성 그림(`docs/presentation/final/images/img-0*.png`)을 쓰지 않는다. 실제 캡처·사진만 쓴다.
 - 분류 정답(실험 전 사용자 기준: 지갑 = 귀중품, 음료 = 음식, 나머지 = 일반)은 결과를 본 뒤 바꾸지 않는다. 결과에서 일부를 빼는 조정도 하지 않는다.
+
+**논문 형식(학회 공식 양식, 2026년 7월 수정본)** — 원고를 고칠 때 깨지 않는다. 전체 대조표는 `docs/paper/REVISION_STATUS.md` 1절, 원문은 `docs/paper/template/`.
+- 첫 쪽은 제목·요약·색인어만 1쪽이다. 영문 요약은 **120–170단어**, 국문 요약은 500자 내외다. 순서는 `[요    약]` → `[Abstract]` → `색인어 :` → `Keyword :`다.
+- **표·그림 안의 글은 영문**이다. 국문 화면 캡처(그림 2·6)는 그림과 캡션 사이에 영문 사유 주석(`*`)을 둔다. 캡션은 국문 줄 아래 영문 줄(영문은 첫 단어만 대문자), 그림은 jpg다.
+- 약어는 처음 나올 때 풀어 쓰고, 수치와 단위 사이는 한 칸 띄운다(%·℃ 제외). 각주는 쓰지 않는다.
+- 참고문헌은 영문이고 본문 인용 순이다. 학술지는 `“제목,” 학술지, Vol., No., pp., 월 연도. doi`, 학술대회는 `in 논문집, 개최 장소, pp., 월 연도`, 온라인은 `저자, 제목 [Internet]. Available: URL.` 형식이다. 목록의 문헌은 모두 본문에 인용돼 있어야 한다.
+- 분량은 10쪽 이내를 지킨다(사용자 결정, 11/11). 넘으면 4-5절·알고리즘 1 → 표 1 순으로 줄인다.
 
 **실험 결과 해석의 경계**
 - 본 실험(손 기록)은 계획 300회, 실제 시도 280회다(줄이어폰은 등록되지 않아 이동·제거 20회는 시도 불가). 성공률 분모는 줄이어폰 제외 270회다.
@@ -97,11 +103,11 @@
 
 - **테스트:** `python3 -m venv <scratch>/venv` → `<scratch>/venv/bin/pip install -r requirements-dev.txt` → `python -m unittest discover -s tests -q`. 현재 290개 실행, 289개 통과, 1개 건너뜀. Node 검사는 `node --test tests/frontend/app.test.cjs`(37개 통과)다. 폴더(`tests/frontend/`)를 지정하면 잘못 실행된다.
 - **논문 PDF 빌드:** 시스템 Python에 `reportlab`·`pypdf`·Pillow가 있다.
-  - 한국어 명조 글꼴이 없으면 나눔명조를 설치한다: scratchpad에서 `npm pack @expo-google-fonts/nanum-myeongjo@0.4.1`으로 받아 풀고, TTF를 `/usr/share/fonts/truetype/nanum/`에 복사한다(저장소에 글꼴을 넣지 않는다).
-  - 빌드 순서는 `make_photo_figures.py`(그림 2·5·6) → `build_manuscript.py`다.
-  - 도식 SVG(그림 1·3·4)는 `--figures-only`일 때만 다시 쓴다.
-  - 결과 확인은 `pdftoppm -r 70 -png`로 렌더링해 본다.
-- **네트워크:** PyPI·npm은 된다. 학회(dcs.or.kr)·KCI·DBpia·koreascience는 프록시 정책으로 막혀 있고 `WebFetch`도 안 된다. `WebSearch`는 되며, 검색 요약으로 JDCS 게재 논문 형식(`Ⅰ. 서 론`, `1-1`)을 확인했다.
+  - 한국어 글꼴이 없으면 나눔명조·나눔고딕을 설치한다: scratchpad에서 `npm pack @expo-google-fonts/nanum-myeongjo@0.4.1`과 `npm pack @expo-google-fonts/nanum-gothic`으로 받아 풀고, TTF를 `/usr/share/fonts/truetype/nanum/`에 복사한다(저장소에 글꼴을 넣지 않는다).
+  - 빌드 순서는 `make_figures.py`(그림 1–6 jpg) → `build_manuscript.py`다. 근사 PDF는 양식 파일에서 읽은 값(용지 210 × 280 mm, 첫 쪽 단독, 줄 간격 150 % 등)을 쓴다.
+  - 결과 확인은 `pdftoppm -r 75 -png`로 렌더링해 본다. 쪽수·요약 단어 수·그림과 표가 놓인 쪽은 `manuscript/PDF_BUILD_REPORT.json`에 나온다.
+  - 양식 HWP의 글을 다시 읽어야 하면 `docs/paper/template/JDCS_TEMPLATE_2026-07.txt`를 본다. HWP 설정값까지 봐야 하면 scratchpad에 venv를 만들어 `pip install pyhwp six lxml`로 `hwp5txt`·`hwp5proc xml`을 쓴다.
+- **네트워크:** PyPI·npm은 된다. 11/11에 이 저장소 전용 클라우드 환경 `capstone-team-project`를 만들어 **학회 홈페이지(`dcs.or.kr`, `www.dcs.or.kr`)를 허용**했다(사용자 승인). 이 환경에서 시작한 세션은 `curl`로 투고 규정·양식을 받을 수 있다(`WebFetch`는 여전히 안 됨). 게재 논문 사이트 `journal.dcs.or.kr`는 허용 목록에 있어도 연결이 끊겨 읽지 못했다. KCI·DBpia·koreascience는 막혀 있다. 막힌 사이트가 꼭 필요하면 사용자에게 승인 요청(환경 수정)을 띄우거나 파일을 부탁한다. `WebSearch`는 된다.
 - **Pi:** 시연은 Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북 PowerShell의 SSH 터널(`ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@refound-pi.local`) → `http://127.0.0.1:18000`으로 한다. 이름 오류가 나면 핫스팟 연결 장치 목록에서 Pi IP를 확인해 `@` 뒤만 바꾼다(`192.168.137.243`은 고정값이 아님). 종료 순서는 `sudo shutdown -h now` → ACT 점멸이 끝난 뒤 전원 분리 → 핫스팟 끄기다.
   - Pi 환경(9/22): Debian 13, 커널 6.18, Python 3.13.5, OpenCV 4.10, Picamera2 0.3.37, FastAPI 0.141, OV5647.
   - 대시보드의 **시연 초기화**는 모든 물품·기록·사진을 백업 없이 지운다(설정·키는 유지).
@@ -109,6 +115,12 @@
 - **덱(claude.ai Slides 아티팩트):** 읽기·수정은 `Artifact` 도구로 한다. 사용자가 편집한 최신본이 아티팩트에 있을 수 있으므로 고치기 전에 반드시 다시 읽는다.
 
 ## 8. 최근 작업 기록 (최신순, 요약)
+
+- **11/11 논문 공식 양식 반영:**
+  - 사용자가 “남은 것은 논문뿐, 공식 규격에 맞게 보충하자”고 했다. 학회 사이트 접속을 승인받아 투고 규정과 양식(2026년 7월 수정 HWP)을 처음으로 직접 읽었다. 양식·규정은 `docs/paper/template/`에 저장했다.
+  - 고친 것: 영문 요약 208 → 168단어, 요약·색인어 순서와 라벨, 표 8개·알고리즘·도식 3개 영문화, 두 줄 캡션, 그림 6장 jpg, 단위 띄어쓰기, 약어 풀어쓰기, 참고문헌 형식(학술대회 개최 장소, 저자 모두 표기, 온라인 형식).
+  - 근사 PDF 생성기를 공식 용지(210 × 280 mm)·첫 쪽 단독·양식의 글꼴 크기와 간격으로 다시 맞췄다. 결과는 10쪽(마지막 쪽 4분의 1 사용). 단을 넘는 문단에서 띄어쓰기가 사라지던 오류도 고쳤다.
+  - 숫자와 실험 내용은 바꾸지 않았다. 남은 것: 저자 정보, 참고문헌 [3] 개최 장소, HWP 이식.
 
 - **10/26 논문 결과 반영:**
   - JDCS 형식을 점검해 세 가지를 고쳤다: 장 번호(`1.` → `Ⅰ. 서 론`), 참고문헌(발행 월 추가, 국문 3번 → 영문 + `(in Korean)`), 방법-실험 불일치(실제 손 기록 방식으로 재작성).

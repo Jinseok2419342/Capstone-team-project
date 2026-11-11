@@ -20,7 +20,7 @@
 |---|---|
 | **최종보고 발표 자료** (11월 3일 발표, 25장) | [최종 PDF](presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf) · 편집용 덱 [Re:Found 최종보고](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) · 원본 [presentation/final/](presentation/final/README.md) |
 | 개발 중간보고 최종본 (10월 13일 발표, PDF 28쪽, Canva 제작) | [presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf](presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) |
-| 논문 원고 PDF (JDCS 2단 근사, 9쪽, 10/25 결과 반영) | [paper/REFOUND_FULL_MANUSCRIPT.pdf](paper/REFOUND_FULL_MANUSCRIPT.pdf) |
+| 논문 원고 PDF (JDCS 공식 양식 근사, 10쪽, 11/11 공식 양식 반영) | [paper/REFOUND_FULL_MANUSCRIPT.pdf](paper/REFOUND_FULL_MANUSCRIPT.pdf) · [학회 양식 HWP](paper/template/JDCS_TEMPLATE_2026-07.hwp) |
 | 졸업작품집 브로셔 | [PDF](<brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP 편집본](<brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
 | 9월 논문 전반부 발표 (PDF 캡처 4장) | [presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx](presentation/REFOUND_PDF_CAPTURE_BRIEFING.pptx) · [원고 4쪽 PDF](paper/briefing/RESEARCH_FRONT_MATTER.pdf) |
 
@@ -52,4 +52,4 @@
 
 ## 현재 진행 상태
 
-**최종보고(11월 3일) 발표 덱은 2026-10-26 완성**됐고, 10월 25일 실험 결과는 [결과 문서](paper/RESULTS_2026-10-25.md)에 정리했습니다. 논문 원고는 2026-10-26 결과를 반영해 [9쪽 PDF](paper/REFOUND_FULL_MANUSCRIPT.pdf)로 만들었습니다. 다음은 10월 27일 최종보고 연습([시연 준비](presentation/FINAL_DEMO_GUIDE.md))과 논문의 HWP 이식·투고 전 확인입니다. 시연 방식은 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**이며, 새 구성의 전원 재인가·무선 단독 부팅 시험은 아직 별도 기록이 없습니다. 다음 세션의 작업(논문·최종보고 연습·Pi)은 사용자가 선택합니다.
+**최종보고(11월 3일) 발표 덱은 2026-10-26 완성**됐고, 10월 25일 실험 결과는 [결과 문서](paper/RESULTS_2026-10-25.md)에 정리했습니다. 최종보고 발표는 11월 3일에 끝났습니다. 논문 원고는 2026-11-11에 학회 공식 양식(2026년 7월 수정본)에 맞춰 [10쪽 PDF](paper/REFOUND_FULL_MANUSCRIPT.pdf)로 다시 만들었습니다. 남은 일은 논문의 HWP 이식·투고 전 확인([개정 상태](paper/REVISION_STATUS.md))과 11월 17일 팀논문, 24일 최종논문 발표입니다. 시연 방식은 **Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북의 SSH 터널**이며, 새 구성의 전원 재인가·무선 단독 부팅 시험은 아직 별도 기록이 없습니다. 다음 세션의 작업(논문·최종보고 연습·Pi)은 사용자가 선택합니다.

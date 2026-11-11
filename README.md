@@ -45,7 +45,7 @@
 | 전체 문서 지도 | [docs/README.md](docs/README.md) |
 | Raspberry Pi 설치 | [처음부터 설치하는 순서](docs/guides/FRESH_SD_START.md) · [상세 설치·운영 가이드](docs/guides/RASPBERRY_PI_GUIDE.md) |
 | 시연 실행·종료 | [Windows 핫스팟·SSH 터널](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) |
-| 논문 | [논문 작업 안내](docs/paper/README.md) · [원고 PDF(9쪽, 결과 반영)](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) · [개정 상태](docs/paper/REVISION_STATUS.md) |
+| 논문 | [논문 작업 안내](docs/paper/README.md) · [원고 PDF(10쪽, 학회 공식 양식 반영)](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) · [개정 상태](docs/paper/REVISION_STATUS.md) |
 | 발표 | [최종보고 PDF(11월 3일)](docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf) · [편집용 덱](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B) · [덱 원본·그림](docs/presentation/final/README.md) · [시연 준비](docs/presentation/FINAL_DEMO_GUIDE.md) · [중간보고 PDF(10월 13일)](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) · [Mermaid 도식](docs/presentation/diagrams/README.md) |
 | 실측 결과 | [2026-10-25 실험 결과](docs/paper/RESULTS_2026-10-25.md) |
 | 졸업작품집 브로셔 | [PDF](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.pdf>) · [HWP](<docs/brochure/2026 졸업작품집_인공지능소프트웨어학과_A_상부상조.hwp>) |
