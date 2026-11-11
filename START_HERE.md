@@ -2,55 +2,57 @@
 
 **Re:Found는 Raspberry Pi 4와 카메라로 물품의 등록·이동·회수를 감지하고, 웹에서 분실물을 관리하는 프로젝트입니다.** 로컬 영상 처리로 변화 사건을 선별하고 필요한 사건에 외부 AI 분석을 요청합니다. 현재 구현·구조·전체 실행 설명은 [README.md](README.md)에 있습니다.
 
-**아래에서 지금 할 일 하나만 고르면 됩니다.** 모든 문서나 `AGENTS.md`를 읽을 필요는 없습니다.
+## 새 세션 시작하는 법
+
+새 Claude Code 세션에서 이렇게 한 줄만 말하면 됩니다.
+
+> AGENT.md, START_HERE.md 읽고 시작하자.
+
+(지침 파일의 실제 이름은 `AGENTS.md`입니다. “AGENT.md”라고 해도 같은 파일로 알아듣습니다.) 그러면 Claude가 지금 상태를 짧게 요약하고 할 일 선택지를 보여 줍니다. 할 일이 정해져 있으면 뒤에 붙이면 바로 시작합니다. 예:
+
+> AGENT.md, START_HERE.md 읽고 시작하자. 교수님이 실천공학교육논문지로 내자고 하셨어. 투고 도와줘.
+
+**모든 작업은 `main`에 들어 있습니다(2026-11-11).** 새 세션은 `main`에서 시작하므로 그대로 이어집니다. 앞으로도 세션을 마칠 때 “main에 반영해”라고 하면 다음 세션이 이어받습니다.
 
 ## 지금 상태 — 2026-11-11
 
+**앱·실험·발표는 모두 끝났고, 남은 것은 논문 투고뿐입니다.**
+
 | 항목 | 상태 |
 |---|---|
-| 최종보고 발표 (11/03) | **끝.** 발표와 영상 촬영을 마쳤습니다. 발표 파일은 [최종 PDF](docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf)(25장, 10/26 덱에서 내려받은 것). 편집은 [Re:Found 최종보고 덱](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B), 원본·그림은 [최종보고 발표 자료](docs/presentation/final/README.md) |
-| **10월 25일 실험** | **완료.** [10/25 실험 결과](docs/paper/RESULTS_2026-10-25.md) — 놓기·옮기기·치우기 270번 중 244번(90.4%), AI 이름·분류 84번 중 80번(95.2%), 손을 뗀 뒤 이름까지 7.8초 |
-| **논문** (남은 작업) | **학회 공식 양식 반영 완료(11/11).** 학회 홈페이지의 공식 규정과 [논문 양식 HWP](docs/paper/template/JDCS_TEMPLATE_2026-07.hwp)를 직접 받아 맞췄습니다. [원고 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf)는 공식 용지 기준 10쪽입니다. 남은 일은 학회 HWP 양식으로 옮기기와 투고 전 확인 2가지입니다([개정 상태](docs/paper/REVISION_STATUS.md)) |
-| **논문 — 두 번째 투고처** | 실천공학교육논문지(JPEE) 규격의 원고와 **바로 제출할 수 있는 [워드 파일](docs/paper/REFOUND_JPEE_MANUSCRIPT.docx)** 을 만들었습니다(11/11). 심사료 0원, 게재료가 더 쌉니다. 두 학술지 비교와 처음 하는 사람용 투고 순서는 [JPEE 안내](docs/paper/jpee/README.md)에 있습니다. **두 곳 중 한 곳에만 냅니다** |
-| 개발 중간보고 (10/13) | 완료. [최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) |
+| 최종보고 발표 (11/03) | **끝.** 발표와 영상 촬영 완료. [최종 PDF](docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf) |
+| 10월 25일 실험 | **끝.** [실험 결과](docs/paper/RESULTS_2026-10-25.md) — 놓기·옮기기·치우기 270번 중 244번(90.4%), AI 이름·분류 84번 중 80번(95.2%), 손을 뗀 뒤 이름까지 7.8초 |
+| **논문 A — 디지털콘텐츠학회논문지** | 학회 공식 양식에 맞춘 원고 완성. [원고 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf)(10쪽). 이 학회는 **한글(HWP) 파일만** 받으므로, 내기로 하면 한글 양식으로 옮기는 일이 남습니다 |
+| **논문 B — 실천공학교육논문지** | **바로 낼 수 있는 [워드 파일](docs/paper/REFOUND_JPEE_MANUSCRIPT.docx)** 완성([미리보기 PDF](docs/paper/jpee/REFOUND_JPEE_PREVIEW.pdf)). 심사료 0원, 게재료가 더 쌉니다 |
 
-남은 일정: **11/17 팀논문, 11/24 최종논문 발표.** (11/03 최종보고와 11/10 본론은 지났습니다.)
+두 원고는 같은 연구라 **한 곳에만 냅니다**(동시에 내면 중복 투고로 둘 다 탈락). 두 학술지 비교와 처음 하는 사람용 투고 순서는 [투고처 비교·투고 안내](docs/paper/jpee/README.md)에 있습니다.
 
-### 사용자가 정하거나 해야 할 것
+남은 일정: **11/17 팀논문, 11/24 최종논문 발표.**
 
-남은 것은 논문뿐입니다. 발표 덱은 고치지 않습니다(AI 호출 81건 표기 유지, 10/26 결정. 정확한 값은 80건, 74.1%이고 논문은 이 값을 씁니다).
+## 내가 해야 할 것
 
-| 할 것 | 언제 | 자세히 |
+| 순서 | 할 것 | 어떻게 |
 |---|---|---|
-| **어느 학술지에 낼지 정하기**(JDCS 또는 JPEE) — [비교표](docs/paper/jpee/README.md) | 투고 전, 지도교수님과 | [JPEE 안내 1절](docs/paper/jpee/README.md) |
-| 논문 저자 정보(저자·순서·소속·교신저자·약력) 정하기 — 교수님께 보낼 메시지가 [개정 상태 4절](docs/paper/REVISION_STATUS.md)에 준비돼 있음 | 투고 전, 지도교수님과 | [개정 상태 4절](docs/paper/REVISION_STATUS.md) |
-| 참고문헌 3번(양형준·최규상, 2025 한국정보기술학회 하계종합학술대회)의 **개최 장소** 확인 — 공식 양식이 학술대회 논문에 장소를 적게 합니다. DBpia 논문 페이지나 논문 PDF 첫 쪽에서 도시 이름만 알려 주면 됩니다 | 투고 전 | [개정 상태 4절](docs/paper/REVISION_STATUS.md) |
-| JDCS로 낼 때: 논문을 학회 HWP 양식으로 옮기기 | 투고 전 | [개정 상태 3절](docs/paper/REVISION_STATUS.md) |
-| JPEE로 낼 때: 회원 가입 → KCI 유사도 검사 → 온라인 투고 | 투고할 때 | [JPEE 안내 4절](docs/paper/jpee/README.md) |
+| 1 | **어느 학술지에 낼지, 저자를 어떻게 할지 교수님께 여쭤보기** | 교수님께 보낼 메시지가 [개정 상태 4절](docs/paper/REVISION_STATUS.md)에 준비돼 있습니다. 두 PDF와 [비교표](docs/paper/jpee/README.md)를 같이 보여 드리면 됩니다 |
+| 2 | 참고문헌 3번 논문(양형준·최규상, 2025 한국정보기술학회 하계종합학술대회)이 **어느 도시에서 열린 학회인지** 확인 | 그 논문 PDF 첫 쪽이나 학회 안내에서 도시 이름만 찾아 Claude에게 알려 주면 됩니다. 몰라도 투고는 할 수 있습니다 |
+| 3 | 교수님 답을 받으면 새 세션에서 그대로 전하기 | 예: “교수님이 JDCS로, 저자는 나·교수님 순서로 하자고 하셨어” |
+| 4 | 투고하기 | **실천공학교육논문지**: 회원 가입 → KCI 유사도 검사 → 온라인 투고([안내 4절](docs/paper/jpee/README.md)). **디지털콘텐츠학회논문지**: 한글 양식으로 옮기기 → 온라인 투고([개정 상태 3절](docs/paper/REVISION_STATUS.md)). 어느 쪽이든 Claude가 한 단계씩 안내합니다 |
+
+발표 덱은 고치지 않습니다(AI 호출 81건 표기 유지, 10/26 결정. 정확한 값은 80건, 74.1%이고 논문은 이 값을 씁니다).
 
 ## 할 일 고르기
 
-다음 작업을 자동으로 정하지 않습니다. 사용자가 작업을 지정하면 바로 이어가고, “계속하자”라고만 하면 아래 선택지를 짧게 안내합니다.
-
-| 할 일 | 먼저 열 파일 | 남은 작업 |
+| 할 일 | 먼저 열 파일 | 하는 일 |
 |---|---|---|
-| **논문 마무리·투고** | [논문 안내](docs/paper/README.md) · [개정 상태(공식 규격 대조·HWP 이식·투고 전 확인)](docs/paper/REVISION_STATUS.md) · [원고 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf) | 투고 전 확인 2가지에 답하기 → 학회 HWP 양식으로 옮기기 → 투고 |
-| 최종보고 발표 (끝) | [시연 준비](docs/presentation/FINAL_DEMO_GUIDE.md) · [최종보고 발표 자료](docs/presentation/final/README.md) | 11/03 발표 완료. 덱을 다시 쓸 일이 있을 때만 엽니다 |
-| **Pi 시연·실기 확인** | [핫스팟 실행·종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 새 구성의 전원 재인가·자동 연결 등 확인 |
-| **Pi API 키 교체·Gemini 전환** | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
-| **PC 자체에서 앱 실행** | 아래 ‘PC 실행 환경 다시 준비하기’ | 필요할 때 `setup.ps1` → `start.ps1` |
+| **논문 투고 준비** | [논문 안내](docs/paper/README.md) · [투고처 비교·투고 안내](docs/paper/jpee/README.md) · [개정 상태](docs/paper/REVISION_STATUS.md) | 투고처 정하기 → 투고 파일 준비 → 투고 → 심사 의견 대응 |
+| 발표 자료 (필요할 때만) | [최종보고 발표 자료](docs/presentation/final/README.md) | 11/24 최종논문 발표 등에 새 자료가 필요할 때 |
+| Pi 시연·실기 확인 | [핫스팟 실행·종료](docs/guides/WINDOWS_HOTSPOT_GUIDE.md) · [실기 확인표](docs/guides/PI_ACCEPTANCE_CHECKLIST.md) | 기존 연결 방식으로 시연, 전원 재인가·자동 연결 시험 |
+| Pi API 키 교체·Gemini 전환 | [API 키 변경 간단 안내](docs/guides/PI_API_KEY_CHANGE.md) | Pi `.env` 키 수정 → 재시작 → 웹 제공자 선택 → 실물 확인 |
+| PC 자체에서 앱 실행 | 아래 ‘PC 실행 환경 다시 준비하기’ | 필요할 때 `setup.ps1` → `start.ps1` |
 
-Pi 관련 작업(시연·실기·API 키)은 Claude가 Pi에 직접 접속할 수 없으므로, 안내받은 명령을 노트북이나 Pi에서 직접 실행하고 출력을 붙여 주면 됩니다. API 키·비밀번호는 채팅에 붙이지 않습니다.
+Pi 관련 작업은 Claude가 Pi에 직접 접속할 수 없으므로, 안내받은 명령을 노트북이나 Pi에서 직접 실행하고 출력을 붙여 주면 됩니다. API 키·비밀번호는 채팅에 붙이지 않습니다.
 
-## 다음 세션 시작하기
-
-새 Claude Code 세션은 `AGENTS.md`(작업 지침)를 자동으로 읽고 시작합니다. 아래처럼 한 줄로 할 일을 말해 주면 됩니다.
-
-> START_HERE.md, AGENTS.md 보고 시작하자.
-
-이렇게만 말하면 현재 상태를 짧게 요약하고 할 일 선택지를 보여 줍니다. 할 일이 정해져 있으면 “… 보고 시작하자. 논문 HWP 이식부터 하자”처럼 작업 이름을 붙이면 바로 시작합니다.
-
-**작업 저장 위치:** Claude가 한 작업은 세션마다 `claude/…` 작업 브랜치에 저장되고, 사용자가 “main에 반영해”라고 하면 `main`에 들어갑니다. 새 세션은 보통 `main`에서 시작하므로, **이전 세션 작업이 `main`에 반영돼 있어야** 새 세션이 그 내용을 봅니다. 10/26 작업까지는 `main`에 반영돼 있습니다([PR #20](https://github.com/Jinseok2419342/Capstone-team-project/pull/20)). **11/11 논문 작업은 브랜치 `claude/gracious-ramanujan-bfolt8`에 있고 아직 `main`에 넣지 않았습니다.** 앞으로도 세션을 마칠 때 “main에 반영해”라고 하면 다음 세션이 바로 이어받습니다.
+**참고:** 새 세션이 학회 사이트를 읽어야 할 때 접속이 막히면, Claude가 이 저장소용 클라우드 환경(`capstone-team-project`)으로 옮기겠다는 승인 창을 띄울 수 있습니다. 허용하면 됩니다. GitHub 푸시가 권한 오류로 막히면 [GitHub 다시 연결](https://claude.ai/connect-github)을 하면 됩니다.
 
 ## 확정한 시연 실행·종료 순서
 
@@ -100,7 +102,7 @@ PC 프로젝트의 `.venv`는 9월 22일 사용자가 삭제했습니다. 발표
 
 ## 파일 정리 기준 — 2026-10-26 (11-11 논문 폴더 갱신)
 
-11월 11일에 논문 폴더에 학회 공식 양식과 규정(`docs/paper/template/`)을 추가했고, 논문 그림은 jpg 6개(`docs/paper/manuscript/figures/`)로 바꿨습니다(이전 SVG·PNG와 `make_photo_figures.py`는 삭제, 새 생성기는 `make_figures.py`).
+11월 11일에 논문 폴더에 학회 공식 양식과 규정(`docs/paper/template/`), 두 번째 투고처인 실천공학교육논문지용 원고·워드 파일·양식(`docs/paper/jpee/`, `docs/paper/REFOUND_JPEE_MANUSCRIPT.docx`)을 추가했고, 논문 그림은 jpg 6개(`docs/paper/manuscript/figures/`)로 바꿨습니다(이전 SVG·PNG와 `make_photo_figures.py`는 삭제, 새 생성기는 `make_figures.py`).
 
 `AGENTS.md`에 쌓였던 날짜별 과거 기록은 [`docs/handoff/AGENTS_HISTORY.md`](docs/handoff/AGENTS_HISTORY.md)로 원문 그대로 옮겼습니다(새 세션이 옛 지시를 따르지 않도록). 논문 자리표시자 입력표는 결과를 넣은 뒤 지우고 [원고 숫자 출처표](docs/paper/MANUSCRIPT_NUMBERS.md)로 바꿨습니다.
 
@@ -115,13 +117,13 @@ PC 프로젝트의 `.venv`는 9월 22일 사용자가 삭제했습니다. 발표
 | `dist/refound-pi.tar.gz` | 새 Pi에 복사할 배포 파일. `.sha256`도 함께 사용. **Git에 포함되지 않아** PC에만 있으며, 없으면 `scripts/raspberry-pi/package-for-pi.ps1`로 다시 만듦 |
 | `docs/` | **모든 문서와 완성본.** 전체 지도는 [문서 인덱스](docs/README.md) |
 | `docs/guides/` | 설치·시연·네트워크 안내. 매번 쓰는 핫스팟 실행·종료 안내도 여기 있음 |
-| `docs/paper/` | 논문 PDF·원고·10/25 실험 결과·원고 숫자 출처표·개정 상태·학회 공식 양식(`template/`)·실험 안내·참고문헌·PDF·그림 생성기 |
+| `docs/paper/` | 논문 두 가지(JDCS 원고·PDF, JPEE 워드 파일과 `jpee/`), 10/25 실험 결과, 원고 숫자 출처표, 개정 상태, 학회 공식 양식(`template/`), 그림 생성기 |
 | `docs/presentation/` | 최종보고 발표 자료(`final/` — 덱 원본·그림), 시연 준비, 중간보고 최종 PDF, 논문 전반부 발표 PPTX, 도식, 8월 발표 초안 |
 | `docs/brochure/` | 졸업작품집 브로셔 최종본(HWP·PDF). 완료된 작업 |
 | `docs/development/`, `docs/handoff/` | 9월 개발 개선 기록, 다음 AI 세션용 인계(누적 기록 `SESSION_HANDOFF.md`, AGENTS 과거 기록 `AGENTS_HISTORY.md`) |
 | `docs/records/` | 날짜별 검증 요약·벤치마크 원장. 평소에는 열 필요 없음 |
 | `docs/project-history/` | 1학기 아이디어·기획·회의록·보고서와 9월 현황보고. 팀 활동 보관 자료이며 현재 설치 설명이 아님 |
 | `data/` | 실제 DB·사진. **Git에 포함되지 않음**(PC·Pi에만 있음). 정리 대상으로 지우지 않음 |
-| `AGENTS.md` | 다음 AI 세션이 자동으로 읽는 지침(현재 상태·시작 순서·규칙·환경). 사용자용 설명서는 이 문서 |
+| `AGENTS.md` | 다음 AI 세션이 자동으로 읽는 지침(현재 상태·시작 순서·규칙·환경). “AGENT.md”라고 불러도 이 파일. 사용자용 설명서는 이 문서 |
 
-분야별 안내는 [문서 인덱스](docs/README.md), 다음 AI의 누적 기록은 [작업 인계](docs/handoff/SESSION_HANDOFF.md)에 있습니다. 다음 작업이 정해졌다면 “논문 HWP 이식”, “최종보고 연습”, “Pi 시연”처럼 작업 이름을 함께 말하면 됩니다.
+분야별 안내는 [문서 인덱스](docs/README.md), 다음 AI의 누적 기록은 [작업 인계](docs/handoff/SESSION_HANDOFF.md)에 있습니다. 다음 작업이 정해졌다면 “실천공학교육논문지 투고”, “JDCS HWP 이식”, “Pi 시연”처럼 작업 이름을 함께 말하면 됩니다.
