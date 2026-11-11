@@ -13,6 +13,7 @@ caption, as the template requires.
 """
 from pathlib import Path
 import math
+import sys
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -20,7 +21,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[2]
 SRC = ROOT / 'docs' / 'presentation' / 'final' / 'images'
 OUT = HERE / 'figures'
-WIDTH = 1200
+WIDTH = 1200          # --width N changes it (JPEE asks for 17 cm at 300 dpi, about 2040 px)
 GAP = 14
 COLUMN_MM = 81
 DPI = round(WIDTH / (COLUMN_MM / 25.4))
@@ -172,7 +173,7 @@ def _row(images, width):
 
 def _label(image, text, xy=(10, 10)):
     draw = ImageDraw.Draw(image)
-    font = _font(30)
+    font = _font(30 * WIDTH / 1200)
     left, top, right, bottom = draw.textbbox((0, 0), text, font=font)
     x, y = xy
     draw.rounded_rectangle((x, y, x + right - left + 16, y + bottom - top + 12), radius=6, fill='white')
@@ -216,11 +217,21 @@ def figure_6():
     # (b) mug lying on its side, the item that failed most moves
     mug = _label(_row([_open('crops/cam-0826-mug.jpg', (0, 0, 990, 470))], WIDTH), '(b)')
     # (c) review list at the same time: nothing was recovered automatically
-    review = _label(_row([_open('crops/review-row.jpg', (0, 0, 1472, 163))], WIDTH), '(c)', (WIDTH - 70, 8))
+    review = _label(_row([_open('crops/review-row.jpg', (0, 0, 1472, 163))], WIDTH), '(c)', (WIDTH - round(70 * WIDTH / 1200), 8))
     return _stack([success, mug, review])
 
 
 def main():
+    global WIDTH, OUT, DPI
+    args = sys.argv[1:]
+    if '--width' in args:
+        WIDTH = int(args[args.index('--width') + 1])
+    if '--out' in args:
+        OUT = Path(args[args.index('--out') + 1]).resolve()
+    if '--dpi' in args:
+        DPI = int(args[args.index('--dpi') + 1])
+    elif '--width' in args:
+        DPI = 300
     OUT.mkdir(parents=True, exist_ok=True)
     makers = {1: figure_1, 2: figure_2, 3: figure_3, 4: figure_4, 5: figure_5, 6: figure_6}
     for n, make in makers.items():
