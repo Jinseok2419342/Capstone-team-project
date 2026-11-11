@@ -13,6 +13,7 @@
 | 10/25 실험 | 끝. 숫자의 유일한 원본 | `docs/paper/RESULTS_2026-10-25.md` |
 | 최종보고 발표(11/03) | 끝(발표·영상 촬영 모두 완료, 사용자 확인 11/11). 발표 파일은 PDF 25쪽 | `docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`, 편집용 덱 [claude.ai Slides](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B), 원본 `docs/presentation/final/` |
 | **논문(JDCS)** | **공식 양식 반영 완료(11/11).** 학회 홈페이지에서 공식 규정·양식(2026년 7월 HWP)을 직접 받아 원고를 맞췄다. 공식 용지 기준 근사 PDF 10쪽, 빈칸 없음. **남은 일은 논문뿐이다:** HWP 이식과 투고 전 확인 2가지 | `docs/paper/README.md`, `docs/paper/REVISION_STATUS.md`, `docs/paper/template/` |
+| **논문(JPEE, 두 번째 투고처)** | **제출용 워드 파일 완성(11/11).** 실천공학교육논문지 규정·워드 양식에 맞춘 원고. 연구와 숫자는 JDCS 원고와 같고, 캡스톤 개발 사례 관점으로 서술했다. **두 학술지 중 한 곳에만 투고한다** | `docs/paper/jpee/README.md`(비교·투고 순서), `docs/paper/REFOUND_JPEE_MANUSCRIPT.docx` |
 
 **일정:** 11/03 최종보고(끝) → 11/10 본론(지남) → **11/17 팀논문 → 11/24 최종논문 발표.**
 
@@ -20,7 +21,11 @@
 
 **정해진 것:** **논문에 생성형 AI 사용 고지는 넣지 않는다(사용자 결정, 10/26).** 학회 규정에서 찾지 못했고, 심사에서 요구하면 그때 반영한다. 다시 제안하지 않는다.
 
+**정해진 것:** **논문 내용은 실험 측정값을 빼고는 바꿔도 된다(사용자, 11/11).** 인용 문헌·서술·구성·언어는 투고처에 맞게 고칠 수 있다. 측정값과 실험 사실은 그대로 둔다.
+
 **사용자가 답하거나 해야 할 것(아직 안 됨):**
+
+0. **어느 학술지에 낼지**(JDCS 또는 JPEE) — 지도교수님과 정할 일. 비교표는 `docs/paper/jpee/README.md` 1절. JPEE는 워드 파일이 준비돼 있고 비용이 적다(심사료 0원, 게재료 6쪽까지 20만 원 + 쪽당 3만 원). JPEE로 가면 사용자가 할 일은 회원 가입, KCI 유사도 검사, 온라인 투고다(같은 문서 4절).
 
 1. 논문 최종본 **저자 정보**(저자·순서·소속·교신저자·약력) — 지도교수님과 정할 일. 교수님께 보낼 메시지는 `docs/paper/REVISION_STATUS.md` 4절에 준비돼 있다(사용자가 다음 세션에 진행하겠다고 함). 답을 받으면 저자·소속 정리 → 약력 초안 → HWP 이식으로 이어 간다. 투고 전 확인 5가지 중 나머지는 10/26에 답을 받아 반영했다(`docs/paper/REVISION_STATUS.md` 4절: 성공 기준 맞음, 단독·여러 물품 배치 둘 다, 참고문헌 1·3번 확인 완료, AI 고지는 넣지 않음).
 2. 논문 **참고문헌 [3]의 학술대회 개최 장소** — 공식 양식은 학술대회 논문에 개최 장소를 적게 한다. 2025년 한국정보기술학회 하계종합학술대회(6/12–14)의 장소를 확인하지 못해 비워 두었다. 사용자가 DBpia 페이지나 논문 PDF에서 확인해 알려 주면 넣는다(추측해서 넣지 않는다).
@@ -39,7 +44,7 @@
 
 | 선택지 | 먼저 읽을 것 | 첫 행동 |
 |---|---|---|
-| ① **논문 마무리·투고** | `docs/paper/README.md` → `docs/paper/REVISION_STATUS.md`(1절 형식 점검표, 3절 HWP 이식, 4절 투고 전 확인) → `docs/paper/MANUSCRIPT_NUMBERS.md` | 원고 `docs/paper/PAPER_DRAFT_JDCS.md`는 공식 양식에 맞춘 완성본이다. 사용자가 4절에 답하면 원고를 고친다. 수정 후 `python docs/paper/manuscript/make_figures.py` → `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만들고 쪽수(10쪽 이내)·글자 깨짐을 이미지로 확인한다. HWP 이식은 3절 순서대로 돕는다(HWP 파일은 Claude가 직접 만들 수 없으므로 필요한 파일은 사용자에게 부탁한다). 새 실험(다른 방법과의 비교 등)은 심사위원이 요청할 때만 한다. |
+| ① **논문 마무리·투고** | `docs/paper/README.md` → `docs/paper/jpee/README.md`(두 투고처 비교) → `docs/paper/REVISION_STATUS.md`(1절 형식 점검표, 3절 HWP 이식, 4절 투고 전 확인) → `docs/paper/MANUSCRIPT_NUMBERS.md` | 원고 `docs/paper/PAPER_DRAFT_JDCS.md`는 공식 양식에 맞춘 완성본이다. 사용자가 4절에 답하면 원고를 고친다. 수정 후 `python docs/paper/manuscript/make_figures.py` → `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만들고 쪽수(10쪽 이내)·글자 깨짐을 이미지로 확인한다. HWP 이식은 3절 순서대로 돕는다(HWP 파일은 Claude가 직접 만들 수 없으므로 필요한 파일은 사용자에게 부탁한다). JPEE 원고는 `docs/paper/jpee/PAPER_DRAFT_JPEE.md`를 고친 뒤 `python docs/paper/jpee/build_jpee_docx.py`로 워드 파일을 다시 만들고 LibreOffice로 PDF 변환해 확인한다. 두 원고의 숫자는 항상 같게 유지한다. 새 실험(다른 방법과의 비교 등)은 심사위원이 요청할 때만 한다. |
 | ② 최종보고 발표(끝, 11/03) | `docs/presentation/FINAL_DEMO_GUIDE.md` → `docs/presentation/final/README.md` | 발표와 영상 촬영은 끝났다. 11/24 최종논문 발표 등으로 덱 수정 요청이 오면 덱 아티팩트를 `Artifact` 도구로 읽고 고친 뒤 `docs/presentation/final/deck/project/`도 같은 내용으로 갱신한다. 덱 수정 규칙은 `final/README.md`에 있다(padding ≤ 256px, 모든 글 `white-space:nowrap` + `<br>`, 목록 대신 점 + 글, 글은 칸 폭 90% 이내). 사용자가 PDF를 다시 내려받아 주면 `REFOUND_PROJECT_FINAL_2026-11-03.pdf`를 교체한다. |
 | ③ **Pi 시연·실기 확인** | `START_HERE.md` ‘확정한 시연 실행·종료 순서’ → `docs/guides/WINDOWS_HOTSPOT_GUIDE.md`(2–5절, 8절 남은 시험) → `docs/guides/PI_ACCEPTANCE_CHECKLIST.md` | 시연 실행 안내인지, 남은 시험인지 확인한다. 실행 7단계·종료 4단계는 바꾸지 않는다. 결과는 사용자가 붙여 준 출력·보고로만 실기 확인표에 적는다. |
 | ④ **Pi API 키 교체·제공자 전환** | `docs/guides/PI_API_KEY_CHANGE.md` | 안내 순서대로 진행한다(Pi `.env` 수정 → 서비스 재시작 → 웹에서 제공자 선택 → 실물 확인). 키 값은 사용자가 Pi에서 직접 넣는다. 10/25 실험은 Gemini 3.5 Flash-Lite(`gemini-3.5-flash-lite`)로 했다. |
@@ -69,6 +74,11 @@
 - 약어는 처음 나올 때 풀어 쓰고, 수치와 단위 사이는 한 칸 띄운다(%·℃ 제외). 각주는 쓰지 않는다.
 - 참고문헌은 영문이고 본문 인용 순이다. 학술지는 `“제목,” 학술지, Vol., No., pp., 월 연도. doi`, 학술대회는 `in 논문집, 개최 장소, pp., 월 연도`, 온라인은 `저자, 제목 [Internet]. Available: URL.` 형식이다. 목록의 문헌은 모두 본문에 인용돼 있어야 한다.
 - 분량은 10쪽 이내를 지킨다(사용자 결정, 11/11). 넘으면 4-5절·알고리즘 1 → 표 1 순으로 줄인다.
+
+**JPEE 원고 형식(실천공학교육논문지 투고 규정 2025-03-01, 국문 워드 양식)** — 대조표는 `docs/paper/jpee/README.md` 3절, 원문은 `docs/paper/jpee/template/`.
+- 워드 1단, 장 번호 `I.`·`A.`·`1)`, 국문 요약 500자·영문 요약 200단어 이내, Key Words는 영문 5개·알파벳순, 표·캡션(국문 줄 아래 영문 줄)·참고문헌은 영문, 참고문헌 10편 이상, 그림과 표는 참고문헌 뒤.
+- 캡스톤 개발 사례로 서술하되 **교육 효과(설문·성취도)를 만들어 넣지 않는다.** 설계 변경 내용은 루트 `README.md`의 ‘초기 계획 대비 현재 변경사항’ 표에 있는 사실만 쓴다. 심사용에는 학교·저자 이름을 넣지 않는다.
+- **중복 투고 금지:** JDCS와 JPEE에 동시에 내지 않는다. 사용자가 두 곳 모두 내려 하면 먼저 이 점을 알린다.
 
 **실험 결과 해석의 경계**
 - 본 실험(손 기록)은 계획 300회, 실제 시도 280회다(줄이어폰은 등록되지 않아 이동·제거 20회는 시도 불가). 성공률 분모는 줄이어폰 제외 270회다.
@@ -107,7 +117,7 @@
   - 빌드 순서는 `make_figures.py`(그림 1–6 jpg) → `build_manuscript.py`다. 근사 PDF는 양식 파일에서 읽은 값(용지 210 × 280 mm, 첫 쪽 단독, 줄 간격 150 % 등)을 쓴다.
   - 결과 확인은 `pdftoppm -r 75 -png`로 렌더링해 본다. 쪽수·요약 단어 수·그림과 표가 놓인 쪽은 `manuscript/PDF_BUILD_REPORT.json`에 나온다.
   - 양식 HWP의 글을 다시 읽어야 하면 `docs/paper/template/JDCS_TEMPLATE_2026-07.txt`를 본다. HWP 설정값까지 봐야 하면 scratchpad에 venv를 만들어 `pip install pyhwp six lxml`로 `hwp5txt`·`hwp5proc xml`을 쓴다.
-- **네트워크:** PyPI·npm은 된다. 11/11에 이 저장소 전용 클라우드 환경 `capstone-team-project`를 만들어 **학회 홈페이지(`dcs.or.kr`, `www.dcs.or.kr`)를 허용**했다(사용자 승인). 이 환경에서 시작한 세션은 `curl`로 투고 규정·양식을 받을 수 있다(`WebFetch`는 여전히 안 됨). 게재 논문 사이트 `journal.dcs.or.kr`는 허용 목록에 있어도 연결이 끊겨 읽지 못했다. KCI·DBpia·koreascience는 막혀 있다. 막힌 사이트가 꼭 필요하면 사용자에게 승인 요청(환경 수정)을 띄우거나 파일을 부탁한다. `WebSearch`는 된다.
+- **네트워크:** PyPI·npm은 된다. 11/11에 이 저장소 전용 클라우드 환경 `capstone-team-project`를 만들어 **학회 홈페이지(`dcs.or.kr`, `www.dcs.or.kr`)를 허용**했다(사용자 승인). 같은 날 실천공학교육논문지(`journal.kipee.or.kr`, `kipee.or.kr`)와 그 파일 서버(`d2j16w31g89z0j.cloudfront.net`), `www.dbpia.co.kr`, `journal.kci.go.kr`도 허용받았다. JPEE 사이트의 검색 기능은 자동 접근을 막으므로 쓰지 않고 호별 목차 페이지를 읽는다. 이 환경에서 시작한 세션은 `curl`로 투고 규정·양식을 받을 수 있다(`WebFetch`는 여전히 안 됨). 게재 논문 사이트 `journal.dcs.or.kr`는 허용 목록에 있어도 연결이 끊겨 읽지 못했다. KCI·DBpia·koreascience는 막혀 있다. 막힌 사이트가 꼭 필요하면 사용자에게 승인 요청(환경 수정)을 띄우거나 파일을 부탁한다. `WebSearch`는 된다.
 - **Pi:** 시연은 Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북 PowerShell의 SSH 터널(`ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@refound-pi.local`) → `http://127.0.0.1:18000`으로 한다. 이름 오류가 나면 핫스팟 연결 장치 목록에서 Pi IP를 확인해 `@` 뒤만 바꾼다(`192.168.137.243`은 고정값이 아님). 종료 순서는 `sudo shutdown -h now` → ACT 점멸이 끝난 뒤 전원 분리 → 핫스팟 끄기다.
   - Pi 환경(9/22): Debian 13, 커널 6.18, Python 3.13.5, OpenCV 4.10, Picamera2 0.3.37, FastAPI 0.141, OV5647.
   - 대시보드의 **시연 초기화**는 모든 물품·기록·사진을 백업 없이 지운다(설정·키는 유지).
@@ -121,6 +131,10 @@
   - 고친 것: 영문 요약 208 → 168단어, 요약·색인어 순서와 라벨, 표 8개·알고리즘·도식 3개 영문화, 두 줄 캡션, 그림 6장 jpg, 단위 띄어쓰기, 약어 풀어쓰기, 참고문헌 형식(학술대회 개최 장소, 저자 모두 표기, 온라인 형식).
   - 근사 PDF 생성기를 공식 용지(210 × 280 mm)·첫 쪽 단독·양식의 글꼴 크기와 간격으로 다시 맞췄다. 결과는 10쪽(마지막 쪽 4분의 1 사용). 단을 넘는 문단에서 띄어쓰기가 사라지던 오류도 고쳤다.
   - 숫자와 실험 내용은 바꾸지 않았다. 남은 것: 저자 정보, 참고문헌 [3] 개최 장소, HWP 이식.
+- **11/11 두 번째 투고처(JPEE) 원고:**
+  - 사용자가 다른 학술지 규격도 하나 더 만들자고 했다(내용은 측정값을 빼고 바꿔도 됨, 비용·절차 고려). 실천공학교육논문지의 규정·양식·비용을 학회 사이트에서 확인하고 그 규격의 원고와 **제출용 워드 파일**을 만들었다.
+  - JDCS 원고와 다른 점: 캡스톤 개발 사례 관점, 설계 변경 표와 시사점 절 추가, JPEE 게재 논문 3편 인용(참고문헌 21편), 장 번호 I.·A., 그림과 표는 뒤에 모음, 그림 폭 2040 px.
+  - 푸시: 11/11 첫 push는 GitHub 권한 오류(403)로 실패했고, 사용자가 GitHub를 다시 연결한 뒤 성공했다. 자동 검사가 커밋 작성자를 Claude로 바꾸라고 요구했지만 사용자 지시대로 사용자 계정을 유지했다(GitHub에는 Unverified로 보인다).
 
 - **10/26 논문 결과 반영:**
   - JDCS 형식을 점검해 세 가지를 고쳤다: 장 번호(`1.` → `Ⅰ. 서 론`), 참고문헌(발행 월 추가, 국문 3번 → 영문 + `(in Korean)`), 방법-실험 불일치(실제 손 기록 방식으로 재작성).

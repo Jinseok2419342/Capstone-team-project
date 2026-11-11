@@ -11,6 +11,7 @@
 | 최종보고 발표 (11/03) | **끝.** 발표와 영상 촬영을 마쳤습니다. 발표 파일은 [최종 PDF](docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf)(25장, 10/26 덱에서 내려받은 것). 편집은 [Re:Found 최종보고 덱](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B), 원본·그림은 [최종보고 발표 자료](docs/presentation/final/README.md) |
 | **10월 25일 실험** | **완료.** [10/25 실험 결과](docs/paper/RESULTS_2026-10-25.md) — 놓기·옮기기·치우기 270번 중 244번(90.4%), AI 이름·분류 84번 중 80번(95.2%), 손을 뗀 뒤 이름까지 7.8초 |
 | **논문** (남은 작업) | **학회 공식 양식 반영 완료(11/11).** 학회 홈페이지의 공식 규정과 [논문 양식 HWP](docs/paper/template/JDCS_TEMPLATE_2026-07.hwp)를 직접 받아 맞췄습니다. [원고 PDF](docs/paper/REFOUND_FULL_MANUSCRIPT.pdf)는 공식 용지 기준 10쪽입니다. 남은 일은 학회 HWP 양식으로 옮기기와 투고 전 확인 2가지입니다([개정 상태](docs/paper/REVISION_STATUS.md)) |
+| **논문 — 두 번째 투고처** | 실천공학교육논문지(JPEE) 규격의 원고와 **바로 제출할 수 있는 [워드 파일](docs/paper/REFOUND_JPEE_MANUSCRIPT.docx)** 을 만들었습니다(11/11). 심사료 0원, 게재료가 더 쌉니다. 두 학술지 비교와 처음 하는 사람용 투고 순서는 [JPEE 안내](docs/paper/jpee/README.md)에 있습니다. **두 곳 중 한 곳에만 냅니다** |
 | 개발 중간보고 (10/13) | 완료. [최종 PDF](docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf) |
 
 남은 일정: **11/17 팀논문, 11/24 최종논문 발표.** (11/03 최종보고와 11/10 본론은 지났습니다.)
@@ -21,9 +22,11 @@
 
 | 할 것 | 언제 | 자세히 |
 |---|---|---|
+| **어느 학술지에 낼지 정하기**(JDCS 또는 JPEE) — [비교표](docs/paper/jpee/README.md) | 투고 전, 지도교수님과 | [JPEE 안내 1절](docs/paper/jpee/README.md) |
 | 논문 저자 정보(저자·순서·소속·교신저자·약력) 정하기 — 교수님께 보낼 메시지가 [개정 상태 4절](docs/paper/REVISION_STATUS.md)에 준비돼 있음 | 투고 전, 지도교수님과 | [개정 상태 4절](docs/paper/REVISION_STATUS.md) |
 | 참고문헌 3번(양형준·최규상, 2025 한국정보기술학회 하계종합학술대회)의 **개최 장소** 확인 — 공식 양식이 학술대회 논문에 장소를 적게 합니다. DBpia 논문 페이지나 논문 PDF 첫 쪽에서 도시 이름만 알려 주면 됩니다 | 투고 전 | [개정 상태 4절](docs/paper/REVISION_STATUS.md) |
-| 논문을 학회 HWP 양식으로 옮기기 | 투고 전 | [개정 상태 3절](docs/paper/REVISION_STATUS.md) |
+| JDCS로 낼 때: 논문을 학회 HWP 양식으로 옮기기 | 투고 전 | [개정 상태 3절](docs/paper/REVISION_STATUS.md) |
+| JPEE로 낼 때: 회원 가입 → KCI 유사도 검사 → 온라인 투고 | 투고할 때 | [JPEE 안내 4절](docs/paper/jpee/README.md) |
 
 ## 할 일 고르기
 
