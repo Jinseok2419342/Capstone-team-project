@@ -1,0 +1,221 @@
+
+<표>
+
+디지털콘텐츠학회 논문지 제목 (한컴고딕, 14pt, 장평100, 자간 -5, 줄간격 160%, 왼쪽정렬)
+이 순 신1·홍 길 동2* (휴먼명조 10.5pt, 장평100, 자간 -5, 줄간격 120%, 왼쪽정렬)
+1한국대학교 디지털콘텐츠학과 석사과정 (돋움, 8.7pt, 장평 100, 자간 0, 줄간격 130%, 왼쪽정렬)
+2대한대학교 컴퓨터공학과 교수 (돋움, 8.7pt, 장평 100, 자간 0, 줄간격 130%, 왼쪽정렬)
+
+Title of JDCS Manuscript (영문 Arial, 16.5pt, 장평 100, 자간 0, 줄간격 130%, 왼쪽정렬)
+Soon-Shin Lee1 · Kil-Dong Hong2*(영문 Times New Roman 10.5pt, 장평 100, 자간 0, 줄간격 120%, 왼쪽정렬)
+1Master’s Course, Department of Digital Contents, Hankook University, Seoul 00000, Korea (영문 Arial, 8.7pt, 장평 100, 자간 0, 줄간격 130%, 왼쪽정렬)
+2Professor, Department of Computer Engineering, Daehan University, Daejeon 00000, Korea
+※ 저자 소속이 둘 이상인 경우 번호로 구분 (즉 저자들 소속이 동일한 경우 번호 병기 필요 없음, *는 교신저자 이름에만 표기)
+
+[요    약] (한컴고딕, 10pt, 장평 100, 자간 -2, 줄간격 150%, 왼쪽정렬)
+<표>
+
+
+<표>
+
+다음은 요약문입니다. (국문 바탕 (영문 Times New Roman), 9.1p, 자간 -5, 장평 100%, 들여쓰기 10pt , 줄간격 150%)
+
+[Abstract] (영문 Arial, 10pt, 장평 100, 자간 -2, 줄간격 150%, 왼쪽정렬)
+Abstract should be placed here. These instructions give you guidelines for preparing papers for JDCS.
+(영문 Times New Roman 9.2pt, 자간 -5, 장평 100%, 들여쓰기 10pt, 줄간격 150%)
+※ 120 words (space 제외)에서 170 words 사이로 반드시 작성. 국문 요약은 이 글자 수에 상응하도록 작성.
+
+색인어 (국문 맑은고딕, 10pt, 장평 100, 자간 -2, 줄간격 150%, 왼쪽정렬) : 5개 단어나 문장 (국문 맑은고딕, 8.7pt)
+ex) 디지털, 콘텐츠, 융합, 기술, 학회
+※ 영문 논문인 경우에도 ‘색인어’를 작성하여 key word 위에 삽입하여야 합니다.
+
+Keyword (영문 Arial, 10pt, 장평100, 자간 -2, 줄간격 150%, 왼쪽정렬) : (영문 Arial, 8.7pt) 
+ex) Digital, Contents, Convergence, Technology, Society
+Every five keywords or phrases are separated by a comma according to the order of Korean Keyword (e.g. Maritime, Information, Communication, Science, Machine Learning) (영문 Arial, 8.7pt)
+※ 각 Keyword는 모두 영문이어야 하며, 각 keyword의 첫 글자는 대문자이어야 함.
+   Keyword의 모든 단어 첫 글자를 대문자로 작성합니다.
+
+
+
+서론부터는 페이지를 바꾸어서 작성하시기 바랍니다. (이 페이지는 반드시 한 페이지로 작성되어야 함)
+Ⅰ. 서  론 (한컴 고딕, 10pt, 왼쪽정렬)
+
+<표>
+
+
+<표>
+
+디지털콘텐츠학회논문지(J. DCS) Vol. 26, No. 12, pp. 1-4, Dec. 2025 (수정 및 삭제 금지)
+디지털콘텐츠학회논문지 논문 제목
+
+서론부터는 2단으로 편집하세요.
+(내용 시작부분 띄어쓰기X)
+(본문 : 들여쓰기 10pt, 바탕, 9.1pt, 줄간격 150%)
+이 문서는 아래한글 2014에 대한 템플릿입니다. 이 템플릿 양식은 학회 홈페이지(www.dcs.or.kr)에서 다운로드하여 사용할 수 있습니다.
+인쇄용지는 가로 210mm 세로 280mm, 워드프로세서는 글 3.0이상을 사용합니다. 논문 편집 여백은 위쪽, 아래쪽 25mm, 좌, 우 여백 각각 20mm로 설정합니다.
+각 장과 장 사이에는 2줄을 띄워 분리하여 주십시오.
+
+
+Ⅱ. 본  론 (한컴 고딕, 10pt, 왼쪽정렬)
+
+본론은 필요에 따라 3-4개의 장으로 편집할 수 있습니다. 본문의 제목은 장, 절, 부절에 따라 다음과 같이 번호를 구분합니다. 각주와 주석은 없어야 합니다. 참고문헌에 작성합니다.
+
+2-1 2의 1절 제목 (국문 영문 모두 한컴 고딕, 9.1pt, 왼쪽정렬)
+
+1) 소 제목 (바탕, 9.1pt, 들여 쓰기 10 pt)
+• 소 제목 (본문과 같은 폰트인데 볼드, 제목 앞에 가운데점)
+
+※본문 작성 시 주의 사항
+단위의 표현 : 단위는 국제단위표준 (SI; international unit) 규정에 따라 표현하고, %와 ℃를 제외한 모든 단위는 수치와 한 칸을 띄워 표현합니다. 이는 본문, 표, 그림 모두 해당됩니다.
+또한 단위 앞과 뒤에 [ ]의 기호 등을 사용하지 않습니다.
+영문 용어의 약어 표현 : 영문 용어의 약어는 논문에 처음 나왔을 때 반드시 표현하여야 하며, 그 다음 표현부터는 약어를 사용할 수 있습니다. 약어 표현 방법은 다음과 같습니다.
+(1) 국문 논문의 경우
+- 국문 용어와 이의 영문 약어가 모두 표현 가능한 경우 예 : 위성 항법 장치 (GPS; global positioning system)
+- 영문 용어와 이의 영문 약어만 표현 가능한 경우 예 : RDPS (residual dispersion per span)
+(2) 영문 논문의 경우
+원어 (약어) 순으로 표현한다. 예를 들어, residual dispersion per span (RDPS)
+
+2-2 그림과 표의 편집 (국문 영문 모두 한컴 고딕, 9.1pt, 왼쪽정렬)
+
+꼭 지켜야 할 사항 : 그림과 표의 위치는 각 페이지의 가장 위나 아래에, 또는 각 단의 가장 위나 아래에 오도록 편집해야 합니다. 그리고 그림 캡션은 그림 아래에 표 캡션은 표 위에 와야 합니다. ★표와 그림 안에 포함되는 모든 내용들은 영문으로 작성합니다.★
+영문논문의 경우는 한글 제목을 넣지 않고 영문 제목만 기재합니다. 또한 표와 그림 영문제목은 맨 앞 단어 첫글자만 대문자로 작성합니다.
+
+1) 그림 편집
+본문에 삽입될 그림은 반드시 jpeg나 jpg로 변환하여 원고 파일에 삽입하여 주시고, 파일로 작성할 수 없는 그림이나 사진이 포함되는 경우에는 저자가 “Camera-ready form”을 만들어 논문 전체를 hard copy로 제출할 수 있습니다. 이런 경우에도 논문의 편집양식은 그대로 지켜야 합니다.
+★그림 안의 내용은 영문이어야 합니다. 국문이 들어가야만 하는 경우에는 그림과 그림제목 사이에 사유를 별첨표시(*)하여 영문으로 작성합니다.★
+
+
+<그림>
+
+그림 1. 국문제목 (돋움, 8.5pt, 장평95, 자간 -8, 줄간격 130%, 왼쪽정렬) 내어 쓰기 28pt
+Fig. 1. 영문제목 (Arial, 8.5pt, 장평100, 자간 -2, 줄간격 130%, 왼쪽정렬) 내어 쓰기 28pt
+
+2) 표 편집
+본문에 삽입될 표는 파일에 삽입하고 표를 삽입한 후에 위치에서 글자처럼 취급 선택하고 여백캡션에서 모든 여백을 0으로 정한다. 표 안의 내용은 영문으로 작성하고 돋움, 7.5pt, 장평100, 자간-3 정렬은 양쪽정렬로, 줄 간격은 120%로 한다.
+
+표 1. 국문제목 (돋움, 8.5pt, 장평95, 자간 -8, 줄간격 130%, 왼쪽정렬) 내어 쓰기 22pt
+Table 1. 영문제목 (Arial, 8.5pt, 장평100, 자간 -2, 줄간격 130%, 왼쪽정렬) 내어 쓰기 22pt
+
+<표>
+
+
+Ⅲ. 제 3 장의 제목 (한컴 고딕, 10pt, 왼쪽정렬)
+
+3-1 수식 (국문 영문 모두 한컴 고딕, 9.1pt, 왼쪽정렬)
+
+수식은 한글에서 수식편집기를 사용하여 삽입하고 오른쪽 여백에 괄호 안에 수식 번호를 입력해야 합니다.
+
+(1)
+
+수식 번호는 연속적이어야 하며, 삽입된 수식 (1)은 본문내용과 아래와 위로 한 줄 띄워야 합니다.
+
+
+Ⅳ. 제 4 장의 제목 (한컴 고딕, 10pt, 왼쪽정렬)
+
+4-1 참고문헌 (국문 영문 모두 한컴 고딕, 9.1pt, 왼쪽정렬)
+
+참고문헌은 먼저 본문에 언급한 순서대로 번호를 매겨야 합니다. 각각의 참고문헌은 다음과 같이 인용합니다[1],[4]. 또는 [6]-[9], 참고[3]또는 논문[5]등으로 사용합니다.
+
+
+Ⅴ. 결  론 (한컴 고딕, 10pt, 왼쪽정렬)
+
+결론을 작성하신 후, 부록이 있는 경우에는 각 부록을 장으로 설정하여, 결론과 참고문헌 사이에 삽입하여 주십시오. 단, 부록과 참고문헌에는 장번호(Ⅰ, Ⅱ, … 등)를 붙이지 않습니다.
+※ 참고문헌은 반드시 영어로 작성하고 본문에서 인용된 것만을 인용 순서에 따라 작성합니다. (참고문헌이 국문논문일지라도 영문으로 작성함)
+
+
+감사의 글 (국문 영문 모두 한컴 고딕, 10pt, 왼쪽정렬)
+
+본 연구는 2021년도 ○○○ 지원본부의 지원에 의하여 이루어진 연구로서, 관계부처에 감사드립니다.(과제번호 기재)
+(심사용 파일에는 감사의글 삭제한다.)
+
+
+참고문헌 (국문 영문 모두 한컴 고딕, 10pt, 왼쪽정렬) 
++참고문헌 주의사항 5페이지 참고
+
+(내용 : Times New Roman, 9pt. 줄 간격 150%)
+학회 투고규정 (Instructions for Authors)에 따라 다음과 같이 작성합니다.
+참고문헌 알파벳 대소문자는 논문명, 학술지명 구분 없이 모든 단어의 첫 글자를 대문자로 처리합니다.
+
+[1] H. J. Kang, “A Study on Analysis of Intelligent Video Surveillance Systems for Societal Security,” The Journal of Digital Contents Society, Vol. 17, No. 4, pp. 273-278, June 2016. https://doi.org/10.9728/dcs.2016.17.4.273
+[2] J. G. Proakis, Digital Communications, 4th ed., New York, NY: McGraw-Hill, 1993.
+[3] J. L. Hennessy and D. A. Patterson, Instruction-level Parallelism and Its Exploitation, in Computer Architecture: A Quantitative Approach, 4th ed., San Francisco, CA: Morgan Kaufmann Pub., pp. 66-153, 2007.
+[4] A. Hashmi, H. Berry, O. Temam, and M. Lipasti, “Automatic Abstraction and Fault Tolerance in Cortical Microachitectures,” in Proceeding of the 38th Annual International Symposium on Computer Architecture, New York, NY, pp. 1-10, 2011. https://doi.org/10.1145/2024723.2000066
+
+
+**참고문헌 유형에 따른 작성 형식
+
+1) 논문지 : 저자명, “제목”, 논문지명, 권, 호, 페이지, 월 년. doi 표기
+[1] H. J. Kang, “A Study on Analysis of Intelligent Video Surveillance Systems for Societal Security,” The Journal of Digital Contents Society, Vol. 17, No. 4, pp. 273-278, June 2016. https://doi.org/10.9728/dcs.2016.17.4.273
+
+2) 단행본 : 저자명, 도서명, 출판사명, 페이지, 년도.
+[2] J. G. Proakis, Digital Communications, 4th ed., New York, NY: McGraw-Hill, 1993.
+[3] J. L. Hennessy and D. A. Patterson, Instruction-level Parallelism and Its Exploitation, in Computer Architecture: A Quantitative Approach, 4th ed., San Francisco, CA: Morgan Kaufmann Pub., pp. 66-153, 2007.
+
+3) 학술대회논문지 : 저자명, “제목”, in 논문지명, 개최장소, 페이지, 월 년. doi 표기
+[4] A. Hashmi, H. Berry, O. Temam, and M. Lipasti, “Automatic Abstraction and Fault Tolerance in Cortical Microachitectures,” in Proceeding of the 38th Annual International Symposium on Computer Architecture, New York, NY, pp. 1-10, 2011. https://doi.org/10.1145/2024723.2000066
+
+4) 학위 논문 : 저자명, 제목, 학위명, 대학명, 장소, 월 년.
+[5] B. Alavi, Distance Measurement Error Modeling for Time- of-arrival Based Indoor Geolocation, Ph.D. Dissertation, Worcester Polytechnic Institute, Worcester, MA, 2006.
+
+5) 기술 보고서 : 저자명, 제목, 기관명, 장소, 기술문서 번호, 페이지, 월 년.
+[6] Y. Z. Ben, D. K. John, and D. J. Anthony, Tapestry: An Infrastructure for Fault-Tolerant Wide-Area Location and Routing, University of California, Berkeley, CA, Technical Report CSD-01-1141, 2001.
+
+6) 온라인(URL) (하이퍼링크 연결은 해제한다.)
+[7] Malardalen Real-Time Research Center, The Worst-Case Execution Time (WCET) Analysis Project [Internet]. Available: http://www.mrtc.mdh.se/projects/wcet/.
+
+7) 번역서 : 저자명, 제목, 역자명, Trans., 지역명: 출판사명, 연도.
+[8] J. Dewey, Democracy and Education, G. D. Hong, Trans., Seoul: Kyoyookbook, 2007.
+
+
+<표>
+
+
+<표>
+
+사진은 Size 28×29mm / 300dpi / jpg 또는 jpeg 형식으로 변환한 후 문서에 포함하여 보내주세요.
+
+
+
+
+*심사용 파일에는 모든 저자정보를 삭제해주시기 바랍니다.
+(첫 페이지와 마지막 페이지에 있는 저자정보 및 감사의 글 삭제 필수)
+
+*투고할 때, PDF가 아닌 한글 파일로 제출 필수.
+(원문파일명: 논문제목으로만, 심사용파일명: (심사용)논문제목으로만 )
+* 참고문헌 목록에는 하나의 문헌을 여러 번 중복해서 기재하지 말아주세요. 
+
+본문 내에서 특정 문헌을 여러 번 인용한 경우, 해당 문헌의 참고문헌 번호를 인용할 때마다 기재해주세요.
+
+▶ 옳은 예시
+
+메밀꽃 필 무렵은 1936년 <조광> 지에 발표된 이효석의 단편소설이다[1]. 소설의 주 무대는 강원도 평창군 봉평명 일대이며[1], 마치 시처럼 서정적인 표현이 다수 사용되기도 했다[1]. 원제는 <모밀꽃 필 무렵>이나, 현행 맞춤법 규정에 따라 표기한다[1].
+
+[1] 위키백과, 메밀꽃 필 무렵.
+
+▶ 틀린 예시
+
+메밀꽃 필 무렵은 1936년 <조광> 지에 발표된 이효석의 단편소설이다[1]. 소설의 주 무대는 강원도 평창군 봉평명 일대이며[2], 마치 시처럼 서정적인 표현이 다수 사용되기도 했다[3]. 원제는 <모밀꽃 필 무렵>이나, 현행 맞춤법 규정에 따라 표기한다[4].
+
+[1] 위키백과, 메밀꽃 필 무렵.
+[2] 위키백과, 메밀꽃 필 무렵.
+[3] 위키백과, 메밀꽃 필 무렵.
+[4] 위키백과, 메밀꽃 필 무렵.
+
+* 참고문헌 목록에 있으면 본문에 모두 인용되어야 합니다.
+본문에 있는 인용은 모두 참고문헌 목록에 있어야 합니다.
+
+* JDCS는 참고문헌 번호로 인용합니다. 저자명으로 인용을 하지 않습니다. 부득이하게 저자명으로 인용을 할 경우 연도표기는 하지 않습니다.
+
+▶ 옳은 예시
+
+홍길동의 연구는 이에 대해 다루고 있다[1].
+
+▶ 틀린 예시
+
+홍길동(2024)의 연구는 이에 대해 다루고 있다.
+
+
+
+
+
+

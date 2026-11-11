@@ -1,27 +1,37 @@
-"""Build a JDCS-like two-column review PDF and the column-width schematics.
+"""Build a PDF that approximates the official JDCS HWP template (2026-07 revision).
 
-The official submission is the JDCS HWP template (A4, two columns, 9.1 pt
-body).  This PDF approximates that layout so the page count can be checked
-before moving the text into HWP; it is not the HWP file itself.
+The submission itself must be the HWP template; this PDF is for checking the
+page count, the one-page front matter and the placement of figures and tables
+before the text is moved into HWP.  Values taken from the template file:
+
+- paper 210 x 280 mm; margins 13 mm top/bottom plus 12 mm header/footer,
+  20 mm left/right; two columns with an 8 mm gap from the introduction on
+- page 1 holds only the titles, abstracts and keywords (one column)
+- body Batang 9.1 pt, line spacing 150 %, first-line indent 10 pt
+- chapter title 10 pt and section title 9.1 pt gothic, with two blank lines
+  before a chapter and one blank line around section titles
+- captions 8.5 pt gothic, left aligned, Korean line then English line
+- table text 7.5 pt, line spacing 120 %; references Times 9 pt, 150 %
+- figures and tables sit at the top of a column
+
+HWP narrows the letter spacing (-5 to -8 %), which reportlab paragraphs cannot
+do.  The same number of characters per line is reached by scaling the font
+size instead (TRACK); line pitch is kept at the template value.
 """
 from pathlib import Path
 import json
-import math
 import re
 import sys
 from xml.sax.saxutils import escape
 
-from reportlab.graphics import renderSVG
-from reportlab.graphics.shapes import Drawing, Line, Polygon, Rect, String
 from reportlab.lib import colors
-from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_RIGHT
-from reportlab.lib.pagesizes import A4
+from reportlab.lib.enums import TA_CENTER, TA_JUSTIFY, TA_LEFT, TA_RIGHT
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import (
-    BaseDocTemplate, Frame, Image, KeepTogether, NextPageTemplate, PageTemplate,
+    BaseDocTemplate, CondPageBreak, Flowable, Frame, Image, NextPageTemplate, PageBreak, PageTemplate,
     Paragraph, Spacer, Table, TableStyle,
 )
 from pypdf import PdfReader
@@ -31,57 +41,61 @@ ROOT = HERE.parents[2]
 SOURCE = HERE.parent / 'PAPER_DRAFT_JDCS.md'
 OUT = HERE.parent / 'REFOUND_FULL_MANUSCRIPT.pdf'
 FIG = HERE / 'figures'
-FIG.mkdir(parents=True, exist_ok=True)
 
-# JDCS template: A4, top/bottom 13 mm + 12 mm header/footer, left/right 20 mm,
-# 8 mm column gap, 9.1 pt body.  Line pitch approximates HWP 160 %.
+PAGE = (210 * mm, 280 * mm)
 MARGIN_X = 20 * mm
-MARGIN_Y = 25 * mm
+MARGIN_Y = 25 * mm          # 13 mm margin + 12 mm header/footer
 GAP = 8 * mm
-BODY_PT = 9.1
-LEADING = 14.5
-FULL_W = A4[0] - 2 * MARGIN_X
+FULL_W = PAGE[0] - 2 * MARGIN_X
 COL_W = (FULL_W - GAP) / 2
-BODY_H = A4[1] - 2 * MARGIN_Y
+BODY_H = PAGE[1] - 2 * MARGIN_Y
+BODY_PT = 9.1
+LINE = BODY_PT * 1.5        # 150 % line spacing
+TRACK = {'body': .92, 'abstract_ko': .95, 'abstract_en': .89, 'caption': .88, 'table': .95, 'ref': .85}
+ABSTRACT_WORDS = (120, 170)
+
+
+def _first(paths):
+    for path, kwargs in paths:
+        if Path(path).exists():
+            return path, kwargs
+    return None, None
 
 
 def _register_fonts():
-    # Myeongjo (serif) faces first: the JDCS body font is Shin Myeongjo.
-    candidates = [
-        ('C:/Windows/Fonts/batang.ttc', 'C:/Windows/Fonts/malgunbd.ttf', 0),
-        ('/usr/share/fonts/truetype/nanum/NanumMyeongjo_400Regular.ttf',
-         '/usr/share/fonts/truetype/nanum/NanumMyeongjo_700Bold.ttf', None),
-        ('/usr/share/fonts/truetype/nanum/NanumMyeongjo.ttf',
-         '/usr/share/fonts/truetype/nanum/NanumMyeongjoBold.ttf', None),
-        ('C:/Windows/Fonts/malgun.ttf', 'C:/Windows/Fonts/malgunbd.ttf', None),
-        ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', '/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', 0),
-    ]
-    for regular, bold, index in candidates:
-        if Path(regular).exists() and Path(bold).exists():
-            kwargs = {'subfontIndex': index} if index is not None else {}
-            pdfmetrics.registerFont(TTFont('Korean', regular, **kwargs))
-            bold_kwargs = {'subfontIndex': 0} if bold.endswith('.ttc') else {}
-            pdfmetrics.registerFont(TTFont('KoreanBold', bold, **bold_kwargs))
-            break
-    else:
-        raise SystemExit('Korean font not found (Batang, Nanum Myeongjo, Malgun Gothic or WenQuanYi Zen Hei)')
-    for path, kwargs in (('C:/Windows/Fonts/cambria.ttc', {'subfontIndex': 0}),
-                         ('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', {})):
-        if Path(path).exists():
-            pdfmetrics.registerFont(TTFont('Equation', path, **kwargs))
-            break
-    else:
-        pdfmetrics.registerFont(TTFont('Equation', regular, **kwargs))
-    pdfmetrics.registerFontFamily('Korean', normal='Korean', bold='KoreanBold', italic='Korean', boldItalic='KoreanBold')
-    # Some Korean faces (e.g. Nanum Myeongjo) lack Roman numerals and U+2212.
-    for path, kwargs in (('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', {}),
-                         ('C:/Windows/Fonts/batang.ttc', {'subfontIndex': 0}),
-                         ('C:/Windows/Fonts/seguisym.ttf', {})):
-        if Path(path).exists():
-            pdfmetrics.registerFont(TTFont('Fallback', path, **kwargs))
-            break
-    else:
-        pdfmetrics.registerFont(TTFont('Fallback', regular, **kwargs))
+    nanum = '/usr/share/fonts/truetype/nanum/'
+    lib = '/usr/share/fonts/truetype/liberation/'
+    faces = {
+        # template: Batang (body), gothic faces (titles, captions), Times New Roman, Arial
+        'Serif': [('C:/Windows/Fonts/batang.ttc', {'subfontIndex': 0}), (nanum + 'NanumMyeongjo_400Regular.ttf', {}),
+                  (nanum + 'NanumMyeongjo.ttf', {}), ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', {'subfontIndex': 0})],
+        'SerifBold': [(nanum + 'NanumMyeongjo_700Bold.ttf', {}), (nanum + 'NanumMyeongjoBold.ttf', {}),
+                      ('C:/Windows/Fonts/malgunbd.ttf', {}), ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', {'subfontIndex': 0})],
+        'Gothic': [('C:/Windows/Fonts/malgun.ttf', {}), (nanum + 'NanumGothic_400Regular.ttf', {}),
+                   (nanum + 'NanumGothic.ttf', {}), ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', {'subfontIndex': 0})],
+        'GothicBold': [('C:/Windows/Fonts/malgunbd.ttf', {}), (nanum + 'NanumGothic_700Bold.ttf', {}),
+                       (nanum + 'NanumGothicBold.ttf', {}), ('/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc', {'subfontIndex': 0})],
+        'Times': [('C:/Windows/Fonts/times.ttf', {}), (lib + 'LiberationSerif-Regular.ttf', {}),
+                  ('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', {})],
+        'TimesItalic': [('C:/Windows/Fonts/timesi.ttf', {}), (lib + 'LiberationSerif-Italic.ttf', {}),
+                        ('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', {})],
+        'Arial': [('C:/Windows/Fonts/arial.ttf', {}), (lib + 'LiberationSans-Regular.ttf', {}),
+                  ('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf', {})],
+        'ArialBold': [('C:/Windows/Fonts/arialbd.ttf', {}), (lib + 'LiberationSans-Bold.ttf', {}),
+                      ('/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf', {})],
+        'Equation': [('C:/Windows/Fonts/cambria.ttc', {'subfontIndex': 0}), ('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', {})],
+        'Fallback': [('/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf', {}), ('C:/Windows/Fonts/seguisym.ttf', {})],
+    }
+    for name, paths in faces.items():
+        path, kwargs = _first(paths)
+        if path is None:
+            if name in ('Serif', 'Gothic'):
+                raise SystemExit('Korean font not found (Batang/Malgun Gothic on Windows, Nanum Myeongjo/Gothic on Linux)')
+            path, kwargs = _first(faces['Serif'])
+        pdfmetrics.registerFont(TTFont(name, path, **kwargs))
+    for family, bold in (('Serif', 'SerifBold'), ('Gothic', 'GothicBold'), ('Arial', 'ArialBold')):
+        pdfmetrics.registerFontFamily(family, normal=family, bold=bold, italic=family, boldItalic=bold)
+    pdfmetrics.registerFontFamily('Times', normal='Times', bold='Times', italic='TimesItalic', boldItalic='TimesItalic')
 
 
 def has_glyph(font, ch):
@@ -95,164 +109,98 @@ def with_fallback(s, font):
         if ch.isspace() or ord(ch) < 0x80 or has_glyph(font, ch):
             out.append(ch)
         else:
-            alt = next((f for f in ('Korean', 'Fallback', 'Equation') if f != font and has_glyph(f, ch)), None)
+            alt = next((f for f in ('Serif', 'Gothic', 'Fallback', 'Equation') if f != font and has_glyph(f, ch)), None)
             out.append(f'<font name="{alt}">{ch}</font>' if alt else ch)
     return ''.join(out)
 
 
 _register_fonts()
-INK = colors.HexColor('#243746')
+INK = colors.HexColor('#1F2A33')
 MUTED = colors.HexColor('#5A6671')
-LIGHT = colors.HexColor('#F0F4F6')
-EDGE = colors.HexColor('#AEBBC4')
+RULE = colors.HexColor('#CAD3D9')
 
 
-def box(d, x, y, w, h, lines, accent=False, size=7.2):
-    d.add(Rect(x, y, w, h, rx=2, ry=2, fillColor=INK if accent else LIGHT, strokeColor=EDGE, strokeWidth=.6))
-    if isinstance(lines, str):
-        lines = lines.split('\n')
-    pitch = size + 2.6
-    for i, line in enumerate(lines):
-        d.add(String(x + w / 2, y + h / 2 + (len(lines) - 1) * pitch / 2 - i * pitch - size * .35, line,
-                     fontName='KoreanBold' if i == 0 else 'Korean', fontSize=size, textAnchor='middle',
-                     fillColor=colors.white if accent else INK))
-
-
-def arrow(d, x1, y1, x2, y2):
-    d.add(Line(x1, y1, x2, y2, strokeColor=MUTED, strokeWidth=.8))
-    a = math.atan2(y2 - y1, x2 - x1)
-    z = 3.6
-    d.add(Polygon([x2, y2, x2 - z * math.cos(a - .5), y2 - z * math.sin(a - .5),
-                   x2 - z * math.cos(a + .5), y2 - z * math.sin(a + .5)], fillColor=MUTED, strokeColor=MUTED))
-
-
-def label(d, x, y, txt, size=6.6):
-    d.add(String(x, y, txt, fontName='Korean', fontSize=size, fillColor=MUTED, textAnchor='middle'))
-
-
-def make_figures(write_svg=False):
-    w = COL_W
-    figs = {}
-
-    d = Drawing(w, 214)
-    box(d, 30, 184, w - 60, 26, ['CSI 카메라', 'Picamera2 영상 입력'])
-    arrow(d, w / 2, 184, w / 2, 170)
-    box(d, 0, 122, w, 48, ['Raspberry Pi 4 (2GB)', '안정 장면 확인 → 영상 정합·조명 보정', '기존 물품 대응 → 사건 판정'], True)
-    arrow(d, w * .25, 122, w * .25, 106)
-    arrow(d, w * .75, 122, w * .75, 106)
-    box(d, 0, 66, w * .47, 40, ['이동 · 제거', '장치에서 처리', '외부 호출 없음'])
-    box(d, w * .53, 66, w * .47, 40, ['등록 · 제거 검증', '외부 시각언어모델', '전후 이미지 최대 4장'])
-    arrow(d, w * .25, 66, w * .25, 50)
-    arrow(d, w * .75, 66, w * .75, 50)
-    box(d, 0, 6, w, 44, ['FastAPI · SQLite WAL', '임시 등록 · 보관 기한 · 처리 이력', '관리자 웹 화면 · 알림'])
-    figs[1] = d
-
-    d = Drawing(w, 132)
-    bw, bh = 64, 32  # figure 3: state machine
-    xs = (0, (w - bw) / 2, w - bw)
-    top, low = 82, 26
-    box(d, xs[0], top, bw, bh, ['카메라 준비', '기준 장면 설정'])
-    box(d, xs[1], top, bw, bh, ['감시', '움직임·누적 변화'])
-    box(d, xs[2], top, bw, bh, ['대기', '마지막 움직임 후 3.0 s'])
-    box(d, xs[2], low, bw, bh, ['안정 확인', '1.2 s 무동작'])
-    box(d, xs[1], low, bw, bh, ['분석', '전후 장면 비교'], True)
-    arrow(d, xs[0] + bw, top + bh / 2, xs[1], top + bh / 2)
-    arrow(d, xs[1] + bw, top + bh / 2, xs[2], top + bh / 2)
-    arrow(d, xs[2] + bw / 2, top, xs[2] + bw / 2, low + bh)
-    arrow(d, xs[2], low + bh / 2, xs[1] + bw, low + bh / 2)
-    arrow(d, xs[1] + bw / 2, low + bh, xs[1] + bw / 2, top)
-    label(d, xs[0] + bw / 2, low + bh / 2 + 3, 'DB 반영 확인 후')
-    label(d, xs[0] + bw / 2, low + bh / 2 - 6, '기준 갱신 → 감시')
-    label(d, w / 2, 8, '안정 확인 중 움직임이 생기면 대기로 돌아간다')
-    figs[3] = d
-
-    steps = [
-        (['안정 전후 영상', '기준 영상 B / 현재 영상 I'], False),
-        (['기하 정합', '광류 추적 + RANSAC 부분 아핀'], False),
-        (['차이 영상 구성', '노출·국소 조명 보정, Lab 색차'], False),
-        (['후보 정리', '공통 경계·그림자 억제, 형태학 연산'], False),
-        (['전역 변화 검사', '변화 42% 초과 시 사건 억제'], False),
-        (['기존 물품 대응 → 사건 판정', '등록 / 이동 / 제거 / 제거 검증'], True),
-    ]
-    bh, gap = 26, 9
-    height = len(steps) * bh + (len(steps) - 1) * gap + 4
-    d = Drawing(w, height)
-    for i, (lines, accent) in enumerate(steps):
-        y = height - 2 - (i + 1) * bh - i * gap
-        box(d, 18, y, w - 36, bh, lines, accent)
-        if i:
-            arrow(d, w / 2, y + bh + gap, w / 2, y + bh)
-    figs[4] = d
-
-    # The PDF draws these Drawings directly. SVG copies (for the HWP version)
-    # are rewritten only on request, so a build on another OS with different
-    # font metrics does not shift the committed files.
-    for n, f in figs.items():
-        target = FIG / f'figure-{n}.svg'
-        if target.exists() and not write_svg:
-            continue
-        renderSVG.drawToFile(f, str(target))
-        svg = target.read_text(encoding='utf-8')
-        svg = svg.replace("font-family: 'KoreanBold'", "font-family: 'Malgun Gothic'; font-weight: bold").replace("font-family: 'Korean'", "font-family: 'Malgun Gothic'")
-        svg = svg.replace('font-family="KoreanBold"', 'font-family="Malgun Gothic" font-weight="bold"').replace('font-family="Korean"', 'font-family="Malgun Gothic"')
-        svg = svg.replace('font-family: KoreanBold;', 'font-family: Malgun Gothic; font-weight: bold;').replace('font-family: Korean;', 'font-family: Malgun Gothic;')
-        target.write_text(svg, encoding='utf-8')
-    return figs
-
-
-def photo_or_placeholder(n, caption_hint):
-    path = FIG / f'figure-{n}.png'
-    if path.exists():
-        image = Image(str(path))
-        scale = COL_W / image.imageWidth
-        image.drawWidth, image.drawHeight = COL_W, image.imageHeight * scale
-        return image, True
-    d = Drawing(COL_W, 118)
-    d.add(Rect(0, 0, COL_W, 118, fillColor=colors.white, strokeColor=EDGE, strokeWidth=.8, strokeDashArray=[3, 2]))
-    label(d, COL_W / 2, 64, f'그림 {n}: 사진 입력 예정', 8)
-    label(d, COL_W / 2, 50, caption_hint, 7)
-    return d, False
+def S(name, font, size, leading, **kw):
+    return ParagraphStyle(name, fontName=font, fontSize=size, leading=leading, textColor=INK, **kw)
 
 
 ST = {
-    'title': ParagraphStyle('title', fontName='KoreanBold', fontSize=15, leading=21, alignment=TA_CENTER, wordWrap='CJK', spaceAfter=6),
-    'en_title': ParagraphStyle('en_title', fontName='KoreanBold', fontSize=10.5, leading=14, alignment=TA_CENTER, spaceAfter=10),
-    'abs_head': ParagraphStyle('abs_head', fontName='KoreanBold', fontSize=9, leading=13, spaceBefore=4, spaceAfter=2),
-    'abstract': ParagraphStyle('abstract', fontName='Korean', fontSize=8.6, leading=13, wordWrap='CJK', alignment=TA_JUSTIFY, leftIndent=12, rightIndent=12, spaceAfter=3),
-    'keywords': ParagraphStyle('keywords', fontName='Korean', fontSize=8.4, leading=12, wordWrap='CJK', leftIndent=12, rightIndent=12, spaceAfter=6),
-    'body': ParagraphStyle('body', fontName='Korean', fontSize=BODY_PT, leading=LEADING, wordWrap='CJK', alignment=TA_JUSTIFY, firstLineIndent=BODY_PT, spaceAfter=0),
-    'h1': ParagraphStyle('h1', fontName='KoreanBold', fontSize=10.5, leading=15, wordWrap='CJK', spaceBefore=10, spaceAfter=4, keepWithNext=True),
-    'h2': ParagraphStyle('h2', fontName='KoreanBold', fontSize=9.4, leading=14, wordWrap='CJK', spaceBefore=6, spaceAfter=2, keepWithNext=True),
-    'caption': ParagraphStyle('caption', fontName='KoreanBold', fontSize=8, leading=11, wordWrap='CJK', alignment=TA_CENTER, spaceBefore=6, spaceAfter=3, keepWithNext=True),
-    'figcaption': ParagraphStyle('figcaption', fontName='KoreanBold', fontSize=8, leading=11, wordWrap='CJK', alignment=TA_CENTER, spaceBefore=3, spaceAfter=8),
-    'table': ParagraphStyle('table', fontName='Korean', fontSize=7.4, leading=10, wordWrap='CJK'),
-    'ref': ParagraphStyle('ref', fontName='Korean', fontSize=7.6, leading=10.6, wordWrap='CJK', spaceAfter=3, leftIndent=14, firstLineIndent=-14),
-    'eq': ParagraphStyle('eq', fontName='Equation', fontSize=8.6, leading=13, alignment=TA_CENTER),
-    'eqno': ParagraphStyle('eqno', fontName='Korean', fontSize=8.6, leading=13, alignment=TA_RIGHT),
-    'alg': ParagraphStyle('alg', fontName='Korean', fontSize=8, leading=11.2, wordWrap='CJK', leftIndent=11, firstLineIndent=-11),
-    'note': ParagraphStyle('note', fontName='Korean', fontSize=7.4, leading=10.5, wordWrap='CJK', textColor=MUTED, alignment=TA_CENTER, spaceAfter=6),
+    'title': S('title', 'GothicBold', 14 * .95, 14 * 1.6, wordWrap='CJK', spaceAfter=5),
+    'en_title': S('en_title', 'Arial', 16.5, 16.5 * 1.3, spaceAfter=16),
+    'abs_head': S('abs_head', 'GothicBold', 10, 15, spaceBefore=6),
+    'abs_head_en': S('abs_head_en', 'ArialBold', 10, 15, spaceBefore=12),
+    'abstract': S('abstract', 'Serif', BODY_PT * TRACK['abstract_ko'], LINE, wordWrap='CJK', alignment=TA_JUSTIFY, firstLineIndent=10),
+    'abstract_en': S('abstract_en', 'Times', 9.2 * TRACK['abstract_en'], 9.2 * 1.5, alignment=TA_JUSTIFY, firstLineIndent=10),
+    'keywords': S('keywords', 'Gothic', 8.7, 15, wordWrap='CJK', spaceBefore=12),
+    'keywords_en': S('keywords_en', 'Arial', 8.7, 15, spaceBefore=4),
+    'body': S('body', 'Serif', BODY_PT * TRACK['body'], LINE, wordWrap='CJK', alignment=TA_JUSTIFY, firstLineIndent=10),
+    'h1': S('h1', 'GothicBold', 10, 15, wordWrap='CJK', spaceBefore=2 * LINE, spaceAfter=LINE),
+    'h2': S('h2', 'GothicBold', BODY_PT * .95, LINE, wordWrap='CJK', spaceBefore=LINE, spaceAfter=LINE),
+    'h2_after_h1': S('h2_after_h1', 'GothicBold', BODY_PT * .95, LINE, wordWrap='CJK', spaceAfter=LINE),
+    'cap_ko': S('cap_ko', 'Gothic', 8.5 * TRACK['caption'], 8.5 * 1.3, wordWrap='CJK', alignment=TA_LEFT),
+    'cap_en': S('cap_en', 'Arial', 8.5 * TRACK['caption'], 8.5 * 1.3, alignment=TA_LEFT),
+    'table': S('table', 'Arial', 7.5 * TRACK['table'], 7.5 * 1.2),
+    'table_head': S('table_head', 'ArialBold', 7.5 * TRACK['table'], 7.5 * 1.2),
+    'fig_note': S('fig_note', 'Arial', 7.5 * TRACK['table'], 7.5 * 1.2),
+    'ref': S('ref', 'Times', 9 * TRACK['ref'], 9 * 1.5, alignment=TA_LEFT, leftIndent=15, firstLineIndent=-15),  # ragged: long URLs
+    'eq': S('eq', 'Equation', 8.6, 13, alignment=TA_CENTER),
+    'eqno': S('eqno', 'Serif', BODY_PT * TRACK['body'], 13, alignment=TA_RIGHT),
 }
 
 
-def markup(s):
+def markup(s, font='Serif'):
     s = re.sub(r'\[\[[^\]]+\]\]', '[입력 대기]', s)
     s = re.sub(r'\\\((.*?)\\\)', lambda m: m[1], s)
-    for src, dst in (('\\hat I_t', 'Î_t'), ('\\ell', 'ℓ'), ('\\tau', 'τ'), ('\\Delta', 'Δ'), ("p'_i", 'p′_i')):
+    for src, dst in (('\\ell', 'ℓ'), ('\\tau', 'τ'), ('\\Delta', 'Δ')):
         s = s.replace(src, dst)
-    s = re.sub(r'(?<=[a-z])-(?=t_)', '−', s)  # t_r-t_m reads as a difference
+    s = re.sub(r'(?<=[a-z])-(?=t_)', ' − ', s)  # t_r-t_m reads as a difference
     s = s.replace('\\', '')
     s = escape(s)
     s = re.sub(r'\*\*(.*?)\*\*', r'<b>\1</b>', s)
     s = re.sub(r'`([^`]+)`', r'\1', s)
     # Hangul counts as a word character, so end subscripts with an explicit lookahead.
-    s = re.sub(r'\b(p|p′)_i(?![A-Za-z0-9_])', r'\1<sub>i</sub>', s)
+    s = re.sub(r"\b(p|p')_i(?![A-Za-z0-9_])", r'\1<sub>i</sub>', s)
     s = re.sub(r'\bt_([mra])(?![A-Za-z0-9_])', r'<i>t</i><sub>\1</sub>', s)
-    return ''.join(with_fallback(part, 'Korean') if not part.startswith('<') else part
+    return ''.join(with_fallback(part, font) if not part.startswith('<') else part
                    for part in re.split(r'(<[^>]+>)', s))
 
 
+class BodyParagraph(Paragraph):
+    """Paragraph that keeps its spaces when it continues in the next column.
+
+    reportlab's character-level (CJK) wrapping strips the space at the end of
+    each line.  When the rest of a split paragraph is wrapped again, the lines
+    are joined without those spaces ("JPEG (joint" + "photographic").  The
+    continuation is therefore rebuilt from the original text.
+    """
+
+    @staticmethod
+    def _plain(frag):
+        return frag.text if hasattr(frag, 'text') else ''.join(frag.words)
+
+    def split(self, aw, ah):
+        single = len(self.frags) == 1 and not hasattr(self.frags[0], 'cbDefn')
+        full = self._plain(self.frags[0]) if single else None
+        parts = super().split(aw, ah)
+        if single and len(parts) == 2:
+            used = sum(len(re.sub(r'\s+', '', ''.join(line[1]))) for line in parts[0].blPara.lines)
+            pos = 0
+            while used and pos < len(full):
+                used -= not full[pos].isspace()
+                pos += 1
+            rest = parts[1].frags[0]
+            if hasattr(rest, 'text'):
+                del rest.text
+            rest.words = [full[pos:].lstrip()]
+            if hasattr(parts[1], 'blPara'):
+                del parts[1].blPara
+            parts[1]._splitpara = 0
+        return parts
+
+
 def p(s, style='body'):
-    return Paragraph(markup(s), ST[style])
+    cls = BodyParagraph if style == 'body' else Paragraph
+    return cls(markup(s, ST[style].fontName), ST[style])
 
 
 EQ = {
@@ -261,58 +209,165 @@ EQ = {
 }
 
 
+def heading(text, style):
+    st = ST[style]
+    return [CondPageBreak(st.spaceBefore + st.leading + st.spaceAfter + 2 * LINE), p(text, style)]
+
+
 def equation(n):
+    """Equation with its number at the right margin and a blank line above and below."""
     formula = ''.join(with_fallback(part, 'Equation') if not part.startswith('<') else part
                       for part in re.split(r'(<[^>]+>)', EQ[n]))
     table = Table([[Paragraph(formula, ST['eq']), Paragraph(f'({n})', ST['eqno'])]],
-                  colWidths=[COL_W - 26, 26], hAlign='CENTER')
+                  colWidths=[COL_W - 22, 22], hAlign='CENTER', spaceBefore=LINE, spaceAfter=LINE)
     table.setStyle(TableStyle([
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('LEFTPADDING', (0, 0), (-1, -1), 0), ('RIGHTPADDING', (0, 0), (-1, -1), 0),
-        ('TOPPADDING', (0, 0), (-1, -1), 4), ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+        ('TOPPADDING', (0, 0), (-1, -1), 0), ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
     ]))
     return table
+
+
+def captions(block, hang):
+    """`**표 1. 국문**` / `**Table 1. English**` -> two left-aligned caption lines."""
+    out = []
+    for line, style in zip([x.strip() for x in block.splitlines()], ('cap_ko', 'cap_en')):
+        m = re.fullmatch(r'\*\*((?:표|그림|알고리즘|Table|Fig\.|Algorithm) \d+\.)\s*(.*?)\*\*', line)
+        assert m, line
+        st = ParagraphStyle(style + str(hang), parent=ST[style], leftIndent=hang, firstLineIndent=-hang)
+        out.append(Paragraph(f'<b>{markup(m[1], st.fontName)}</b> {markup(m[2], st.fontName)}', st))
+    assert len(out) == 2, block
+    return out
 
 
 def table_flowable(block):
     rows = [[x.strip() for x in line.strip().strip('|').split('|')] for line in block.splitlines()]
     rows = [r for r in rows if not all(re.fullmatch(r'[-:]+', c) for c in r)]
     count = len(rows[0])
-    def width(text):
-        return sum(2 if ord(ch) > 0x1100 else 1 for ch in re.sub(r'<[^>]+>', '', markup(text)))
-    weights = [min(40, max(7, max(width(r[i]) for r in rows))) for i in range(count)]
-    total = sum(weights)
-    widths = [COL_W * w / total for w in weights]
-    table = Table([[p(c, 'table') for c in row] for row in rows], colWidths=widths, repeatRows=1, hAlign='CENTER')
+
+    def plain(text):
+        return re.sub(r'<[^>]+>', '', markup(text, 'Arial'))
+
+    def measure(text, row):
+        return pdfmetrics.stringWidth(text, 'ArialBold' if row == 0 else 'Arial', ST['table'].fontSize)
+    pad = 6.5
+    natural = [max(measure(plain(r[i]), k) for k, r in enumerate(rows)) + pad for i in range(count)]
+    narrow = [max(measure(word, k) for k, r in enumerate(rows) for word in plain(r[i]).split() or ['']) + pad
+              for i in range(count)]
+    if sum(natural) <= COL_W:
+        widths = [n * COL_W / sum(natural) for n in natural]
+    else:  # give every column its longest word, then share the rest by text length
+        spare = COL_W - sum(narrow)
+        assert spare >= 0, 'table is wider than the column'
+        extra = [n - m for n, m in zip(natural, narrow)]
+        widths = [m + spare * e / sum(extra) for m, e in zip(narrow, extra)]
+    data = [[p(c, 'table_head' if i == 0 else 'table') for c in row] for i, row in enumerate(rows)]
+    table = Table(data, colWidths=widths, hAlign='CENTER')
     table.setStyle(TableStyle([
-        ('BACKGROUND', (0, 0), (-1, 0), LIGHT),
         ('LINEABOVE', (0, 0), (-1, 0), .8, INK), ('LINEBELOW', (0, 0), (-1, 0), .5, INK),
         ('LINEBELOW', (0, -1), (-1, -1), .8, INK),
-        ('INNERGRID', (0, 1), (-1, -1), .25, colors.HexColor('#CAD3D9')),
+        ('INNERGRID', (0, 1), (-1, -1), .25, RULE),
         ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
         ('LEFTPADDING', (0, 0), (-1, -1), 3), ('RIGHTPADDING', (0, 0), (-1, -1), 3),
-        ('TOPPADDING', (0, 0), (-1, -1), 2.5), ('BOTTOMPADDING', (0, 0), (-1, -1), 2.5),
+        ('TOPPADDING', (0, 0), (-1, -1), 2), ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
     ]))
     return table
 
 
-def reference(b):
-    m = re.search(r'\s+(https?://\S+)', b)
-    if not m:
-        return p(b, 'ref')
-    rendered = escape(b[:m.start()]) + f' <link href="{escape(m[1])}" color="#243746">{escape(m[1])}</link>'
-    tail = b[m.end():].strip()
-    if tail:
-        rendered += ' ' + escape(tail)
-    return Paragraph(rendered, ST['ref'])
+def steps_flowable(block):
+    rows = [[p(line, 'table')] for line in block.splitlines()]
+    table = Table(rows, colWidths=[COL_W])
+    table.setStyle(TableStyle([
+        ('LINEABOVE', (0, 0), (-1, 0), .8, INK), ('LINEBELOW', (0, -1), (-1, -1), .8, INK),
+        ('LEFTPADDING', (0, 0), (-1, -1), 3), ('RIGHTPADDING', (0, 0), (-1, -1), 3),
+        ('TOPPADDING', (0, 0), (-1, -1), 1.5), ('BOTTOMPADDING', (0, 0), (-1, -1), 1.5),
+    ]))
+    return table
+
+
+def figure_image(n):
+    path = FIG / f'figure-{n}.jpg'
+    if not path.exists():
+        raise SystemExit(f'{path.name} is missing: run make_figures.py first')
+    image = Image(str(path))
+    image.drawWidth, image.drawHeight = COL_W, image.imageHeight * COL_W / image.imageWidth
+    return image
+
+
+class Float(Flowable):
+    """Marker left where a figure or table is cited; the document places the
+    group at the top of a column (JDCS: top or bottom of a page or column)."""
+
+    def __init__(self, group):
+        super().__init__()
+        self.group = group
+        self.height = sum(f.wrap(COL_W, BODY_H)[1] for f in group) + sum(f.getSpaceBefore() + f.getSpaceAfter() for f in group)
+
+    def wrap(self, aw, ah):
+        return 0, 0
+
+    def draw(self):
+        pass
+
+
+class FlushFloats(Flowable):
+    """At the end of the story: move to new columns until no float is waiting."""
+
+    def __init__(self, doc):
+        super().__init__()
+        self.doc = doc
+
+    def wrap(self, aw, ah):
+        return (0, ah + 1) if self.doc.pending else (0, 0)
+
+    def draw(self):
+        pass
+
+
+class Manuscript(BaseDocTemplate):
+    def __init__(self, *args, **kw):
+        super().__init__(*args, **kw)
+        self.pending = []
+        self.text_in_frame = False
+        self.float_pages = {}
+
+    def _place(self, flt):
+        frame = self.frame
+        if flt.height > frame._y - frame._y1p:
+            return False
+        for f in flt.group:
+            assert frame.add(f, self.canv, trySplit=0), 'float did not fit'
+        self.float_pages[flt.label] = self.page
+        return True
+
+    def handle_frameBegin(self, *args, **kw):
+        super().handle_frameBegin(*args, **kw)
+        self.text_in_frame = False
+        if self.frame.id == 'front':
+            return
+        while self.pending and self._place(self.pending[0]):
+            del self.pending[0]
+
+    def afterFlowable(self, flowable):
+        if isinstance(flowable, Float):
+            if self.pending or self.text_in_frame or not self._place(flowable):
+                self.pending.append(flowable)
+        elif not isinstance(flowable, (FlushFloats, Spacer)) and getattr(flowable, 'height', 1):
+            self.text_in_frame = True
 
 
 def parse():
-    figs = make_figures()
     text = SOURCE.read_text(encoding='utf-8')
     blocks = [b.strip() for b in text.split('\n\n') if b.strip()]
-    front, body, photos = [], [], {}
-    i, in_front, refs = 0, True, False
+    front, body, info = [], [], {'figures': 0, 'tables': 0, 'algorithms': 0}
+    i, in_front, refs, prev_h1 = 0, True, False, False
+
+    def float_group(label, parts):
+        parts = parts + [Spacer(1, LINE)]
+        flt = Float(parts)
+        flt.label = label
+        return flt
+
     while i < len(blocks):
         b = blocks[i]
         i += 1
@@ -323,98 +378,123 @@ def parse():
                 front.append(p(b[2:], 'title'))
             elif b.startswith('An Event-'):
                 front.append(p(b, 'en_title'))
-            elif b in ('## [요 약]', '## [Abstract]'):
+            elif b.startswith('## [요'):
                 front.append(p(b[3:], 'abs_head'))
-            elif b.startswith('핵심어:') or b.startswith('Key words:'):
-                front.append(p(b, 'keywords'))
+                info['abstract_ko'] = blocks[i]
+                front.append(p(blocks[i], 'abstract'))
+                i += 1
+            elif b == '## [Abstract]':
+                front.append(p(b[3:], 'abs_head_en'))
+                info['abstract_en'] = blocks[i]
+                front.append(p(blocks[i], 'abstract_en'))
+                i += 1
+            elif b.startswith('색인어 :'):
+                front.append(Paragraph(f'<font name="GothicBold" size="10">색인어</font> : {markup(b[5:].strip(), "Gothic")}', ST['keywords']))
+            elif b.startswith('Keyword :'):
+                front.append(Paragraph(f'<font name="ArialBold" size="10">Keyword</font> : {markup(b[9:].strip(), "Arial")}', ST['keywords_en']))
             elif re.match(r'# [ⅠⅡⅢⅣⅤⅥⅦ]\.', b):
                 in_front = False
-                body.append(p(b[2:], 'h1'))
+                body += heading(b[2:], 'h1')
+                prev_h1 = True
             else:
-                front.append(p(b, 'abstract'))
+                raise SystemExit(f'unexpected front-matter block: {b[:40]}')
             continue
+        was_h1, prev_h1 = prev_h1, False
         if b.startswith('![그림'):
             n = int(re.search(r'figure-(\d)', b)[1])
-            caption = blocks[i]
+            parts = [figure_image(n), Spacer(1, 3)]
+            if blocks[i].startswith('\\*'):
+                parts += [p(blocks[i], 'fig_note'), Spacer(1, 2)]
+                i += 1
+            parts += captions(blocks[i], 28)
             i += 1
-            if n in figs:
-                graphic = figs[n]
-            else:
-                hint = {2: '관리자 웹 화면 캡처', 5: '실험 장치 사진'}.get(n, '판정 사례')
-                graphic, photos[n] = photo_or_placeholder(n, hint)
-            body.append(KeepTogether([Spacer(1, 4), graphic, p(caption, 'figcaption')]))
+            info['figures'] += 1
+            body.append(float_group(f'Fig. {n}', parts))
         elif b.startswith('\\['):
-            n = int(re.search(r'\\tag\{(\d+)\}', b)[1])
-            body.append(equation(n))
+            body.append(equation(int(re.search(r'\\tag\{(\d+)\}', b)[1])))
         elif b.startswith('# '):
             refs = b[2:] == '참고문헌'
-            body.append(p(b[2:], 'h1'))
+            body += heading(b[2:], 'h1')
+            prev_h1 = True
         elif b.startswith('## '):
-            body.append(p(b[3:], 'h2'))
+            body += heading(b[3:], 'h2_after_h1' if was_h1 else 'h2')
         elif b.startswith('**알고리즘 '):
-            caption = p(b, 'caption')
-            steps = [p(line, 'alg') for line in blocks[i].splitlines()]
+            n = int(re.match(r'\*\*알고리즘 (\d+)', b)[1])
+            parts = captions(b, 22) + [Spacer(1, 3), steps_flowable(blocks[i])]
             i += 1
-            frame = Table([[x] for x in steps], colWidths=[COL_W])
-            frame.setStyle(TableStyle([
-                ('LINEABOVE', (0, 0), (-1, 0), .8, INK), ('LINEBELOW', (0, -1), (-1, -1), .8, INK),
-                ('LEFTPADDING', (0, 0), (-1, -1), 2), ('RIGHTPADDING', (0, 0), (-1, -1), 2),
-                ('TOPPADDING', (0, 0), (-1, -1), 1.2), ('BOTTOMPADDING', (0, 0), (-1, -1), 1.2),
-            ]))
-            body.append(KeepTogether([caption, frame, Spacer(1, 7)]))
+            info['algorithms'] += 1
+            body.append(float_group(f'Algorithm {n}', parts))
         elif b.startswith('**표 '):
-            caption = p(b, 'caption')
-            table = table_flowable(blocks[i])
+            n = int(re.match(r'\*\*표 (\d+)', b)[1])
+            parts = captions(b, 22) + [Spacer(1, 3), table_flowable(blocks[i])]
             i += 1
-            body.append(KeepTogether([caption, table, Spacer(1, 7)]))
+            info['tables'] += 1
+            body.append(float_group(f'Table {n}', parts))
         elif refs:
-            body.append(reference(b))
+            body.append(p(b, 'ref'))
         else:
             body.append(p(b))
-    return text, front, body, photos
+    return text, front, body, info
 
 
-def footer(canvas, doc):
+def page_marks(canvas, doc):
     canvas.saveState()
-    canvas.setFont('Korean', 7)
     canvas.setFillColor(MUTED)
-    canvas.drawString(MARGIN_X, 14 * mm, 'JDCS 심사용 원고(익명) · 2단 근사 조판 — 최종 투고는 학회 HWP 양식')
-    canvas.drawRightString(A4[0] - MARGIN_X, 14 * mm, str(doc.page))
+    canvas.setStrokeColor(MUTED)
+    canvas.setLineWidth(.4)
+    canvas.setFont('Gothic', 7)
+    top = PAGE[1] - 17 * mm
+    if doc.page == 1:
+        canvas.drawString(MARGIN_X, top + 9, '디지털콘텐츠학회논문지')
+        canvas.setFont('Arial', 7)
+        canvas.drawString(MARGIN_X, top, 'Journal of Digital Contents Society — review manuscript, author information removed')
+        canvas.line(MARGIN_X, top - 5, PAGE[0] - MARGIN_X, top - 5)
+        box_top = MARGIN_Y + 40 * mm
+        canvas.line(MARGIN_X, box_top, PAGE[0] - MARGIN_X, box_top)
+        canvas.setFont('Gothic', 7)
+        canvas.drawString(MARGIN_X, box_top - 12, '학회 기재란(DOI, 접수·수정·게재확정일, 교신저자) — 양식의 이 영역은 수정하지 않는다')
+    else:
+        canvas.drawString(MARGIN_X, top, '디지털콘텐츠학회논문지(J. DCS) — 심사용 원고')
+        canvas.line(MARGIN_X, top - 4, PAGE[0] - MARGIN_X, top - 4)
+    canvas.setFont('Gothic', 7)
+    canvas.drawString(MARGIN_X, 14 * mm, 'JDCS 공식 양식(2026.07)의 근사 조판 — 최종 투고는 학회 HWP 양식')
+    canvas.drawCentredString(PAGE[0] / 2, 14 * mm, str(doc.page))
     canvas.restoreState()
 
 
 def build():
-    text, front, body, photos = parse()
-    front_h = sum(f.wrap(FULL_W, BODY_H)[1] + f.getSpaceBefore() + f.getSpaceAfter() for f in front) + 14
-    col_h = BODY_H - front_h
-    first = PageTemplate('first', frames=[
-        Frame(MARGIN_X, MARGIN_Y + col_h, FULL_W, front_h, id='front', leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0),
-        Frame(MARGIN_X, MARGIN_Y, COL_W, col_h, id='c1', leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0),
-        Frame(MARGIN_X + COL_W + GAP, MARGIN_Y, COL_W, col_h, id='c2', leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0),
-    ], onPage=footer)
+    text, front, body, info = parse()
+    words = len(info['abstract_en'].split())
+    assert ABSTRACT_WORDS[0] <= words <= ABSTRACT_WORDS[1], f'English abstract has {words} words (template: 120-170)'
+    pad = dict(leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0)
+    # the template keeps a 40 mm society box (DOI, dates, corresponding author) at the foot of page 1
+    first = PageTemplate('first', frames=[Frame(MARGIN_X, MARGIN_Y + 42 * mm, FULL_W, BODY_H - 42 * mm, id='front', **pad)],
+                         onPage=page_marks)
     later = PageTemplate('later', frames=[
-        Frame(MARGIN_X, MARGIN_Y, COL_W, BODY_H, id='l1', leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0),
-        Frame(MARGIN_X + COL_W + GAP, MARGIN_Y, COL_W, BODY_H, id='l2', leftPadding=0, rightPadding=0, topPadding=0, bottomPadding=0),
-    ], onPage=footer)
-    doc = BaseDocTemplate(str(OUT), pagesize=A4, pageTemplates=[first, later],
-                          title=text.splitlines()[0][2:], author='', subject='JDCS 심사용 원고(2026-10-25 실험 결과 반영)')
-    from reportlab.platypus import FrameBreak
-    doc.build(front + [FrameBreak(), NextPageTemplate('later')] + body)
+        Frame(MARGIN_X, MARGIN_Y, COL_W, BODY_H, id='c1', **pad),
+        Frame(MARGIN_X + COL_W + GAP, MARGIN_Y, COL_W, BODY_H, id='c2', **pad),
+    ], onPage=page_marks)
+    doc = Manuscript(str(OUT), pagesize=PAGE, pageTemplates=[first, later],
+                     title=text.splitlines()[0][2:], author='', subject='JDCS 심사용 원고(공식 양식 근사 조판)')
+    front_h = sum(f.wrap(FULL_W, BODY_H)[1] + f.getSpaceBefore() + f.getSpaceAfter() for f in front)
+    assert front_h <= BODY_H - 42 * mm, 'front matter does not fit on one page'
+    doc.build(front + [NextPageTemplate('later'), PageBreak()] + body + [FlushFloats(doc)])
     texts = [page.extract_text() for page in PdfReader(OUT).pages]
     joined = '\n'.join(texts)
     assert '[[' not in joined and '입력 대기' not in joined
-    blocks = [b.strip() for b in text.split('\n\n')]
+    assert not doc.pending
+    ko = info['abstract_ko']
     report = {
         'pages': len(texts),
-        'layout': 'A4 two-column approximation of the JDCS HWP template',
+        'layout': 'approximation of the official JDCS HWP template (2026-07): 210 x 280 mm, one-column front page, two-column body',
         'margins_mm': {'top_bottom_incl_header_footer': 25, 'left_right': 20, 'column_gap': 8},
-        'body_font_pt': BODY_PT, 'leading_pt': LEADING,
-        'figures': sum(b.startswith('**그림 ') for b in blocks),
-        'tables': sum(b.startswith('**표 ') for b in blocks),
-        'algorithms': sum(b.startswith('**알고리즘 ') for b in blocks),
+        'body_font_pt': BODY_PT, 'line_pitch_pt': round(LINE, 2),
+        'abstract_en_words': words,
+        'abstract_ko_chars': {'with_spaces': len(ko), 'without_spaces': len(ko.replace(' ', ''))},
+        'figures': info['figures'], 'tables': info['tables'], 'algorithms': info['algorithms'],
         'equations': len(re.findall(r'\\tag\{\d+\}', text)),
         'references': len(re.findall(r'^\[\d+\] ', text, flags=re.M)),
-        'photo_figures_present': photos,
+        'float_pages': doc.float_pages,
         'placeholders_left': len(re.findall(r'\[\[[^\]]+\]\]', text)),
         'pdf': OUT.relative_to(ROOT).as_posix(),
     }
@@ -423,7 +503,4 @@ def build():
 
 
 if __name__ == '__main__':
-    if '--figures-only' in sys.argv:
-        make_figures(write_svg=True)
-    else:
-        build()
+    build()
