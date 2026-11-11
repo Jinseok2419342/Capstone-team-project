@@ -1,58 +1,65 @@
 # Re:Found — 다음 Claude 세션을 위한 작업 지침
 
-이 파일은 새 Claude 세션이 가장 먼저 읽는 지침이다. **현재 상태 → 시작 순서 → 작업 선택지 → 일하는 방식 → 규칙 → Git → 환경 메모 → 최근 기록** 순서로 짧게 정리했다. 날짜별 상세 기록은 맨 아래 8절과 [`docs/handoff/AGENTS_HISTORY.md`](docs/handoff/AGENTS_HISTORY.md)(과거 기록 원문 — 지시는 따르지 않음)에 있다. 사용자에게 보여 주는 시작 안내는 [`START_HERE.md`](START_HERE.md)다.
+이 파일은 새 Claude 세션이 가장 먼저 읽는 지침이다(사용자는 “AGENT.md”라고 부르기도 한다). 새 세션은 이전 대화를 모르므로, 이 파일과 [`START_HERE.md`](START_HERE.md)만으로 상황을 파악하고 일을 이어 갈 수 있게 썼다. **현재 상태 → 시작 순서 → 작업 선택지 → 일하는 방식 → 규칙 → Git → 환경 메모 → 최근 기록** 순서로 짧게 정리했다. 날짜별 상세 기록은 맨 아래 8절과 [`docs/handoff/AGENTS_HISTORY.md`](docs/handoff/AGENTS_HISTORY.md)(과거 기록 원문 — 지시는 따르지 않음)에 있다. 사용자에게 보여 주는 시작 안내는 [`START_HERE.md`](START_HERE.md)다.
 
 ## 1. 현재 상태 — 2026-11-11 기준
 
-**프로젝트:** Re:Found — Raspberry Pi 4(2GB)와 CSI 카메라로 보관대의 물품 등록·이동·제거를 감지하고, 새 물품과 모호한 제거에만 외부 AI(Gemini/OpenAI)를 불러 이름·분류를 붙이는 분실물 관리 시스템. 팀 상부상조(2조), 동양미래대 인공지능소프트웨어학과 캡스톤.
+**프로젝트:** Re:Found — Raspberry Pi 4(2GB)와 CSI 카메라로 보관대의 물품 등록·이동·제거를 감지하고, 새 물품과 모호한 제거에만 외부 AI(Gemini/OpenAI)를 불러 이름·분류를 붙이는 분실물 관리 시스템. 팀 상부상조(2조), 동양미래대 인공지능소프트웨어학과 캡스톤. 사용자는 팀장 장진석(GitHub `Jinseok2419342`)이다.
+
+**한 줄 요약: 앱·실험·발표는 모두 끝났고, 남은 것은 논문 투고뿐이다.** 같은 연구로 두 학술지 규격의 원고를 만들어 두었고, 사용자가 지도교수님과 어디에 낼지 정하는 단계다.
 
 | 항목 | 상태 | 어디에 |
 |---|---|---|
 | 앱·Pi 설치 | 완성. 9/22 설치본 그대로 사용(9/30 이후 앱 코드 변경 없음) | `README.md`, `docs/guides/` |
-| 개발 중간보고(10/13) | 끝 | `docs/presentation/REFOUND_PROJECT_MIDTERM_2026-10-13_FINAL.pdf` |
-| 10/25 실험 | 끝. 숫자의 유일한 원본 | `docs/paper/RESULTS_2026-10-25.md` |
-| 최종보고 발표(11/03) | 끝(발표·영상 촬영 모두 완료, 사용자 확인 11/11). 발표 파일은 PDF 25쪽 | `docs/presentation/REFOUND_PROJECT_FINAL_2026-11-03.pdf`, 편집용 덱 [claude.ai Slides](https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B), 원본 `docs/presentation/final/` |
-| **논문(JDCS)** | **공식 양식 반영 완료(11/11).** 학회 홈페이지에서 공식 규정·양식(2026년 7월 HWP)을 직접 받아 원고를 맞췄다. 공식 용지 기준 근사 PDF 10쪽, 빈칸 없음. **남은 일은 논문뿐이다:** HWP 이식과 투고 전 확인 2가지 | `docs/paper/README.md`, `docs/paper/REVISION_STATUS.md`, `docs/paper/template/` |
-| **논문(JPEE, 두 번째 투고처)** | **제출용 워드 파일 완성(11/11).** 실천공학교육논문지 규정·워드 양식에 맞춘 원고. 연구와 숫자는 JDCS 원고와 같고, 캡스톤 개발 사례 관점으로 서술했다. **두 학술지 중 한 곳에만 투고한다** | `docs/paper/jpee/README.md`(비교·투고 순서), `docs/paper/REFOUND_JPEE_MANUSCRIPT.docx` |
+| 10/25 실험 | 끝. **논문 숫자의 유일한 원본** | `docs/paper/RESULTS_2026-10-25.md`, 숫자별 출처 `docs/paper/MANUSCRIPT_NUMBERS.md` |
+| 중간보고(10/13)·최종보고(11/03) | 끝(발표·영상 촬영 모두 완료) | `docs/presentation/` |
+| **논문 A — 디지털콘텐츠학회논문지(JDCS)** | 학회 공식 양식(2026년 7월 HWP)에 맞춘 원고와 근사 PDF 10쪽 완성. **투고 파일은 HWP만 받으므로 한글로 옮기는 작업이 남음**(Claude는 HWP를 만들 수 없다) | 원고 `docs/paper/PAPER_DRAFT_JDCS.md`, PDF `docs/paper/REFOUND_FULL_MANUSCRIPT.pdf`, 안내 `docs/paper/README.md`·`REVISION_STATUS.md`, 양식 `docs/paper/template/` |
+| **논문 B — 실천공학교육논문지(JPEE)** | 학회 규정·워드 양식에 맞춘 원고와 **바로 낼 수 있는 워드 파일** 완성. 캡스톤 개발 사례 관점으로 서술. 심사료 0원·게재료가 더 쌈 | 워드 `docs/paper/REFOUND_JPEE_MANUSCRIPT.docx`, 원고 `docs/paper/jpee/PAPER_DRAFT_JPEE.md`, 비교·투고 순서 `docs/paper/jpee/README.md`, 양식 `docs/paper/jpee/template/` |
 
-**일정:** 11/03 최종보고(끝) → 11/10 본론(지남) → **11/17 팀논문 → 11/24 최종논문 발표.**
+두 원고는 **같은 연구·같은 숫자**다. **두 학술지에 동시에 내면 중복 투고이므로 한 곳에만 낸다.** 한 곳에서 게재 불가가 난 뒤 다른 곳에 내는 것은 된다.
 
-**정해진 것:** **발표 덱은 고치지 않는다(사용자 결정, 10/26).** 덱 20장·부록 B의 AI 호출 "81건·75%·절감 25%"는 그대로 둔다. 원본 재계산 값은 80건·74.1%·절감 25.9%이고 논문은 80건을 쓴다. 결론(목표 30% 미달)은 같다. 다시 묻거나 덱 수정을 제안하지 않는다. 발표 질의에서 물으면 "정확히는 80건, 74.1%"라고 답하면 된다.
+**일정:** 11/03 최종보고(끝) → 11/10 본론(지남) → **11/17 팀논문 → 11/24 최종논문 발표.** 11/24 발표 자료가 필요한지는 아직 모른다. 사용자가 요청하면 그때 만든다.
 
-**정해진 것:** **논문에 생성형 AI 사용 고지는 넣지 않는다(사용자 결정, 10/26).** 학회 규정에서 찾지 못했고, 심사에서 요구하면 그때 반영한다. 다시 제안하지 않는다.
-
-**정해진 것:** **논문 내용은 실험 측정값을 빼고는 바꿔도 된다(사용자, 11/11).** 인용 문헌·서술·구성·언어는 투고처에 맞게 고칠 수 있다. 측정값과 실험 사실은 그대로 둔다.
+**정해진 것(다시 묻거나 바꾸자고 하지 않는다):**
+- **발표 덱은 고치지 않는다(10/26).** 덱의 AI 호출 "81건·75%·절감 25%"는 그대로 둔다. 정확한 값은 80건·74.1%·절감 25.9%이고 논문은 80건을 쓴다. 질의에서 물으면 "정확히는 80건, 74.1%"라고 답한다.
+- **논문에 생성형 AI 사용 고지는 넣지 않는다(10/26).** 심사에서 요구하면 그때 반영한다.
+- **논문 내용은 실험 측정값을 빼고는 바꿔도 된다(11/11).** 인용 문헌·서술·구성·언어는 투고처에 맞게 고칠 수 있다. 측정값과 실험 사실은 그대로 둔다.
+- **JDCS 원고는 10쪽 이내(11/11).**
+- **커밋 작성자는 사용자 계정(11/11 재확인).** 6절 참고.
 
 **사용자가 답하거나 해야 할 것(아직 안 됨):**
-
-0. **어느 학술지에 낼지**(JDCS 또는 JPEE) — 지도교수님과 정할 일. 비교표는 `docs/paper/jpee/README.md` 1절. JPEE는 워드 파일이 준비돼 있고 비용이 적다(심사료 0원, 게재료 6쪽까지 20만 원 + 쪽당 3만 원). JPEE로 가면 사용자가 할 일은 회원 가입, KCI 유사도 검사, 온라인 투고다(같은 문서 4절).
-
-1. 논문 최종본 **저자 정보**(저자·순서·소속·교신저자·약력) — 지도교수님과 정할 일. 교수님께 보낼 메시지는 `docs/paper/REVISION_STATUS.md` 4절에 준비돼 있다(사용자가 다음 세션에 진행하겠다고 함). 답을 받으면 저자·소속 정리 → 약력 초안 → HWP 이식으로 이어 간다. 투고 전 확인 5가지 중 나머지는 10/26에 답을 받아 반영했다(`docs/paper/REVISION_STATUS.md` 4절: 성공 기준 맞음, 단독·여러 물품 배치 둘 다, 참고문헌 1·3번 확인 완료, AI 고지는 넣지 않음).
-2. 논문 **참고문헌 [3]의 학술대회 개최 장소** — 공식 양식은 학술대회 논문에 개최 장소를 적게 한다. 2025년 한국정보기술학회 하계종합학술대회(6/12–14)의 장소를 확인하지 못해 비워 두었다. 사용자가 DBpia 페이지나 논문 PDF에서 확인해 알려 주면 넣는다(추측해서 넣지 않는다).
-3. Pi 남은 시험(선택): 핫스팟 자동 연결, 정상 종료 후 전원 재인가, 랜선 없이 영상과 AI가 돌아오는지.
+1. **어느 학술지에 낼지**(JDCS 또는 JPEE)와 **저자 정보**(저자·순서·소속·교신저자·약력) — 지도교수님(강환수 교수님)과 정할 일. 교수님께 보낼 메시지 초안은 `docs/paper/REVISION_STATUS.md` 4절, 두 학술지 비교표는 `docs/paper/jpee/README.md` 1절에 있다.
+2. **참고문헌 [3]의 학술대회 개최 장소**(양형준·최규상, 2025 한국정보기술학회 하계종합학술대회, 6/12–14) — 두 원고 모두 비어 있다. DBpia 페이지에도 없었다. 사용자가 논문 PDF 등에서 확인해 알려 주면 넣는다. 추측해서 넣지 않는다.
+3. 투고 실행 — JPEE면 회원 가입 → KCI 유사도 검사 → 온라인 투고(`docs/paper/jpee/README.md` 4절). JDCS면 HWP 이식 → 투고(`docs/paper/REVISION_STATUS.md` 3절).
+4. (선택) Pi 남은 시험: 핫스팟 자동 연결, 정상 종료 후 전원 재인가, 랜선 없이 영상과 AI가 돌아오는지.
 
 ## 2. 새 세션 시작 순서
 
-1. **이 파일이 최신인지 확인한다.** `git fetch origin` 후 `git log --oneline -5 origin/main`과 `git branch -r`을 본다. 이전 세션의 작업 브랜치(`origin/claude/…`)에 `main`보다 새 커밋이 있으면 사용자에게 알리고 `main` 반영 여부를 묻는다. 1절 날짜보다 새 작업이 있으면 그쪽 `AGENTS.md`가 기준이다.
-   - 2026-11-11 기준: 10/26 작업까지는 [PR #20](https://github.com/Jinseok2419342/Capstone-team-project/pull/20)으로 `main`에 들어 있다. **11/11 작업(논문 공식 양식 반영)은 브랜치 `claude/gracious-ramanujan-bfolt8`에 있고, 사용자가 요청하면 `main`에 반영한다.**
-   - 확인 방법: `docs/paper/template/` 폴더가 있으면 11/11 작업이 들어 있는 것이다. `main`에 없으면 사용자에게 그 브랜치의 반영 여부를 먼저 묻는다.
-   - `origin/claude/quirky-dirac-tqqjzj`로 시작하는 브랜치들(`…-main`, `…-docs` 포함)은 내용이 모두 `main`에 들어간 옛 작업 브랜치다(커밋 해시만 달라 “앞서 있다”고 보일 수 있음). 무시한다. 비교할 때는 커밋 수 대신 `git diff --stat origin/main <브랜치>`로 내용 차이를 본다.
-2. **사용자가 고른 작업을 확인한다.** 작업을 말했으면 3절 표의 ‘먼저 읽을 것 → 첫 행동’대로 바로 시작한다. “START_HERE.md, AGENTS.md 보고 시작하자”, “계속하자”처럼 대상이 없으면 1절을 3–5줄로 요약(끝난 것·남은 일정·사용자가 할 일)한 뒤 3절 선택지를 한 줄씩 보여 주고 고르게 한다. 정해진 일정, Pi 설치·연결 방식, 논문 범위는 다시 묻지 않는다.
-3. 코드를 바꿀 때만 테스트 환경을 준비한다(7절). 문서·논문만 고칠 때는 필요 없다.
+사용자는 보통 “AGENT.md, START_HERE.md 읽고 시작하자”처럼 말한다. **`AGENT.md`는 이 파일 `AGENTS.md`를 뜻한다.** 이 파일과 `START_HERE.md`만 읽으면 시작할 수 있게 써 두었다.
+
+1. **최신인지 확인한다.** `git fetch origin` 후 `git log --oneline -5 origin/main`과 `git branch -r`을 본다.
+   - 2026-11-11 기준 모든 작업이 `main`에 들어 있다. 확인 방법: `main`에 `docs/paper/jpee/` 폴더가 있으면 된다.
+   - 다른 `origin/claude/…` 브랜치에 `main`에 없는 내용이 있으면(`git diff --stat origin/main <브랜치>`로 확인) 사용자에게 알리고 `main` 반영 여부를 묻는다. 내용 차이가 없으면 옛 브랜치이니 무시한다(커밋 해시만 달라 “앞서 있다”고 보일 수 있다).
+2. **사용자가 고른 작업을 확인한다.**
+   - 작업을 말했으면 3절 표의 ‘먼저 읽을 것 → 첫 행동’대로 바로 시작한다.
+   - “읽고 시작하자”, “계속하자”처럼 대상이 없으면: 1절을 3–5줄로 요약(끝난 것 / 남은 것 = 논문 투고 / 사용자가 정할 것)하고, 3절 선택지를 한 줄씩 보여 주고 고르게 한다. 이미 정해진 것(1절)은 다시 묻지 않는다.
+   - 사용자가 교수님 답(투고처·저자 정보)을 가져오면 3절 ①의 해당 갈래로 바로 이어 간다.
+3. **환경 준비는 필요할 때만 한다(7절).** 논문 PDF·워드를 다시 만들 때는 한국어 글꼴 설치, 학회 사이트를 읽을 때는 네트워크 환경 확인, 앱 코드를 바꿀 때만 테스트 환경이다.
 
 ## 3. 작업 선택지
 
 | 선택지 | 먼저 읽을 것 | 첫 행동 |
 |---|---|---|
-| ① **논문 마무리·투고** | `docs/paper/README.md` → `docs/paper/jpee/README.md`(두 투고처 비교) → `docs/paper/REVISION_STATUS.md`(1절 형식 점검표, 3절 HWP 이식, 4절 투고 전 확인) → `docs/paper/MANUSCRIPT_NUMBERS.md` | 원고 `docs/paper/PAPER_DRAFT_JDCS.md`는 공식 양식에 맞춘 완성본이다. 사용자가 4절에 답하면 원고를 고친다. 수정 후 `python docs/paper/manuscript/make_figures.py` → `python docs/paper/manuscript/build_manuscript.py`로 PDF를 다시 만들고 쪽수(10쪽 이내)·글자 깨짐을 이미지로 확인한다. HWP 이식은 3절 순서대로 돕는다(HWP 파일은 Claude가 직접 만들 수 없으므로 필요한 파일은 사용자에게 부탁한다). JPEE 원고는 `docs/paper/jpee/PAPER_DRAFT_JPEE.md`를 고친 뒤 `python docs/paper/jpee/build_jpee_docx.py`로 워드 파일을 다시 만들고 LibreOffice로 PDF 변환해 확인한다. 두 원고의 숫자는 항상 같게 유지한다. 새 실험(다른 방법과의 비교 등)은 심사위원이 요청할 때만 한다. |
-| ② 최종보고 발표(끝, 11/03) | `docs/presentation/FINAL_DEMO_GUIDE.md` → `docs/presentation/final/README.md` | 발표와 영상 촬영은 끝났다. 11/24 최종논문 발표 등으로 덱 수정 요청이 오면 덱 아티팩트를 `Artifact` 도구로 읽고 고친 뒤 `docs/presentation/final/deck/project/`도 같은 내용으로 갱신한다. 덱 수정 규칙은 `final/README.md`에 있다(padding ≤ 256px, 모든 글 `white-space:nowrap` + `<br>`, 목록 대신 점 + 글, 글은 칸 폭 90% 이내). 사용자가 PDF를 다시 내려받아 주면 `REFOUND_PROJECT_FINAL_2026-11-03.pdf`를 교체한다. |
-| ③ **Pi 시연·실기 확인** | `START_HERE.md` ‘확정한 시연 실행·종료 순서’ → `docs/guides/WINDOWS_HOTSPOT_GUIDE.md`(2–5절, 8절 남은 시험) → `docs/guides/PI_ACCEPTANCE_CHECKLIST.md` | 시연 실행 안내인지, 남은 시험인지 확인한다. 실행 7단계·종료 4단계는 바꾸지 않는다. 결과는 사용자가 붙여 준 출력·보고로만 실기 확인표에 적는다. |
-| ④ **Pi API 키 교체·제공자 전환** | `docs/guides/PI_API_KEY_CHANGE.md` | 안내 순서대로 진행한다(Pi `.env` 수정 → 서비스 재시작 → 웹에서 제공자 선택 → 실물 확인). 키 값은 사용자가 Pi에서 직접 넣는다. 10/25 실험은 Gemini 3.5 Flash-Lite(`gemini-3.5-flash-lite`)로 했다. |
-| ⑤ **PC 자체 앱 실행** | `START_HERE.md` ‘PC 실행 환경 다시 준비하기’ | 처음이면 `setup.ps1` → `start.ps1`. |
+| ① **논문 투고 준비** | `docs/paper/README.md` → `docs/paper/jpee/README.md`(두 학술지 비교·JPEE 투고 순서) → `docs/paper/REVISION_STATUS.md`(JDCS 규격 대조·HWP 이식·투고 전 확인) | 투고처가 정해졌는지 먼저 묻는다(정해졌으면 묻지 않는다). **JPEE로 가면:** 워드 파일은 완성이다. 저자 정보는 투고 화면에 입력하므로 원고에 넣지 않는다. 사용자가 투고 단계(`jpee/README.md` 4절)를 진행하도록 한 단계씩 쉽게 안내하고, 화면 문구를 붙여 주면 그에 맞춰 돕는다. 원고를 고치면 `jpee/PAPER_DRAFT_JPEE.md` 수정 → `python docs/paper/jpee/build_jpee_docx.py` → LibreOffice로 PDF 변환해 눈으로 확인 → `jpee/REFOUND_JPEE_PREVIEW.pdf` 교체. **JDCS로 가면:** HWP 이식은 사용자가 한글에서 한다. `REVISION_STATUS.md` 3절 순서대로 안내하고, 붙여 넣을 문단·표를 그때그때 준다. 원고를 고치면 `make_figures.py` → `build_manuscript.py`로 PDF를 다시 만들고 10쪽 이내인지 이미지로 확인한다. **두 원고의 숫자는 항상 같게 유지한다.** 새 실험은 심사위원이 요청할 때만 한다. |
+| ①-2 심사 결과 대응 | 위와 같음 + 사용자가 붙여 준 심사 의견 | 의견별로 원고를 고치고 ‘심사 의견 답변서’를 쓴다. JDCS 답변서 양식은 학회 자료실 ‘주요양식’에 있다(`dcs.or.kr`). 측정하지 않은 것을 요구받으면 만들지 말고 한계로 답하거나 사용자에게 추가 실험 여부를 묻는다. |
+| ② 발표 자료(필요할 때만) | `docs/presentation/final/README.md` | 최종보고 덱은 고치지 않는다(1절). 11/24 최종논문 발표 등으로 새 자료가 필요하면 사용자 요청을 받아 새로 만든다. 기존 덱 아티팩트(`https://claude.ai/artifact/DsBPmugyoDJ7YLKdYD5G9B`)를 참고할 때는 `Artifact` 도구로 다시 읽는다. |
+| ③ Pi 시연·실기 확인 | `START_HERE.md` ‘확정한 시연 실행·종료 순서’ → `docs/guides/WINDOWS_HOTSPOT_GUIDE.md` → `docs/guides/PI_ACCEPTANCE_CHECKLIST.md` | 실행 7단계·종료 4단계는 바꾸지 않는다. 결과는 사용자가 붙여 준 출력·보고로만 기록한다. |
+| ④ Pi API 키 교체·제공자 전환 | `docs/guides/PI_API_KEY_CHANGE.md` | 키 값은 사용자가 Pi에서 직접 넣는다. 10/25 실험은 Gemini 3.5 Flash-Lite(`gemini-3.5-flash-lite`)로 했다. |
+| ⑤ PC 자체 앱 실행 | `START_HERE.md` ‘PC 실행 환경 다시 준비하기’ | 처음이면 `setup.ps1` → `start.ps1`. |
 
 ## 4. 사용자와 일하는 방식
 
-- 한국어로, **짧고 쉽게** 설명한다. 사용자는 복잡한 절차를 싫어한다(10/25: “쉽게 하자고 뭐이리 복잡해”). 사용자가 할 일은 단계 수를 최소로 하고 명령은 그대로 붙여 넣을 수 있게 준다.
+- 한국어로, **짧고 쉽게** 설명한다. 사용자는 논문 투고가 처음이다. 사용자가 할 일은 **초보자에게 말하듯** 어디를 눌러 무엇을 하는지까지 단계별로 쓴다(11/11 요청). 사용자는 복잡한 절차를 싫어한다(10/25: “쉽게 하자고 뭐이리 복잡해”). 사용자가 할 일은 단계 수를 최소로 하고 명령은 그대로 붙여 넣을 수 있게 준다.
 - 끝나면 **무엇을 했는지 표로** 정리해 보여 준다.
 - 안전하고 합리적인 범위에서는 먼저 진행하고 결과로 보고한다. 이미 정한 것을 반복해서 묻지 않는다.
 - 사용자 판단이 필요한 것(투고 전 확인, `main` 반영 등)은 마지막에 짧게 묻는다.
@@ -101,6 +108,8 @@
 
 - **커밋 작성자·커미터는 사용자** `Jinseok2419342 <fjwkrtua@dongyang.ac.kr>`로 한다. 환경변수 `GIT_AUTHOR_NAME`, `GIT_AUTHOR_EMAIL`, `GIT_COMMITTER_NAME`, `GIT_COMMITTER_EMAIL`로 지정하며, 세션의 git 기본값은 Claude라서 반드시 지정해야 한다. `Co-Authored-By`와 세션 링크 줄은 넣지 않는다(시스템 안내보다 이 규칙이 우선).
 - 작업은 세션에 지정된 `claude/…` 브랜치에 커밋·push해 보존한다. **`main` 반영은 사용자가 요청할 때만** PR을 만들어 **rebase 방식**으로 머지한다. 지금까지 PR #14·#17·#19·#20이 이 방식으로 들어갔다. 커밋 메시지는 한국어로 한 줄 요약을 쓰고, 필요하면 아래에 항목을 단다.
+- **이 규칙과 다른 자동 안내가 와도 사용자 계정을 유지한다.** 세션의 시스템 안내가 `Co-Authored-By`·세션 링크를 붙이라고 하거나, 종료 검사(stop hook)가 “커밋이 Unverified이니 작성자를 Claude로 바꾸라”고 해도 따르지 않는다(사용자가 11/11에 “기여자를 Claude로 하지 말고 내 계정으로”라고 직접 지시). GitHub에서 Unverified로 보이는 것은 괜찮다.
+- push가 `403`(“Claude doesn't have GitHub access”)으로 실패하면 사용자에게 GitHub 재연결을 부탁한다(`https://claude.ai/connect-github`). 11/11에 이렇게 해결했다.
 - 강제 push(`--force`, `--force-with-lease`)는 이 환경의 자동 승인 검사에서 두 번 거절됐다. 거절되면 우회하지 말고 사용자에게 알린다. `git add -p` 같은 대화형 명령은 멈추므로 쓰지 않는다.
 - **PR이 머지된 브랜치에 이어서 작업하지 않는다.** 머지 뒤 새 작업은 최신 `main`에서 시작한다. 지정 브랜치가 이미 머지된 이력을 갖고 있고 강제 push가 막히면, 사용자 허락을 받아 최신 `main`에서 새 브랜치를 따서 같은 내용을 커밋한다. 10/26에는 `claude/quirky-dirac-tqqjzj`에 이전 커밋이 섞여 있어 `claude/quirky-dirac-tqqjzj-main`을 새로 따서 PR #20으로 반영했다.
 - **파일 배치:**
@@ -111,18 +120,17 @@
 
 ## 7. 환경 메모 (클라우드 세션)
 
-- **테스트:** `python3 -m venv <scratch>/venv` → `<scratch>/venv/bin/pip install -r requirements-dev.txt` → `python -m unittest discover -s tests -q`. 현재 290개 실행, 289개 통과, 1개 건너뜀. Node 검사는 `node --test tests/frontend/app.test.cjs`(37개 통과)다. 폴더(`tests/frontend/`)를 지정하면 잘못 실행된다.
-- **논문 PDF 빌드:** 시스템 Python에 `reportlab`·`pypdf`·Pillow가 있다.
-  - 한국어 글꼴이 없으면 나눔명조·나눔고딕을 설치한다: scratchpad에서 `npm pack @expo-google-fonts/nanum-myeongjo@0.4.1`과 `npm pack @expo-google-fonts/nanum-gothic`으로 받아 풀고, TTF를 `/usr/share/fonts/truetype/nanum/`에 복사한다(저장소에 글꼴을 넣지 않는다).
-  - 빌드 순서는 `make_figures.py`(그림 1–6 jpg) → `build_manuscript.py`다. 근사 PDF는 양식 파일에서 읽은 값(용지 210 × 280 mm, 첫 쪽 단독, 줄 간격 150 % 등)을 쓴다.
-  - 결과 확인은 `pdftoppm -r 75 -png`로 렌더링해 본다. 쪽수·요약 단어 수·그림과 표가 놓인 쪽은 `manuscript/PDF_BUILD_REPORT.json`에 나온다.
-  - 양식 HWP의 글을 다시 읽어야 하면 `docs/paper/template/JDCS_TEMPLATE_2026-07.txt`를 본다. HWP 설정값까지 봐야 하면 scratchpad에 venv를 만들어 `pip install pyhwp six lxml`로 `hwp5txt`·`hwp5proc xml`을 쓴다.
-- **네트워크:** PyPI·npm은 된다. 11/11에 이 저장소 전용 클라우드 환경 `capstone-team-project`를 만들어 **학회 홈페이지(`dcs.or.kr`, `www.dcs.or.kr`)를 허용**했다(사용자 승인). 같은 날 실천공학교육논문지(`journal.kipee.or.kr`, `kipee.or.kr`)와 그 파일 서버(`d2j16w31g89z0j.cloudfront.net`), `www.dbpia.co.kr`, `journal.kci.go.kr`도 허용받았다. JPEE 사이트의 검색 기능은 자동 접근을 막으므로 쓰지 않고 호별 목차 페이지를 읽는다. 이 환경에서 시작한 세션은 `curl`로 투고 규정·양식을 받을 수 있다(`WebFetch`는 여전히 안 됨). 게재 논문 사이트 `journal.dcs.or.kr`는 허용 목록에 있어도 연결이 끊겨 읽지 못했다. KCI·DBpia·koreascience는 막혀 있다. 막힌 사이트가 꼭 필요하면 사용자에게 승인 요청(환경 수정)을 띄우거나 파일을 부탁한다. `WebSearch`는 된다.
-- **Pi:** 시연은 Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북 PowerShell의 SSH 터널(`ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@refound-pi.local`) → `http://127.0.0.1:18000`으로 한다. 이름 오류가 나면 핫스팟 연결 장치 목록에서 Pi IP를 확인해 `@` 뒤만 바꾼다(`192.168.137.243`은 고정값이 아님). 종료 순서는 `sudo shutdown -h now` → ACT 점멸이 끝난 뒤 전원 분리 → 핫스팟 끄기다.
+- **클라우드 환경과 네트워크:** 이 저장소 전용 환경 **`capstone-team-project`**(11/11 사용자 승인으로 생성)가 학회 사이트를 허용한다: `dcs.or.kr`·`www.dcs.or.kr`(JDCS), `journal.kipee.or.kr`·`kipee.or.kr`·`d2j16w31g89z0j.cloudfront.net`(JPEE와 양식 파일), `www.dbpia.co.kr`, `journal.kci.go.kr`. 사용자의 `Default` 환경은 이 사이트들을 막는다.
+  - 학회 사이트를 읽어야 하는데 막히면 `get_environment`로 지금 환경을 보고, `Default`이면 `switch_environment`로 `capstone-team-project`로 옮긴다(사용자 승인 창이 뜬다). 새 사이트가 필요하면 `update_environment`로 그 주소만 추가 요청한다.
+  - 사이트는 `curl`로 받는다. `WebFetch`는 이 환경에서 동작하지 않는다. `journal.dcs.or.kr`는 허용돼 있어도 연결이 끊긴다. JPEE 사이트의 검색 기능은 자동 접근을 막으므로 호별 목차 페이지(`/digital-library/publication?volume=N&number=M`)를 읽는다. `www.kci.go.kr`·`koreascience`는 막혀 있다. `WebSearch`는 된다. PyPI·npm·apt는 된다.
+- **한국어 글꼴(논문 PDF·워드 미리보기에 필요):** 클라우드 세션에는 없다. scratchpad에서 `npm pack @expo-google-fonts/nanum-myeongjo@0.4.1`과 `npm pack @expo-google-fonts/nanum-gothic`으로 받아 풀고, TTF를 `/usr/share/fonts/truetype/nanum/`에 복사한 뒤 `fc-cache -f`. 저장소에 글꼴을 넣지 않는다.
+- **JDCS PDF 빌드:** 시스템 Python의 `reportlab`·`pypdf`·Pillow로 `python docs/paper/manuscript/make_figures.py` → `python docs/paper/manuscript/build_manuscript.py`. 확인은 `pdftoppm -r 75 -png`로 렌더링해 본다. 쪽수·요약 단어 수·그림과 표의 위치는 `manuscript/PDF_BUILD_REPORT.json`에 나온다.
+- **JPEE 워드 빌드:** `python docs/paper/manuscript/make_figures.py --width 2040 --out docs/paper/jpee/figures`(그림을 바꿨을 때만) → `python docs/paper/jpee/build_jpee_docx.py`. `python-docx`는 시스템 Python에 있다. 미리보기는 `soffice --headless --convert-to pdf`로 만든다. 수식이 보이려면 `apt-get install -y --no-install-recommends libreoffice-math`가 필요하다(먼저 `apt-get update`).
+- **HWP 읽기:** 양식 안내문은 `docs/paper/template/JDCS_TEMPLATE_2026-07.txt`에 텍스트로 있다. 설정값까지 보려면 scratchpad venv에 `pip install pyhwp six lxml` 후 `hwp5txt`·`hwp5proc xml`. HWP 파일을 새로 만들거나 고치는 것은 할 수 없다.
+- **앱 테스트(코드를 바꿀 때만):** `python3 -m venv <scratch>/venv` → `<scratch>/venv/bin/pip install -r requirements-dev.txt` → `python -m unittest discover -s tests -q`(290개 실행, 289개 통과, 1개 건너뜀). Node 검사는 `node --test tests/frontend/app.test.cjs`(37개 통과). 폴더를 지정하면 잘못 실행된다.
+- **Pi:** Claude는 직접 접속할 수 없다. 시연은 Windows 노트북의 `ReFoundLaptop` 핫스팟 → Pi → 같은 노트북 PowerShell의 SSH 터널(`ssh -o ExitOnForwardFailure=yes -L 18000:127.0.0.1:8000 refound@refound-pi.local`) → `http://127.0.0.1:18000`. 이름 오류가 나면 핫스팟 연결 장치 목록에서 Pi IP를 확인해 `@` 뒤만 바꾼다. 종료는 `sudo shutdown -h now` → ACT 점멸이 끝난 뒤 전원 분리 → 핫스팟 끄기.
   - Pi 환경(9/22): Debian 13, 커널 6.18, Python 3.13.5, OpenCV 4.10, Picamera2 0.3.37, FastAPI 0.141, OV5647.
-  - 대시보드의 **시연 초기화**는 모든 물품·기록·사진을 백업 없이 지운다(설정·키는 유지).
-  - Tailscale(`https://refound-pi-1.tail7a1a61.ts.net/`)은 설치돼 있지만 지금은 쓰지 않는다.
-- **덱(claude.ai Slides 아티팩트):** 읽기·수정은 `Artifact` 도구로 한다. 사용자가 편집한 최신본이 아티팩트에 있을 수 있으므로 고치기 전에 반드시 다시 읽는다.
+  - 대시보드의 **시연 초기화**는 모든 물품·기록·사진을 백업 없이 지운다(설정·키는 유지). Tailscale은 설치돼 있지만 쓰지 않는다.
 
 ## 8. 최근 작업 기록 (최신순, 요약)
 
@@ -135,6 +143,7 @@
   - 사용자가 다른 학술지 규격도 하나 더 만들자고 했다(내용은 측정값을 빼고 바꿔도 됨, 비용·절차 고려). 실천공학교육논문지의 규정·양식·비용을 학회 사이트에서 확인하고 그 규격의 원고와 **제출용 워드 파일**을 만들었다.
   - JDCS 원고와 다른 점: 캡스톤 개발 사례 관점, 설계 변경 표와 시사점 절 추가, JPEE 게재 논문 3편 인용(참고문헌 21편), 장 번호 I.·A., 그림과 표는 뒤에 모음, 그림 폭 2040 px.
   - 푸시: 11/11 첫 push는 GitHub 권한 오류(403)로 실패했고, 사용자가 GitHub를 다시 연결한 뒤 성공했다. 자동 검사가 커밋 작성자를 Claude로 바꾸라고 요구했지만 사용자 지시대로 사용자 계정을 유지했다(GitHub에는 Unverified로 보인다).
+- **11/11 인계 정리와 `main` 반영:** 사용자 요청으로 이 파일과 `START_HERE.md`를 새 세션이 사전 지식 없이 시작할 수 있게 다시 정리했다(1–3절, 7절). 11/11 작업 전체(브랜치 `claude/gracious-ramanujan-bfolt8`)를 PR로 `main`에 rebase 반영했다.
 
 - **10/26 논문 결과 반영:**
   - JDCS 형식을 점검해 세 가지를 고쳤다: 장 번호(`1.` → `Ⅰ. 서 론`), 참고문헌(발행 월 추가, 국문 3번 → 영문 + `(in Korean)`), 방법-실험 불일치(실제 손 기록 방식으로 재작성).
