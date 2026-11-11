@@ -4,6 +4,15 @@
 
 **2026-11-11 공식 양식 반영 완료.** 학회 홈페이지에서 공식 투고 규정과 논문 양식(2026년 7월 수정 HWP)을 직접 받아 원고를 다시 맞췄다: 첫 쪽은 제목·요약·색인어만, 영문 요약 168단어(규격 120–170), 표·그림 안의 글은 영문, 캡션은 국문 줄 아래 영문 줄, 그림은 jpg, 참고문헌은 양식의 유형별 형식. 숫자와 실험 내용은 10/26 결과 반영본 그대로다. 공식 용지(210 × 280 mm) 기준 근사 조판으로 **10쪽**(마지막 쪽은 4분의 1만 사용)이며 빈칸은 없다. 남은 일은 **학회 HWP 양식으로 옮기기와 투고 전 확인 2가지**(저자 정보, 참고문헌 [3]의 개최 장소)다([개정 상태](REVISION_STATUS.md) 3·4절).
 
+## 투고처 두 가지 (11/11)
+
+같은 연구로 두 학술지 규격의 원고를 준비했다. **투고는 한 곳에만 한다.** 비교와 초보자용 투고 순서는 [JPEE 안내](jpee/README.md)에 있다.
+
+| 학술지 | 제출 파일 | 상태 | 예상 비용 |
+|---|---|---|---|
+| 디지털콘텐츠학회논문지(JDCS) | HWP(학회 양식) — 직접 옮겨야 함 | 원고·근사 PDF 완성, HWP 이식 남음 | 약 36만 원 + 연회비 |
+| 실천공학교육논문지(JPEE) | [워드 파일](REFOUND_JPEE_MANUSCRIPT.docx) — 만들어져 있음 | 제출 파일 완성 | 약 26–29만 원(추정) + 회비 |
+
 ## 지금 열 파일
 
 | 할 일 | 파일 |
@@ -11,6 +20,7 @@
 | 원고 읽기 | [공식 양식 근사 조판 PDF — 10쪽(심사용, 저자 정보 없음)](REFOUND_FULL_MANUSCRIPT.pdf) |
 | 원고 수정·HWP로 옮기기 | [편집 원고](PAPER_DRAFT_JDCS.md) |
 | 공식 규격 대조·HWP 이식 방법·투고 전 확인 | [개정 상태](REVISION_STATUS.md) |
+| JPEE(두 번째 투고처) | [안내·비교·투고 순서](jpee/README.md) · [워드 파일](REFOUND_JPEE_MANUSCRIPT.docx) · [미리보기 PDF](jpee/REFOUND_JPEE_PREVIEW.pdf) · [원고](jpee/PAPER_DRAFT_JPEE.md) |
 | 학회 공식 양식·규정 | [양식 HWP(2026년 7월)](template/JDCS_TEMPLATE_2026-07.hwp) · [양식 안내문 텍스트](template/JDCS_TEMPLATE_2026-07.txt) · [투고 규정](template/JDCS_SUBMISSION_RULES.txt) |
 | 숫자 근거 | [10/25 실험 결과](RESULTS_2026-10-25.md)(발표·논문 공통 원본) · [원고 숫자 출처표](MANUSCRIPT_NUMBERS.md)(원고 숫자 하나하나의 출처와 계산) |
 | 다시 실험할 때만 | [실험 진행 안내](EXPERIMENT_GUIDE.md)(10/25에 알게 된 주의점 포함) |
@@ -34,6 +44,7 @@
 |---|---|
 | `PAPER_DRAFT_JDCS.md` | 원고 원본. HWP로 옮길 기준본(장 번호 Ⅰ·1-1, 요약·Abstract·색인어·Keyword, 영문 표, 두 줄 캡션) |
 | `REFOUND_FULL_MANUSCRIPT.pdf` | 공식 양식 근사 조판(`manuscript/build_manuscript.py`가 생성) |
+| `REFOUND_JPEE_MANUSCRIPT.docx`, `jpee/` | 실천공학교육논문지 투고용 워드 파일과 그 원고·그림·생성기·학회 양식과 규정 |
 | `template/` | 학회 공식 양식 HWP, 양식 안내문 텍스트, 투고 규정(2026-11-11에 학회 홈페이지에서 받음) |
 | `RESULTS_2026-10-25.md` | 10/25 실험 결과 — 발표·논문 공통 숫자(손 기록과 Pi 기록 계산 구분, 보조 구간 상세는 5절) |
 | `MANUSCRIPT_NUMBERS.md` | 원고 숫자별 출처·계산(심사 질의 대응용) |
